@@ -9,9 +9,7 @@ export default defineConfig({
       defaultPropsToUndefined: ['Boolean'],
     }),
     vueJsx(),
-    vue({
-      include: [/\.vue$/, /\.md$/],
-    }),
+    vue(),
   ],
   entry: [
     'src/**/*.ts',
