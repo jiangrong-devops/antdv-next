@@ -92,6 +92,7 @@ Input 的其他属性和 Vue 自带的 [input](https://cn.vuejs.org/guide/essent
 | --- | --- | --- | --- |
 | prefix | 自定义前缀图标 | - | - |
 | suffix | 自定义后缀图标 | - | - |
+| clearIcon | 自定义清除图标（需搭配allowClear属性使用） | - | - |
 
 ### TextArea {#input-textarea}
 

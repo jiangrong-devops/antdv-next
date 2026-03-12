@@ -83,6 +83,14 @@ The rest of the props of Input are exactly the same as the original [input](http
 | blur | Remove focus | - | - |
 | focus | Get focus | (option?: &#123; preventScroll?: boolean, cursor?: 'start' \| 'end' \| 'all' &#125;) | - |
 
+#### Slots {#input-slots}
+
+| Slot | Description | Type | Version |
+| --- | --- | --- | --- |
+| prefix | Customize prefix icon | - | - |
+| suffix | Customize suffix icon | - | - |
+| clearIcon | Customize clear icon (to be used with allowClear attribute) | - | - |
+
 ### TextArea {#input-textarea}
 
 #### Props {#input-textarea-props}
