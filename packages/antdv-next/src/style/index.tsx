@@ -95,6 +95,8 @@ export const genLinkStyle: GenerateStyle<AliasToken, CSSObject> = token => ({
       outline: 0,
     },
 
+    ...genFocusStyle(token),
+
     '&[disabled]': {
       color: token.colorTextDisabled,
       cursor: 'not-allowed',
