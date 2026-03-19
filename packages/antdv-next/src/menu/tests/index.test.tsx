@@ -1,7 +1,9 @@
 import type { MenuProps } from '..'
+import { MailOutlined } from '@antdv-next/icons'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
 import Menu, { MenuItem, MenuItemGroup, SubMenu } from '..'
+import ConfigProvider from '../../config-provider'
 import { mountTest, rtlTest } from '/@tests/shared'
 import { mount } from '/@tests/utils'
 
@@ -248,5 +250,39 @@ describe('menu', () => {
     expect(wrapper.find('.menu-prop-icon').exists()).toBe(true)
     expect(wrapper.find('.ant-menu-item-extra').exists()).toBe(true)
     expect(wrapper.find('.ant-menu-item-icon').exists()).toBe(true)
+  })
+
+  it('aligns inline-collapsed icon when collapsedIconSize is customized', async () => {
+    Array.from(document.querySelectorAll('style')).forEach((style) => {
+      style.parentNode?.removeChild(style)
+    })
+
+    const wrapper = mount(() => (
+      <ConfigProvider theme={{ components: { Menu: { collapsedIconSize: 30 } } }}>
+        <Menu
+          mode="inline"
+          inlineCollapsed
+          items={[
+            {
+              key: 'sub1',
+              label: 'Navigation One',
+              icon: MailOutlined,
+              children: [{ key: '1', label: 'Option 1' }],
+            },
+          ]}
+        />
+      </ConfigProvider>
+    ))
+
+    await nextTick()
+
+    const dynamicStyleText = Array.from(document.querySelectorAll('style[data-css-hash]'))
+      .map(style => style.innerHTML)
+      .join('\n')
+
+    expect(dynamicStyleText).toMatch(/ant-menu-inline-collapsed[\s\S]*justify-content:center/)
+    expect(dynamicStyleText).toMatch(/ant-menu-inline-collapsed[\s\S]*ant-menu-title-content\{width:0;opacity:0;overflow:hidden/)
+
+    wrapper.unmount()
   })
 })
