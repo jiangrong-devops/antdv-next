@@ -53,10 +53,10 @@ const teamMembers = [
   },
   {
     github: 'Darkingtail',
-    name: 'Darkingtail',
+    name: 'darkingtail',
     avatar: 'https://avatars.githubusercontent.com/u/51188676?v=4',
-    wxCode: '',
-    alipayCode: '',
+    wxCode: 'wxp://f2f0x9VQ7XaFm__iV8Vu9Apg1KCD6f6DY9UWCacpoCaTKYYa1absGX_lf933xeCmhd-c',
+    alipayCode: 'https://qr.alipay.com/fkx11381rbbef2e82zl106a',
   },
   {
     github: 'shiqkuangsan',
