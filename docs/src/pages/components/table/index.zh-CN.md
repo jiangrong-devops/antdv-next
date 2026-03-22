@@ -185,6 +185,7 @@ const columns = [
 | filters | 表头的筛选菜单项 | object\[] | - | - |
 | filterDropdownProps | 自定义下拉属性 | [DropdownProps](/components/dropdown#api) | - | - |
 | fixed | （IE 下无效）列是否固定，可选 `true` (等效于 `'start'`) `'start'` `'end'` | boolean \| string | false | - |
+| key | Vue 需要的 key，如果已经设置了唯一的 `dataIndex`，可以忽略这个属性 | string | - |  |
 | render | 生成复杂数据的渲染函数，参数分别为当前单元格的值，当前行数据，行索引 | (value: V, record: T, index: number): VueNode | - | - |
 | responsive | 响应式 breakpoint 配置列表。未设置则始终可见。 | [Breakpoint](https://github.com/antdv-next/antdv-next/blob/main/packages/antdv-next/src/_util/responsiveObserver.ts#L9)\[] | - | - |
 | rowScope | 设置列范围 | `row` \| `rowgroup` | - | - |
@@ -277,7 +278,7 @@ const columns = [
 
 | 参数     | 说明                       | 类型                        | 默认值 |
 | -------- | -------------------------- | --------------------------- | ------ |
-| key      | React 需要的 key，建议设置 | string                      | -      |
+| key      | Vue 需要的 key，建议设置 | string                      | -      |
 | text     | 选择项显示的文字           | VueNode                   | -      |
 | onSelect | 选择项点击回调             | function(changeableRowKeys) | -      |
 
