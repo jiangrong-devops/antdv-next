@@ -23,7 +23,9 @@ exports[`image demo > renders _semantic correctly 1`] = `
         >
           <div
             class="ant-image css-var-v-0 ant-image-css-var semantic-mark-root"
+            role="button"
             style="width: 200px;"
+            tabindex="0"
           >
             <img
               class="ant-image-img semantic-mark-image"
@@ -1028,8 +1030,11 @@ exports[`image demo > renders basic correctly 1`] = `
 >
   <div
     alt="basic"
+    aria-label="basic"
     class="ant-image css-var-root ant-image-css-var"
+    role="button"
     style="width: 200px;"
+    tabindex="0"
   >
     <img
       class="ant-image-img"
@@ -1150,8 +1155,11 @@ exports[`image demo > renders controlled-preview correctly 1`] = `
   </button>
   <div
     alt="basic image"
+    aria-label="basic image"
     class="ant-image css-var-root ant-image-css-var"
+    role="button"
     style="width: 200px;"
+    tabindex="0"
   >
     <img
       class="ant-image-img"
@@ -1176,8 +1184,11 @@ exports[`image demo > renders fallback correctly 1`] = `
 >
   <div
     alt="basic image"
+    aria-label="basic image"
     class="ant-image css-var-root ant-image-css-var"
+    role="button"
     style="width: 200px; height: 200px;"
+    tabindex="0"
   >
     <img
       class="ant-image-img"
@@ -1203,8 +1214,11 @@ exports[`image demo > renders imageRender correctly 1`] = `
 >
   <div
     alt="slot image"
+    aria-label="slot image"
     class="ant-image css-var-root ant-image-css-var"
+    role="button"
     style="width: 200px;"
+    tabindex="0"
   >
     <img
       class="ant-image-img"
@@ -1222,8 +1236,11 @@ exports[`image demo > renders imageRender correctly 1`] = `
   <br />
   <div
     alt="preview image"
+    aria-label="preview image"
     class="ant-image css-var-root ant-image-css-var"
+    role="button"
     style="width: 200px;"
+    tabindex="0"
   >
     <img
       class="ant-image-img"
@@ -1247,8 +1264,11 @@ exports[`image demo > renders mask correctly 1`] = `
 >
   <div
     alt="Default blur"
+    aria-label="Default blur"
     class="ant-image css-var-root ant-image-css-var"
+    role="button"
     style="width: 100px;"
+    tabindex="0"
   >
     <img
       class="ant-image-img"
@@ -1274,8 +1294,11 @@ exports[`image demo > renders mask correctly 1`] = `
   <!---->
   <div
     alt="Dimmed mask"
+    aria-label="Dimmed mask"
     class="ant-image css-var-root ant-image-css-var"
+    role="button"
     style="width: 100px;"
+    tabindex="0"
   >
     <img
       class="ant-image-img"
@@ -1301,8 +1324,11 @@ exports[`image demo > renders mask correctly 1`] = `
   <!---->
   <div
     alt="No mask"
+    aria-label="No mask"
     class="ant-image css-var-root ant-image-css-var"
+    role="button"
     style="width: 100px;"
+    tabindex="0"
   >
     <img
       class="ant-image-img"
@@ -1364,8 +1390,11 @@ exports[`image demo > renders placeholder correctly 1`] = `
   >
     <div
       alt="basic image"
+      aria-label="basic image"
       class="ant-image css-var-root ant-image-css-var"
+      role="button"
       style="width: 200px;"
+      tabindex="0"
     >
       <img
         class="ant-image-img"
@@ -1378,8 +1407,11 @@ exports[`image demo > renders placeholder correctly 1`] = `
       >
         <div
           alt="placeholder image"
+          aria-label="placeholder image"
           class="ant-image css-var-root ant-image-css-var"
+          role="button"
           style="width: 200px;"
+          tabindex="0"
         >
           <img
             class="ant-image-img"
@@ -1431,8 +1463,11 @@ exports[`image demo > renders preview-group correctly 1`] = `
 >
   <div
     alt="svg image"
+    aria-label="svg image"
     class="ant-image css-var-root ant-image-css-var"
+    role="button"
     style="width: 200px;"
+    tabindex="0"
   >
     <img
       class="ant-image-img"
@@ -1449,8 +1484,11 @@ exports[`image demo > renders preview-group correctly 1`] = `
   <!---->
   <div
     alt="svg image"
+    aria-label="svg image"
     class="ant-image css-var-root ant-image-css-var"
+    role="button"
     style="width: 200px;"
+    tabindex="0"
   >
     <img
       class="ant-image-img"
@@ -1475,8 +1513,11 @@ exports[`image demo > renders preview-group-visible correctly 1`] = `
 >
   <div
     alt="webp image"
+    aria-label="webp image"
     class="ant-image css-var-root ant-image-css-var"
+    role="button"
     style="width: 200px;"
+    tabindex="0"
   >
     <img
       class="ant-image-img"
@@ -1501,8 +1542,11 @@ exports[`image demo > renders previewSrc correctly 1`] = `
 >
   <div
     alt="basic image"
+    aria-label="basic image"
     class="ant-image css-var-root ant-image-css-var"
+    role="button"
     style="width: 200px;"
+    tabindex="0"
   >
     <img
       class="ant-image-img"
@@ -1526,8 +1570,11 @@ exports[`image demo > renders style-class correctly 1`] = `
 >
   <div
     alt="示例图片"
+    aria-label="示例图片"
     class="ant-image css-var-root ant-image-css-var"
+    role="button"
     style="width: 160px; padding: 4px; border-radius: 8px; overflow: hidden;"
+    tabindex="0"
   >
     <img
       class="ant-image-img"
@@ -1545,8 +1592,11 @@ exports[`image demo > renders style-class correctly 1`] = `
   <!---->
   <div
     alt="示例图片"
+    aria-label="示例图片"
     class="ant-image css-var-root ant-image-css-var"
+    role="button"
     style="width: 160px; border: 2px solid rgb(165, 148, 249); border-radius: 8px; padding: 4px; transition: all 0.3s ease;"
+    tabindex="0"
   >
     <img
       class="ant-image-img"
@@ -1571,8 +1621,11 @@ exports[`image demo > renders toolbarRender correctly 1`] = `
 >
   <div
     alt="image-0"
+    aria-label="image-0"
     class="ant-image css-var-root ant-image-css-var"
+    role="button"
     style="width: 200px;"
+    tabindex="0"
   >
     <img
       class="ant-image-img"
@@ -1589,8 +1642,11 @@ exports[`image demo > renders toolbarRender correctly 1`] = `
   <!---->
   <div
     alt="image-1"
+    aria-label="image-1"
     class="ant-image css-var-root ant-image-css-var"
+    role="button"
     style="width: 200px;"
+    tabindex="0"
   >
     <img
       class="ant-image-img"

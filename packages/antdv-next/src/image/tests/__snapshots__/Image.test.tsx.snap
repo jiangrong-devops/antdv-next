@@ -6,6 +6,8 @@ exports[`image > rtl render > component should be rendered correctly in RTL dire
 >
   <div
     class="ant-image css-var-root ant-image-css-var"
+    role="button"
+    tabindex="0"
   >
     <img
       class="ant-image-img"
@@ -23,7 +25,7 @@ exports[`image > rtl render > component should be rendered correctly in RTL dire
 `;
 
 exports[`image > should match snapshot 1`] = `
-"<div alt="Test" class="ant-image css-var-root ant-image-css-var" style="width: 200px;"><img src="https://example.com/test.png" class="ant-image-img" width="200">
+"<div alt="Test" class="ant-image css-var-root ant-image-css-var" role="button" tabindex="0" aria-label="Test" style="width: 200px;"><img src="https://example.com/test.png" class="ant-image-img" width="200">
   <!---->
   <div class="ant-image-cover ant-image-cover-center">
     <!---->
@@ -32,7 +34,7 @@ exports[`image > should match snapshot 1`] = `
 `;
 
 exports[`image > should match snapshot with preview disabled 1`] = `
-"<div class="ant-image css-var-root ant-image-css-var"><img src="https://example.com/test.png" class="ant-image-img">
+"<div class="ant-image css-var-root ant-image-css-var" role="button" tabindex="0"><img src="https://example.com/test.png" class="ant-image-img">
   <!---->
   <!---->
 </div>"
@@ -44,6 +46,8 @@ exports[`image.PreviewGroup > rtl render > component should be rendered correctl
 >
   <div
     class="ant-image css-var-root ant-image-css-var"
+    role="button"
+    tabindex="0"
   >
     <img
       class="ant-image-img"
@@ -62,13 +66,13 @@ exports[`image.PreviewGroup > rtl render > component should be rendered correctl
 `;
 
 exports[`image.PreviewGroup > should match snapshot 1`] = `
-"<div class="ant-image css-var-root ant-image-css-var" style="width: 200px;"><img src="https://example.com/test.png" class="ant-image-img" width="200">
+"<div class="ant-image css-var-root ant-image-css-var" role="button" tabindex="0" style="width: 200px;"><img src="https://example.com/test.png" class="ant-image-img" width="200">
   <!---->
   <div class="ant-image-cover ant-image-cover-center">
     <!---->
   </div>
 </div>
-<div class="ant-image css-var-root ant-image-css-var" style="width: 200px;"><img src="https://example.com/test2.png" class="ant-image-img" width="200">
+<div class="ant-image css-var-root ant-image-css-var" role="button" tabindex="0" style="width: 200px;"><img src="https://example.com/test2.png" class="ant-image-img" width="200">
   <!---->
   <div class="ant-image-cover ant-image-cover-center">
     <!---->
