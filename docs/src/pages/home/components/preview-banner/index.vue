@@ -24,7 +24,7 @@ const { t } = useLocale()
         <a-button type="primary" href="/components/overview" size="large">
           {{ t('home.start') }}
         </a-button>
-        <a-button href="/docs/spec/introduce" size="large">
+        <a-button href="https://github.com/antdv-next/antdv-next" size="large">
           {{ t('home.designLanguage') }}
         </a-button>
       </a-flex>
