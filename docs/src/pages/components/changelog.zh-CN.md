@@ -2,6 +2,41 @@
 title: 组件更新日志
 ---
 
+## V1.1.7
+
+本次版本主要聚焦于 **修复 cssinjs、Tree、Transfer、Image、Table、Menu 等在渲染、样式与交互细节上的问题**，并进一步 **优化文档站移动端适配、图标搜索交互以及多处文档描述与仓库链接内容**。同时同步了 antd 6.3.4 的部分细节表现。
+
+**🐞 问题修复 Fixes**
+
+* fix(cssinjs)：修复 cssinjs 渲染延迟问题，并同步 cssinjs 相关实现 by @aibayanyu20 [#403](https://github.com/antdv-next/antdv-next/pull/403)
+* fix：修复图标分类标题国际化未生效问题 by @selicens [#404](https://github.com/antdv-next/antdv-next/pull/404)
+* fix(popconfirm)：修复 `style-class` 示例容器 padding 未生效的问题 by @selicens [#405](https://github.com/antdv-next/antdv-next/pull/405)
+* fix(Tree)：同步 antd 6.3.4，修复启用 `showLine` 时自定义 `switcherIcon` class 不正确的问题 by @selicens [#407](https://github.com/antdv-next/antdv-next/pull/407)
+* fix(transfer)：同步 antd 6.3.4，修复渲染条目时非字符串 `render` 结果的处理问题 by @selicens [#408](https://github.com/antdv-next/antdv-next/pull/408)
+* fix：同步 antd 6.3.4，为 SubMenu 父级菜单项应用自定义 hover 颜色 by @selicens [#409](https://github.com/antdv-next/antdv-next/pull/409)
+* fix(image)：同步 antd 6.3.4，支持透传 `fetchPriority` 属性 by @selicens [#410](https://github.com/antdv-next/antdv-next/pull/410)
+* fix(table)：修复开启 scroll 时列标题中的受控 Popover 被重复渲染的问题 by @aibayanyu20 [#411](https://github.com/antdv-next/antdv-next/pull/411)
+
+**📝 文档更新 Documentation**
+
+* docs：将 key 描述从 React 更新为 Vue，并补充 column key 相关说明 by @jiangrong-devops [#399](https://github.com/antdv-next/antdv-next/pull/399)
+* feat(docs)：新增文档站移动端响应式适配 by @william-xue [#400](https://github.com/antdv-next/antdv-next/pull/400)
+* docs(icon)：搜索图标后自动滚动到图标列表 by @z-kunf [#401](https://github.com/antdv-next/antdv-next/pull/401)
+* docs：更新文档仓库地址 by @ayangweb [#406](https://github.com/antdv-next/antdv-next/pull/406)
+
+---
+
+**👏 新贡献者 New Contributors**
+
+感谢以下社区贡献者的首次参与：
+
+* @william-xue（[#400](https://github.com/antdv-next/antdv-next/pull/400)）
+* @ayangweb（[#406](https://github.com/antdv-next/antdv-next/pull/406)）
+
+**Full Changelog**
+https://github.com/antdv-next/antdv-next/compare/antdv-next@1.1.6...antdv-next@1.1.7
+
+
 ## V1.1.6
 
 本次版本主要聚焦于 **修复 Menu / Divider / Image 等组件在样式与交互细节上的问题**，并进一步 **完善 Modal 文档、暗色主题对比度逻辑与主题预览体验**。同时新增赞助页暗色风格收款二维码，补充社区支持入口。

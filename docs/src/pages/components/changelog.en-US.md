@@ -2,6 +2,41 @@
 title: Component Changelog
 ---
 
+## V1.1.7
+
+This release focuses on **fixing rendering, styling, and interaction details across cssinjs, Tree, Transfer, Image, Table, and Menu**, while also **improving mobile responsiveness in the docs site, icon search interaction, and several documentation descriptions and repository links**. It also syncs part of the behavior with antd 6.3.4.
+
+**🐞 Fixes**
+
+* fix(cssinjs): fix cssinjs render delay and sync related cssinjs implementation by @aibayanyu20 in [#403](https://github.com/antdv-next/antdv-next/pull/403)
+* fix: fix invalid i18n for icon category titles by @selicens in [#404](https://github.com/antdv-next/antdv-next/pull/404)
+* fix(popconfirm): fix invalid padding in the `style-class` demo container by @selicens in [#405](https://github.com/antdv-next/antdv-next/pull/405)
+* fix(Tree): sync antd 6.3.4 and correct the custom `switcherIcon` class when `showLine` is enabled by @selicens in [#407](https://github.com/antdv-next/antdv-next/pull/407)
+* fix(transfer): sync antd 6.3.4 and handle non-string `render` results when rendering items by @selicens in [#408](https://github.com/antdv-next/antdv-next/pull/408)
+* fix: sync antd 6.3.4 and apply custom hover color to SubMenu parent items by @selicens in [#409](https://github.com/antdv-next/antdv-next/pull/409)
+* fix(image): sync antd 6.3.4 and support `fetchPriority` prop passthrough by @selicens in [#410](https://github.com/antdv-next/antdv-next/pull/410)
+* fix(table): fix controlled Popover in column titles being rendered twice when scroll is enabled by @aibayanyu20 in [#411](https://github.com/antdv-next/antdv-next/pull/411)
+
+**📝 Documentation**
+
+* docs: update key descriptions from React to Vue and add column key notes by @jiangrong-devops in [#399](https://github.com/antdv-next/antdv-next/pull/399)
+* feat(docs): add mobile responsive adaptation for the docs site by @william-xue in [#400](https://github.com/antdv-next/antdv-next/pull/400)
+* docs(icon): scroll to the icon list after searching by @z-kunf in [#401](https://github.com/antdv-next/antdv-next/pull/401)
+* docs: update the documentation repository URL by @ayangweb in [#406](https://github.com/antdv-next/antdv-next/pull/406)
+
+---
+
+**👏 New Contributors**
+
+Thanks to the following contributors for their first contributions:
+
+* @william-xue in [#400](https://github.com/antdv-next/antdv-next/pull/400)
+* @ayangweb in [#406](https://github.com/antdv-next/antdv-next/pull/406)
+
+**Full Changelog**
+https://github.com/antdv-next/antdv-next/compare/antdv-next@1.1.6...antdv-next@1.1.7
+
+
 ## V1.1.6
 
 This release focuses on **fixing styling and interaction details across Menu, Divider, and Image**, while also **improving the Modal docs, dark-mode contrast logic, and the theme preview experience**. It also adds dark-themed payment QR codes to the sponsor page to expand community support options.
