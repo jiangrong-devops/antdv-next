@@ -15,10 +15,10 @@ export const headerItems: MenuItemType[] = [
     key: '/blog',
     label: '/blog',
   },
-  {
-    key: '/pro',
-    label: '/pro',
-  },
+  // {
+  //   key: '/pro',
+  //   label: '/pro',
+  // },
   {
     key: '/playground',
     label: '/playground',
