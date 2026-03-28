@@ -10,6 +10,7 @@ export default defineConfig({
       include: [
         'packages/antdv-next/src/**/*.{ts,tsx}',
         'packages/cssinjs/src/**/*.{ts,tsx}',
+        'packages/pro/src/**/*.{ts,tsx}',
       ],
       exclude: [
         'packages/**/locale/*.{ts,tsx}',

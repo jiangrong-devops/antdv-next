@@ -159,6 +159,10 @@ export default defineConfig(({ mode }) => {
           replacement: path.resolve(baseUrl, '../packages/cssinjs/src'),
         },
         {
+          find: /^@antdv-next\/pro/,
+          replacement: path.resolve(baseUrl, '../packages/pro/src'),
+        },
+        {
           find: '@',
           replacement: '/src',
         },

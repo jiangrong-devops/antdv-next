@@ -5,6 +5,7 @@ import homePage from './home-page'
 import layout from './layout'
 import menu from './menu'
 import menuComponents from './menu-components'
+import menuPro from './menu-pro'
 import ui from './ui'
 
 export default {
@@ -14,6 +15,7 @@ export default {
   homePage,
   layout,
   menuComponents,
+  menuPro,
   menu,
   ui,
 } as const

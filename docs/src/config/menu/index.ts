@@ -1,12 +1,14 @@
 import type { AntdvMenuItem } from './interface'
 import { componentLocales } from './components'
 import { docsMenuLocales, docsMenus } from './docs'
+import { proLocales } from './pro'
 
 type MenuLocales = Record<string, Record<string, string>>
 
 const allLocales: MenuLocales = {
   ...docsMenuLocales,
   ...componentLocales,
+  ...proLocales,
 }
 
 function collectMenuKeys(items: AntdvMenuItem[]) {

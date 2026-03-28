@@ -74,6 +74,41 @@
     },
     "./global.d.ts": "./global.d.ts",
     "./global": "./global.d.ts",
+    "./config-provider": {
+      "types": "./dist/config-provider/index.d.ts",
+      "import": "./dist/config-provider/index.js",
+      "default": "./dist/config-provider/index.js"
+    },
+    "./config-provider/context": {
+      "types": "./dist/config-provider/context.d.ts",
+      "import": "./dist/config-provider/context.js",
+      "default": "./dist/config-provider/context.js"
+    },
+    "./config-provider/DisabledContext": {
+      "types": "./dist/config-provider/DisabledContext.d.ts",
+      "import": "./dist/config-provider/DisabledContext.js",
+      "default": "./dist/config-provider/DisabledContext.js"
+    },
+    "./config-provider/hooks/useSize": {
+      "types": "./dist/config-provider/hooks/useSize.d.ts",
+      "import": "./dist/config-provider/hooks/useSize.js",
+      "default": "./dist/config-provider/hooks/useSize.js"
+    },
+    "./config-provider/hooks/useCSSVarCls": {
+      "types": "./dist/config-provider/hooks/useCSSVarCls.d.ts",
+      "import": "./dist/config-provider/hooks/useCSSVarCls.js",
+      "default": "./dist/config-provider/hooks/useCSSVarCls.js"
+    },
+    "./theme/internal": {
+      "types": "./dist/theme/internal.d.ts",
+      "import": "./dist/theme/internal.js",
+      "default": "./dist/theme/internal.js"
+    },
+    "./theme/interface/components": {
+      "types": "./dist/theme/interface/components.d.ts",
+      "import": "./dist/theme/interface/components.js",
+      "default": "./dist/theme/interface/components.js"
+    },
     "./dist/reset.css": "./dist/reset.css",
     "./dist/antd.css": "./dist/antd.css",
     "./dist/antd-with-locales.js": "./dist/antd-with-locales.js",
