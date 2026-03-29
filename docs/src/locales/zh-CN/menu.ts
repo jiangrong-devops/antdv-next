@@ -5,6 +5,7 @@ const menuLocales = {
     },
     components: '组件',
     blog: '博客',
+    pro: '扩展',
     resources: '资源',
     sponsor: '赞助',
     playground: 'Playground',

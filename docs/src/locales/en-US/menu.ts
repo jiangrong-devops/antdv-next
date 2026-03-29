@@ -5,6 +5,7 @@ const menuLocales = {
     },
     components: 'Components',
     blog: 'Blog',
+    pro: 'Extra',
     resources: 'Resources',
     sponsor: 'Sponsor',
     playground: 'Playground',
