@@ -2,6 +2,25 @@
 title: 组件更新日志
 ---
 
+## V1.1.9
+
+本次版本主要聚焦于 **修复 Tabs、Menu、FormItem 与 Image 等在 class、样式资源和表单标签表现上的问题**，并进一步 **优化 SSR 渲染场景下的样式完整性与类型性能表现**。
+
+**🐞 问题修复 Fixes**
+
+* fix(tabs)：修复 class 名重复的问题 by @selicens [#435](https://github.com/antdv-next/antdv-next/pull/435)
+* fix：修复 SSR 渲染模式下 Menu 样式缺失的问题 by @aibayanyu20 [#437](https://github.com/antdv-next/antdv-next/pull/437)
+* fix：修复 FormItem label 未生效的问题 by @aibayanyu20 [#441](https://github.com/antdv-next/antdv-next/pull/441)
+
+**🛠 重构与维护 Refactor & Maintenance**
+
+* chore(image)：更新图片资源地址 by @selicens [#436](https://github.com/antdv-next/antdv-next/pull/436)
+* perf：优化类型性能 by @aibayanyu20 [#442](https://github.com/antdv-next/antdv-next/pull/442)
+
+**Full Changelog**
+https://github.com/antdv-next/antdv-next/compare/antdv-next@1.1.8...antdv-next@1.1.9
+
+
 ## V1.1.8
 
 本次版本主要聚焦于 **修复 Input、ConfigProvider、Image、TimePicker 等在输入法输入、样式透传与触屏交互上的问题**，并进一步 **优化文档站排版、Tabs 示例、发布公告内容与 GitHub 编辑链接**。同时新增 Pro 项目初始化，并补充 Claude Code 协作说明与相关 CI 工作流。
