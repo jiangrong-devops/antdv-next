@@ -2,6 +2,25 @@
 title: Component Changelog
 ---
 
+## V1.1.9
+
+This release focuses on **fixing class duplication, missing styles, and form label behavior across Tabs, Menu, FormItem, and Image**, while also **improving style completeness in SSR rendering scenarios and optimizing type performance**.
+
+**🐞 Fixes**
+
+* fix(tabs): fix duplicated class names by @selicens in [#435](https://github.com/antdv-next/antdv-next/pull/435)
+* fix: fix missing Menu styles in SSR rendering mode by @aibayanyu20 in [#437](https://github.com/antdv-next/antdv-next/pull/437)
+* fix: fix FormItem label not taking effect by @aibayanyu20 in [#441](https://github.com/antdv-next/antdv-next/pull/441)
+
+**🛠 Refactor & Maintenance**
+
+* chore(image): update image source paths by @selicens in [#436](https://github.com/antdv-next/antdv-next/pull/436)
+* perf: optimize type performance by @aibayanyu20 in [#442](https://github.com/antdv-next/antdv-next/pull/442)
+
+**Full Changelog**
+https://github.com/antdv-next/antdv-next/compare/antdv-next@1.1.8...antdv-next@1.1.9
+
+
 ## V1.1.8
 
 This release focuses on **fixing IME input handling, style/class passthrough, and touch interactions across Input, ConfigProvider, Image, and TimePicker**, while also **improving docs layout, Tabs examples, release announcement content, and GitHub edit links**. It also introduces the initial Pro project setup and adds Claude Code collaboration guidance together with related CI workflows.
