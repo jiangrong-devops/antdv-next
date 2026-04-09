@@ -9,7 +9,7 @@ interface IpAddrResponse {
   }
 }
 
-const CN_SITE_ORIGIN = 'https://antdv-next.cn'
+const CN_SITE_ORIGIN = 'https://www.antdv-next.cn'
 const GEO_IP_API_URL = 'https://v4_dx.boce.com:44433/ipaddr'
 const GEO_IP_TIMEOUT = 1200
 const GEO_REDIRECT_PREFERENCE_KEY = 'cn-site-redirect-preference'
