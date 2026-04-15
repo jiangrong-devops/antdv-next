@@ -2,6 +2,49 @@
 title: Component Changelog
 ---
 
+## V1.2.0
+
+Release Date: 2026-04-15
+
+This release focuses on **exposing missing Select instance methods, syncing the latest antd-related implementation, and fixing type, layout, and interaction issues across Breadcrumb, Space, Tree, Upload, and ConfigProvider**, while also **improving the Spin migration docs, icon/message doc copy, the LLMs docs generation workflow, and static asset maintenance**.
+
+**✨ Features**
+
+* feat(select): expose `blur`, `focus`, and `scrollTo` methods by @selicens in [#448](https://github.com/antdv-next/antdv-next/pull/448)
+* feat: sync antd by @aibayanyu20 in [#460](https://github.com/antdv-next/antdv-next/pull/460)
+
+**🐞 Fixes**
+
+* fix: fix Breadcrumb slot typing by @aibayanyu20 in [#447](https://github.com/antdv-next/antdv-next/pull/447)
+* fix(space): prevent `Space.Addon` content from wrapping by @selicens in [#452](https://github.com/antdv-next/antdv-next/pull/452)
+* fix(Tree): fix checkbox alignment when the parent node content spans multiple lines in Tree by @jiangrong-devops in [#431](https://github.com/antdv-next/antdv-next/pull/431)
+* fix: fix Upload link navigation and update dependencies by @aibayanyu20 in [#453](https://github.com/antdv-next/antdv-next/pull/453)
+* fix: fix Select `getPopupContainer` from ConfigProvider not taking effect by @aibayanyu20 in [#456](https://github.com/antdv-next/antdv-next/pull/456)
+* fix: fix ConfigProvider extended props not taking effect by @aibayanyu20 in [#459](https://github.com/antdv-next/antdv-next/pull/459)
+
+**📝 Documentation**
+
+* perf(docs): improve the LLMs docs generation workflow path by @cc-hearts in [#444](https://github.com/antdv-next/antdv-next/pull/444)
+* docs(spin): add Description API and migration docs by @selicens in [#449](https://github.com/antdv-next/antdv-next/pull/449)
+* fix: fix icon and message display copy in docs by @cc-hearts in [#454](https://github.com/antdv-next/antdv-next/pull/454)
+* fix: correct a zh-CN typo in the Timeline docs by @jasonren0403 in [#457](https://github.com/antdv-next/antdv-next/pull/457)
+
+**🛠 Refactor & Maintenance**
+
+* chore(image): update image source paths by @selicens in [#445](https://github.com/antdv-next/antdv-next/pull/445)
+
+---
+
+**👏 New Contributors**
+
+Thanks to the following contributor for their first contribution:
+
+* @jasonren0403 in [#457](https://github.com/antdv-next/antdv-next/pull/457)
+
+**Full Changelog**
+https://github.com/antdv-next/antdv-next/compare/antdv-next@1.1.9...antdv-next@1.2.0
+
+
 ## V1.1.9
 
 This release focuses on **fixing class duplication, missing styles, and form label behavior across Tabs, Menu, FormItem, and Image**, while also **improving style completeness in SSR rendering scenarios and optimizing type performance**.

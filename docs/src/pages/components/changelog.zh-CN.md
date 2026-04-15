@@ -2,6 +2,49 @@
 title: 组件更新日志
 ---
 
+## V1.2.0
+
+发布日期：2026-04-15
+
+本次版本主要聚焦于 **补齐 Select 实例方法暴露、同步最新 antd 相关实现，并修复 Breadcrumb、Space、Tree、Upload 与 ConfigProvider 等组件在类型、布局和交互上的问题**，同时进一步 **完善 Spin 迁移文档、图标文案展示以及文档生成工作流与静态资源维护**。
+
+**✨ 新功能 Features**
+
+* feat(select)：暴露 `blur`、`focus` 与 `scrollTo` 实例方法 by @selicens [#448](https://github.com/antdv-next/antdv-next/pull/448)
+* feat：同步最新 antd 相关实现 by @aibayanyu20 [#460](https://github.com/antdv-next/antdv-next/pull/460)
+
+**🐞 问题修复 Fixes**
+
+* fix：修复 Breadcrumb 插槽类型定义问题 by @aibayanyu20 [#447](https://github.com/antdv-next/antdv-next/pull/447)
+* fix(space)：避免 `Space.Addon` 内容发生换行 by @selicens [#452](https://github.com/antdv-next/antdv-next/pull/452)
+* fix(Tree)：修复 Tree 组件父节点内容多行时复选框整体未对齐的问题 by @jiangrong-devops [#431](https://github.com/antdv-next/antdv-next/pull/431)
+* fix：修复 Upload 链接误跳转问题，并更新相关依赖 by @aibayanyu20 [#453](https://github.com/antdv-next/antdv-next/pull/453)
+* fix：修复 Select 在 ConfigProvider 中 `getPopupContainer` 未生效的问题 by @aibayanyu20 [#456](https://github.com/antdv-next/antdv-next/pull/456)
+* fix：修复 ConfigProvider 扩展属性未生效的问题 by @aibayanyu20 [#459](https://github.com/antdv-next/antdv-next/pull/459)
+
+**📝 文档更新 Documentation**
+
+* perf(docs)：优化 LLMs 文档生成工作流路径 by @cc-hearts [#444](https://github.com/antdv-next/antdv-next/pull/444)
+* docs(spin)：补充 description API 与迁移文档说明 by @selicens [#449](https://github.com/antdv-next/antdv-next/pull/449)
+* fix：修复文档中 Icon 与 Message 的展示文案问题 by @cc-hearts [#454](https://github.com/antdv-next/antdv-next/pull/454)
+* fix：修正文档中 Timeline 的中文错别字 by @jasonren0403 [#457](https://github.com/antdv-next/antdv-next/pull/457)
+
+**🛠 重构与维护 Refactor & Maintenance**
+
+* chore(image)：更新图片资源地址 by @selicens [#445](https://github.com/antdv-next/antdv-next/pull/445)
+
+---
+
+**👏 新贡献者 New Contributors**
+
+感谢以下社区贡献者的首次参与：
+
+* @jasonren0403（[#457](https://github.com/antdv-next/antdv-next/pull/457)）
+
+**Full Changelog**
+https://github.com/antdv-next/antdv-next/compare/antdv-next@1.1.9...antdv-next@1.2.0
+
+
 ## V1.1.9
 
 本次版本主要聚焦于 **修复 Tabs、Menu、FormItem 与 Image 等在 class、样式资源和表单标签表现上的问题**，并进一步 **优化 SSR 渲染场景下的样式完整性与类型性能表现**。
