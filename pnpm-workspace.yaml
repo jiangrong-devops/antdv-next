@@ -129,9 +129,9 @@ catalogs:
     '@v-c/collapse': ^1.0.0
     '@v-c/color-picker': ^1.0.6
     '@v-c/dialog': ^1.0.3
-    '@v-c/drawer': ^1.0.5
+    '@v-c/drawer': ^1.0.6
     '@v-c/dropdown': ^1.0.2
-    '@v-c/image': ^1.0.10
+    '@v-c/image': ^1.0.11
     '@v-c/input': ^1.0.3
     '@v-c/input-number': ^1.0.5
     '@v-c/mentions': ^1.0.0
@@ -151,12 +151,12 @@ catalogs:
     '@v-c/slider': ^1.0.10
     '@v-c/steps': ^1.0.0
     '@v-c/switch': ^1.0.0
-    '@v-c/table': ^1.0.5
+    '@v-c/table': ^1.0.6
     '@v-c/tabs': ^1.0.2
     '@v-c/textarea': ^1.0.4
     '@v-c/tooltip': ^1.0.3
     '@v-c/tour': ^1.0.3
-    '@v-c/tree': ^1.0.5
+    '@v-c/tree': ^1.0.6
     '@v-c/tree-select': ^1.0.3
     '@v-c/trigger': ^1.0.14
     '@v-c/upload': ^1.0.0
