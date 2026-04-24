@@ -109,7 +109,11 @@ exports[`descriptions demo > renders _semantic correctly 1`] = `
                       >
                         Telephone
                       </span>
-                      <!---->
+                      <span
+                        class="ant-descriptions-item-content semantic-mark-content"
+                      >
+                        1810000000
+                      </span>
                     </div>
                   </td>
                 </tr>
