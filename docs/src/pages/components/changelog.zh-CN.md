@@ -2,6 +2,38 @@
 title: 组件更新日志
 ---
 
+## V1.2.2
+
+发布日期：2026-04-28
+
+本次版本主要聚焦于 **新增上一页/下一页翻页能力、支持 Table 泛型模式，并同步最新 antd 实现至 6.3.7**，同时修复 **Masonry 插槽类型、Card 空内容渲染、Button 动效、Form 字段行为以及 Table 虚拟滚动表头同步** 等问题，并进一步优化文档侧边栏、Descriptions 文档、列宽调整说明与同步文档内容。
+
+**✨ 新功能 Features**
+
+* feat：新增上一页和下一页翻页能力 by @selicens [#491](https://github.com/antdv-next/antdv-next/pull/491)
+* feat：支持 Table 泛型模式 by @aibayanyu20 [#496](https://github.com/antdv-next/antdv-next/pull/496)
+* feat：同步 antd 相关实现 by @aibayanyu20 [#505](https://github.com/antdv-next/antdv-next/pull/505)
+* feat：同步 antd@6.3.7 by @aibayanyu20 [#507](https://github.com/antdv-next/antdv-next/pull/507)
+
+**🐞 问题修复 Fixes**
+
+* fix(masonry)：为 `itemRender` 插槽数据字段增加泛型类型支持 by @ayangweb [#490](https://github.com/antdv-next/antdv-next/pull/490)
+* fix(card)：无内容时跳过空的 body 包裹层渲染 by @ayangweb [#493](https://github.com/antdv-next/antdv-next/pull/493)
+* fix：修复 Button 动效问题 by @aibayanyu20 [#495](https://github.com/antdv-next/antdv-next/pull/495)
+* fix：修复 Form 使用原始 name 时异常的问题 by @aibayanyu20 [#498](https://github.com/antdv-next/antdv-next/pull/498)
+* fix：修复 Table 虚拟模式下表头滚动未生效的问题 by @aibayanyu20 [#499](https://github.com/antdv-next/antdv-next/pull/499)
+* fix：修复 Form 自动补全未生效的问题 by @aibayanyu20 [#504](https://github.com/antdv-next/antdv-next/pull/504)
+
+**📝 文档更新 Documentation**
+
+* docs(menu)：优化侧边栏，支持在新标签页打开链接 by @cc-hearts [#485](https://github.com/antdv-next/antdv-next/pull/485)
+* docs(descriptions)：更新 Descriptions 组件文档 by @jiangrong-devops [#501](https://github.com/antdv-next/antdv-next/pull/501)
+* docs：修复调整列宽时触发非预期排序的问题 by @think-gem [#502](https://github.com/antdv-next/antdv-next/pull/502)
+* docs：同步文档内容 by @aibayanyu20 [#506](https://github.com/antdv-next/antdv-next/pull/506)
+
+**Full Changelog**
+https://github.com/antdv-next/antdv-next/compare/antdv-next@1.2.1...antdv-next@1.2.2
+
 ## V1.2.1
 
 发布日期：2026-04-20

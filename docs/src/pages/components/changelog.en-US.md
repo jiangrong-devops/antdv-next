@@ -2,6 +2,38 @@
 title: Component Changelog
 ---
 
+## V1.2.2
+
+Release Date: 2026-04-28
+
+This release focuses on **adding previous/next page navigation, supporting Table generic mode, and syncing the latest antd implementation up to 6.3.7**, while also **fixing Masonry slot typing, Card empty content rendering, Button motion, Form field behavior, and Table virtual scroll header synchronization**. It also improves the docs sidebar, Descriptions docs, column resize guidance, and synchronized documentation content.
+
+**✨ Features**
+
+* feat: add previous and next page turning by @selicens in [#491](https://github.com/antdv-next/antdv-next/pull/491)
+* feat: support Table generic mode by @aibayanyu20 in [#496](https://github.com/antdv-next/antdv-next/pull/496)
+* feat: sync antd by @aibayanyu20 in [#505](https://github.com/antdv-next/antdv-next/pull/505)
+* feat: sync antd@6.3.7 by @aibayanyu20 in [#507](https://github.com/antdv-next/antdv-next/pull/507)
+
+**🐞 Fixes**
+
+* fix(masonry): add generic type support for the `itemRender` slot data field by @ayangweb in [#490](https://github.com/antdv-next/antdv-next/pull/490)
+* fix(card): skip the empty body wrapper when there is no content by @ayangweb in [#493](https://github.com/antdv-next/antdv-next/pull/493)
+* fix: fix Button motion by @aibayanyu20 in [#495](https://github.com/antdv-next/antdv-next/pull/495)
+* fix: fix Form using the origin name incorrectly by @aibayanyu20 in [#498](https://github.com/antdv-next/antdv-next/pull/498)
+* fix: fix Table header scroll not taking effect in virtual mode by @aibayanyu20 in [#499](https://github.com/antdv-next/antdv-next/pull/499)
+* fix: fix Form auto-complete not taking effect by @aibayanyu20 in [#504](https://github.com/antdv-next/antdv-next/pull/504)
+
+**📝 Documentation**
+
+* docs(menu): optimize the sidebar to support opening links in a new tab by @cc-hearts in [#485](https://github.com/antdv-next/antdv-next/pull/485)
+* docs(descriptions): update the Descriptions component documentation by @jiangrong-devops in [#501](https://github.com/antdv-next/antdv-next/pull/501)
+* docs: fix unexpected sorting when adjusting column width by @think-gem in [#502](https://github.com/antdv-next/antdv-next/pull/502)
+* docs: sync docs by @aibayanyu20 in [#506](https://github.com/antdv-next/antdv-next/pull/506)
+
+**Full Changelog**
+https://github.com/antdv-next/antdv-next/compare/antdv-next@1.2.1...antdv-next@1.2.2
+
 ## V1.2.1
 
 Release Date: 2026-04-20
