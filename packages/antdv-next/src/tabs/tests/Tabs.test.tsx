@@ -1,7 +1,9 @@
 import type { Tab } from '..'
+import VcTabs from '@v-c/tabs'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { h, nextTick } from 'vue'
 import Tabs from '..'
+import App from '../../app'
 import ConfigProvider from '../../config-provider'
 import TabPane from '../TabPane'
 import mountTest from '/@tests/shared/mountTest'
@@ -520,6 +522,49 @@ describe('tabs', () => {
     })
   })
 
+  // ========================= Scroll Position =========================
+  describe('scrollPosition', () => {
+    it('passes scrollPosition to VcTabs', () => {
+      const wrapper = mount(Tabs, {
+        props: { items: defaultItems, scrollPosition: 'center' },
+        attachTo: document.body,
+      })
+
+      expect(wrapper.findComponent(VcTabs).props('scrollPosition')).toBe('center')
+      wrapper.unmount()
+    })
+
+    it('merges scrollPosition from ConfigProvider', () => {
+      const wrapper = mount({
+        render() {
+          return (
+            <ConfigProvider tabs={{ scrollPosition: 'end' }}>
+              <Tabs items={defaultItems} />
+            </ConfigProvider>
+          )
+        },
+      }, { attachTo: document.body })
+
+      expect(wrapper.findComponent(VcTabs).props('scrollPosition')).toBe('end')
+      wrapper.unmount()
+    })
+
+    it('component scrollPosition overrides ConfigProvider', () => {
+      const wrapper = mount({
+        render() {
+          return (
+            <ConfigProvider tabs={{ scrollPosition: 'start' }}>
+              <Tabs items={defaultItems} scrollPosition="center" />
+            </ConfigProvider>
+          )
+        },
+      }, { attachTo: document.body })
+
+      expect(wrapper.findComponent(VcTabs).props('scrollPosition')).toBe('center')
+      wrapper.unmount()
+    })
+  })
+
   // ========================= Destroy On Hidden =========================
   describe('destroyOnHidden', () => {
     it('supports destroyOnHidden prop', async () => {
@@ -884,7 +929,7 @@ describe('tabs', () => {
 
   // ========================= RTL =========================
   describe('rTL', () => {
-    it('renders in rtl direction', () => {
+    it('adds -rtl class from ConfigProvider direction', () => {
       const wrapper = mount({
         render() {
           return (
@@ -895,8 +940,27 @@ describe('tabs', () => {
         },
       }, { attachTo: document.body })
       const root = document.querySelector('.ant-tabs')
-      // VcTabs handles RTL via direction prop
-      expect(root).toBeTruthy()
+      // VcTabs adds the -rtl class from the direction prop
+      expect(root?.classList.contains('ant-tabs-rtl')).toBe(true)
+      wrapper.unmount()
+    })
+
+    it('keeps -rtl class when wrapped in App (#883)', () => {
+      const wrapper = mount({
+        render() {
+          return (
+            <ConfigProvider direction="rtl">
+              <App>
+                <Tabs items={defaultItems} tabPlacement="start" />
+              </App>
+            </ConfigProvider>
+          )
+        },
+      }, { attachTo: document.body })
+      const root = document.querySelector('.ant-tabs')
+      expect(root?.classList.contains('ant-tabs-rtl')).toBe(true)
+      // start → right in RTL
+      expect(root?.classList.contains('ant-tabs-right')).toBe(true)
       wrapper.unmount()
     })
   })

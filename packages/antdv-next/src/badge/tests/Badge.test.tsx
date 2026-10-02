@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest'
 import { h } from 'vue'
 import Badge from '..'
 import Avatar from '../../avatar'
+import ConfigProvider from '../../config-provider'
 import rtlTest from '/@tests/shared/rtlTest'
 import { mount } from '/@tests/utils'
 
@@ -98,6 +99,25 @@ describe('badge', () => {
     expect(wrapper.find('.ant-badge-status-text').text()).toBe('Success')
   })
 
+  it('should hide status text when text is "0" without showZero', () => {
+    const wrapper = mount(Badge, {
+      props: { color: 'blue', text: '0' },
+    })
+    expect(wrapper.find('.ant-badge-status-dot').exists()).toBe(true)
+    expect(wrapper.find('.ant-badge-status-text').exists()).toBe(false)
+  })
+
+  it('should hide whole badge when count and text is "0" without showZero', () => {
+    const wrapper = mount(Badge, {
+      props: { count: 5, text: '0' },
+      slots: {
+        default: () => h(Avatar, { shape: 'square' }),
+      },
+    })
+    expect(wrapper.find('.ant-badge-count').exists()).toBe(false)
+    expect(wrapper.find('.ant-badge-status-text').exists()).toBe(false)
+  })
+
   it('should render preset colors', () => {
     const colors = ['pink', 'red', 'yellow', 'orange', 'cyan', 'green', 'blue', 'purple'] as const
     colors.forEach((color) => {
@@ -157,6 +177,30 @@ describe('badge', () => {
     const style = count.attributes('style')
     expect(style).toContain('inset-inline-end: -10px')
     expect(style).toContain('margin-top: 10px')
+  })
+
+  it('should preserve fractional offset values', () => {
+    const wrapper = mount(Badge, {
+      props: { count: 5, offset: [10.5, 20.5] },
+      slots: {
+        default: () => h('span', 'test'),
+      },
+    })
+    const style = wrapper.find('.ant-badge-count').attributes('style')
+    expect(style).toContain('inset-inline-end: -10.5px')
+    expect(style).toContain('margin-top: 20.5px')
+  })
+
+  it('should keep the same horizontal offset direction under rtl', () => {
+    const wrapper = mount(ConfigProvider, {
+      props: { direction: 'rtl' },
+      slots: {
+        default: () => h(Badge, { count: 5, offset: [10, 10] }, { default: () => h('span', 'test') }),
+      },
+    })
+    expect(wrapper.find('.ant-badge-rtl').exists()).toBe(true)
+    // The logical property mirrors automatically under rtl, same as antd
+    expect(wrapper.find('.ant-badge-count').attributes('style')).toContain('inset-inline-end: -10px')
   })
 
   it('should render custom count with slot', () => {

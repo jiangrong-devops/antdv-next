@@ -1239,7 +1239,7 @@ exports[`card demo > renders button-alignment-debug correctly 1`] = `
   data-v-app=""
 >
   <div
-    class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-middle ant-flex-vertical"
+    class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-medium ant-flex-vertical"
   >
     <div
       class="ant-card ant-card-bordered line-card css-var-root"
@@ -1551,7 +1551,7 @@ exports[`card demo > renders component-token correctly 1`] = `
         </div>
       </div>
       <div
-        class="ant-tabs ant-tabs-top ant-tabs-large css-var-v-0 ant-tabs-css-var ant-card-head-size"
+        class="ant-tabs ant-tabs-top ant-tabs-large css-var-v-0 ant-tabs-css-var ant-card-head-tabs"
       >
         <div
           aria-orientation="horizontal"
@@ -2119,7 +2119,7 @@ exports[`card demo > renders inner correctly 1`] = `
 
 exports[`card demo > renders loading correctly 1`] = `
 <div
-  class="ant-flex css-var-root ant-flex-align-start ant-flex-gap-middle ant-flex-vertical"
+  class="ant-flex css-var-root ant-flex-align-start ant-flex-gap-medium ant-flex-vertical"
   data-v-b2133cf4=""
 >
   <button
@@ -2585,7 +2585,7 @@ exports[`card demo > renders simple correctly 1`] = `
 
 exports[`card demo > renders style-class correctly 1`] = `
 <div
-  class="ant-flex css-var-root ant-flex-gap-middle"
+  class="ant-flex css-var-root ant-flex-gap-medium"
   data-v-f3a6db99=""
 >
   <div
@@ -2761,6 +2761,7 @@ exports[`card demo > renders style-class correctly 1`] = `
   <div
     class="ant-card ant-card-bordered css-var-root custom-card-root"
     data-v-f3a6db99=""
+    style="border-color: rgb(105, 111, 199); box-shadow: 0 2px 8px #A7AAE1; border-radius: 8px;"
   >
     <div
       class="ant-card-head custom-card-header"
@@ -2770,11 +2771,13 @@ exports[`card demo > renders style-class correctly 1`] = `
       >
         <div
           class="ant-card-head-title"
+          style="font-size: 16px; font-weight: 500; color: rgb(167, 170, 225);"
         >
           Function Card
         </div>
         <div
           class="ant-card-extra"
+          style="color: rgb(105, 111, 199);"
         >
           <button
             class="ant-btn css-var-root ant-btn-link ant-btn-color-link ant-btn-variant-link"
@@ -2960,7 +2963,7 @@ exports[`card demo > renders tabs correctly 1`] = `
         </div>
       </div>
       <div
-        class="ant-tabs ant-tabs-top ant-tabs-large css-var-root ant-tabs-css-var ant-card-head-size"
+        class="ant-tabs ant-tabs-top ant-tabs-large css-var-root ant-tabs-css-var ant-card-head-tabs"
       >
         <div
           aria-orientation="horizontal"
@@ -3097,7 +3100,7 @@ exports[`card demo > renders tabs correctly 1`] = `
         <!---->
       </div>
       <div
-        class="ant-tabs ant-tabs-top css-var-root ant-tabs-css-var ant-card-head-size"
+        class="ant-tabs ant-tabs-top css-var-root ant-tabs-css-var ant-card-head-tabs"
       >
         <div
           aria-orientation="horizontal"

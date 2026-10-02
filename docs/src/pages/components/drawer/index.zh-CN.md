@@ -52,7 +52,7 @@ demo:
 | classes | 用于自定义 Drawer 组件内部各语义化结构的 class，支持对象或函数 | DrawerClassNamesType | - | - | ✓ |
 | closable | 是否展示关闭按钮，可通过 `placement` 设置位置 | boolean \| \{ closeIcon?: VueNode, disabled?: boolean, placement?: 'start' \| 'end' \} | true | - | ✓ |
 | closeIcon | 自定义关闭图标 | VueNode | - | - | ✓ |
-| ~~destroyOnClose~~ | 关闭时销毁 Drawer 里的子元素 | boolean | false | - | × |
+| ~~destroyOnClose~~ | 关闭时销毁 Drawer 里的子元素，请使用 `destroyOnHidden` 替代 | boolean | false | - | × |
 | destroyOnHidden | 关闭时销毁 Drawer 里的子元素 | boolean | false | - | × |
 | extra | 右上角额外操作区域 | VueNode | - | - | × |
 | footer | 抽屉底部 | VueNode | - | - | × |
@@ -77,7 +77,6 @@ demo:
 
 | 事件 | 说明 | 类型 | 版本 |
 | --- | --- | --- | --- |
-| afterOpenChange | 切换抽屉时动画结束后的回调 | (open: boolean) => void | - |
 | close | 抽屉关闭回调 | (e: MouseEvent \| KeyboardEvent) => void | - |
 | keydown | 键盘按下回调 | (e: KeyboardEvent) => void | - |
 | keyup | 键盘抬起回调 | (e: KeyboardEvent) => void | - |

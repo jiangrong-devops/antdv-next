@@ -134,7 +134,7 @@ const columns = [
 | scroll | 表格是否可滚动，也可以指定滚动区域的宽、高，[配置项](#scroll) | object | - | - | ✓ |
 | showHeader | 是否显示表头 | boolean | true | - | × |
 | showSorterTooltip | 表头是否显示下一次排序的 tooltip 提示。当参数类型为对象时，将被设置为 Tooltip 的属性 | boolean \| [Tooltip props](/components/tooltip-cn) & `{target?: 'full-header' \| 'sorter-icon' }` | \{ target: 'full-header' \} | - | × |
-| size | 表格大小 | `large` \| `middle` \| `small` | `large` |  | × |
+| size | 表格大小 | `large` \| `medium` \| `small` | `large` |  | × |
 | sortDirections | 支持的排序方式，取值为 `ascend` `descend` | Array | \[`ascend`, `descend`] | - | × |
 | sticky | 设置粘性头部和滚动条 | boolean \| `{offsetHeader?: number, offsetScroll?: number, getContainer?: () => HTMLElement}` | - | - | × |
 | styles | 用于自定义组件内部各语义化结构的行内 style，支持对象或函数 | Record\<[SemanticDOM](#semantic-dom), CSSProperties\> \| (info: \{ props \})=> Record\<[SemanticDOM](#semantic-dom), CSSProperties\> | - | - | ✓ |
@@ -151,6 +151,7 @@ const columns = [
 | change | 分页、排序、筛选变化时触发 | (     pagination: TablePaginationConfig,     filters: Record&lt;string, FilterValue \| null&gt;,     sorter: SorterResult&lt;RecordType&gt; \| SorterResult&lt;RecordType&gt;[],     extra: TableCurrentDataSource&lt;RecordType&gt;,   ) =&gt; void | - |
 | update:expandedRowKeys | - | (keys: readonly Key[]) =&gt; void | - |
 | scroll | 表格是否可滚动，也可以指定滚动区域的宽、高，[配置项](#scroll) | NonNullable&lt;VcTableProps['onScroll']&gt; | - |
+| resizeColumn | 拖动 `resizable` 列调整宽度后触发，每次拖动触发一次；`columnKey` 为记录列宽所用的 key（列的 `key`，未设置时为位置生成的 key） | (width: number, column: ColumnType, columnKey: Key) =&gt; void | 1.5.5 |
 | headerRow | 设置头部行属性 | function(columns, index) | - | - |
 | row | 设置行属性 | function(record, index) | - | - |
 
@@ -221,7 +222,7 @@ const onHeaderRow: TableProps['onHeaderRow'] = (columns, index) => {
 | filterDropdown | 可以自定义筛选菜单，此函数只负责渲染图层，需要自行编写各种交互 | VueNode \| (props: [FilterDropdownProps](https://github.com/antdv-next/antdv-next/blob/main/packages/antdv-next/src/table/interface.ts#L94)) => VueNode | - | - |
 | filtered | 是否处于筛选状态 | boolean | false | - |
 | filteredValue | 筛选的受控属性，外界可用此控制列的筛选状态，值为已筛选的 value 数组 | string\[] | - | - |
-| filterIcon | 自定义 filter 图标。 | VueNode \| (filtered: boolean) => VueNode | false | - |
+| filterIcon | 自定义 filter 图标。 | VueNode \| (filtered: boolean) => VueNode | - | - |
 | filterOnClose | 是否在筛选菜单关闭时触发筛选 | boolean | true | - |
 | filterMultiple | 是否多选 | boolean | true | - |
 | filterMode | 指定筛选菜单的用户界面 | 'menu' \| 'tree' | 'menu' | - |
@@ -231,6 +232,7 @@ const onHeaderRow: TableProps['onHeaderRow'] = (columns, index) => {
 | fixed | （IE 下无效）列是否固定，可选 `true` (等效于 `'start'`) `'start'` `'end'` | boolean \| string | false | - |
 | key | Vue 需要的 key，如果已经设置了唯一的 `dataIndex`，可以忽略这个属性 | string | - |  |
 | render | 生成复杂数据的渲染函数，参数分别为当前单元格的值，当前行数据，行索引 | (value: V, record: T, index: number): VueNode | - | - |
+| resizable | 列是否可以通过拖动表头边缘调整宽度，仅对叶子列生效；开启后表格会启用横向滚动并使用 `tableLayout="fixed"`。列宽按 `key` 记录，列会增删或换序时请提供稳定的 `key`；各列 `width` 建议使用数字 | boolean | false | 1.5.5 |
 | responsive | 响应式 breakpoint 配置列表。未设置则始终可见。 | [Breakpoint](https://github.com/antdv-next/antdv-next/blob/main/packages/antdv-next/src/_util/responsiveObserver.ts#L9)\[] | - | - |
 | rowScope | 设置列范围 | `row` \| `rowgroup` | - | - |
 | shouldCellUpdate | 自定义单元格渲染时机 | (record, prevRecord) => boolean | - | - |
@@ -241,7 +243,7 @@ const onHeaderRow: TableProps['onHeaderRow'] = (columns, index) => {
 | sortIcon | 自定义 sort 图标 | (props: \{ sortOrder \}) => VueNode | - | - |
 | title | 列头显示文字（函数用法 `3.10.0` 后支持） | VueNode \| (\{ sortColumns, filters \}) => VueNode | - | - |
 | width | 列宽 | string \| number | - | - |
-| minWidth | 最小列宽度，只在 `tableLayout="auto"` 时有效 | number | - | - |
+| minWidth | 最小列宽度；`tableLayout="auto"` 时作为列宽下限，`resizable` 时作为拖动下限（默认 40） | number | - | - |
 | hidden | 隐藏列 | boolean | false | - |
 | onCell | 设置单元格属性 | function(record, rowIndex) | - | - |
 | onFilter | 本地模式下，确定筛选的运行函数 | function | - | - |
@@ -327,11 +329,11 @@ const onHeaderRow: TableProps['onHeaderRow'] = (columns, index) => {
 
 ### scroll
 
-| 参数 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| scrollToFirstRowOnChange | 当分页、排序、筛选变化后是否滚动到表格顶部 | boolean | - |
-| x | 设置横向滚动，也可用于指定滚动区域的宽，可以设置为像素值，百分比，`true` 和 ['max-content'](https://developer.mozilla.org/zh-CN/docs/Web/CSS/width#max-content) | string \| number \| true | - |
-| y | 设置纵向滚动，也可用于指定滚动区域的高，可以设置为像素值 | string \| number | - |
+| 参数 | 说明 | 类型 | 默认值 | 版本 | [全局配置](/components/config-provider-cn#component-config) |
+| --- | --- | --- | --- | --- | --- |
+| scrollToFirstRowOnChange | 当分页、排序、筛选变化后是否滚动到表格顶部 | boolean | - | - | ✓ |
+| x | 设置横向滚动，也可用于指定滚动区域的宽，可以设置为像素值，百分比，`true` 和 ['max-content'](https://developer.mozilla.org/zh-CN/docs/Web/CSS/width#max-content) | string \| number \| true | - | - | ✓ |
+| y | 设置纵向滚动，也可用于指定滚动区域的高，可以设置为像素值 | string \| number | - | - | ✓ |
 
 ### selection
 
@@ -345,7 +347,7 @@ const onHeaderRow: TableProps['onHeaderRow'] = (columns, index) => {
 
 <demo src="./demo/_semantic.vue" simplify></demo>
 
-## 主题变量（Design Token）
+## 主题变量（Design Token） {#design-token}
 
 <ComponentTokenTable component="Table" />
 

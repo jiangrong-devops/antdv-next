@@ -2265,7 +2265,6 @@ exports[`dropdown demo > renders render-panel correctly 1`] = `
   data-v-app=""
 >
   <div
-    menu="[object Object]"
     style="padding-bottom: 0px; position: relative; min-width: 0px;"
   >
     <span
@@ -2331,7 +2330,7 @@ exports[`dropdown demo > renders selectable correctly 1`] = `
 
 exports[`dropdown demo > renders style-class correctly 1`] = `
 <div
-  class="ant-flex css-var-root ant-flex-wrap-wrap ant-flex-gap-middle"
+  class="ant-flex css-var-root ant-flex-wrap-wrap ant-flex-gap-medium"
 >
   <div
     class="ant-space ant-space-vertical ant-space-gap-row-large ant-space-gap-col-large css-var-root"

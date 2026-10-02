@@ -59,7 +59,7 @@ export interface BaseButtonProps extends ComponentBaseProps {
   color?: ButtonColorType
   variant?: ButtonVariantType
   icon?: VueNode
-  iconPlacement?: 'start' | 'end' // deprecated
+  iconPlacement?: 'start' | 'end'
   shape?: ButtonShape
   size?: SizeType
   disabled?: boolean
@@ -195,9 +195,15 @@ const InternalCompoundedButton = defineComponent<
         }
         return colorVariantPair
       }
+      if (variant === 'solid') {
+        return ['primary', variant]
+      }
       // >>> Context fallback
       if (contextColor?.value && contextVariant?.value) {
         return [contextColor.value, contextVariant.value]
+      }
+      if (contextVariant?.value === 'solid') {
+        return ['primary', contextVariant.value]
       }
       return ['default', 'outlined']
     })

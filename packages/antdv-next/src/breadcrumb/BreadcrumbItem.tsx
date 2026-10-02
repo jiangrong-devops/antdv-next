@@ -64,10 +64,10 @@ export const InternalBreadcrumbItem = defineComponent<
           mergeDropDownProps.menu = {
             ...menuProps,
             items: items?.map(({ key, title, label, path, ...itemProps }, index) => {
-              let mergedLabel: any = getSlotPropsFnRun({ label: title }, { label }, 'label')
+              let mergedLabel: any = getSlotPropsFnRun({}, { label: isNonNullable(label) ? label : title }, 'label')
 
               if (path) {
-                mergedLabel = <a href={`${href}${path}`}>{mergedLabel}</a>
+                mergedLabel = <a href={`${href ?? ''}${path}`}>{mergedLabel}</a>
               }
 
               return {
@@ -91,7 +91,7 @@ export const InternalBreadcrumbItem = defineComponent<
       return breadcrumbItem
     }
     return () => {
-      const { separator = '/', prefixCls } = props
+      const { separator = '/', prefixCls, onClick } = props
       const children = checkRenderNode(filterEmpty(slots?.default?.() ?? []))
       const { classes: mergedClassNames, styles: mergedStyles } = breadcrumbContext.value
       // wrap to dropDown
@@ -100,7 +100,7 @@ export const InternalBreadcrumbItem = defineComponent<
       if (isNonNullable(link)) {
         return (
           <>
-            <li class={clsx(`${prefixCls}-item`, mergedClassNames?.item)} style={mergedStyles?.item}>
+            <li class={clsx(`${prefixCls}-item`, mergedClassNames?.item)} style={mergedStyles?.item} onClick={onClick}>
               {link}
             </li>
             {isRenderable(separator) && <BreadcrumbSeparator>{separator}</BreadcrumbSeparator>}

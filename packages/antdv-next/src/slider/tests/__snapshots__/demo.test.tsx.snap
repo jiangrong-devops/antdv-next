@@ -1161,7 +1161,7 @@ exports[`slider demo > renders disabled-handle correctly 1`] = `
       class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
     >
       <span
-        class="ant-checkbox ant-wave-target ant-wave-target"
+        class="ant-checkbox ant-wave-target"
       >
         <input
           class="ant-checkbox-input"
@@ -1178,7 +1178,7 @@ exports[`slider demo > renders disabled-handle correctly 1`] = `
       class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
     >
       <span
-        class="ant-checkbox ant-wave-target ant-wave-target"
+        class="ant-checkbox ant-wave-target"
       >
         <input
           class="ant-checkbox-input"
@@ -1195,7 +1195,7 @@ exports[`slider demo > renders disabled-handle correctly 1`] = `
       class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
     >
       <span
-        class="ant-checkbox ant-wave-target ant-wave-target"
+        class="ant-checkbox ant-wave-target"
       >
         <input
           class="ant-checkbox-input"
@@ -2337,7 +2337,7 @@ exports[`slider demo > renders show-tooltip correctly 1`] = `
 
 exports[`slider demo > renders style-class correctly 1`] = `
 <div
-  class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-middle ant-flex-vertical"
+  class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-medium ant-flex-vertical"
   data-v-e57a2610=""
 >
   <div

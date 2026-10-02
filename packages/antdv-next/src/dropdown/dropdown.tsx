@@ -1,6 +1,6 @@
 import type { MenuInfo, MenuProps as VcMenuProps } from '@v-c/menu'
 import type { AlignType } from '@v-c/trigger'
-import type { App, CSSProperties, SlotsType } from 'vue'
+import type { App, CSSProperties, SlotsType, VNode, VNodeChild } from 'vue'
 import type { SemanticClassNamesType, SemanticStylesType } from '../_util/hooks'
 import type { AdjustOverflow } from '../_util/placements'
 import type { ComponentBaseProps } from '../config-provider/context'
@@ -84,7 +84,7 @@ export interface DropdownProps extends ComponentBaseProps,
   autoFocus?: boolean
   arrow?: boolean | DropdownArrowOptions
   trigger?: ('click' | 'hover' | 'contextmenu' | 'contextMenu')[]
-  popupRender?: (Vnode: any) => any
+  popupRender?: (node: VNode) => VNodeChild
   // onOpenChange?: (open: boolean, info: { source: 'trigger' | 'menu' }) => void;
   open?: boolean
   disabled?: boolean
@@ -116,7 +116,7 @@ export interface DropdownEmitsProps {
 }
 
 export interface DropdownSlots extends MenuSlots {
-  popupRender: (info: { open: boolean, source: 'trigger' | 'menu' }) => any
+  popupRender: (node: VNode) => VNodeChild
 }
 
 const defaults = {
@@ -255,7 +255,8 @@ const Dropdown = defineComponent<
 
     return () => {
       const children = filterEmpty(slots?.default?.())
-      const child = children.length === 1 ? (isVNode(children[0]) ? children[0] : <span>{children}</span>) : <span>{children}</span>
+      const firstChild = children[0]
+      const child = children.length === 1 && isVNode(firstChild) && typeof firstChild.type !== 'symbol' ? firstChild : <span>{children}</span>
       const {
         menu,
         popupRender,
@@ -313,8 +314,9 @@ const Dropdown = defineComponent<
         if (mergedPopupRender) {
           overlayNode = mergedPopupRender(overlayNode)
         }
-        const overlayFiltered = filterEmpty(Array.isArray(overlayNode) ? overlayNode : [overlayNode]).filter(Boolean)
-        overlayNode = overlayFiltered.length === 1 ? (typeof overlayFiltered[0] === 'string' ? <span>{overlayFiltered}</span> : overlayFiltered) : overlayFiltered
+        if (typeof overlayNode === 'string') {
+          overlayNode = <span>{overlayNode}</span>
+        }
 
         return (
           <OverrideProvider
@@ -366,7 +368,7 @@ const Dropdown = defineComponent<
           {...omit(props, ['rootClass']) as any}
           mouseEnterDelay={mouseEnterDelay}
           mouseLeaveDelay={mouseLeaveDelay}
-          visible={mergedOpen.value}
+          open={mergedOpen.value}
           builtinPlacements={builtinPlacements.value}
           arrow={!!arrow}
           prefixCls={prefixCls.value}
@@ -375,7 +377,7 @@ const Dropdown = defineComponent<
           trigger={triggerActions.value}
           overlay={renderOverlay}
           placement={memoPlacement.value}
-          onVisibleChange={onInnerOpenChange}
+          onOpenChange={onInnerOpenChange}
           overlayStyle={{ ...mergedStyles.value?.root, zIndex: zIndex.value }}
           overlayClassName={overlayClassNameCustomized}
           autoDestroy={destroyOnHidden}

@@ -12,6 +12,7 @@ import { clsx } from '@v-c/util'
 import { filterEmpty } from '@v-c/util/dist/props-util'
 import { omit } from 'es-toolkit'
 import { computed, defineComponent, isVNode, ref } from 'vue'
+import { normalizeStyle } from '../_util/styleUtils'
 import { groupKeysMap } from '../_util/transKeys'
 import Checkbox from '../checkbox'
 import Dropdown from '../dropdown'
@@ -252,9 +253,8 @@ const TransferSection = defineComponent<
         />
       )
 
-      const footerDom = props.footer && (props.footer.length < 2
-        ? props.footer(props)
-        : props.footer(props, { direction: props.direction }))
+      // Always forward `direction`; sniffing the callback arity is unreliable
+      const footerDom = props.footer?.(props, { direction: props.direction })
 
       const listFooter = footerDom
         ? (
@@ -349,7 +349,7 @@ const TransferSection = defineComponent<
             [`${sectionPrefixCls.value}-with-pagination`]: !!props.pagination,
             [`${sectionPrefixCls.value}-with-footer`]: !!footerDom,
           })}
-          style={{ ...props.style, ...props.styles?.section }}
+          style={{ ...(normalizeStyle(props.style) || {}), ...props.styles?.section }}
         >
           <div class={clsx(`${listPrefixCls.value}-header`, props.classes?.header)} style={props.styles?.header}>
             {props.showSelectAll

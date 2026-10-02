@@ -18,6 +18,12 @@ demo:
 ## Examples {#examples}
 
 <demo-group>
+<demo src="./demo/basic.vue">Basic</demo>
+<demo src="./demo/default-value.vue">Default value</demo>
+<demo src="./demo/custom-trigger.vue">Custom trigger</demo>
+<demo src="./demo/hover.vue">Hover</demo>
+<demo src="./demo/disabled-option.vue">Disabled option</demo>
+<demo src="./demo/change-on-select.vue">Change on select</demo>
 <demo src="./demo/multiple.vue">Multiple</demo>
 <demo src="./demo/showCheckedStrategy.vue">ShowCheckedStrategy</demo>
 <demo src="./demo/size.vue">Size</demo>
@@ -50,6 +56,7 @@ Common props ref：[Common props](/docs/vue/common-props)
 | fieldNames | Custom field name for label and value and children | object | \{ label: `label`, value: `value`, children: `children` \} | - | × |
 | getPopupContainer | Parent Node which the selector should be rendered to. Default to `body`. When position issues happen, try to modify it into scrollable content and position it relative. [example](https://codepen.io/afc163/pen/zEjNOy?editors=0010) | function(triggerNode) | () =&gt; document.body | - | × |
 | loadData | To load option lazily, and it cannot work with `showSearch` | (selectedOptions) =&gt; void | - | - | × |
+| loadingIcon | Customize the loading icon while options are loading lazily | VueNode | - | - | ✓ |
 | maxTagCount | Max tag count to show. `responsive` will cost render performance | number \| `responsive` | - | - | × |
 | maxTagPlaceholder | Placeholder for not showing tags | VueNode \| function(omittedValues) | - | - | × |
 | maxTagTextLength | Max tag text length to show | number | - | - | × |
@@ -58,11 +65,9 @@ Common props ref：[Common props](/docs/vue/common-props)
 | options | The data options of cascade | [Option](#option)\[] | - | - | × |
 | placeholder | The input placeholder | string | - | - | × |
 | placement | Use preset popup align config from builtinPlacements | `bottomLeft` `bottomRight` `topLeft` `topRight` | `bottomLeft` | - | × |
-| popupMenuColumnStyle | The style of the drop-down menu column | CSSProperties | - | - | × |
 | showCheckedStrategy | The way to show selected items in the box (only effective when `multiple` is `true`). `Cascader.SHOW_CHILD`: just show child treeNode. `Cascader.SHOW_PARENT`: just show parent treeNode (when all child treeNode under the parent treeNode are checked) | `Cascader.SHOW_PARENT` \| `Cascader.SHOW_CHILD` | `Cascader.SHOW_PARENT` | - | × |
 | showSearch | Whether show search input in single mode | boolean \| [Object](#showsearch) | false | - | × |
-| ~~searchValue~~ | Set search value, Need work with `showSearch` | string | - | - | × |
-| size | The input size | `large` \| `middle` \| `small` | - | - | × |
+| size | The input size | `large` \| `medium` \| `small` | `medium` | - | × |
 | status | Set validation status | 'error' \| 'warning' | - | - | × |
 | styles | Customize inline style for each semantic structure inside the component. Supports object or function. | Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; \| (info: \{ props \})=&gt; Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; | - | - | ✓ |
 | value | The selected value, support `v-model:value` | string\[] \| number\[] | - | - | × |
@@ -73,7 +78,7 @@ Common props ref：[Common props](/docs/vue/common-props)
 | Event | Description | Type | Version |
 | --- | --- | --- | --- |
 | change | Callback when finishing cascader select | (value, selectedOptions) =&gt; void | - |
-| openChange | Callback when popup shown or hidden | (value) =&gt; void | - |
+| openChange | Callback when popup shown or hidden | (open: boolean) =&gt; void | - |
 
 ### Slots
 
@@ -81,10 +86,10 @@ Common props ref：[Common props](/docs/vue/common-props)
 | --- | --- | --- | --- |
 | displayRender | The render function of displaying selected options | (label, selectedOptions) => VueNode | - |
 | expandIcon | Customize the current item expand icon | VueNode | - |
-| loadingIcon | The appearance of lazy loading (now is useless) | VueNode | - |
+| loadingIcon | Customize the loading icon while options are loading lazily | VueNode | - |
 | notFoundContent | Specify content to show when no result matches | VueNode | - |
 | optionRender | Customize the rendering dropdown options | (option: Option) => VueNode | - |
-| popupRender | Customize dropdown content | (menus: VueNode) => VueNode | - |
+| popupRender | Customize dropdown content | (menus: VNode) => VueNode | - |
 | prefix | The custom prefix | VueNode | - |
 | removeIcon | The custom remove icon | VueNode | - |
 | suffixIcon | The custom suffix icon | VueNode | - |

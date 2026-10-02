@@ -33,7 +33,6 @@ export interface DesignTokenProviderProps {
    * @descCN 开启零运行时模式，不会在运行时产生样式，需要手动引入 CSS 文件。
    * @descEN Enable zero-runtime mode, which will not generate style at runtime, need to import additional CSS file.
    * @default true
-   * @since 6.0.0
    * @example
    * ```tsx
    * import { ConfigProvider } from 'antd';
@@ -67,6 +66,10 @@ export const DesignTokenProvider = defineComponent(
   },
 )
 
+// One shared fallback ref: components outside any DesignTokenProvider must
+// resolve to the same ref so `useToken` can share its derived state by context.
+const defaultDesignTokenRef = computed<DesignTokenProviderProps>(() => defaultConfig)
+
 export function useDesignToken() {
-  return inject(DesignTokenContextKey, computed(() => defaultConfig))
+  return inject(DesignTokenContextKey, defaultDesignTokenRef)
 }

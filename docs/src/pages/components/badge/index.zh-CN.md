@@ -28,7 +28,7 @@ demo:
 <demo src="./demo/status.vue">状态点</demo>
 <demo src="./demo/colorful.vue">多彩徽标</demo>
 <demo src="./demo/ribbon.vue">缎带</demo>
-<demo src="./demo/style-class.vue" version="6.0.0">自定义语义结构的样式和类</demo>
+<demo src="./demo/style-class.vue">自定义语义结构的样式和类</demo>
 <demo src="./demo/title.vue" debug>自定义标题</demo>
 </demo-group>
 
@@ -40,7 +40,7 @@ demo:
 
 | 属性 | 说明 | 类型 | 默认值 | 版本 | [全局配置](/components/config-provider-cn#component-config) |
 | --- | --- | --- | --- | --- | --- |
-| count | 展示的数字，大于 overflowCount 时显示为 `$&#123;overflowCount&#125;+`，为 0 时隐藏 | VueNode | - | - | × |
+| count | 展示的数字，大于 overflowCount 时显示为 `${overflowCount}+`，为 0 时隐藏 | VueNode | - | - | × |
 | showZero | 当数值为 0 时，是否展示 Badge | boolean | false | - | × |
 | overflowCount | 展示封顶的数字值 | number | 99 | - | × |
 | dot | 不展示数字，只有一个小红点 | boolean | false | - | × |
@@ -48,7 +48,7 @@ demo:
 | status | 设置 Badge 为状态点 | PresetStatusColorType | - | - | × |
 | color | 自定义小圆点的颜色 | LiteralUnion&lt;PresetColorKey&gt; | - | - | × |
 | text | 在设置了 `status` 的前提下有效，设置状态点的文本 | VueNode | - | - | × |
-| size | 在设置了 `count` 的前提下有效，设置小圆点的大小 | 'default' \| 'small' | - | - | × |
+| size | 在设置了 `count` 的前提下有效，设置小圆点的大小 | `medium` \| `small` | - | - | × |
 | offset | 设置状态点的位置偏移 | [number \| string, number \| string] | - | - | × |
 | title | 设置鼠标放在状态点上时显示的文字，设为 `null` 或 `false` 可移除原生 title | string \| null \| false | - | null/false: 1.4.0 | × |
 | classes | 用于自定义组件内部各语义化结构的 class，支持对象或函数 | BadgeClassNamesType | - | - | ✓ |
@@ -58,10 +58,10 @@ demo:
 
 | 插槽 | 说明 | 类型 | 版本 |
 | --- | --- | --- | --- |
-| count | 展示的数字，大于 overflowCount 时显示为 `$&#123;overflowCount&#125;+`，为 0 时隐藏 | () =&gt; any | - |
+| count | 自定义徽标指示器内容 | () =&gt; any | - |
 | text | 在设置了 `status` 的前提下有效，设置状态点的文本 | () =&gt; any | - |
 
-## 语义化 DOM
+## 语义化 DOM {#semantic-dom}
 
 ### Badge
 
@@ -71,7 +71,7 @@ demo:
 
 <demo src="./demo/_semantic_ribbon.vue" simplify></demo>
 
-## 主题变量（Design Token）
+## 主题变量（Design Token） {#design-token}
 
 <ComponentTokenTable component="Badge" />
 

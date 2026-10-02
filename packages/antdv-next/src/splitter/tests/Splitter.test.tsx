@@ -389,6 +389,24 @@ describe('splitter', () => {
       expect(onResizeEnd).toHaveBeenCalledWith([10, 90])
     })
 
+    it('should respect min when container shrinks after drag', async () => {
+      containerSize = 1000
+
+      const wrapper = mountSplitter({ items: [{ min: 200 }, {}] })
+
+      await resizeSplitter()
+
+      await mockDrag(wrapper.find('.ant-splitter-bar-dragger').element, -300)
+
+      containerSize = 600
+      await resizeSplitter()
+
+      const panels = wrapper.element.querySelectorAll<HTMLElement>('.ant-splitter-panel')
+
+      expect(Number.parseFloat(panels[0]!.style.flexBasis)).toBeCloseTo(200)
+      expect(Number.parseFloat(panels[1]!.style.flexBasis)).toBeCloseTo(400)
+    })
+
     it('with max', async () => {
       const onResize = vi.fn()
       const onResizeEnd = vi.fn()
@@ -542,6 +560,73 @@ describe('splitter', () => {
 
       expect(wrapper.findAll('.ant-splitter-bar-collapse-start')).toHaveLength(2)
       expect(wrapper.findAll('.ant-splitter-bar-collapse-end')).toHaveLength(1)
+    })
+
+    it('applies panel transition when motion is enabled', async () => {
+      const wrapper = mountSplitter({
+        items: [{ collapsible: true }, { collapsible: true }],
+        collapsible: { motion: true },
+      })
+
+      await nextTick()
+
+      expect(wrapper.findAll('.ant-splitter-panel-transition')).toHaveLength(2)
+    })
+
+    it('does not apply panel transition when motion is disabled', async () => {
+      const wrapper = mountSplitter({
+        items: [{ collapsible: true }, { collapsible: true }],
+        collapsible: { motion: false },
+      })
+
+      await nextTick()
+
+      expect(wrapper.find('.ant-splitter-panel-transition').exists()).toBe(false)
+    })
+
+    it('removes panel transition while dragging', async () => {
+      const wrapper = mountSplitter({
+        items: [{ collapsible: true }, { collapsible: true }],
+        collapsible: { motion: true },
+      })
+
+      await nextTick()
+      expect(wrapper.findAll('.ant-splitter-panel-transition')).toHaveLength(2)
+
+      dispatchMouseEvent(wrapper.find('.ant-splitter-bar-dragger').element, 'mousedown', 0, 0)
+      await nextTick()
+
+      expect(wrapper.find('.ant-splitter-panel-transition').exists()).toBe(false)
+    })
+
+    it('uses global motion tokens for panel transition styles', async () => {
+      trackWrapper(mount(
+        <ConfigProvider
+          theme={{
+            token: {
+              motionDurationSlow: '0.5s',
+              motionEaseInOut: 'cubic-bezier(.92,.16,.35,1)',
+            },
+          }}
+        >
+          <SplitterDemo
+            items={[{ collapsible: true }, { collapsible: true }]}
+            collapsible={{ motion: true }}
+          />
+        </ConfigProvider>,
+      ))
+
+      await nextTick()
+
+      const dynamicStyleText = Array.from(document.querySelectorAll('style[data-css-hash]'))
+        .map(style => style.innerHTML)
+        .join('\n')
+
+      expect(dynamicStyleText).toContain('--ant-motion-duration-slow:0.5s')
+      expect(dynamicStyleText).toContain('--ant-motion-ease-in-out:cubic-bezier(.92,.16,.35,1)')
+      expect(dynamicStyleText).toContain(
+        'ant-splitter-panel-transition{transition:flex-basis var(--ant-motion-duration-slow) var(--ant-motion-ease-in-out)',
+      )
     })
 
     it('collapsible - true', async () => {
@@ -1034,13 +1119,16 @@ describe('splitter', () => {
       expect(draggerEle.find('.customize-dragger-icon').exists()).toBe(true)
     })
 
-    it('customize collapsibleIcon', async () => {
+    it.each([
+      ['collapsible.icon', (icon: any) => ({ collapsible: { icon } })],
+      ['deprecated collapsibleIcon', (icon: any) => ({ collapsibleIcon: icon })],
+    ])('customize %s', async (_, getIconProps) => {
       const wrapper = mountSplitter({
         items: [{ size: 20, collapsible: true }, { collapsible: true }],
-        collapsibleIcon: {
+        ...getIconProps({
           start: <span class="customize-icon-start" />,
           end: <span class="customize-icon-end" />,
-        },
+        }),
       })
 
       await resizeSplitter()

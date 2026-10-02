@@ -10,7 +10,7 @@ import rtlTest from '/@tests/shared/rtlTest'
 import { mount } from '/@tests/utils'
 
 describe('alert', () => {
-  rtlTest(() => h(Alert, null, { message: () => 'test' }))
+  rtlTest(() => h(Alert, null, { title: () => 'test' }))
 
   it('should render title correctly', () => {
     const wrapper = mount(Alert, {
@@ -25,7 +25,7 @@ describe('alert', () => {
   it('should render description correctly', () => {
     const wrapper = mount(Alert, {
       props: {
-        message: 'Success Text',
+        title: 'Success Text',
         description: 'Success Description',
         type: 'success',
       },
@@ -33,12 +33,22 @@ describe('alert', () => {
     expect(wrapper.find('.ant-alert-description').text()).toBe('Success Description')
   })
 
+  it('should render numeric 0 for title, description and action', () => {
+    const wrapper = mount(Alert, {
+      props: { title: 0, description: 0, action: 0 },
+    })
+    expect(wrapper.find('.ant-alert-title').text()).toBe('0')
+    expect(wrapper.find('.ant-alert-description').text()).toBe('0')
+    expect(wrapper.find('.ant-alert-actions').text()).toBe('0')
+    expect(wrapper.find('.ant-alert-with-description').exists()).toBe(true)
+  })
+
   it('should render type correctly', () => {
     const types = ['success', 'info', 'warning', 'error'] as const
     types.forEach((type) => {
       const wrapper = mount(Alert, {
         props: {
-          message: 'Text',
+          title: 'Text',
           type,
         },
       })
@@ -49,7 +59,7 @@ describe('alert', () => {
   it('should show icon', () => {
     const wrapper = mount(Alert, {
       props: {
-        message: 'Success Text',
+        title: 'Success Text',
         type: 'success',
         showIcon: true,
       },
@@ -60,7 +70,7 @@ describe('alert', () => {
   it('should allow custom icon', () => {
     const wrapper = mount(Alert, {
       props: {
-        message: 'Success Text',
+        title: 'Success Text',
         icon: h(SmileOutlined),
         showIcon: true,
       },
@@ -68,11 +78,39 @@ describe('alert', () => {
     expect(wrapper.find('.anticon-smile').exists()).toBe(true)
   })
 
+  it('should allow custom icon via slot', () => {
+    const wrapper = mount(Alert, {
+      props: {
+        title: 'Success Text',
+        showIcon: true,
+      },
+      slots: {
+        icon: () => h(SmileOutlined),
+      },
+    })
+    expect(wrapper.find('.anticon-smile').exists()).toBe(true)
+  })
+
+  it('icon slot should take priority over icon prop', () => {
+    const wrapper = mount(Alert, {
+      props: {
+        title: 'Success Text',
+        icon: h('span', { class: 'icon-from-prop' }, 'prop'),
+        showIcon: true,
+      },
+      slots: {
+        icon: () => h('span', { class: 'icon-from-slot' }, 'slot'),
+      },
+    })
+    expect(wrapper.find('.icon-from-slot').exists()).toBe(true)
+    expect(wrapper.find('.icon-from-prop').exists()).toBe(false)
+  })
+
   it('should be closable', async () => {
     const onClose = vi.fn()
     const wrapper = mount(Alert, {
       props: {
-        message: 'Success Text',
+        title: 'Success Text',
         closable: true,
         onClose,
       },
@@ -87,17 +125,110 @@ describe('alert', () => {
   it('should allow custom close icon', () => {
     const wrapper = mount(Alert, {
       props: {
-        message: 'Success Text',
+        title: 'Success Text',
         closable: { closeIcon: h(SmileOutlined) },
       },
     })
     expect(wrapper.find('.anticon-smile').exists()).toBe(true)
   })
 
+  it('should use global closeIcon from ConfigProvider', () => {
+    const wrapper = mount(() => (
+      <ConfigProvider alert={{ closeIcon: h('span', { class: 'global-close-icon' }, 'G') }}>
+        <Alert title="Success Text" closable />
+      </ConfigProvider>
+    ))
+
+    expect(wrapper.find('.global-close-icon').exists()).toBe(true)
+  })
+
+  it('should use global closable.closeIcon from ConfigProvider', () => {
+    const wrapper = mount(() => (
+      <ConfigProvider alert={{ closable: { closeIcon: h('span', { class: 'global-closable-icon' }, 'C') } }}>
+        <Alert title="Success Text" />
+      </ConfigProvider>
+    ))
+
+    expect(wrapper.find('.global-closable-icon').exists()).toBe(true)
+  })
+
+  it('should use the default close icon when closeIcon is true', () => {
+    const wrapper = mount(Alert, {
+      props: {
+        title: 'Success Text',
+        closable: true,
+        closeIcon: true,
+      },
+    })
+
+    expect(wrapper.find('.ant-alert-close-icon .anticon-close').exists()).toBe(true)
+  })
+
+  it('should call closable.onClose with priority over onClose', async () => {
+    const closableOnClose = vi.fn()
+    const onClose = vi.fn()
+    const wrapper = mount(Alert, {
+      props: {
+        title: 'Success Text',
+        closable: { onClose: closableOnClose },
+        onClose,
+      },
+    })
+
+    await wrapper.find('.ant-alert-close-icon').trigger('click')
+    expect(closableOnClose).toHaveBeenCalledTimes(1)
+    expect(onClose).not.toHaveBeenCalled()
+  })
+
+  it('should only pass aria and data props from closable to close button', () => {
+    const wrapper = mount(Alert, {
+      props: {
+        title: 'Success Text',
+        closable: {
+          'aria-label': 'Close',
+          'data-test': 'close',
+          'title': 'close-title',
+        } as any,
+      },
+    })
+
+    const closeButton = wrapper.find('.ant-alert-close-icon')
+    expect(closeButton.attributes('aria-label')).toBe('Close')
+    expect(closeButton.attributes('data-test')).toBe('close')
+    expect(closeButton.attributes('title')).toBeUndefined()
+  })
+
+  it('should not close while closable.disabled is true and close after it is false', async () => {
+    const onClose = vi.fn()
+    const afterClose = vi.fn()
+    const wrapper = mount(Alert, {
+      props: {
+        title: 'Notice',
+        closable: { disabled: true, onClose, afterClose },
+      },
+    })
+
+    const closeButton = wrapper.find('.ant-alert-close-icon')
+    expect((closeButton.element as HTMLButtonElement).disabled).toBe(true)
+    await closeButton.trigger('click')
+    expect(wrapper.find('.ant-alert').exists()).toBe(true)
+    expect(onClose).not.toHaveBeenCalled()
+
+    await wrapper.setProps({ closable: { disabled: false, onClose, afterClose } })
+    expect((wrapper.find('.ant-alert-close-icon').element as HTMLButtonElement).disabled).toBe(false)
+    await wrapper.find('.ant-alert-close-icon').trigger('click')
+    expect(onClose).toHaveBeenCalledTimes(1)
+  })
+
+  it('should expose nativeElement', () => {
+    const wrapper = mount(Alert, { props: { title: 'Success Text' } })
+    expect((wrapper.vm as any).nativeElement).toBe(wrapper.find('.ant-alert').element)
+  })
+
   it('should support banner mode', () => {
     const wrapper = mount(Alert, {
       props: {
-        message: 'Banner Text',
+        title: 'Banner Text',
         banner: true,
       },
     })
@@ -108,7 +239,7 @@ describe('alert', () => {
   it('should support action slot', () => {
     const wrapper = mount(Alert, {
       props: {
-        message: 'Text',
+        title: 'Text',
       },
       slots: {
         action: () => h('button', 'Action'),
@@ -128,11 +259,22 @@ describe('alert', () => {
     expect(wrapper.find('.ant-alert-description').text()).toBe('Description Slot')
   })
 
+  it('should support deprecated message prop and slot', () => {
+    const propWrapper = mount(Alert, { props: { message: 'Message Text' } })
+    expect(propWrapper.find('.ant-alert-title').text()).toBe('Message Text')
+
+    const slotWrapper = mount(Alert, { slots: { message: () => 'Message Slot' } })
+    expect(slotWrapper.find('.ant-alert-title').text()).toBe('Message Slot')
+
+    const priorityWrapper = mount(Alert, { props: { title: 'Title Text', message: 'Message Text' } })
+    expect(priorityWrapper.find('.ant-alert-title').text()).toBe('Title Text')
+  })
+
   it('should show close button and could be closed', async () => {
     const onClose = vi.fn()
     const wrapper = mount(() => (
       <Alert
-        message="Warning Text Warning Text Warning Text Warning Text Warning Text Warning TextWarning Text"
+        title="Warning Text Warning Text Warning Text Warning Text Warning Text Warning TextWarning Text"
         type="warning"
         closable={true}
         onClose={onClose}
@@ -145,7 +287,7 @@ describe('alert', () => {
   it('custom action', () => {
     const wrapper = mount(() => (
       <Alert
-        message="Success Tips"
+        title="Success Tips"
         type="success"
         showIcon={true}
         closable={true}
@@ -163,7 +305,7 @@ describe('alert', () => {
         data-test="test-id"
         data-id="12345"
         aria-describedby="some-label"
-        message={null}
+        title={null}
       />
     ))
     const alert = wrapper.find('[role="alert"]')
@@ -176,7 +318,7 @@ describe('alert', () => {
     const wrapper = mount(() => (
       <Alert
         role="status"
-        message={null}
+        title={null}
       />
     ))
     expect(wrapper.find('[role="status"]').exists()).toBe(true)
@@ -186,7 +328,7 @@ describe('alert', () => {
     const wrapper = mount(() => (
       <Tooltip title="xxx" mouseEnterDelay={0}>
         <Alert
-          message="Warning Text"
+          title="Warning Text"
           type="warning"
         />
       </Tooltip>
@@ -200,7 +342,7 @@ describe('alert', () => {
     const wrapper = mount(() => (
       <Popconfirm title="xxx">
         <Alert
-          message="Warning Text"
+          title="Warning Text"
           type="warning"
         />
       </Popconfirm>

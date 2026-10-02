@@ -242,6 +242,86 @@ describe('card', () => {
     expect(activeTab.text()).toBe('Tab 2')
   })
 
+  it('should use tabProps.defaultActiveKey and allow switching tabs', async () => {
+    const wrapper = mount(Card, {
+      props: {
+        tabList: [
+          { key: 'tab1', label: 'Tab 1' },
+          { key: 'tab2', label: 'Tab 2' },
+        ],
+        tabProps: { defaultActiveKey: 'tab2' },
+      },
+      slots: { default: () => 'content' },
+    })
+
+    expect(wrapper.find('.ant-tabs-tab-active').text()).toBe('Tab 2')
+
+    await wrapper.findAll('.ant-tabs-tab')[0].trigger('click')
+    expect(wrapper.find('.ant-tabs-tab-active').text()).toBe('Tab 1')
+  })
+
+  it('should prioritize defaultActiveTabKey over tabProps.defaultActiveKey', () => {
+    const wrapper = mount(Card, {
+      props: {
+        tabList: [
+          { key: 'tab1', label: 'Tab 1' },
+          { key: 'tab2', label: 'Tab 2' },
+        ],
+        defaultActiveTabKey: 'tab2',
+        tabProps: { defaultActiveKey: 'tab1' },
+      },
+      slots: { default: () => 'content' },
+    })
+
+    expect(wrapper.find('.ant-tabs-tab-active').text()).toBe('Tab 2')
+  })
+
+  const cardTabList = [
+    { key: 'tab1', label: 'Tab 1' },
+    { key: 'tab2', label: 'Tab 2' },
+  ]
+
+  it('should prioritize tabBarExtraContent slot over prop', () => {
+    const wrapper = mount(Card, {
+      props: {
+        tabList: cardTabList,
+        tabBarExtraContent: h('span', { class: 'prop-extra' }, 'Prop Extra'),
+      },
+      slots: {
+        default: () => 'content',
+        tabBarExtraContent: () => h('span', { class: 'slot-extra' }, 'Slot Extra'),
+      },
+    })
+    expect(wrapper.find('.slot-extra').exists()).toBe(true)
+    expect(wrapper.find('.prop-extra').exists()).toBe(false)
+  })
+
+  it('should render tabBarExtraContent prop when no slot given', () => {
+    const wrapper = mount(Card, {
+      props: {
+        tabList: cardTabList,
+        tabBarExtraContent: h('span', { class: 'prop-extra' }, 'Prop Extra'),
+      },
+      slots: { default: () => 'content' },
+    })
+    expect(wrapper.find('.prop-extra').exists()).toBe(true)
+  })
+
+  it('should support { left, right } tabBarExtraContent object when no slot given', () => {
+    const wrapper = mount(Card, {
+      props: {
+        tabList: cardTabList,
+        tabBarExtraContent: {
+          left: h('span', { class: 'left-extra' }, 'Left Extra'),
+          right: h('span', { class: 'right-extra' }, 'Right Extra'),
+        },
+      },
+      slots: { default: () => 'content' },
+    })
+    expect(wrapper.find('.left-extra').exists()).toBe(true)
+    expect(wrapper.find('.right-extra').exists()).toBe(true)
+  })
+
   // ============ Card.Grid tests ============
 
   it('should render Card.Grid', () => {

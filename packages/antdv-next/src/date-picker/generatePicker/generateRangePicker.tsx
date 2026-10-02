@@ -44,12 +44,13 @@ export interface RangePickerEmits<DateType = AnyObject> {
   'keydown': (e: KeyboardEvent, preventDefault: VoidFunction) => void
 }
 
-export interface RangePickerSlots {
+export interface RangePickerSlots<CurrentType = AnyObject> {
   suffixIcon?: () => any
+  prefix?: () => any
   renderExtraFooter?: (mode: PickerMode) => any
   panelRender?: (originPanel: VueNode) => any
   inputRender?: (props: Record<string, any>) => any
-  cellRender?: (ctx: { current: AnyObject, info: any }) => any
+  cellRender?: (ctx: { current: CurrentType, info: any }) => any
   dateRender?: (ctx: { date: AnyObject, today: AnyObject }) => any
   monthCellRender?: (ctx: { date: AnyObject, locale: any }) => any
   [key: string]: any
@@ -116,6 +117,12 @@ function generateRangePicker<DateType extends AnyObject = AnyObject>(generateCon
         separator: contextSeparator,
       } = useComponentBaseConfig('rangePicker' as any, props as any, ['separator'], 'picker')
 
+      // allowClear / clearIcon come from the datePicker / timePicker config, not rangePicker (upstream parity)
+      const {
+        allowClear: contextAllowClear,
+        clearIcon: contextClearIcon,
+      } = useComponentBaseConfig(pickerType.value as any, props as any, ['allowClear', 'clearIcon'], 'picker')
+
       const { compactSize, compactItemClassnames } = useCompactItemContext(prefixCls, direction)
       const mergedSize = useSize<SizeType>(ctx => customizeSize.value ?? compactSize.value ?? ctx)
 
@@ -158,7 +165,7 @@ function generateRangePicker<DateType extends AnyObject = AnyObject>(generateCon
         rootClass.value,
       ))
 
-      const [contextLocale] = useLocale('Calendar', enUS)
+      const [contextLocale] = useLocale('DatePicker', enUS)
       const locale = computed(() => ({
         ...contextLocale?.value,
         ...(props.locale ?? {}),
@@ -244,7 +251,9 @@ function generateRangePicker<DateType extends AnyObject = AnyObject>(generateCon
           components,
           placement,
           suffixIcon,
+          prefix,
           allowClear,
+          clearIcon,
           popupClassName: _popupClassName,
           dropdownClassName: _dropdownClassName,
           popupStyle: _popupStyle,
@@ -264,8 +273,12 @@ function generateRangePicker<DateType extends AnyObject = AnyObject>(generateCon
         const { className, style, restAttrs } = getAttrStyleAndClass(attrs, undefined, props)
 
         const mergedSuffixIcon = getSlotPropsFnRun(slots, { suffixIcon }, 'suffixIcon', false)
+        const mergedPrefix = getSlotPropsFnRun(slots, { prefix }, 'prefix', false)
 
-        const [mergedAllowClear] = useIcons({ allowClear }, prefixCls.value)
+        const [mergedAllowClear] = useIcons({ allowClear, clearIcon }, prefixCls.value, {
+          allowClear: contextAllowClear?.value,
+          clearIcon: contextClearIcon?.value,
+        })
 
         const mergedComponents = useComponents(components as any)
 
@@ -347,7 +360,8 @@ function generateRangePicker<DateType extends AnyObject = AnyObject>(generateCon
               disabled={mergedDisabled.value}
               placement={placement}
               placeholder={getRangePlaceholder(locale.value, props.picker, placeholder)}
-              suffixIcon={suffixNode}
+              suffix={suffixNode}
+              prefix={mergedPrefix}
               prevIcon={<span class={`${prefixCls.value}-prev-icon`} />}
               nextIcon={<span class={`${prefixCls.value}-next-icon`} />}
               superPrevIcon={<span class={`${prefixCls.value}-super-prev-icon`} />}

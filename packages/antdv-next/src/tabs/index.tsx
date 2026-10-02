@@ -7,10 +7,9 @@ import type { SizeType } from '../config-provider/SizeContext.tsx'
 import { CloseOutlined, EllipsisOutlined, PlusOutlined } from '@antdv-next/icons'
 import VcTabs from '@v-c/tabs'
 import { clsx } from '@v-c/util'
-import { getAttrStyleAndClass } from '@v-c/util/dist/props-util'
 import { omit } from 'es-toolkit'
 import { computed, defineComponent, shallowRef, toRef } from 'vue'
-import { useMergeSemantic, useSemanticRootStyle, useToArr, useToProps } from '../_util/hooks'
+import { getAttrStyleAndClass, useMergeSemantic, useSemanticRootStyle, useToArr, useToProps } from '../_util/hooks'
 import { getSlotPropsFnRun, toPropsRefs } from '../_util/tools.ts'
 import { devUseWarning, isDev } from '../_util/warning.ts'
 import { useComponentBaseConfig } from '../config-provider/context.ts'
@@ -90,6 +89,8 @@ export interface BaseTabsProps<Item extends Tab = TabItem> extends ComponentBase
   /** @deprecated please use `tabPlacement` instead */
   tabPosition?: TabPosition
   tabPlacement?: TabPlacement
+  /** Scroll alignment of the active tab when switching. `auto` keeps the legacy edge-aligned behavior. */
+  scrollPosition?: VcTabsProps['scrollPosition']
   /** @deprecated Please use `indicator={{ size: ... }}` instead */
   indicatorSize?: GetIndicatorSize
   items?: Item[]
@@ -191,9 +192,11 @@ const InternalTabs = defineComponent<
       styles: contextStyles,
       getPopupContainer,
       getPrefixCls,
-    } = useComponentBaseConfig('tabs', props)
+      scrollPosition: contextScrollPosition,
+    } = useComponentBaseConfig('tabs', props, ['scrollPosition'])
 
     const size = useSize(customSize)
+    const mergedScrollPosition = computed(() => props.scrollPosition ?? contextScrollPosition.value)
 
     const mergedPlacement = computed<TabPosition | undefined>(() => {
       const placement = tabPlacementProp.value ?? tabPosition.value
@@ -404,7 +407,6 @@ const InternalTabs = defineComponent<
       return (
         <VcTabs
           ref={tabsRef}
-          direction={direction.value}
           getPopupContainer={getPopupContainer}
           {...restAttrs}
           {...restProps}
@@ -416,15 +418,20 @@ const InternalTabs = defineComponent<
           }}
           renderTabBar={renderTabBar}
           tabBarExtraContent={tabBarExtraContent}
-          styles={mergedStyles.value}
+          // `popup` is nested as `{ root }` in antdv-next but flat in @v-c/tabs, same as `classNames` above
+          styles={{ ...mergedStyles.value, popup: mergedStyles.value.popup?.root }}
           style={mergedStyle}
           editable={editable}
           more={mergedMore}
           prefixCls={prefixCls.value}
           animated={mergedAnimated.value}
           indicator={mergedIndicator.value}
+          scrollPosition={mergedScrollPosition.value}
           destroyOnHidden={props.destroyOnHidden ?? props.destroyInactiveTabPane}
           tabPosition={mergedPlacement.value}
+          // must stay after the spreads: `restProps` carries `direction: undefined`
+          // (inherited VcTabs prop) which would clobber the context-derived value (#883)
+          direction={props.direction ?? direction.value}
           onChange={onInternalChange}
           onTabClick={onInternalTabClick}
           onTabScroll={onInternalTabScroll}

@@ -2,7 +2,7 @@
 title: 社区生态
 ---
 
-## 官方生态
+## 官方生态 {#official-ecosystem}
 
 | 名称 | 详情 |
 | ---- | ---- |
@@ -18,11 +18,11 @@ title: 社区生态
 | [docs-base](https://github.com/antdv-next/docs-base) | 二次开发模板 |
 | [vite-plugin-dayjs](https://github.com/antdv-next/vite-plugin-dayjs) | 将 Day.js 的 CommonJS 导入转换为 ESM 格式 |
 
-## 社区生态
+## 社区生态 {#community-ecosystem}
 
 | 名称 | 详情 |
 | ---- | ---- |
 | [Fantastic-admin](https://fantastic-admin.hurui.me/) | 面向AI的管理系统框架 |
 | [antdv-next-tiptap](https://pengyinghao.github.io/antdv-next-tiptap/) | 基于vue3+antdv-next+tiptap 封装的富文本编辑器 |
-| [antdv-next-pro-components](https://github.com/archiesong/pro-components/) | 基于antdv-next的组件库，包含企业级组件 |
+| [antdv-next-pro-components](https://github.com/lucasjeke/pro-components/) | 基于antdv-next的组件库，包含企业级组件 |
 | [Naive Admin](https://naiveadmin.com) | 开箱即用前后端框架 |

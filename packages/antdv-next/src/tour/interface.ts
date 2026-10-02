@@ -2,7 +2,7 @@ import type {
   TourProps as VcTourProps,
   TourStepProps as VcTourStepProps,
 } from '@v-c/tour'
-import type { CSSProperties } from 'vue'
+import type { CSSProperties, StyleValue } from 'vue'
 import type {
   SemanticClassNames,
   SemanticClassNamesType,
@@ -10,6 +10,7 @@ import type {
   SemanticStylesType,
 } from '../_util/hooks'
 import type { VueNode } from '../_util/type.ts'
+import type { ButtonProps } from '../button'
 import type { ComponentBaseProps } from '../config-provider/context.ts'
 
 export type TourSemanticName = keyof TourSemanticClassNames & keyof TourSemanticStyles
@@ -96,15 +97,15 @@ export interface TourStepProps extends Omit<VcTourStepProps, 'className'> {
   cover?: VueNode
   nextButtonProps?: {
     children?: VueNode
-    onClick?: () => void
+    onClick?: ButtonProps['onClick']
     class?: string
-    style?: CSSProperties
+    style?: StyleValue
   }
   prevButtonProps?: {
     children?: VueNode
-    onClick?: () => void
+    onClick?: ButtonProps['onClick']
     class?: string
-    style?: CSSProperties
+    style?: StyleValue
   }
   // default type, affects the background color and text color
   type?: 'default' | 'primary'

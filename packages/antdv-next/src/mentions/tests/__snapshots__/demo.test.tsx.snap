@@ -27,7 +27,15 @@ exports[`mentions demo > renders _semantic correctly 1`] = `
             rows="1"
             value="Hi, @"
           />
-          <!---->
+          <div
+            class="ant-mentions-measure"
+          >
+            Hi, 
+            <span>
+              @
+            </span>
+            <!---->
+          </div>
           <span
             class="ant-mentions-suffix semantic-mark-suffix"
           >
@@ -597,7 +605,7 @@ exports[`mentions demo > renders _semantic correctly 1`] = `
 
 exports[`mentions demo > renders allow-clear correctly 1`] = `
 <div
-  class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-middle ant-flex-vertical"
+  class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-medium ant-flex-vertical"
 >
   <span
     class="ant-mentions-affix-wrapper ant-mentions-outlined ant-mentions css-var-root ant-mentions-css-var ant-mentions-has-suffix"
@@ -1098,7 +1106,7 @@ exports[`mentions demo > renders prefix correctly 1`] = `
 
 exports[`mentions demo > renders readonly correctly 1`] = `
 <div
-  class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-middle ant-flex-vertical"
+  class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-medium ant-flex-vertical"
 >
   <div
     class="ant-mentions ant-mentions-disabled css-var-root ant-mentions-css-var ant-mentions-outlined ant-mentions css-var-root ant-mentions-css-var"
@@ -1134,9 +1142,7 @@ exports[`mentions demo > renders render-panel correctly 1`] = `
   data-v-app=""
 >
   <div
-    options="[object Object],[object Object]"
     style="padding-bottom: 0px; position: relative; min-width: 0px;"
-    value="@"
   >
     <div
       class="ant-mentions css-var-v-0 ant-mentions-css-var ant-mentions-outlined ant-mentions css-var-v-0 ant-mentions-css-var"
@@ -1156,7 +1162,7 @@ exports[`mentions demo > renders render-panel correctly 1`] = `
 
 exports[`mentions demo > renders size correctly 1`] = `
 <div
-  class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-middle ant-flex-vertical"
+  class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-medium ant-flex-vertical"
 >
   <div
     class="ant-mentions ant-mentions-lg css-var-root ant-mentions-css-var ant-mentions-outlined ant-mentions ant-mentions-lg css-var-root ant-mentions-css-var"
@@ -1196,7 +1202,7 @@ exports[`mentions demo > renders size correctly 1`] = `
 
 exports[`mentions demo > renders status correctly 1`] = `
 <div
-  class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-middle ant-flex-vertical"
+  class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-medium ant-flex-vertical"
 >
   <div
     class="ant-mentions css-var-root ant-mentions-css-var ant-mentions-outlined ant-mentions-status-error ant-mentions css-var-root ant-mentions-css-var"
@@ -1223,7 +1229,7 @@ exports[`mentions demo > renders status correctly 1`] = `
 
 exports[`mentions demo > renders style-class correctly 1`] = `
 <div
-  class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-middle ant-flex-vertical"
+  class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-medium ant-flex-vertical"
   data-v-a0b778f7=""
 >
   <div
@@ -1257,7 +1263,7 @@ exports[`mentions demo > renders style-class correctly 1`] = `
 
 exports[`mentions demo > renders variant correctly 1`] = `
 <div
-  class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-middle ant-flex-vertical"
+  class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-medium ant-flex-vertical"
 >
   <div
     class="ant-mentions css-var-root ant-mentions-css-var ant-mentions-outlined ant-mentions css-var-root ant-mentions-css-var"

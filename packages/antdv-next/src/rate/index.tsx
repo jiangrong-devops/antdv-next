@@ -24,7 +24,7 @@ const defaults = {
 } as any
 export interface RateProps extends Omit<
   VcRateProps,
-'onChange' | 'onHoverChange' | 'onFocus' | 'onBlur' | 'onKeyDown' | 'onMouseLeave' | 'onUpdate:value'
+'onChange' | 'onHoverChange' | 'onFocus' | 'onBlur' | 'onKeyDown' | 'onMouseLeave' | 'onUpdate:value' | 'direction'
 >,
   /* @vue-ignore */
   RateEmitsProps {
@@ -108,7 +108,7 @@ const Rate = defineComponent<
           disabled={mergedDisabled}
           characterRender={characterRender}
           {...restAttrs}
-          {...omit(restProps, ['characterRender'])}
+          {...omit(restProps, ['characterRender', 'size'])}
           class={clsx(
             {
               [`${ratePrefixCls.value}-large`]: mergedSize.value === 'large',

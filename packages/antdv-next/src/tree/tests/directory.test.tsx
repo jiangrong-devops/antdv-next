@@ -156,6 +156,66 @@ describe('directory Tree', () => {
     wrapper.unmount()
   })
 
+  it.each([false, true])('skip unselectable nodes in shift selection (reverse: %s)', async (reverse) => {
+    const onSelect = vi.fn()
+    const treeData = [
+      { title: 'A', key: 'a' },
+      {
+        title: 'B',
+        key: 'b',
+        selectable: false,
+        children: [{ title: 'B child', key: 'b-child' }],
+      },
+      {
+        title: 'D',
+        key: 'd',
+        disabled: true,
+        children: [{ title: 'D child', key: 'd-child' }],
+      },
+      { title: 'C', key: 'c' },
+    ]
+    const wrapper = mount(DirectoryTree, {
+      props: {
+        multiple: true,
+        defaultExpandAll: true,
+        expandAction: false,
+        treeData,
+        onSelect,
+      },
+    })
+    await waitFakeTimer(0, 1)
+
+    const getNode = (title: string) => wrapper
+      .findAll('.ant-tree-node-content-wrapper')
+      .find(node => node.find('.ant-tree-title').text() === title)!
+
+    await getNode('B').trigger('click')
+    await getNode('D').trigger('click')
+    await waitFakeTimer(0, 1)
+    expect(onSelect).not.toHaveBeenCalled()
+
+    await getNode(reverse ? 'C' : 'A').trigger('click')
+    await waitFakeTimer(0, 1)
+    await getNode(reverse ? 'A' : 'C').trigger('click', { shiftKey: true })
+    await waitFakeTimer(0, 1)
+
+    expect(onSelect).toHaveBeenLastCalledWith(
+      reverse ? ['c', 'a', 'b-child', 'd-child'] : ['a', 'b-child', 'd-child', 'c'],
+      expect.objectContaining({
+        selectedNodes: [
+          treeData[0],
+          treeData[1]!.children![0],
+          treeData[2]!.children![0],
+          treeData[3],
+        ],
+      }),
+    )
+    expect(
+      wrapper.findAll('.ant-tree-node-selected .ant-tree-title').map(node => node.text()),
+    ).toEqual(['A', 'B child', 'D child', 'C'])
+    wrapper.unmount()
+  })
+
   it('select range when the first selected key is 0', async () => {
     const onSelect = vi.fn()
     const treeData = [
@@ -367,6 +427,48 @@ describe('directory Tree', () => {
     wrapper.unmount()
   })
 
+  // https://github.com/ant-design/ant-design/issues/49668
+  it('should stay uncontrolled when expandedKeys is undefined', async () => {
+    const wrapper = mountDirectoryTree({ expandedKeys: undefined })
+    await waitFakeTimer(0, 1)
+    expect(wrapper.findAll('[role="treeitem"]').length).toBe(2)
+
+    await wrapper.find('.ant-tree-node-content-wrapper').trigger('click')
+    await waitFakeTimer(0, 1)
+    expect(wrapper.findAll('[role="treeitem"]').length).toBe(4)
+    wrapper.unmount()
+  })
+
+  it('should support shift range selection when expandedKeys is undefined', async () => {
+    const onSelect = vi.fn()
+    const treeData = [
+      { title: 'Zero', key: 0, children: [{ title: 'Zero-Zero', key: '0-0', isLeaf: true }] },
+      { title: 'One', key: 1 },
+      { title: 'Two', key: 2 },
+    ]
+    const wrapper = mount(DirectoryTree, {
+      props: { multiple: true, expandedKeys: undefined, treeData, onSelect },
+      attachTo: document.body,
+    })
+    await waitFakeTimer(0, 1)
+
+    // Expand the first node in uncontrolled mode
+    await wrapper.find('.ant-tree-node-content-wrapper').trigger('click')
+    await waitFakeTimer(0, 1)
+    const nodes = wrapper.findAll('.ant-tree-node-content-wrapper')
+    expect(nodes).toHaveLength(4)
+
+    await nodes[0]!.trigger('click')
+    await nodes[3]!.trigger('click', { shiftKey: true })
+
+    // The range must include the expanded child node
+    expect(onSelect).toHaveBeenLastCalledWith(
+      [0, '0-0', 1, 2],
+      expect.objectContaining({ selectedNodes: [treeData[0], treeData[0]!.children![0], treeData[1], treeData[2]] }),
+    )
+    wrapper.unmount()
+  })
+
   it('ref support', async () => {
     const treeRef = ref()
     mount(() => (
@@ -416,5 +518,45 @@ describe('directory Tree', () => {
     await waitFakeTimer(0, 1)
     expect(onSelect.mock.calls[0]![1].selectedNodes.length).toBe(1)
     wrapper.unmount()
+  })
+
+  it('selects a range of numeric keys with defaultExpandAll', async () => {
+    const onSelect = vi.fn()
+    const treeData = [
+      {
+        key: 1,
+        title: 'Folder',
+        children: [
+          { key: 2, title: 'File A' },
+          { key: 3, title: 'File B' },
+          { key: 4, title: 'File C' },
+        ],
+      },
+    ]
+    const wrapper = mount(DirectoryTree, {
+      props: {
+        multiple: true,
+        defaultExpandAll: true,
+        expandAction: 'doubleClick',
+        treeData,
+        onSelect,
+      },
+    })
+    await waitFakeTimer(0, 1)
+
+    const getNode = (title: string) => wrapper
+      .findAll('.ant-tree-node-content-wrapper')
+      .find(node => node.find('.ant-tree-title').text() === title)!
+
+    await getNode('File A').trigger('click')
+    await waitFakeTimer(0, 1)
+    await getNode('File C').trigger('click', { shiftKey: true })
+    await waitFakeTimer(0, 1)
+
+    expect(wrapper.findAll('.ant-tree-node-selected')).toHaveLength(3)
+    expect(onSelect).toHaveBeenLastCalledWith(
+      [2, 3, 4],
+      expect.objectContaining({ selectedNodes: treeData[0]!.children }),
+    )
   })
 })

@@ -1,9 +1,10 @@
-import type { ComputedRef } from 'vue'
+import type { ComputedRef, CSSProperties, Ref } from 'vue'
 
 import type { TimelineItemType, TimelineMode, TimelineProps } from './Timeline'
 import { LoadingOutlined } from '@antdv-next/icons'
 import { classNames as clsx } from '@v-c/util'
 import { computed } from 'vue'
+import { normalizeStyle } from '../_util/styleUtils'
 import { genCssVar } from '../theme/util/genStyleUtils'
 
 export interface TimelineItemRenders {
@@ -13,8 +14,8 @@ export interface TimelineItemRenders {
 }
 
 function useItems(
-  rootPrefixCls: ComputedRef<string>,
-  prefixCls: ComputedRef<string>,
+  rootPrefixCls: Ref<string>,
+  prefixCls: Ref<string>,
   mode: ComputedRef<TimelineMode>,
   items?: ComputedRef<TimelineItemType[] | undefined>,
   pending?: ComputedRef<TimelineProps['pending']>,
@@ -62,7 +63,7 @@ function useItems(
         else {
           mergedStyle = {
             [varName('item-icon-dot-color')]: color,
-            ...style,
+            ...(normalizeStyle(style) as CSSProperties | undefined),
           }
         }
       }

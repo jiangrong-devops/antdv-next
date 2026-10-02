@@ -11,6 +11,7 @@ import { clsx } from '@v-c/util'
 import { omit } from 'es-toolkit'
 import { computed, defineComponent, shallowRef } from 'vue'
 import { ContextIsolator } from '../_util/ContextIsolator.tsx'
+import getAllowClear from '../_util/getAllowClear'
 import { getAttrStyleAndClass, useMergeSemantic, useSemanticRootStyle, useToArr, useToProps } from '../_util/hooks'
 import { getMergedStatus, getStatusClassNames } from '../_util/statusUtils'
 import { getSlotPropsFnRun, toPropsRefs } from '../_util/tools'
@@ -32,6 +33,7 @@ export interface InputNumberSemanticClassNames {
   root?: string
   prefix?: string
   suffix?: string
+  clear?: string
   input?: string
   actions?: string
   action?: string
@@ -41,6 +43,7 @@ export interface InputNumberSemanticStyles {
   root?: CSSProperties
   prefix?: CSSProperties
   suffix?: CSSProperties
+  clear?: CSSProperties
   input?: CSSProperties
   actions?: CSSProperties
   action?: CSSProperties
@@ -74,10 +77,11 @@ export interface InputNumberProps
   addonAfter?: VueNode
   prefix?: VueNode
   suffix?: VueNode
+  /** Show clear button, or customize it with `{ clearIcon, disabled, label }` */
+  allowClear?: boolean | { clearIcon?: VueNode, disabled?: boolean, label?: string }
   /** @deprecated Use `variant="borderless"` instead. */
   bordered?: boolean
   /**
-   * @since 5.13.0
    * @default "outlined"
    */
   variant?: Variant
@@ -93,6 +97,7 @@ export interface InputNumberEmits {
   'input': (text: string) => void
   'pressEnter': (e: KeyboardEvent) => void
   'step': (value: any, info: InputNumberStepContext) => void
+  'clear': () => void
   'mousedown': (e: MouseEvent) => void
   'click': (e: MouseEvent) => void
   'mouseup': (e: MouseEvent) => void
@@ -114,6 +119,7 @@ export interface InputNumberEmitsProps {
   onInput?: InputNumberEmits['input']
   onPressEnter?: InputNumberEmits['pressEnter']
   onStep?: InputNumberEmits['step']
+  onClear?: InputNumberEmits['clear']
   onMousedown?: InputNumberEmits['mousedown']
   onClick?: InputNumberEmits['click']
   onMouseup?: InputNumberEmits['mouseup']
@@ -133,6 +139,7 @@ export interface InputNumberEmitsProps {
 export interface InputNumberSlots {
   prefix?: () => any
   suffix?: () => any
+  clearIcon?: () => any
   addonBefore?: () => any
   addonAfter?: () => any
   default?: () => any
@@ -156,6 +163,8 @@ const omitKeys: (keyof InputNumberProps)[] = [
   'onInput',
   'onPressEnter',
   'onStep',
+  'onClear',
+  'allowClear',
   'onBeforeinput',
   'keyboard',
   'onClick',
@@ -201,7 +210,8 @@ const InputNumber = defineComponent<
       style: contextStyle,
       classes: contextClassNames,
       styles: contextStyles,
-    } = useComponentBaseConfig('inputNumber', props, [], 'input-number')
+      allowClear: contextAllowClear,
+    } = useComponentBaseConfig('inputNumber', props, ['allowClear'], 'input-number')
 
     const {
       classes,
@@ -362,6 +372,7 @@ const InputNumber = defineComponent<
     const handleFocusEvent = (eventName: keyof InputNumberEmits) => (e: FocusEvent) => emit(eventName as any, e)
     const handleCompositionEvent = (eventName: keyof InputNumberEmits) => (e: CompositionEvent) => emit(eventName as any, e)
     const handleBeforeInput: InputNumberEmits['beforeinput'] = e => emit('beforeinput', e)
+    const handleClear: InputNumberEmits['clear'] = () => emit('clear')
 
     return () => {
       const { restAttrs } = getAttrStyleAndClass(attrs)
@@ -381,12 +392,18 @@ const InputNumber = defineComponent<
         return suffixSlot
       }
       const mergedSuffix = mergedSuffixFn()
+      const clearIconNode = slots.clearIcon?.()
+      const allowClear = getAllowClear(props.allowClear ?? contextAllowClear.value)
+      const mergedAllowClear = clearIconNode && allowClear
+        ? { ...(typeof allowClear === 'object' ? allowClear : {}), clearIcon: clearIconNode }
+        : allowClear
       const renderInputNode = () => (
         <VcInputNumber
           {...restAttrs}
           {...restProps}
           keyboard={props.keyboard}
           value={props.value}
+          defaultValue={props.defaultValue}
           ref={inputNumberRef as any}
           prefixCls={prefixCls.value}
           className={classesValue.value}
@@ -399,6 +416,8 @@ const InputNumber = defineComponent<
           downHandler={downIcon.value}
           prefix={prefixNode}
           suffix={mergedSuffix}
+          allowClear={mergedAllowClear}
+          onClear={handleClear}
           min={min}
           max={max}
           step={step}

@@ -1,5 +1,5 @@
 import type { DataNode, TreeSelectProps as VcTreeSelectProps } from '@v-c/tree-select'
-import type { App, CSSProperties, PublicProps, SlotsType } from 'vue'
+import type { App, CSSProperties, PublicProps, SlotsType, VNode, VNodeChild } from 'vue'
 import type { SemanticClassNamesType, SemanticStylesType } from '../_util/hooks'
 import type { SelectCommonPlacement } from '../_util/motion'
 import type { InputStatus } from '../_util/statusUtils'
@@ -10,16 +10,10 @@ import type { AntTreeNodeProps, TreeProps } from '../tree'
 import type { SwitcherIcon } from '../tree/Tree'
 import VcTreeSelect, { SHOW_ALL, SHOW_CHILD, SHOW_PARENT, TreeNode } from '@v-c/tree-select'
 import { clsx } from '@v-c/util'
-import { getAttrStyleAndClass } from '@v-c/util/dist/props-util'
 import { getTransitionName } from '@v-c/util/dist/utils/transition'
 import { omit } from 'es-toolkit/compat'
 import { computed, defineComponent, shallowRef } from 'vue'
-import {
-  useMergeSemantic,
-  useToArr,
-  useToProps,
-  useZIndex,
-} from '../_util/hooks'
+import { getAttrStyleAndClass, useMergeSemantic, useToArr, useToProps, useZIndex } from '../_util/hooks'
 import genPurePanel from '../_util/PurePanel.tsx'
 import { getMergedStatus, getStatusClassNames } from '../_util/statusUtils'
 import { getSlotPropsFnRun, toPropsRefs } from '../_util/tools'
@@ -126,6 +120,7 @@ interface BaseTreeSelectProps<ValueType = any, OptionType extends DataNode = Dat
     | 'onPopupScroll'
     | 'onPopupVisibleChange'
     | 'onSearch'
+    | 'popupRender'
   > {
   size?: SizeType
   disabled?: boolean
@@ -144,13 +139,13 @@ export interface TreeSelectProps<ValueType = any, OptionType extends DataNode = 
   disabled?: boolean
   placement?: SelectCommonPlacement
 
-  /** @deprecated Please use `classNames.popup.root` instead */
+  /** @deprecated Please use `classes.popup.root` instead */
   popupClassName?: string
-  /** @deprecated Please use `classNames.popup.root` instead */
+  /** @deprecated Please use `classes.popup.root` instead */
   dropdownClassName?: string
   /** @deprecated Please use `popupRender` instead */
-  dropdownRender?: (menu: any) => any
-  popupRender?: (menu: any) => any
+  dropdownRender?: (menu: VNode) => VNodeChild
+  popupRender?: (menu: VNode) => VNodeChild
   /** @deprecated Please use `styles.popup.root` instead */
   dropdownStyle?: CSSProperties
   // /** @deprecated Please use `onOpenChange` instead */
@@ -172,7 +167,6 @@ export interface TreeSelectProps<ValueType = any, OptionType extends DataNode = 
    */
   showArrow?: boolean
   /**
-   * @since 5.13.0
    * @default "outlined"
    */
   variant?: Variant
@@ -312,8 +306,8 @@ const InternalTreeSelect = defineComponent<
       const deprecatedProps = {
         dropdownMatchSelectWidth: 'popupMatchSelectWidth',
         dropdownStyle: 'styles.popup.root',
-        dropdownClassName: 'classNames.popup.root',
-        popupClassName: 'classNames.popup.root',
+        dropdownClassName: 'classes.popup.root',
+        popupClassName: 'classes.popup.root',
         dropdownRender: 'popupRender',
         onDropdownVisibleChange: 'onOpenChange',
         bordered: 'variant',
@@ -486,7 +480,7 @@ const InternalTreeSelect = defineComponent<
         mergedNotFound = notFoundContent
       }
       else {
-        mergedNotFound = configCtx?.value?.renderEmpty?.('Select') || <DefaultRenderEmpty componentName="Select" />
+        mergedNotFound = configCtx?.value?.renderEmpty?.('TreeSelect') || <DefaultRenderEmpty componentName="TreeSelect" />
       }
 
       // ==================== Render =====================

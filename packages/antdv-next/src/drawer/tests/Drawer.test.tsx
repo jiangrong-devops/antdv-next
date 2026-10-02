@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import { nextTick, ref } from 'vue'
 import Drawer from '..'
+import { resetWarned } from '../../_util/warning'
 import Popover from '../../popover'
 import { mount, waitFakeTimer } from '/@tests/utils'
 
@@ -86,6 +87,9 @@ describe('drawer', () => {
     await nextTick()
     const extra = document.querySelector('.ant-drawer-extra .extra-content')
     expect(extra?.textContent).toBe('Extra')
+    const extraNode = document.querySelector('.ant-drawer-extra')
+    expect(extraNode?.parentElement?.classList.contains('ant-drawer-header')).toBe(true)
+    expect(extraNode?.parentElement?.classList.contains('ant-drawer-header-title')).toBe(false)
     wrapper.unmount()
   })
 
@@ -128,6 +132,32 @@ describe('drawer', () => {
     await nextTick()
     const header = document.querySelector('.ant-drawer-header')
     expect(header).toBeNull()
+    wrapper.unmount()
+  })
+
+  it('renders header when only extra is provided', async () => {
+    const wrapper = mount(Drawer, {
+      props: { open: true, closable: false, extra: 0 },
+      slots: { default: () => <p>Body</p> },
+      attachTo: document.body,
+    })
+    await nextTick()
+    await nextTick()
+    expect(document.querySelector('.ant-drawer-header')).toBeTruthy()
+    expect(document.querySelector('.ant-drawer-extra')?.textContent).toBe('0')
+    wrapper.unmount()
+  })
+
+  it('renders title with zero value', async () => {
+    const wrapper = mount(Drawer, {
+      props: { open: true, closable: false, title: 0 },
+      slots: { default: () => <p>Body</p> },
+      attachTo: document.body,
+    })
+    await nextTick()
+    await nextTick()
+    expect(document.querySelector('.ant-drawer-header')).toBeTruthy()
+    expect(document.querySelector('.ant-drawer-title')?.textContent).toBe('0')
     wrapper.unmount()
   })
 
@@ -509,6 +539,29 @@ describe('drawer', () => {
     await nextTick()
     const section = document.querySelector('.ant-drawer-section')
     expect(section?.innerHTML).toMatchSnapshot()
+    wrapper.unmount()
+  })
+
+  // ========================= Deprecated =========================
+  it('should warn deprecated destroyOnClose', async () => {
+    resetWarned()
+    const errSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+    const wrapper = mount(Drawer, {
+      props: {
+        open: true,
+        destroyOnClose: true,
+      },
+      slots: {
+        default: () => <p>Drawer Content</p>,
+      },
+    })
+    await nextTick()
+    expect(errSpy).toHaveBeenCalledWith(
+      expect.stringContaining(
+        'Warning: [antd: Drawer] `destroyOnClose` is deprecated. Please use `destroyOnHidden` instead.',
+      ),
+    )
+    errSpy.mockRestore()
     wrapper.unmount()
   })
 })

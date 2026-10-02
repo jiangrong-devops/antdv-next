@@ -3,6 +3,7 @@
 exports[`select demo > renders _semantic correctly 1`] = `
 <div
   class="semantic-preview-container"
+  data-v-4da095ce=""
   data-v-dfc8ebef=""
 >
   <div
@@ -14,17 +15,20 @@ exports[`select demo > renders _semantic correctly 1`] = `
       data-v-dfc8ebef=""
     >
       <div
+        class="select-semantic-demo"
+        data-v-4da095ce=""
         style="position: absolute; height: 200px;"
       >
         <div
+          data-v-4da095ce=""
           style="display: flex; justify-content: center; margin-bottom: 12px;"
         >
           <div
             aria-label="segmented control"
             aria-orientation="horizontal"
             class="ant-segmented css-var-v-0 css-var-v-0"
+            data-v-4da095ce=""
             role="radiogroup"
-            size="middle"
             tabindex="0"
           >
             <div
@@ -66,11 +70,12 @@ exports[`select demo > renders _semantic correctly 1`] = `
           </div>
         </div>
         <div
+          data-v-4da095ce=""
           style="display: flex; flex-direction: column; gap: 12px;"
         >
           <!---->
           <div
-            class="ant-select ant-select-outlined semantic-mark-root css-var-v-0 ant-select-css-var ant-select-single ant-select-show-arrow ant-select-open"
+            class="ant-select ant-select-outlined semantic-mark-root css-var-v-0 ant-select-css-var ant-select-single ant-select-allow-clear ant-select-show-arrow ant-select-open"
             style="width: 300px;"
           >
             <div
@@ -79,13 +84,10 @@ exports[`select demo > renders _semantic correctly 1`] = `
               prefix
             </div>
             <div
-              class="ant-select-content semantic-mark-content"
+              class="ant-select-content ant-select-content-has-value semantic-mark-content"
+              title="aojunhao123"
             >
-              <div
-                class="ant-select-placeholder semantic-mark-placeholder"
-              >
-                <!---->
-              </div>
+              aojunhao123
               <input
                 aria-activedescendant="test-id_list_0"
                 aria-autocomplete="list"
@@ -126,7 +128,33 @@ exports[`select demo > renders _semantic correctly 1`] = `
               </span>
               <!---->
             </div>
-            <!---->
+            <button
+              aria-label="Clear"
+              class="ant-select-clear semantic-mark-clear"
+              style="opacity: 1; visibility: hidden;"
+              type="button"
+            >
+              <span
+                aria-label="close-circle"
+                class="anticon anticon-close-circle"
+                role="img"
+              >
+                <svg
+                  aria-hidden="true"
+                  data-icon="close-circle"
+                  fill="currentColor"
+                  fill-rule="evenodd"
+                  focusable="false"
+                  height="1em"
+                  viewBox="64 64 896 896"
+                  width="1em"
+                >
+                  <path
+                    d="M512 64c247.4 0 448 200.6 448 448S759.4 960 512 960 64 759.4 64 512 264.6 64 512 64zm127.98 274.82h-.04l-.08.06L512 466.75 384.14 338.88c-.04-.05-.06-.06-.08-.06a.12.12 0 00-.07 0c-.03 0-.05.01-.09.05l-45.02 45.02a.2.2 0 00-.05.09.12.12 0 000 .07v.02a.27.27 0 00.06.06L466.75 512 338.88 639.86c-.05.04-.06.06-.06.08a.12.12 0 000 .07c0 .03.01.05.05.09l45.02 45.02a.2.2 0 00.09.05.12.12 0 00.07 0c.02 0 .04-.01.08-.05L512 557.25l127.86 127.87c.04.04.06.05.08.05a.12.12 0 00.07 0c.03 0 .05-.01.09-.05l45.02-45.02a.2.2 0 00.05-.09.12.12 0 000-.07v-.02a.27.27 0 00-.05-.06L557.25 512l127.87-127.86c.04-.04.05-.06.05-.08a.12.12 0 000-.07c0-.03-.01-.05-.05-.09l-45.02-45.02a.2.2 0 00-.09-.05.12.12 0 00-.07 0z"
+                  />
+                </svg>
+              </span>
+            </button>
             <!---->
           </div>
           <!---->
@@ -1715,7 +1743,7 @@ exports[`select demo > renders big-data correctly 1`] = `
 
 exports[`select demo > renders clear-suffix-debug correctly 1`] = `
 <div
-  class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-middle ant-flex-vertical"
+  class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-medium ant-flex-vertical"
 >
   <div
     class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-small ant-flex-vertical"
@@ -4498,12 +4526,13 @@ exports[`select demo > renders placement correctly 1`] = `
     >
       <span
         class="ant-radio-button ant-radio-button-checked"
-        name="v-0"
       >
         <input
           checked=""
           class="ant-radio-button-input"
+          name="v-0"
           type="radio"
+          value="topLeft"
         />
       </span>
       <span
@@ -4517,11 +4546,12 @@ exports[`select demo > renders placement correctly 1`] = `
     >
       <span
         class="ant-radio-button"
-        name="v-0"
       >
         <input
           class="ant-radio-button-input"
+          name="v-0"
           type="radio"
+          value="topRight"
         />
       </span>
       <span
@@ -4535,11 +4565,12 @@ exports[`select demo > renders placement correctly 1`] = `
     >
       <span
         class="ant-radio-button"
-        name="v-0"
       >
         <input
           class="ant-radio-button-input"
+          name="v-0"
           type="radio"
+          value="bottomLeft"
         />
       </span>
       <span
@@ -4553,11 +4584,12 @@ exports[`select demo > renders placement correctly 1`] = `
     >
       <span
         class="ant-radio-button"
-        name="v-0"
       >
         <input
           class="ant-radio-button-input"
+          name="v-0"
           type="radio"
+          value="bottomRight"
         />
       </span>
       <span
@@ -4658,10 +4690,7 @@ exports[`select demo > renders render-panel correctly 1`] = `
     </span>
   </button>
   <div
-    options="[object Object],[object Object],[object Object],[object Object]"
     style="padding-bottom: 0px; position: relative; min-width: 0px;"
-    value="lucy"
-    virtual="false"
   >
     <!---->
     <div
@@ -5280,11 +5309,12 @@ exports[`select demo > renders size correctly 1`] = `
     >
       <span
         class="ant-radio-button"
-        name="v-0"
       >
         <input
           class="ant-radio-button-input"
+          name="v-0"
           type="radio"
+          value="large"
         />
       </span>
       <span
@@ -5298,12 +5328,13 @@ exports[`select demo > renders size correctly 1`] = `
     >
       <span
         class="ant-radio-button ant-radio-button-checked"
-        name="v-0"
       >
         <input
           checked=""
           class="ant-radio-button-input"
+          name="v-0"
           type="radio"
+          value="medium"
         />
       </span>
       <span
@@ -5317,11 +5348,12 @@ exports[`select demo > renders size correctly 1`] = `
     >
       <span
         class="ant-radio-button"
-        name="v-0"
       >
         <input
           class="ant-radio-button-input"
+          name="v-0"
           type="radio"
+          value="small"
         />
       </span>
       <span
@@ -5343,7 +5375,7 @@ exports[`select demo > renders size correctly 1`] = `
       <!---->
       <div
         class="ant-select ant-select-outlined css-var-root ant-select-css-var ant-select-single ant-select-show-arrow"
-        size="middle"
+        size="medium"
         style="width: 200px;"
       >
         <!---->
@@ -5403,7 +5435,7 @@ exports[`select demo > renders size correctly 1`] = `
       <!---->
       <div
         class="ant-select ant-select-outlined css-var-root ant-select-css-var ant-select-multiple ant-select-show-arrow ant-select-show-search"
-        size="middle"
+        size="medium"
         style="width: 100%;"
       >
         <!---->
@@ -5552,7 +5584,7 @@ exports[`select demo > renders size correctly 1`] = `
       <!---->
       <div
         class="ant-select ant-select-outlined css-var-root ant-select-css-var ant-select-multiple ant-select-show-arrow ant-select-show-search"
-        size="middle"
+        size="medium"
         style="width: 100%;"
       >
         <!---->
@@ -5833,7 +5865,7 @@ exports[`select demo > renders status correctly 1`] = `
 
 exports[`select demo > renders style-class correctly 1`] = `
 <div
-  class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-middle ant-flex-vertical"
+  class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-medium ant-flex-vertical"
 >
   <!---->
   <div

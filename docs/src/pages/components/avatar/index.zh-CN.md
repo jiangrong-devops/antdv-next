@@ -68,10 +68,10 @@ group:
 | --- | --- | --- | --- | --- |
 | prefixCls | - | string | - | - |
 | max | - | &#123;     count?: number     style?: CSSProperties     popover?: PopoverProps   &#125; | - | - |
-| size | 设置头像的大小 | AvatarSize | `default` | - |
+| size | 设置头像的大小 | AvatarSize | `medium` | - |
 | shape | 指定头像的形状 | 'circle' \| 'square' | `circle` | - |
 
-## 主题变量（Design Token）
+## 主题变量（Design Token） {#design-token}
 
 <ComponentTokenTable component="Avatar" />
 

@@ -6,7 +6,7 @@ import type { HashPriority } from '../StyleContext'
 import type Theme from '../theme/Theme'
 import type { Transformer } from '../transformers/interface.ts'
 import type { Nonce } from '../util'
-import type { ExtractStyle } from './useGlobalCache'
+import type { ExtractStyle, OnCacheRemove } from './useGlobalCache'
 import { removeCSS, updateCSS } from '@v-c/util/dist/Dom/dynamicCSS'
 
 import { compile, middleware, prefixer, serialize, stringify } from 'stylis'
@@ -381,6 +381,15 @@ type StyleCacheValue = [
     clientOnly: boolean | undefined,
     order: number,
 ]
+
+// Module-level on purpose: see `OnCacheRemove` in useGlobalCache.ts.
+const removeStyleCache: OnCacheRemove<StyleCacheValue> = (cacheValue, fromHMR) => {
+  const [, styleId] = cacheValue
+  if (fromHMR && isClientSide) {
+    removeCSS(styleId, { mark: ATTR_MARK })
+  }
+}
+
 export default function useStyleRegister(
   info: Ref<{
     theme: Theme<any, any>
@@ -401,34 +410,34 @@ export default function useStyleRegister(
 ) {
   const styleContext = useStyleContext()
 
-  const enableLayer = computed(() => !!styleContext.value.layer)
-  const order = computed(() => info.value.order ?? 0)
-  const hashId = computed(() => info.value.hashId)
-
+  // The only reactive derivation this hook needs: everything else is read from
+  // `info` / `styleContext` at the time the cache entry is created or injected.
   const fullPath = computed<string []>(() => {
-    const path: string[] = [hashId.value || '']
-    if (enableLayer.value) {
-      path.push('layer')
+    const { hashId, path } = info.value
+    const result: string[] = [hashId || '']
+    if (styleContext.value.layer) {
+      result.push('layer')
     }
-    path.push(...info.value.path)
-    return path
+    result.push(...path)
+    return result
   })
 
-  const isMergedClientSide = computed(() => {
+  const isMergedClientSide = () => {
     let merged = isClientSide
     if (isDev && styleContext.value.mock !== undefined) {
       merged = styleContext.value.mock === 'client'
     }
     return merged
-  })
+  }
 
   useGlobalCache<StyleCacheValue>(
-    computed(() => STYLE_PREFIX),
+    STYLE_PREFIX,
     fullPath,
     () => {
       const cachePath = fullPath.value.join('|')
       const context = styleContext.value
       const infoValue = info.value
+      const order = infoValue.order ?? 0
 
       // Get style from SSR inline style directly
       if (existPath(cachePath)) {
@@ -439,7 +448,7 @@ export default function useStyleRegister(
             styleHash,
             {},
             infoValue.clientOnly,
-            order.value,
+            order,
           ]
         }
       }
@@ -448,13 +457,13 @@ export default function useStyleRegister(
       const [parsedStyle, effectStyle] = parseStyle(styleObj, {
         hashId: infoValue.hashId,
         hashPriority: context.hashPriority,
-        layer: enableLayer.value ? infoValue.layer : undefined,
+        layer: context.layer ? infoValue.layer : undefined,
         path: infoValue.path.join('-'),
         transformers: (context.transformers as any[]) || [],
         linters: context.linters || [],
       })
 
-      const styleStr = normalizeStyle(parsedStyle, styleContext.value.autoPrefix || false)
+      const styleStr = normalizeStyle(parsedStyle, context.autoPrefix || false)
       const styleId = uniqueHash(fullPath.value, styleStr)
 
       return [
@@ -462,21 +471,15 @@ export default function useStyleRegister(
         styleId,
         effectStyle,
         infoValue.clientOnly,
-        order.value,
+        order,
       ]
     },
     // Remove cache if no need
-
-    (cacheValue, fromHMR) => {
-      const [, styleId] = cacheValue
-      if (fromHMR && isClientSide) {
-        removeCSS(styleId, { mark: ATTR_MARK })
-      }
-    },
+    removeStyleCache,
     // Effect: Inject style here
     (cacheValue) => {
       const [styleStr, styleId, effectStyle, , priority] = cacheValue
-      if (!isMergedClientSide.value || styleStr === CSS_FILE_STYLE) {
+      if (!isMergedClientSide() || styleStr === CSS_FILE_STYLE) {
         return
       }
 

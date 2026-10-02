@@ -68,6 +68,19 @@ describe('avatar', () => {
     expect(style).toContain('height: 64px')
   })
 
+  it('should apply a string style prop without index-key corruption', () => {
+    const errSpy = vi.spyOn(console, 'error')
+    const wrapper = mount(Avatar, {
+      props: { style: 'background-color: red;' },
+      slots: { default: () => 'U' },
+    })
+    const style = wrapper.find('.ant-avatar').attributes('style') || ''
+    expect(style).toContain('background-color: red')
+    expect(style).not.toContain('undefined')
+    expect(errSpy).not.toHaveBeenCalled()
+    errSpy.mockRestore()
+  })
+
   it('should render image when src is provided', () => {
     const wrapper = mount(Avatar, {
       props: {
@@ -158,6 +171,65 @@ describe('avatar', () => {
     expect(wrapper.find('img').exists()).toBe(true)
   })
 
+  it('should render children fallback when image load fails', async () => {
+    const wrapper = mount(Avatar, {
+      props: { src: 'https://example.com/invalid.png' },
+      slots: { default: () => 'Fallback' },
+    })
+
+    await wrapper.find('img').trigger('error')
+    await nextTick()
+
+    expect(wrapper.find('img').exists()).toBe(false)
+    expect(wrapper.find('.ant-avatar-string').exists()).toBe(true)
+    expect(wrapper.text()).toContain('Fallback')
+    expect(wrapper.find('.ant-avatar').classes()).not.toContain('ant-avatar-image')
+  })
+
+  it('should render icon fallback when image load fails', async () => {
+    const wrapper = mount(Avatar, {
+      props: { src: 'https://example.com/invalid.png', icon: h(UserOutlined) },
+    })
+
+    await wrapper.find('img').trigger('error')
+    await nextTick()
+
+    expect(wrapper.find('img').exists()).toBe(false)
+    expect(wrapper.find('.anticon-user').exists()).toBe(true)
+  })
+
+  it('should retry when src changes after an error', async () => {
+    const src = ref('https://example.com/invalid.png')
+    const wrapper = mount(() => (
+      <Avatar src={src.value}>Fallback</Avatar>
+    ))
+
+    await wrapper.find('img').trigger('error')
+    await nextTick()
+    expect(wrapper.find('img').exists()).toBe(false)
+
+    src.value = 'https://example.com/avatar.png'
+    await nextTick()
+    expect(wrapper.find('img').exists()).toBe(true)
+    expect(wrapper.find('img').attributes('src')).toBe('https://example.com/avatar.png')
+  })
+
+  it('should retry when srcSet changes after an error', async () => {
+    const srcSet = ref('https://example.com/invalid@2x.png 2x')
+    const wrapper = mount(() => (
+      <Avatar src="https://example.com/invalid.png" srcSet={srcSet.value}>Fallback</Avatar>
+    ))
+
+    await wrapper.find('img').trigger('error')
+    await nextTick()
+    expect(wrapper.find('img').exists()).toBe(false)
+
+    srcSet.value = 'https://example.com/avatar@2x.png 2x'
+    await nextTick()
+    expect(wrapper.find('img').exists()).toBe(true)
+    expect(wrapper.find('img').attributes('srcset')).toBe('https://example.com/avatar@2x.png 2x')
+  })
+
   it('should render icon', () => {
     const wrapper = mount(Avatar, {
       props: {
@@ -194,6 +266,16 @@ describe('avatar', () => {
       <Avatar data-test="test-id">U</Avatar>
     ))
     expect(wrapper.find('[data-test="test-id"]').exists()).toBe(true)
+  })
+
+  it('should emit click when clicked', async () => {
+    const onClick = vi.fn()
+    const wrapper = mount(Avatar, {
+      props: { onClick },
+      slots: { default: () => 'U' },
+    })
+    await wrapper.find('.ant-avatar').trigger('click')
+    expect(onClick).toHaveBeenCalledTimes(1)
   })
 
   it('should match snapshot', () => {
@@ -262,7 +344,7 @@ describe('avatar.Group', () => {
     // 2 visible + 1 "+2" avatar
     const avatars = wrapper.findAll('.ant-avatar')
     expect(avatars.length).toBe(3)
-    expect(avatars[2].text()).toBe('+2')
+    expect(avatars[2]!.text()).toBe('+2')
   })
 
   it('should match group snapshot', () => {
@@ -276,6 +358,16 @@ describe('avatar.Group', () => {
   })
 
   // ========================= Ref =========================
+  it('should support Avatar nativeElement ref', async () => {
+    const avatarRef = ref<any>()
+    const wrapper = mount(() => (
+      <Avatar ref={avatarRef}>A</Avatar>
+    ))
+    await nextTick()
+    expect(avatarRef.value?.nativeElement).toBeInstanceOf(HTMLSpanElement)
+    expect(avatarRef.value.nativeElement).toBe(wrapper.find('.ant-avatar').element)
+  })
+
   it('should support Avatar.Group nativeElement ref', async () => {
     const groupRef = ref<any>()
     const wrapper = mount(() => (

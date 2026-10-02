@@ -36,11 +36,11 @@ coverDark: https://mdn.alipayobjects.com/huamei_7uahnr/afts/img/A*sir-TK0HkWcAAA
 通用属性参考：[通用属性](/docs/vue/common-props)
 ### Collapse
 
-#### 属性 {#props}
+#### 属性 {#collapse-props}
 
 | 属性 | 说明 | 类型 | 默认值 | 版本 | [全局配置](/components/config-provider-cn#component-config) |
 | --- | --- | --- | --- | --- | --- |
-| activeKey | 当前激活 tab 面板的 key | Array&lt;string \| number&gt; \| string \| number | 手风琴模式下为第一个元素 | - | × |
+| activeKey | 当前激活 tab 面板的 key，支持 `v-model:active-key` | Array&lt;string \| number&gt; \| string \| number | 手风琴模式下为第一个元素 | - | × |
 | defaultActiveKey | 初始化选中面板的 key | Array&lt;string \| number&gt; \| string \| number | - | - | × |
 | accordion | 手风琴模式 | boolean | false | - | × |
 | destroyOnHidden | 销毁折叠隐藏的面板 | boolean | false | - | × |
@@ -49,7 +49,7 @@ coverDark: https://mdn.alipayobjects.com/huamei_7uahnr/afts/img/A*sir-TK0HkWcAAA
 | expandIcon | 自定义切换图标 | (panelProps: PanelProps) =&gt; any | - | - | ✓ |
 | expandIconPlacement | 设置图标位置 | `start` \| `end` | `start` | - | × |
 | ghost | 使折叠面板透明且无边框 | boolean | false | - | × |
-| size | 设置折叠面板大小 | SizeType | `middle` | - | × |
+| size | 设置折叠面板大小 | SizeType | `medium` | - | × |
 | collapsible | 所有子面板是否可折叠或指定可折叠触发区域 | `header` \| `icon` \| `disabled` | - | - | × |
 | labelRender | 自定义渲染label | (params: &#123; item: CollapseItemType, index: number &#125;) =&gt; any | - | - | × |
 | contentRender | 自定义渲染内容 | (params: &#123; item: CollapseItemType, index: number &#125;) =&gt; any | - | - | × |
@@ -57,13 +57,13 @@ coverDark: https://mdn.alipayobjects.com/huamei_7uahnr/afts/img/A*sir-TK0HkWcAAA
 | styles | 用于自定义组件内部各语义化结构的行内 style，支持对象或函数 | CollapseStylesType | - | - | ✓ |
 | items | 折叠项目内容 | CollapseItemType[] | - | - | × |
 
-#### 事件 {#events}
+#### 事件 {#collapse-events}
 
 | 事件 | 说明 | 类型 | 版本 |
 | --- | --- | --- | --- |
 | change | 切换面板的回调 | (key: string[]) =&gt; void | - |
 
-#### 插槽 {#slots}
+#### 插槽 {#collapse-slots}
 
 | 插槽 | 说明 | 类型 | 版本 |
 | --- | --- | --- | --- |
@@ -82,7 +82,9 @@ coverDark: https://mdn.alipayobjects.com/huamei_7uahnr/afts/img/A*sir-TK0HkWcAAA
 | 参数 | 说明 | 类型 | 默认值 | 版本 |
 | --- | --- | --- | --- | --- |
 | collapsible | 是否可折叠或指定可折叠触发区域 | `header` \| `icon` \| `disabled` | - | - |
+| extra | 自定义渲染每个面板右上角的内容 | VueNode | - | - |
 | forceRender | 被隐藏时是否渲染 body 区域 DOM 结构 | boolean | false |  |
+| header | 面板标题 | VueNode | - | - |
 | key | 对应 activeKey | string \| number | - |  |
 | showArrow | 是否展示当前面板上的箭头（为 false 时，collapsible 不能设为 icon） | boolean | true |  |
 
@@ -90,6 +92,7 @@ coverDark: https://mdn.alipayobjects.com/huamei_7uahnr/afts/img/A*sir-TK0HkWcAAA
 
 | 插槽 | 说明 | 类型 | 版本 |
 | --- | --- | --- | --- |
+| default | 面板内容 | VueNode | - |
 | header | 面板标题 | VueNode | - |
 | extra | 自定义渲染每个面板右上角的内容 | VueNode | - |
 
@@ -101,6 +104,7 @@ coverDark: https://mdn.alipayobjects.com/huamei_7uahnr/afts/img/A*sir-TK0HkWcAAA
 | --- | --- | --- | --- | --- |
 | classes | 语义化结构 class | [`Record<header \| body, string>`](#semantic-dom) | - | - |
 | collapsible | 是否可折叠或指定可折叠触发区域 | `header` \| `icon` \| `disabled` | - |  |
+| content | 面板内容 | VueNode | - | - |
 | extra | 自定义渲染每个面板右上角的内容 | VueNode | - |  |
 | forceRender | 被隐藏时是否渲染 body 区域 DOM 结构 | boolean | false |  |
 | key | 对应 activeKey | string \| number | - |  |

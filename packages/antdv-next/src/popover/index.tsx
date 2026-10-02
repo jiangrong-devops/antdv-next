@@ -6,7 +6,7 @@ import { clsx } from '@v-c/util'
 import KeyCode from '@v-c/util/dist/KeyCode'
 import { filterEmpty, removeUndefined } from '@v-c/util/dist/props-util'
 import { getTransitionName } from '@v-c/util/dist/utils/transition'
-import { computed, createVNode, defineComponent, shallowRef, watch } from 'vue'
+import { computed, createVNode, defineComponent, isVNode, shallowRef, watch } from 'vue'
 import {
   useMergeSemantic,
   useSemanticRootStyle,
@@ -131,12 +131,12 @@ const InternalPopover = defineComponent<
       { immediate: true },
     )
 
-    const settingOpen = (value: boolean, e?: MouseEvent | KeyboardEvent) => {
+    const settingOpen = (nextOpen: boolean, e?: MouseEvent | KeyboardEvent) => {
       if (props.open === undefined) {
-        open.value = value
+        open.value = nextOpen
       }
-      emit('openChange', value, e)
-      emit('update:open', value)
+      emit('openChange', nextOpen, e)
+      emit('update:open', nextOpen)
     }
 
     const onKeyDown = (e: KeyboardEvent) => {
@@ -145,12 +145,13 @@ const InternalPopover = defineComponent<
       }
     }
 
-    const onInternalOpenChange = (value: boolean) => {
-      settingOpen(value)
+    const onInternalOpenChange = (nextOpen: boolean) => {
+      settingOpen(nextOpen)
     }
 
     return () => {
-      const children = filterEmpty(slots?.default?.() ?? [])?.[0]
+      const firstChild = filterEmpty(slots?.default?.() ?? [])[0]
+      const child = firstChild && !(isVNode(firstChild) && typeof firstChild.type !== 'symbol') ? <span>{firstChild}</span> : firstChild
       const {
         placement,
         mouseLeaveDelay: _mouseLeaveDelay,
@@ -212,7 +213,7 @@ const InternalPopover = defineComponent<
           dataPopoverInject={true}
           ref={popoverRef}
         >
-          { children ? createVNode(children, { onKeydown: onKeyDown }) : null}
+          { child ? createVNode(child, { onKeydown: onKeyDown }) : null}
         </Tooltip>
       )
     }

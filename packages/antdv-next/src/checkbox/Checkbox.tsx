@@ -4,7 +4,6 @@ import type { SemanticClassNamesType, SemanticStylesType } from '../_util/hooks'
 import type { ComponentBaseProps } from '../config-provider/context'
 import VcCheckbox from '@v-c/checkbox'
 import { clsx } from '@v-c/util'
-import { filterEmpty } from '@v-c/util/dist/props-util'
 import { omit } from 'es-toolkit'
 import { computed, defineComponent, nextTick, shallowRef, watch } from 'vue'
 import { getAttrStyleAndClass, useMergeSemantic, useSemanticRootStyle, useToArr, useToProps } from '../_util/hooks'
@@ -175,7 +174,6 @@ const InternalCheckbox = defineComponent<
       CheckboxProps
     >(useToArr(contextClassNames, classes), useToArr(contextStyles, contextStyleRoot as any, styles), useToProps(mergedProps))
 
-    const prevValue = shallowRef(props.value)
     const checkboxRef = shallowRef()
     if (isDev) {
       const warning = devUseWarning('Checkbox')
@@ -187,23 +185,19 @@ const InternalCheckbox = defineComponent<
       )
     }
     watch(
-      [() => props.value, () => props?.skipGroup],
-      (_n, _o, onCleanup) => {
-        if (props.skipGroup || !checkboxGroup?.value) {
+      [() => props.value, () => props.skipGroup],
+      ([value, skipGroup], _prev, onCleanup) => {
+        const group = checkboxGroup?.value
+        if (skipGroup || !group) {
           return
         }
-        if (prevValue.value !== props.value) {
-          checkboxGroup?.value?.registerValue?.(props.value)
-          prevValue.value = props.value
-        }
+        group.registerValue?.(value)
         onCleanup(() => {
-          checkboxGroup?.value?.cancelValue?.(prevValue.value)
+          group.cancelValue?.(value)
         })
       },
+      { immediate: true },
     )
-    if (checkboxGroup?.value) {
-      checkboxGroup?.value?.registerValue?.(prevValue.value)
-    }
 
     watch(
       () => props.indeterminate,
@@ -246,31 +240,17 @@ const InternalCheckbox = defineComponent<
     })
     return () => {
       const { skipGroup, rootClass, indeterminate } = props
-      const children = checkRenderNode(filterEmpty(slots?.default?.() ?? []))
+      const children = checkRenderNode(slots?.default?.() ?? [])
       const { className, style, restAttrs } = getAttrStyleAndClass(attrs)
-      const checkboxProps: any = {
-        ...omit(props, keys),
-      }
 
       // 是否在 Group 中使用
       const inGroup = checkboxGroup?.value && !skipGroup
 
-      if (inGroup) {
-        checkboxProps.onChange = (checked: any) => {
-          emit('change', checked)
-        }
-        checkboxProps.name = checkboxGroup.value?.name
-        checkboxProps.checked = mergedChecked.value
-      }
-      else {
-        // 单独使用时，使用 isChecked 判断选中状态
-        checkboxProps.checked = mergedChecked.value
-      }
       const classString = clsx(
         `${prefixCls.value}-wrapper`,
         {
           [`${prefixCls.value}-rtl`]: direction.value === 'rtl',
-          [`${prefixCls.value}-wrapper-checked`]: checkboxProps.checked,
+          [`${prefixCls.value}-wrapper-checked`]: mergedChecked.value,
           [`${prefixCls.value}-wrapper-disabled`]: mergedDisabled.value,
           [`${prefixCls.value}-wrapper-in-form-item`]: formItemInputContext.value?.isFormItemInput,
         },
@@ -301,14 +281,11 @@ const InternalCheckbox = defineComponent<
             {...restAttrs}
           >
             <VcCheckbox
-              {...omit(checkboxProps, ['onChange'])}
+              {...omit(props, keys) as any}
               {
                 ...{
                   'onChange': (e: any) => {
-                    if (!checkboxProps.onChange) {
-                      emit('change', e)
-                    }
-                    checkboxProps?.onChange?.(e)
+                    emit('change', e)
                   },
                   'onUpdate:checked': (checked: boolean) => {
                     if (inGroup) {

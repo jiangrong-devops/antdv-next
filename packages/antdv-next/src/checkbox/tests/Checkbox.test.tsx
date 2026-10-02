@@ -207,6 +207,27 @@ describe('checkbox', () => {
     expect(wrapper.vm.input).toBeDefined()
   })
 
+  // ============ Native input ============
+
+  it('should pass id and name to the native input', () => {
+    const wrapper = mount(Checkbox, {
+      props: { id: 'agree', name: 'agreement' },
+    })
+    const input = wrapper.find('input')
+    expect(input.attributes('id')).toBe('agree')
+    expect(input.attributes('name')).toBe('agreement')
+    expect(wrapper.find('.ant-checkbox').attributes('name')).toBeUndefined()
+  })
+
+  it('should emit blur when the native input loses focus', async () => {
+    const onBlur = vi.fn()
+    const wrapper = mount(Checkbox, {
+      props: { onBlur },
+    })
+    await wrapper.find('input').trigger('blur')
+    expect(onBlur).toHaveBeenCalledTimes(1)
+  })
+
   // ============ Mouse events ============
 
   it('should emit mouseenter and mouseleave events', async () => {
@@ -280,6 +301,30 @@ describe('checkboxGroup', () => {
     const items = wrapper.findAll('.ant-checkbox-wrapper')
     expect(items.length).toBe(3)
     expect(items![0]!.text()).toBe('1')
+  })
+
+  // sync ant-design#59217
+  describe('value is undefined', () => {
+    it('should use defaultValue when value is undefined', () => {
+      const wrapper = mount(CheckboxGroup, {
+        props: { defaultValue: ['A'], value: undefined, options: ['A'] },
+      })
+      expect(wrapper.findAll('.ant-checkbox-checked')).toHaveLength(1)
+    })
+
+    it('should update value when value is undefined', async () => {
+      const onChange = vi.fn()
+      const wrapper = mount(CheckboxGroup, {
+        props: { defaultValue: ['A'], value: undefined, options: ['A', 'B'], onChange },
+      })
+      const inputs = wrapper.findAll('input')
+      expect((inputs[0]!.element as HTMLInputElement).checked).toBe(true)
+
+      await inputs[1]!.trigger('change')
+      expect((inputs[0]!.element as HTMLInputElement).checked).toBe(true)
+      expect((inputs[1]!.element as HTMLInputElement).checked).toBe(true)
+      expect(onChange).toHaveBeenCalledWith(['A', 'B'])
+    })
   })
 
   it('should ignore options with nullish values', async () => {
@@ -441,9 +486,12 @@ describe('checkboxGroup', () => {
     // Name is passed to internal Checkbox components via group context
     const checkboxes = wrapper.findAll('.ant-checkbox-wrapper')
     expect(checkboxes.length).toBe(3)
-    // Verify group renders all checkboxes correctly
+    // ...and lands on each native input
     const inputs = wrapper.findAll('input[type="checkbox"]')
     expect(inputs.length).toBe(3)
+    inputs.forEach((input) => {
+      expect(input.attributes('name')).toBe('fruits')
+    })
   })
 
   it('should render with children slots', () => {

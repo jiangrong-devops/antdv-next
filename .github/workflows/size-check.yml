@@ -1,0 +1,234 @@
+name: Size Report (Compute)
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: size-pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  size:
+    name: Package size report
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      # Build the exact PR head. This also works when the PR comes from a fork.
+      - name: Checkout PR head
+        uses: actions/checkout@v7
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10.34.5
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Write size measurement script
+        run: |
+          cat > /tmp/size-report.mjs <<'MEOF'
+          import {
+            brotliCompressSync,
+            constants,
+            gzipSync,
+          } from 'node:zlib'
+          import {
+            existsSync,
+            readFileSync,
+            writeFileSync,
+          } from 'node:fs'
+          import { join } from 'node:path'
+
+          const MAX_COMMENT_BYTES = 60_000
+          const TARGET_PACKAGE_NAME = 'antdv-next'
+          const MEASURED_BUNDLE_FILES = [
+            'dist/antd.js',
+            'dist/antd.esm.js',
+          ]
+          const [command, firstArg, secondArg, thirdArg] = process.argv.slice(2)
+
+          function measurePackage(packageDir) {
+            const files = {}
+
+            for (const relativeFile of MEASURED_BUNDLE_FILES) {
+              const file = join(packageDir, relativeFile)
+              if (!existsSync(file))
+                throw new Error(`Missing bundle file: ${relativeFile}`)
+
+              const content = readFileSync(file)
+              files[relativeFile] = {
+                size: content.length,
+                gzip: gzipSync(content, { level: 9, mtime: 0 }).length,
+                brotli: brotliCompressSync(content, {
+                  params: {
+                    [constants.BROTLI_PARAM_QUALITY]: 11,
+                  },
+                }).length,
+              }
+            }
+
+            return files
+          }
+
+          function measureWorkspace(outputFile) {
+            const files = measurePackage(join('packages', 'antdv-next'))
+            writeFileSync(outputFile, `${JSON.stringify({
+              packages: {
+                [TARGET_PACKAGE_NAME]: { files },
+              },
+            }, null, 2)}\n`)
+          }
+
+          function formatBytes(value) {
+            const units = ['B', 'kB', 'MB', 'GB']
+            let amount = value
+            let unit = 0
+
+            while (amount >= 1024 && unit < units.length - 1) {
+              amount /= 1024
+              unit++
+            }
+
+            return `${unit === 0 || amount >= 100 ? amount.toFixed(0) : amount.toFixed(1)} ${units[unit]}`
+          }
+
+          function formatSignedBytes(value) {
+            if (value === 0)
+              return '±0 B'
+            return `${value > 0 ? '+' : '-'}${formatBytes(Math.abs(value))}`
+          }
+
+          function formatCompare(main, pr) {
+            if (main === undefined && pr !== undefined)
+              return `${formatBytes(pr)} (new)`
+
+            if (main !== undefined && pr === undefined)
+              return `${formatBytes(main)} (deleted)`
+
+            if (main === pr)
+              return `${formatBytes(pr)} (±0 B)`
+
+            const delta = pr - main
+            const rate = main === 0
+              ? 'N/A'
+              : `${delta > 0 ? '+' : ''}${(delta * 100 / main).toFixed(1)}%`
+
+            return `${formatBytes(main)} → ${formatBytes(pr)} (${formatSignedBytes(delta)}, ${rate})`
+          }
+
+          function formatTableRow(fields) {
+            const escapedFields = fields.map(field => String(field)
+              .replaceAll('|', '\\|')
+              .replace(/\r?\n/g, '<br>'))
+            return `| ${escapedFields.join(' | ')} |`
+          }
+
+          function buildReport(main, pr) {
+            const lines = ['Size Report', '---', '']
+            const packageName = TARGET_PACKAGE_NAME
+            const mainFiles = main.packages[packageName]?.files ?? {}
+            const prFiles = pr.packages[packageName]?.files ?? {}
+
+            lines.push('| File | Size | Gzip | Brotli |')
+            lines.push('| --- | --- | --- | --- |')
+
+            for (const file of MEASURED_BUNDLE_FILES) {
+              const mainFile = mainFiles[file]
+              const prFile = prFiles[file]
+
+              lines.push(formatTableRow([
+                file,
+                formatCompare(mainFile?.size, prFile?.size),
+                formatCompare(mainFile?.gzip, prFile?.gzip),
+                formatCompare(mainFile?.brotli, prFile?.brotli),
+              ]))
+            }
+
+            lines.push('')
+            lines.push('<!-- size-report -->')
+            return `${lines.join('\n')}\n`
+          }
+
+          function writeReport(mainFile, prFile, outputFile) {
+            const main = JSON.parse(readFileSync(mainFile, 'utf8'))
+            const pr = JSON.parse(readFileSync(prFile, 'utf8'))
+            const report = buildReport(main, pr)
+
+            if (Buffer.byteLength(report, 'utf8') > MAX_COMMENT_BYTES)
+              throw new Error('Changed file size report is too large to publish as one PR comment')
+
+            writeFileSync(outputFile, report)
+          }
+
+          if (command === 'measure') {
+            measureWorkspace(firstArg)
+          }
+          else if (command === 'report') {
+            writeReport(firstArg, secondArg, thirdArg)
+          }
+          else {
+            throw new Error('Usage: measure <output.json> or report <main.json> <pr.json> <output.md>')
+          }
+          MEOF
+
+      - name: Install PR head dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build PR head bundles
+        run: |
+          rm -rf packages/antdv-next/dist
+          pnpm --filter @antdv-next/cssinjs build
+          pnpm --filter antdv-next run build:umd
+          pnpm --filter antdv-next run build:full-esm
+
+      - name: Measure PR head
+        run: node /tmp/size-report.mjs measure /tmp/size-pr.json
+
+      - name: Checkout main
+        uses: actions/checkout@v7
+        with:
+          repository: ${{ github.repository }}
+          ref: ${{ github.event.pull_request.base.ref }}
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Install main dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build main bundles
+        run: |
+          rm -rf packages/antdv-next/dist
+          pnpm --filter @antdv-next/cssinjs build
+          pnpm --filter antdv-next run build:umd
+          pnpm --filter antdv-next run build:full-esm
+
+      - name: Measure main
+        run: node /tmp/size-report.mjs measure /tmp/size-main.json
+
+      - name: Generate PR size report
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          node /tmp/size-report.mjs report /tmp/size-main.json /tmp/size-pr.json /tmp/size-report.md
+          printf '\n<!-- pr-number:%s -->\n' "$PR_NUMBER" >> /tmp/size-report.md
+
+      - name: Upload size report
+        uses: actions/upload-artifact@v4
+        with:
+          name: size-report
+          path: /tmp/size-report.md
+          retention-days: 1

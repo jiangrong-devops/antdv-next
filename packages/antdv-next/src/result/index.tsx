@@ -5,14 +5,10 @@ import type { ComponentBaseProps } from '../config-provider/context.ts'
 import { CheckCircleFilled, CloseCircleFilled, ExclamationCircleFilled, WarningFilled } from '@antdv-next/icons'
 import { classNames } from '@v-c/util'
 import pickAttrs from '@v-c/util/dist/pickAttrs'
-import { filterEmpty, getAttrStyleAndClass } from '@v-c/util/dist/props-util'
+import { filterEmpty } from '@v-c/util/dist/props-util'
 import { computed, createVNode, defineComponent, shallowRef } from 'vue'
-import {
-  useMergeSemantic,
-  useSemanticRootStyle,
-  useToArr,
-  useToProps,
-} from '../_util/hooks'
+import { getAttrStyleAndClass, useMergeSemantic, useSemanticRootStyle, useToArr, useToProps } from '../_util/hooks'
+import { isRenderable } from '../_util/is.ts'
 import { clsx, getSlotPropsFnRun, toPropsRefs } from '../_util/tools.ts'
 import { useComponentBaseConfig } from '../config-provider/context.ts'
 import noFound from './noFound'
@@ -112,7 +108,7 @@ const Icon = defineComponent<IconProps>(
         return null
       }
 
-      return <div {...attrs}>{icon || iconNode}</div>
+      return <div {...attrs}>{isRenderable(icon) ? icon : iconNode}</div>
     }
   },
   {

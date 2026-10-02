@@ -1,9 +1,11 @@
+import { SmileOutlined } from '@antdv-next/icons'
 import dayjs from 'dayjs'
 import MockDate from 'mockdate'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { defineComponent, h, nextTick, ref } from 'vue'
 import DatePicker from '..'
 import { resetWarned } from '../../_util/warning'
+import ConfigProvider from '../../config-provider'
 import Flex from '../../flex'
 import { mount } from '/@tests/utils'
 
@@ -179,6 +181,111 @@ describe('date-picker', () => {
     errSpy.mockRestore()
     open.value = false
     await nextTick()
+    wrapper.unmount()
+  })
+
+  // ====================== Prefix ======================
+  it('should prefer prefix slot and fall back to prop', () => {
+    const wrapper = mount({
+      render: () => (
+        <DatePicker
+          prefix={<span class="prop-prefix">P</span>}
+          v-slots={{ prefix: () => <SmileOutlined /> }}
+        />
+      ),
+    })
+    expect(wrapper.find('.ant-picker-prefix').exists()).toBe(true)
+    expect(wrapper.find('.ant-picker-prefix .anticon-smile').exists()).toBe(true)
+    expect(wrapper.find('.ant-picker-prefix .prop-prefix').exists()).toBe(false)
+    wrapper.unmount()
+
+    const propWrapper = mount(DatePicker, {
+      props: { prefix: <span class="custom-prefix">P</span> },
+    })
+    expect(propWrapper.find('.ant-picker-prefix .custom-prefix').exists()).toBe(true)
+    propWrapper.unmount()
+  })
+
+  it('should render prefix for RangePicker from slot', () => {
+    const wrapper = mount({
+      render: () => (
+        <DatePicker.RangePicker
+          prefix={<span class="prop-prefix">P</span>}
+          v-slots={{ prefix: () => <SmileOutlined /> }}
+        />
+      ),
+    })
+    expect(wrapper.find('.ant-picker-prefix').exists()).toBe(true)
+    expect(wrapper.find('.ant-picker-prefix .anticon-smile').exists()).toBe(true)
+    expect(wrapper.find('.ant-picker-prefix .prop-prefix').exists()).toBe(false)
+    wrapper.unmount()
+
+    const propWrapper = mount(DatePicker.RangePicker, {
+      props: { prefix: <span class="custom-prefix">P</span> },
+    })
+    expect(propWrapper.find('.ant-picker-prefix .custom-prefix').exists()).toBe(true)
+    propWrapper.unmount()
+  })
+
+  it('should hide clear icon when ConfigProvider datePicker allowClear is false', () => {
+    const wrapper = mount(
+      <ConfigProvider datePicker={{ allowClear: false }}>
+        <DatePicker value={dayjs('2026-02-23')} />
+      </ConfigProvider>,
+    )
+
+    expect(wrapper.find('.ant-picker-clear').exists()).toBe(false)
+  })
+
+  it('should use clear icon from ConfigProvider datePicker config', () => {
+    const wrapper = mount(
+      <ConfigProvider datePicker={{ clearIcon: <span data-testid="config-clear-icon">x</span> }}>
+        <DatePicker value={dayjs('2026-02-23')} />
+      </ConfigProvider>,
+    )
+
+    expect(wrapper.find('.ant-picker-clear').exists()).toBe(true)
+    expect(wrapper.find('[data-testid="config-clear-icon"]').exists()).toBe(true)
+  })
+
+  it('should use allowClear.clearIcon from ConfigProvider datePicker config', () => {
+    const wrapper = mount(
+      <ConfigProvider datePicker={{ allowClear: { clearIcon: <span data-testid="config-object-clear">x</span> } }}>
+        <DatePicker value={dayjs('2026-02-23')} />
+      </ConfigProvider>,
+    )
+
+    expect(wrapper.find('[data-testid="config-object-clear"]').exists()).toBe(true)
+  })
+
+  it('should prefer props allowClear over ConfigProvider config', () => {
+    const wrapper = mount(
+      <ConfigProvider datePicker={{ allowClear: false }}>
+        <DatePicker
+          value={dayjs('2026-02-23')}
+          allowClear={{ clearIcon: <span data-testid="props-clear-icon">x</span> }}
+        />
+      </ConfigProvider>,
+    )
+
+    expect(wrapper.find('.ant-picker-clear').exists()).toBe(true)
+    expect(wrapper.find('[data-testid="props-clear-icon"]').exists()).toBe(true)
+  })
+
+  it('should react to ConfigProvider datePicker allowClear changes', async () => {
+    const allowClear = ref(false)
+    const wrapper = mount({
+      render: () => (
+        <ConfigProvider datePicker={{ allowClear: allowClear.value }}>
+          <DatePicker value={dayjs('2026-02-23')} />
+        </ConfigProvider>
+      ),
+    })
+
+    expect(wrapper.find('.ant-picker-clear').exists()).toBe(false)
+    allowClear.value = true
+    await nextTick()
+    expect(wrapper.find('.ant-picker-clear').exists()).toBe(true)
     wrapper.unmount()
   })
 })

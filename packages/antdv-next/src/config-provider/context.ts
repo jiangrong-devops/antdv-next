@@ -1,6 +1,6 @@
 import type { DerivativeFunc } from '@antdv-next/cssinjs'
 import type { MoreProps as TabsMoreProps } from '@v-c/tabs'
-import type { AriaAttributes, CSSProperties, InjectionKey, Ref } from 'vue'
+import type { CSSProperties, InjectionKey, Ref } from 'vue'
 import type { MaskType } from '../_util/hooks'
 import type { AnyObject, VueNode } from '../_util/type.ts'
 import type { WarningContextProps } from '../_util/warning.ts'
@@ -71,7 +71,7 @@ import type { TreeProps } from '../tree/Tree.tsx'
 import type { BlockProps as TypographyBaseProps } from '../typography/interface'
 import type { UploadProps } from '../upload/interface.ts'
 import type { RenderEmptyHandler } from './defaultRenderEmpty'
-import { computed, inject, provide, ref } from 'vue'
+import { computed, inject, provide, ref, toRef } from 'vue'
 
 export const defaultPrefixCls = 'ant'
 export const defaultIconPrefixCls = 'anticon'
@@ -154,14 +154,12 @@ export interface ThemeConfig {
    * @descCN 是否开启 `hashed` 属性。如果你的应用中只存在一个版本的 antd，你可以设置为 `false` 来进一步减小样式体积。
    * @descEN Whether to enable the `hashed` attribute. If there is only one version of antd in your application, you can set `false` to reduce the bundle size.
    * @default true
-   * @since 5.0.0
    */
   hashed?: boolean
   /**
    * @descCN 通过 `cssVar` 配置来开启 CSS 变量模式，这个配置会被继承。
    * @descEN Enable CSS variable mode through `cssVar` configuration, This configuration will be inherited.
    * @default false
-   * @since 5.12.0
    */
   /*
    * `true` only (not `boolean`): CSS variables are always on in v6 —
@@ -185,7 +183,6 @@ export interface ThemeConfig {
    * @descCN 开启零运行时模式，不会在运行时产生样式，需要手动引入 CSS 文件。
    * @descEN Enable zero-runtime mode, which will not generate style at runtime, need to import additional CSS file.
    * @default true
-   * @since 6.0.0
    * @example
    * ```tsx
    * import { ConfigProvider } from 'antd';
@@ -252,8 +249,7 @@ export type ButtonConfig = ComponentStyleConfig
 
 export type FlexConfig = ComponentStyleConfig & Pick<FlexProps, 'vertical'>
 
-export type AlertConfig = ComponentStyleConfig & Pick<AlertProps, 'variant' | 'closeIcon' | 'classes' | 'styles'> & {
-  closable?: boolean | ({ closeIcon?: VueNode } & AriaAttributes)
+export type AlertConfig = ComponentStyleConfig & Pick<AlertProps, 'variant' | 'closeIcon' | 'closable' | 'classes' | 'styles'> & {
   successIcon?: VueNode
   infoIcon?: VueNode
   warningIcon?: VueNode
@@ -361,7 +357,7 @@ export type InputConfig = ComponentStyleConfig
   & Pick<InputProps, 'autoComplete' | 'autocomplete' | 'classes' | 'styles' | 'allowClear' | 'variant' | 'changeOnComposing'>
 
 export type InputNumberConfig = ComponentStyleConfig
-  & Pick<InputNumberProps, 'classes' | 'styles' | 'variant'>
+  & Pick<InputNumberProps, 'classes' | 'styles' | 'variant' | 'allowClear'>
 
 export type TextAreaConfig = ComponentStyleConfig
   & Pick<TextAreaProps, 'classes' | 'styles' | 'allowClear' | 'variant' | 'changeOnComposing'>
@@ -399,6 +395,7 @@ export type TabsConfig = ComponentStyleConfig
     | 'removeIcon'
     | 'classes'
     | 'styles'
+    | 'scrollPosition'
   >
   & TabsMoreConfig
 
@@ -466,9 +463,9 @@ export type DatePickerConfig = ComponentStyleConfig
   & Pick<DatePickerProps, 'classes' | 'styles' | 'variant' | 'suffixIcon' | 'allowClear'>
   & { clearIcon?: any }
 
+// RangePicker reads allowClear / clearIcon from the datePicker / timePicker config, so only `variant` / `separator` live here
 export type RangePickerConfig = ComponentStyleConfig
-  & Pick<RangePickerProps, 'classes' | 'styles' | 'variant' | 'separator' | 'suffixIcon' | 'allowClear'>
-  & { clearIcon?: any }
+  & Pick<RangePickerProps, 'variant' | 'separator'>
 
 export type TimePickerConfig = ComponentStyleConfig
   & Pick<TimePickerProps, 'classes' | 'styles' | 'variant' | 'suffixIcon' | 'allowClear'>
@@ -615,12 +612,16 @@ function defaultGetPrefixCls(suffixCls?: string, customizePrefixCls?: string) {
   return suffixCls ? `${defaultPrefixCls}-${suffixCls}` : defaultPrefixCls
 }
 
+// One shared fallback ref: components without a ConfigProvider must resolve to
+// the same context object so shared caches (e.g. the design token) can key on it.
+const defaultConfigRef = ref({
+  // We provide a default function for Context without provider
+  getPrefixCls: defaultGetPrefixCls,
+  iconPrefixCls: defaultIconPrefixCls,
+}) as Ref<ConfigConsumerProps>
+
 export function useConfig() {
-  return inject(ConfigConsumerKey, ref({
-    // We provide a default function for Context without provider
-    getPrefixCls: defaultGetPrefixCls,
-    iconPrefixCls: defaultIconPrefixCls,
-  }) as Ref<ConfigConsumerProps>)
+  return inject(ConfigConsumerKey, defaultConfigRef)
 }
 
 /**
@@ -637,18 +638,16 @@ export type ConfigRefs<R extends ConfigConsumerProps = ConfigConsumerProps> = {
 
 export function useBaseConfig<K extends string>(suffixCls?: K, props?: ComponentBaseProps) {
   const config = useConfig()
+  // `toRef(getter)` refs are plain getters: no ComputedRefImpl / Dep / Link per
+  // instance, while reads inside render or computed still track `config`.
   return {
-    result: computed(() => config.value?.result),
-    modal: computed(() => config.value?.modal),
-    timeline: computed(() => config.value?.timeline),
-    notification: computed(() => config.value?.notification),
+    result: toRef(() => config.value?.result),
+    modal: toRef(() => config.value?.modal),
+    timeline: toRef(() => config.value?.timeline),
+    notification: toRef(() => config.value?.notification),
     getPrefixCls: (suffixCls?: string, prefixCls?: string) => config.value?.getPrefixCls(suffixCls, prefixCls),
-    prefixCls: computed(() => {
-      return config.value?.getPrefixCls(suffixCls, props?.prefixCls)
-    }),
-    direction: computed(() => {
-      return config.value?.direction
-    }),
+    prefixCls: toRef(() => config.value?.getPrefixCls(suffixCls, props?.prefixCls)),
+    direction: toRef(() => config.value?.direction),
     getPopupContainer: config?.value.getPopupContainer,
   }
 }
@@ -683,48 +682,44 @@ export function useComponentBaseConfig<
   K extends keyof NonNullable<ConfigComponentProps[T]> = keyof NonNullable<ConfigComponentProps[T]>,
 >(propName: T, props?: ComponentBaseProps, keys?: readonly K[], suffixCls?: string) {
   const context = useConfig()
-  const propValue = computed(() => {
-    // Index through `any`: with real (non-any) config types the raw indexed
-    // access forms a union of every component config, which trips TS2590
-    // (union too complex). The result is cast to the precise type anyway.
-    return (context.value as any)[propName] as { classes?: any, styles?: any } & ConfigComponentProps[T]
-  })
-  const toRefs = <TValue>(propValues: Ref<TValue>) => {
+  // Index through `any`: with real (non-any) config types the raw indexed
+  // access forms a union of every component config, which trips TS2590
+  // (union too complex). The result is cast to the precise type anyway.
+  const getPropValue = () => (context.value as any)[propName] as { classes?: any, styles?: any } & ConfigComponentProps[T]
+
+  // Every field is a `toRef(getter)`: a plain getter object instead of a
+  // computed, so a component pays no reactive bookkeeping for config fields.
+  const toRefs = <TValue>(getPropValues: () => TValue) => {
     const result: any = {
-      classes: computed(() => (propValues.value as any)?.classes ?? EMPTY_OBJECT),
-      styles: computed(() => (propValues.value as any)?.styles ?? EMPTY_OBJECT),
-      class: computed(() => (propValues.value as any)?.class),
-      style: computed(() => (propValues.value as any)?.style),
+      classes: toRef(() => (getPropValues() as any)?.classes ?? EMPTY_OBJECT),
+      styles: toRef(() => (getPropValues() as any)?.styles ?? EMPTY_OBJECT),
+      class: toRef(() => (getPropValues() as any)?.class),
+      style: toRef(() => (getPropValues() as any)?.style),
     }
-    const __keys = Object.keys(result)
-    for (const key in propValues.value) {
-      if (!__keys.includes(key)) {
-        result[key] = computed(() => propValues.value[key])
+    const addKey = (key: string) => {
+      if (!result[key]) {
+        result[key] = toRef(() => (getPropValues() as any)?.[key])
       }
     }
-    if (keys && keys.length) {
-      keys.forEach((key) => {
-        if (!result[key]) {
-          result[key] = computed(() => propValues.value?.[key])
-        }
-      })
+    const current = getPropValues()
+    if (current) {
+      Object.keys(current).forEach(addKey)
     }
+    keys?.forEach(key => addKey(key as string))
     return result as { [Key in keyof TValue]-?: Ref<TValue[Key]> }
   }
-  const refsData = toRefs(propValue)
+  const refsData = toRefs(getPropValue)
   return {
     ...refsData,
-    direction: computed(() => context.value.direction),
-    prefixCls: computed(() => {
-      return context.value?.getPrefixCls(suffixCls ?? propName, props?.prefixCls)
-    }),
-    rootPrefixCls: computed(() => context.value?.getPrefixCls()),
+    direction: toRef(() => context.value.direction),
+    prefixCls: toRef(() => context.value?.getPrefixCls(suffixCls ?? propName, props?.prefixCls)),
+    rootPrefixCls: toRef(() => context.value?.getPrefixCls()),
     getPopupContainer: context.value.getPopupContainer,
     getPrefixCls: context.value.getPrefixCls,
     getTargetContainer: context.value.getTargetContainer,
-    virtual: computed(() => context.value.virtual),
-    renderEmpty: computed(() => context.value.renderEmpty),
-    popupMatchSelectWidth: computed(() => context.value.popupMatchSelectWidth),
-    popupOverflow: computed(() => context.value.popupOverflow),
+    virtual: toRef(() => context.value.virtual),
+    renderEmpty: toRef(() => context.value.renderEmpty),
+    popupMatchSelectWidth: toRef(() => context.value.popupMatchSelectWidth),
+    popupOverflow: toRef(() => context.value.popupOverflow),
   }
 }

@@ -43,6 +43,7 @@ export {
 
 export type MentionPlacement = 'top' | 'bottom'
 
+/** @deprecated Please use the `options` prop with `MentionsOptionProps` instead. */
 export interface OptionProps {
   value: string
   // children: ReactNode;
@@ -87,7 +88,6 @@ export interface MentionProps extends
   options?: MentionsOptionProps[]
   popupClassName?: string
   /**
-   * @since 5.13.0
    * @default "outlined"
    */
   variant?: Variant
@@ -269,7 +269,7 @@ const InternalMentions = defineComponent<
       if (props.notFoundContent !== undefined) {
         return props.notFoundContent
       }
-      return renderEmpty?.value?.('Select') || <DefaultRenderEmpty componentName="Select" />
+      return renderEmpty?.value?.('Mentions') || <DefaultRenderEmpty componentName="Mentions" />
     })
 
     const mergedFilterOption = computed(() => (props.loading ? loadingFilterOption : props.filterOption))

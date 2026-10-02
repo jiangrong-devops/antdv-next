@@ -62,9 +62,6 @@ export interface CollapseProps extends
   defaultActiveKey?: Array<string | number> | string | number
   /** 手风琴效果 */
   accordion?: boolean
-  /**
-   * @since 5.25.0
-   */
   destroyOnHidden?: boolean
   rootClass?: string
   bordered?: boolean
@@ -82,9 +79,11 @@ export interface CollapseProps extends
 }
 
 export interface CollapseEmits {
+  'update:activeKey': (key: string[]) => void
   change: (key: string[]) => void
 }
 export interface CollapseEmitsProps {
+  'onUpdate:activeKey'?: CollapseEmits['update:activeKey']
   onChange?: CollapseEmits['change']
 }
 
@@ -212,9 +211,9 @@ const Collapse = defineComponent<
       const labelRender = slots?.labelRender ?? props?.labelRender
       const contentRender = slots?.contentRender ?? props?.contentRender
       const items = sourceItems.value.map((item, index) => {
-        const { classes: itemClasses, ...restItem } = item
+        const { classes: itemClasses, content: itemContent, ...restItem } = item
         const label = checkRenderNode(labelRender ? labelRender?.({ item, index }) : item.label)
-        const children = checkRenderNode(contentRender ? contentRender?.({ item, index }) : item.content)
+        const children = checkRenderNode(contentRender ? contentRender?.({ item, index }) : itemContent)
         const _item: ItemType = {
           ...restItem,
           classNames: itemClasses,
@@ -238,7 +237,10 @@ const Collapse = defineComponent<
           expandIcon={renderExpandIcon}
           classNames={mergedClassNames.value}
           styles={mergedStyles.value}
-          onChange={key => emit('change', key as string[])}
+          onChange={(key) => {
+            emit('update:activeKey', key as string[])
+            emit('change', key as string[])
+          }}
           destroyOnHidden={destroyOnHidden}
           items={items}
         />

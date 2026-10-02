@@ -2,6 +2,7 @@ import type { CSSProperties, SlotsType } from 'vue'
 import type { SemanticClassNamesType, SemanticStylesType } from '../_util/hooks'
 import type { VueNode } from '../_util/type'
 import type { ComponentBaseProps } from '../config-provider/context'
+import type { SizeType } from '../config-provider/SizeContext'
 import type { Tab, TabsSlots } from '../tabs'
 import { clsx } from '@v-c/util'
 import { filterEmpty } from '@v-c/util/dist/props-util'
@@ -19,7 +20,10 @@ import useStyle from './style'
 
 export type CardType = 'inner'
 
-export type CardSize = 'small' | 'medium' | 'middle' | 'default'
+/**
+ * Note: `default` is deprecated and will be removed in later versions, please use `medium` instead.
+ */
+export type CardSize = Exclude<SizeType, 'large'> | 'default'
 
 export interface CardTabListType extends Omit<Tab, 'label'> {
   key: string
@@ -161,7 +165,7 @@ const Card = defineComponent<
       return {
         ...props,
         size: mergedSize.value,
-        variant: customVariant.value,
+        variant: variant.value,
       } as CardProps
     })
 
@@ -197,7 +201,6 @@ const Card = defineComponent<
         activeTabKey,
         tabProps,
         defaultActiveTabKey,
-        tabBarExtraContent,
         tabList,
         headStyle,
         bodyStyle,
@@ -224,13 +227,12 @@ const Card = defineComponent<
         </Skeleton>
       )
       const hasActiveTabKey = activeTabKey !== undefined
-      const tabBarExtraContentSlot = typeof tabBarExtraContent === 'object' && tabBarExtraContent ? tabBarExtraContent : getSlotPropsFnRun(slots, props, 'tabBarExtraContent')
       const extraProps = {
         ...tabProps,
         [hasActiveTabKey ? 'activeKey' : 'defaultActiveKey']: hasActiveTabKey
           ? activeTabKey
-          : defaultActiveTabKey,
-        tabBarExtraContent: tabBarExtraContentSlot,
+          : defaultActiveTabKey ?? tabProps?.defaultActiveKey,
+        tabBarExtraContent: getSlotPropsFnRun(slots, props, 'tabBarExtraContent'),
       }
 
       let head: any
@@ -246,7 +248,7 @@ const Card = defineComponent<
             <Tabs
               size={tabSize}
               {...extraProps}
-              class={`${prefixCls.value}-head-size`}
+              class={`${prefixCls.value}-head-tabs`}
               {
                 ... {
                   'onUpdate:activeKey': (key: string) => {

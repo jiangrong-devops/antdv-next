@@ -27,7 +27,7 @@ Badge normally appears in proximity to notifications or user avatars with eye-ca
 <demo src="./demo/status.vue">Status</demo>
 <demo src="./demo/colorful.vue">Colorful Badge</demo>
 <demo src="./demo/ribbon.vue">Ribbon</demo>
-<demo src="./demo/style-class.vue" version="6.0.0">Custom semantic dom styling</demo>
+<demo src="./demo/style-class.vue">Custom semantic dom styling</demo>
 <demo src="./demo/title.vue" debug>Title</demo>
 </demo-group>
 
@@ -47,7 +47,7 @@ Common props ref：[Common props](/docs/vue/common-props)
 | status | Set Badge as a status dot | PresetStatusColorType | - | - | × |
 | color | Customize Badge dot color | LiteralUnion&lt;PresetColorKey&gt; | - | - | × |
 | text | If `status` is set, `text` sets the display text of the status `dot` | VueNode | - | - | × |
-| size | If `count` is set, `size` sets the size of badge | 'default' \| 'small' | - | - | × |
+| size | If `count` is set, `size` sets the size of badge | `medium` \| `small` | - | - | × |
 | offset | Set offset of the badge dot | [number \| string, number \| string] | - | - | × |
 | title | Text to show when hovering over the badge; set `null` or `false` to remove the native title | string \| null \| false | - | null/false: 1.4.0 | × |
 | classes | Customize class for each semantic structure inside the component. Supports object or function. | BadgeClassNamesType | - | - | ✓ |
@@ -57,7 +57,7 @@ Common props ref：[Common props](/docs/vue/common-props)
 
 | Slot | Description | Type | Version |
 | --- | --- | --- | --- |
-| count | Number to show in badge | () =&gt; any | - |
+| count | Customize the badge indicator content | () =&gt; any | - |
 | text | If `status` is set, `text` sets the display text of the status `dot` | () =&gt; any | - |
 
 ## Semantic DOM

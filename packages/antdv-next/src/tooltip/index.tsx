@@ -1,4 +1,4 @@
-import type { placements as Placements, TooltipProps as VcTooltipProps } from '@v-c/tooltip'
+import type { placements as Placements } from '@v-c/tooltip'
 import type { ActionType, AlignType } from '@v-c/trigger'
 import type { LiteralUnion } from '@v-c/util/dist/type'
 import type { App, CSSProperties, SlotsType } from 'vue'
@@ -100,7 +100,8 @@ export interface TriggerCommonApi extends ComponentBaseProps {
   classes?: TooltipClassNamesType
   styles?: TooltipStylesType
   getTooltipContainer?: (node: HTMLElement) => HTMLElement
-  motion?: VcTooltipProps['motion']
+  /** Only the transition `name` is honoured; the rest of the motion config is managed internally */
+  motion?: { name?: string }
 }
 
 export interface TooltipProps extends TriggerCommonApi,
@@ -211,13 +212,13 @@ const InternalTooltip = defineComponent<
       { immediate: true },
     )
     let noTitle = false
-    const onInternalOpenChange = (vis: boolean) => {
+    const onInternalOpenChange = (nextOpen: boolean) => {
       if (props.open === undefined) {
-        open.value = noTitle ? false : vis
+        open.value = noTitle ? false : nextOpen
       }
       if (!noTitle) {
-        emit('openChange', vis)
-        emit('update:open', vis)
+        emit('openChange', nextOpen)
+        emit('update:open', nextOpen)
       }
     }
 
@@ -285,7 +286,7 @@ const InternalTooltip = defineComponent<
       )
       const children = filterEmpty(slots.default?.())
       let child = children?.[0]
-      child = isVNode(child) ? child : <span>{child}</span>
+      child = isVNode(child) && typeof child.type !== 'symbol' ? child : <span>{child}</span>
       const childProps = child?.props ?? {}
       const childCls = !childProps?.class || typeof childProps?.class === 'string' ? clsx(childProps.class, openClass || `${prefixCls.value}-open`) : childProps.class
 

@@ -48,7 +48,7 @@ demo:
 | defaultValue | 指定默认选中的条目 | string \| string[] | - | - | × |
 | disabled | 是否禁用 | boolean | false | - | × |
 | popupMatchSelectWidth | 下拉菜单和选择器同宽。默认将设置 `min-width`，当值小于选择框宽度时会被忽略。false 时会关闭虚拟滚动 | boolean \| number | true | - | × |
-| popupRender | 自定义下拉框内容 | (menu: VueNode) =&gt; VueNode | - | - | × |
+| popupRender | 自定义下拉框内容 | (menu: VNode) =&gt; VueNode | - | - | × |
 | fieldNames | 自定义节点 label、value、children 的字段 | object | &#123; label: `label`, value: `value`, children: `children` &#125; | - | × |
 | getPopupContainer | 菜单渲染父节点。默认渲染到 body 上，如果你遇到菜单滚动定位问题，试试修改为滚动的区域，并相对其定位。[示例](https://codepen.io/afc163/pen/zEjNOy?editors=0010) | (triggerNode: HTMLElement) =&gt; HTMLElement | () =&gt; document.body | - | × |
 | labelInValue | 是否把每个选项的 label 包装到 value 中，会把 value 类型从 `string` 变为 &#123; value: string, label: VueNode, halfChecked: boolean &#125; 的格式 | boolean | false | - | × |
@@ -66,7 +66,7 @@ demo:
 | prefix | 自定义前缀 | VueNode | - | - | × |
 | showCheckedStrategy | 配置 `treeCheckable` 时，定义选中项回填的方式。`TreeSelect.SHOW_ALL`: 显示所有选中节点（包括父节点）；`TreeSelect.SHOW_PARENT`: 只显示父节点（当父节点下所有子节点都选中时）；默认只显示子节点 | `TreeSelect.SHOW_ALL` \| `TreeSelect.SHOW_PARENT` \| `TreeSelect.SHOW_CHILD` | `TreeSelect.SHOW_CHILD` | - | × |
 | showSearch | 是否支持搜索框 | boolean \| [Object](#showsearch) | 单选：false \| 多选：true | - | × |
-| size | 选择框大小 | `large` \| `middle` \| `small` | - | - | × |
+| size | 选择框大小 | `large` \| `medium` \| `small` | - | - | × |
 | status | 设置校验状态 | 'error' \| 'warning' | - | - | × |
 | variant | 形态变体 | `outlined` \| `borderless` \| `filled` \| `underlined` | `outlined` | - | ✓ |
 | suffixIcon | 自定义的选择框后缀图标 | VueNode | `&lt;DownOutlined /&gt;` | - | × |
@@ -164,7 +164,7 @@ demo:
 
 ### 为何在搜索时 `loadData` 不会触发展开？ {#faq-load-data-expand}
 
-在早期版本中，搜索时会触发 `loadData`。但我们收到反馈，输入时会阻塞网络，因此改为搜索不触发 `loadData`。你仍然可以通过 `filterTreeNode` 处理异步加载逻辑：
+搜索时不会触发 `loadData`，以避免输入时阻塞网络。你仍然可以通过 `filterTreeNode` 处理异步加载逻辑：
 
 ```html
 <a-tree-select

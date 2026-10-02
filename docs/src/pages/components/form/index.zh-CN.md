@@ -24,7 +24,7 @@ coverDark: https://mdn.alipayobjects.com/huamei_7uahnr/afts/img/A*ylFATY6w-ygAAA
   <demo src="./demo/layout.vue">表单布局</demo>
   <demo src="./demo/layout-multiple.vue">混合布局</demo>
   <demo src="./demo/disabled.vue">禁用表单</demo>
-  <demo src="./demo/variant.vue" version="5.13.0">表单变体</demo>
+  <demo src="./demo/variant.vue">表单变体</demo>
   <demo src="./demo/required-mark.vue">必选样式</demo>
   <demo src="./demo/size.vue">表单尺寸</demo>
   <demo src="./demo/layout-can-wrap.vue">label 换行</demo>
@@ -56,7 +56,7 @@ coverDark: https://mdn.alipayobjects.com/huamei_7uahnr/afts/img/A*ylFATY6w-ygAAA
   <demo src="./demo/getValueProps-normalize.vue">值转换</demo>
   <demo src="./demo/validate-scroll-to-field.vue" iframe="240">滑动到错误字段</demo>
   <demo src="./demo/validate-other.vue">其他表单控件</demo>
-  <demo src="./demo/style-class.vue" version="6.0.0">自定义语义结构样式</demo>
+  <demo src="./demo/style-class.vue">自定义语义结构样式</demo>
   <demo src="./demo/col-24-debug.vue" debug>Col 24 布局调试</demo>
   <demo src="./demo/disabled-input-debug.vue" debug>禁用状态调试</demo>
   <demo src="./demo/label-debug.vue" debug>Label 省略调试</demo>
@@ -76,7 +76,7 @@ coverDark: https://mdn.alipayobjects.com/huamei_7uahnr/afts/img/A*ylFATY6w-ygAAA
 | styles | 用于自定义组件内部各语义化结构的行内 style，支持对象或函数 | FormStylesType | - | - | ✓ |
 | colon | 配置 Form.Item 的 `colon` 的默认值。表示是否显示 label 后面的冒号 (只有在属性 layout 为 horizontal 时有效) | boolean | true | - | ✓ |
 | name | 表单名称，会作为表单字段 `id` 前缀使用 | string | - | - | × |
-| layout | 表单布局 | FormLayout | `horizontal` | - | × |
+| layout | 表单布局。`horizontal` 布局默认在视口宽度不超过 `575px` 时将标签和控件上下排列，可通过 `labelCol` 和 `wrapperCol` 的 `xs` 配置自定义窄屏下的列宽 | FormLayout | `horizontal` | - | × |
 | labelAlign | label 标签的文本对齐方式 | FormLabelAlign | `right` | - | ✓ |
 | labelWrap | label 标签的文本换行方式 | boolean | false | - | × |
 | labelCol | label 标签布局，同 `Col` 组件，设置 `span` `offset` 值，如 `{span: 3, offset: 12}` 或 `sm: {span: 3, offset: 12}` | ColProps | - | - | × |
@@ -183,9 +183,9 @@ const formRef = ref<FormInstance>()
 | extra | 自定义额外提示信息（优先于 `extra` 属性） | () =&gt; any | - |
 | help | 自定义帮助/错误提示（优先于 `help` 属性） | () =&gt; any | - |
 
-### 类型
+## 类型 {#types}
 
-#### Rule {#rule}
+### Rule {#rule}
 
 `rules` 支持在 `Form` 上按字段批量声明，也支持在 `Form.Item` 上为单个字段声明。当前实现的主要类型如下：
 
@@ -244,7 +244,7 @@ type Rule = RuleObject | RuleRender
 - `type: 'array'` 时可通过 `defaultField` 为数组元素继续声明规则
 - `message` 支持渲染函数（如 `() => t('required')`）：校验时原样保留，渲染错误时才调用，因此函数内读取的响应式状态（locale、i18n 等）变化时，已显示的提示会自动更新，无需重新校验。注意函数形式不参与 `${label}` 等模板变量插值
 
-#### validateMessages {#validatemessages}
+### validateMessages {#validatemessages}
 
 Form 提供默认校验提示文案，你可以通过 `validateMessages` 自定义模板：
 

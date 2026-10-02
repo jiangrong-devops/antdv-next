@@ -117,6 +117,14 @@ export interface CoverableDropdownProps extends DropdownProps {
 export interface ColumnType<RecordType = AnyObject>
   extends Omit<VcColumnType<RecordType>, 'title'> {
   title?: ColumnTitle<RecordType>
+  /**
+   * @version >= 1.5.5
+   * @nameZH 是否可以拖动调整列宽
+   * @nameEN Whether the column width can be resized
+   * @desc 在表头边缘拖动时显示代理线，松开后更新列宽并触发 `resizeColumn`；拖动下限为 `minWidth`（默认 40）。
+   * @descEN Shows a proxy line while dragging the header edge; on release the width is applied and `resizeColumn` fires. `minWidth` (default 40) is the lower bound.
+   */
+  resizable?: boolean
   // Sorter
   sorter?:
     | boolean
@@ -146,7 +154,6 @@ export interface ColumnType<RecordType = AnyObject>
   onFilter?: (value: Key | boolean, record: RecordType) => boolean
   /**
    * Can cover `<Dropdown>` props
-   * @since 5.22.0
    */
   filterDropdownProps?: CoverableDropdownProps
   filterResetToDefaultFilteredValue?: boolean
@@ -157,14 +164,12 @@ export interface ColumnType<RecordType = AnyObject>
   // Deprecated
   /**
    * @deprecated Please use `filterDropdownProps.open` instead.
-   * @since 4.23.0
    */
   filterDropdownOpen?: boolean
   /**
    * @deprecated Please use `filterDropdownProps.onOpenChange` instead.
-   * @since 4.23.0
    */
-  onFilterDropdownOpenChange?: (visible: boolean) => void
+  onFilterDropdownOpenChange?: (open: boolean) => void
 }
 
 export interface ColumnGroupType<RecordType = AnyObject>
@@ -178,6 +183,8 @@ export interface ColumnGroupType<RecordType = AnyObject>
    * actual value. Narrow to a group with `'children' in column`. See #673.
    */
   dataIndex?: never
+  /** Group headers are not resizable; resize their leaf columns instead. Kept as `never` for the same reason as `dataIndex`. */
+  resizable?: never
 }
 
 export type ColumnsType<RecordType = AnyObject> = (

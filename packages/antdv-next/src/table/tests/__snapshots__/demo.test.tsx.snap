@@ -2064,7 +2064,7 @@ exports[`table demo > renders ajax correctly 1`] = `
 
 exports[`table demo > renders auto-height correctly 1`] = `
 <div
-  class="ant-flex css-var-root ant-flex-align-start ant-flex-gap-middle ant-flex-vertical"
+  class="ant-flex css-var-root ant-flex-align-start ant-flex-gap-medium ant-flex-vertical"
 >
   <button
     aria-checked="true"
@@ -2781,7 +2781,7 @@ exports[`table demo > renders basic correctly 1`] = `
                   >
                     <!---->
                     <div
-                      class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-middle ant-space-gap-col-middle css-var-root"
+                      class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-medium ant-space-gap-col-medium css-var-root"
                     >
                       <div
                         class="ant-space-item"
@@ -2859,7 +2859,7 @@ exports[`table demo > renders basic correctly 1`] = `
                   >
                     <!---->
                     <div
-                      class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-middle ant-space-gap-col-middle css-var-root"
+                      class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-medium ant-space-gap-col-medium css-var-root"
                     >
                       <div
                         class="ant-space-item"
@@ -2950,7 +2950,7 @@ exports[`table demo > renders basic correctly 1`] = `
                   >
                     <!---->
                     <div
-                      class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-middle ant-space-gap-col-middle css-var-root"
+                      class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-medium ant-space-gap-col-medium css-var-root"
                     >
                       <div
                         class="ant-space-item"
@@ -6375,12 +6375,13 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                 >
                   <span
                     class="ant-radio-button ant-radio-button-checked"
-                    name="v-0"
                   >
                     <input
                       checked=""
                       class="ant-radio-button-input"
+                      name="v-0"
                       type="radio"
+                      value="large"
                     />
                   </span>
                   <span
@@ -6394,17 +6395,18 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                 >
                   <span
                     class="ant-radio-button"
-                    name="v-0"
                   >
                     <input
                       class="ant-radio-button-input"
+                      name="v-0"
                       type="radio"
+                      value="medium"
                     />
                   </span>
                   <span
                     class="ant-radio-button-label"
                   >
-                     Middle 
+                     Medium 
                   </span>
                 </label>
                 <label
@@ -6412,11 +6414,12 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                 >
                   <span
                     class="ant-radio-button"
-                    name="v-0"
                   >
                     <input
                       class="ant-radio-button-input"
+                      name="v-0"
                       type="radio"
+                      value="small"
                     />
                   </span>
                   <span
@@ -6484,12 +6487,13 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                 >
                   <span
                     class="ant-radio-button ant-radio-button-checked"
-                    name="v-1"
                   >
                     <input
                       checked=""
                       class="ant-radio-button-input"
+                      name="v-1"
                       type="radio"
+                      value="unset"
                     />
                   </span>
                   <span
@@ -6503,11 +6507,12 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                 >
                   <span
                     class="ant-radio-button"
-                    name="v-1"
                   >
                     <input
                       class="ant-radio-button-input"
+                      name="v-1"
                       type="radio"
+                      value="scroll"
                     />
                   </span>
                   <span
@@ -6521,11 +6526,12 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                 >
                   <span
                     class="ant-radio-button"
-                    name="v-1"
                   >
                     <input
                       class="ant-radio-button-input"
+                      name="v-1"
                       type="radio"
+                      value="fixed"
                     />
                   </span>
                   <span
@@ -6593,12 +6599,13 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                 >
                   <span
                     class="ant-radio-button ant-radio-button-checked"
-                    name="v-2"
                   >
                     <input
                       checked=""
                       class="ant-radio-button-input"
+                      name="v-2"
                       type="radio"
+                      value="unset"
                     />
                   </span>
                   <span
@@ -6612,11 +6619,12 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                 >
                   <span
                     class="ant-radio-button"
-                    name="v-2"
                   >
                     <input
                       class="ant-radio-button-input"
+                      name="v-2"
                       type="radio"
+                      value="fixed"
                     />
                   </span>
                   <span
@@ -6684,11 +6692,12 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                 >
                   <span
                     class="ant-radio-button"
-                    name="v-3"
                   >
                     <input
                       class="ant-radio-button-input"
+                      name="v-3"
                       type="radio"
+                      value="topStart"
                     />
                   </span>
                   <span
@@ -6702,11 +6711,12 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                 >
                   <span
                     class="ant-radio-button"
-                    name="v-3"
                   >
                     <input
                       class="ant-radio-button-input"
+                      name="v-3"
                       type="radio"
+                      value="topCenter"
                     />
                   </span>
                   <span
@@ -6720,11 +6730,12 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                 >
                   <span
                     class="ant-radio-button"
-                    name="v-3"
                   >
                     <input
                       class="ant-radio-button-input"
+                      name="v-3"
                       type="radio"
+                      value="topEnd"
                     />
                   </span>
                   <span
@@ -6738,12 +6749,13 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                 >
                   <span
                     class="ant-radio-button ant-radio-button-checked"
-                    name="v-3"
                   >
                     <input
                       checked=""
                       class="ant-radio-button-input"
+                      name="v-3"
                       type="radio"
+                      value="none"
                     />
                   </span>
                   <span
@@ -6811,11 +6823,12 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                 >
                   <span
                     class="ant-radio-button"
-                    name="v-4"
                   >
                     <input
                       class="ant-radio-button-input"
+                      name="v-4"
                       type="radio"
+                      value="bottomStart"
                     />
                   </span>
                   <span
@@ -6829,11 +6842,12 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                 >
                   <span
                     class="ant-radio-button"
-                    name="v-4"
                   >
                     <input
                       class="ant-radio-button-input"
+                      name="v-4"
                       type="radio"
+                      value="bottomCenter"
                     />
                   </span>
                   <span
@@ -6847,12 +6861,13 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                 >
                   <span
                     class="ant-radio-button ant-radio-button-checked"
-                    name="v-4"
                   >
                     <input
                       checked=""
                       class="ant-radio-button-input"
+                      name="v-4"
                       type="radio"
+                      value="bottomEnd"
                     />
                   </span>
                   <span
@@ -6866,11 +6881,12 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                 >
                   <span
                     class="ant-radio-button"
-                    name="v-4"
                   >
                     <input
                       class="ant-radio-button-input"
+                      name="v-4"
                       type="radio"
+                      value="none"
                     />
                   </span>
                   <span
@@ -6971,7 +6987,7 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                           class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                         >
                           <span
-                            class="ant-checkbox ant-wave-target ant-wave-target"
+                            class="ant-checkbox ant-wave-target"
                           >
                             <input
                               class="ant-checkbox-input"
@@ -7202,7 +7218,7 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -7239,7 +7255,7 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                     >
                       <!---->
                       <div
-                        class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-middle ant-space-gap-col-middle css-var-root"
+                        class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-medium ant-space-gap-col-medium css-var-root"
                       >
                         <div
                           class="ant-space-item"
@@ -7318,7 +7334,7 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -7355,7 +7371,7 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                     >
                       <!---->
                       <div
-                        class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-middle ant-space-gap-col-middle css-var-root"
+                        class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-medium ant-space-gap-col-medium css-var-root"
                       >
                         <div
                           class="ant-space-item"
@@ -7434,7 +7450,7 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -7471,7 +7487,7 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                     >
                       <!---->
                       <div
-                        class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-middle ant-space-gap-col-middle css-var-root"
+                        class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-medium ant-space-gap-col-medium css-var-root"
                       >
                         <div
                           class="ant-space-item"
@@ -7550,7 +7566,7 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -7587,7 +7603,7 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                     >
                       <!---->
                       <div
-                        class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-middle ant-space-gap-col-middle css-var-root"
+                        class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-medium ant-space-gap-col-medium css-var-root"
                       >
                         <div
                           class="ant-space-item"
@@ -7666,7 +7682,7 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -7703,7 +7719,7 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                     >
                       <!---->
                       <div
-                        class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-middle ant-space-gap-col-middle css-var-root"
+                        class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-medium ant-space-gap-col-medium css-var-root"
                       >
                         <div
                           class="ant-space-item"
@@ -7782,7 +7798,7 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -7819,7 +7835,7 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                     >
                       <!---->
                       <div
-                        class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-middle ant-space-gap-col-middle css-var-root"
+                        class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-medium ant-space-gap-col-medium css-var-root"
                       >
                         <div
                           class="ant-space-item"
@@ -7898,7 +7914,7 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -7935,7 +7951,7 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                     >
                       <!---->
                       <div
-                        class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-middle ant-space-gap-col-middle css-var-root"
+                        class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-medium ant-space-gap-col-medium css-var-root"
                       >
                         <div
                           class="ant-space-item"
@@ -8014,7 +8030,7 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -8051,7 +8067,7 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                     >
                       <!---->
                       <div
-                        class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-middle ant-space-gap-col-middle css-var-root"
+                        class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-medium ant-space-gap-col-medium css-var-root"
                       >
                         <div
                           class="ant-space-item"
@@ -8130,7 +8146,7 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -8167,7 +8183,7 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                     >
                       <!---->
                       <div
-                        class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-middle ant-space-gap-col-middle css-var-root"
+                        class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-medium ant-space-gap-col-medium css-var-root"
                       >
                         <div
                           class="ant-space-item"
@@ -8246,7 +8262,7 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -8283,7 +8299,7 @@ exports[`table demo > renders dynamic-settings correctly 1`] = `
                     >
                       <!---->
                       <div
-                        class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-middle ant-space-gap-col-middle css-var-root"
+                        class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-medium ant-space-gap-col-medium css-var-root"
                       >
                         <div
                           class="ant-space-item"
@@ -19905,12 +19921,13 @@ exports[`table demo > renders hidden-columns correctly 1`] = `
       class="ant-checkbox-wrapper ant-checkbox-wrapper-checked ant-checkbox-group-item css-var-root ant-checkbox-css-var"
     >
       <span
-        class="ant-checkbox ant-wave-target ant-checkbox-checked ant-wave-target"
+        class="ant-checkbox ant-wave-target ant-checkbox-checked"
       >
         <input
           checked=""
           class="ant-checkbox-input"
           type="checkbox"
+          value="1"
         />
       </span>
       <span
@@ -19923,12 +19940,13 @@ exports[`table demo > renders hidden-columns correctly 1`] = `
       class="ant-checkbox-wrapper ant-checkbox-wrapper-checked ant-checkbox-group-item css-var-root ant-checkbox-css-var"
     >
       <span
-        class="ant-checkbox ant-wave-target ant-checkbox-checked ant-wave-target"
+        class="ant-checkbox ant-wave-target ant-checkbox-checked"
       >
         <input
           checked=""
           class="ant-checkbox-input"
           type="checkbox"
+          value="2"
         />
       </span>
       <span
@@ -19941,12 +19959,13 @@ exports[`table demo > renders hidden-columns correctly 1`] = `
       class="ant-checkbox-wrapper ant-checkbox-wrapper-checked ant-checkbox-group-item css-var-root ant-checkbox-css-var"
     >
       <span
-        class="ant-checkbox ant-wave-target ant-checkbox-checked ant-wave-target"
+        class="ant-checkbox ant-wave-target ant-checkbox-checked"
       >
         <input
           checked=""
           class="ant-checkbox-input"
           type="checkbox"
+          value="3"
         />
       </span>
       <span
@@ -19959,12 +19978,13 @@ exports[`table demo > renders hidden-columns correctly 1`] = `
       class="ant-checkbox-wrapper ant-checkbox-wrapper-checked ant-checkbox-group-item css-var-root ant-checkbox-css-var"
     >
       <span
-        class="ant-checkbox ant-wave-target ant-checkbox-checked ant-wave-target"
+        class="ant-checkbox ant-wave-target ant-checkbox-checked"
       >
         <input
           checked=""
           class="ant-checkbox-input"
           type="checkbox"
+          value="4"
         />
       </span>
       <span
@@ -19977,12 +19997,13 @@ exports[`table demo > renders hidden-columns correctly 1`] = `
       class="ant-checkbox-wrapper ant-checkbox-wrapper-checked ant-checkbox-group-item css-var-root ant-checkbox-css-var"
     >
       <span
-        class="ant-checkbox ant-wave-target ant-checkbox-checked ant-wave-target"
+        class="ant-checkbox ant-wave-target ant-checkbox-checked"
       >
         <input
           checked=""
           class="ant-checkbox-input"
           type="checkbox"
+          value="5"
         />
       </span>
       <span
@@ -19995,12 +20016,13 @@ exports[`table demo > renders hidden-columns correctly 1`] = `
       class="ant-checkbox-wrapper ant-checkbox-wrapper-checked ant-checkbox-group-item css-var-root ant-checkbox-css-var"
     >
       <span
-        class="ant-checkbox ant-wave-target ant-checkbox-checked ant-wave-target"
+        class="ant-checkbox ant-wave-target ant-checkbox-checked"
       >
         <input
           checked=""
           class="ant-checkbox-input"
           type="checkbox"
+          value="6"
         />
       </span>
       <span
@@ -20013,12 +20035,13 @@ exports[`table demo > renders hidden-columns correctly 1`] = `
       class="ant-checkbox-wrapper ant-checkbox-wrapper-checked ant-checkbox-group-item css-var-root ant-checkbox-css-var"
     >
       <span
-        class="ant-checkbox ant-wave-target ant-checkbox-checked ant-wave-target"
+        class="ant-checkbox ant-wave-target ant-checkbox-checked"
       >
         <input
           checked=""
           class="ant-checkbox-input"
           type="checkbox"
+          value="7"
         />
       </span>
       <span
@@ -20031,12 +20054,13 @@ exports[`table demo > renders hidden-columns correctly 1`] = `
       class="ant-checkbox-wrapper ant-checkbox-wrapper-checked ant-checkbox-group-item css-var-root ant-checkbox-css-var"
     >
       <span
-        class="ant-checkbox ant-wave-target ant-checkbox-checked ant-wave-target"
+        class="ant-checkbox ant-wave-target ant-checkbox-checked"
       >
         <input
           checked=""
           class="ant-checkbox-input"
           type="checkbox"
+          value="8"
         />
       </span>
       <span
@@ -22520,7 +22544,7 @@ exports[`table demo > renders nested-table correctly 1`] = `
                                         >
                                           <!---->
                                           <div
-                                            class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-middle ant-space-gap-col-middle css-var-root"
+                                            class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-medium ant-space-gap-col-medium css-var-root"
                                           >
                                             <div
                                               class="ant-space-item"
@@ -22620,7 +22644,7 @@ exports[`table demo > renders nested-table correctly 1`] = `
                                         >
                                           <!---->
                                           <div
-                                            class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-middle ant-space-gap-col-middle css-var-root"
+                                            class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-medium ant-space-gap-col-medium css-var-root"
                                           >
                                             <div
                                               class="ant-space-item"
@@ -22720,7 +22744,7 @@ exports[`table demo > renders nested-table correctly 1`] = `
                                         >
                                           <!---->
                                           <div
-                                            class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-middle ant-space-gap-col-middle css-var-root"
+                                            class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-medium ant-space-gap-col-medium css-var-root"
                                           >
                                             <div
                                               class="ant-space-item"
@@ -23340,7 +23364,7 @@ exports[`table demo > renders nested-table correctly 1`] = `
                                         >
                                           <!---->
                                           <div
-                                            class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-middle ant-space-gap-col-middle css-var-root"
+                                            class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-medium ant-space-gap-col-medium css-var-root"
                                           >
                                             <div
                                               class="ant-space-item"
@@ -23440,7 +23464,7 @@ exports[`table demo > renders nested-table correctly 1`] = `
                                         >
                                           <!---->
                                           <div
-                                            class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-middle ant-space-gap-col-middle css-var-root"
+                                            class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-medium ant-space-gap-col-medium css-var-root"
                                           >
                                             <div
                                               class="ant-space-item"
@@ -23540,7 +23564,7 @@ exports[`table demo > renders nested-table correctly 1`] = `
                                         >
                                           <!---->
                                           <div
-                                            class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-middle ant-space-gap-col-middle css-var-root"
+                                            class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-medium ant-space-gap-col-medium css-var-root"
                                           >
                                             <div
                                               class="ant-space-item"
@@ -24160,7 +24184,7 @@ exports[`table demo > renders nested-table correctly 1`] = `
                                         >
                                           <!---->
                                           <div
-                                            class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-middle ant-space-gap-col-middle css-var-root"
+                                            class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-medium ant-space-gap-col-medium css-var-root"
                                           >
                                             <div
                                               class="ant-space-item"
@@ -24260,7 +24284,7 @@ exports[`table demo > renders nested-table correctly 1`] = `
                                         >
                                           <!---->
                                           <div
-                                            class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-middle ant-space-gap-col-middle css-var-root"
+                                            class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-medium ant-space-gap-col-medium css-var-root"
                                           >
                                             <div
                                               class="ant-space-item"
@@ -24360,7 +24384,7 @@ exports[`table demo > renders nested-table correctly 1`] = `
                                         >
                                           <!---->
                                           <div
-                                            class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-middle ant-space-gap-col-middle css-var-root"
+                                            class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-medium ant-space-gap-col-medium css-var-root"
                                           >
                                             <div
                                               class="ant-space-item"
@@ -24744,7 +24768,7 @@ exports[`table demo > renders order-column correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -24810,7 +24834,7 @@ exports[`table demo > renders order-column correctly 1`] = `
                       class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                     >
                       <span
-                        class="ant-checkbox ant-wave-target ant-wave-target"
+                        class="ant-checkbox ant-wave-target"
                       >
                         <input
                           class="ant-checkbox-input"
@@ -24867,7 +24891,7 @@ exports[`table demo > renders order-column correctly 1`] = `
                       class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                     >
                       <span
-                        class="ant-checkbox ant-wave-target ant-wave-target"
+                        class="ant-checkbox ant-wave-target"
                       >
                         <input
                           class="ant-checkbox-input"
@@ -24924,7 +24948,7 @@ exports[`table demo > renders order-column correctly 1`] = `
                       class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                     >
                       <span
-                        class="ant-checkbox ant-wave-target ant-wave-target"
+                        class="ant-checkbox ant-wave-target"
                       >
                         <input
                           class="ant-checkbox-input"
@@ -24981,7 +25005,7 @@ exports[`table demo > renders order-column correctly 1`] = `
                       class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                     >
                       <span
-                        class="ant-checkbox ant-wave-target ant-wave-target"
+                        class="ant-checkbox ant-wave-target"
                       >
                         <input
                           class="ant-checkbox-input"
@@ -25111,13 +25135,14 @@ exports[`table demo > renders pagination correctly 1`] = `
         class="ant-radio-wrapper ant-radio-wrapper-checked css-var-root ant-radio-css-var"
       >
         <span
-          class="ant-radio ant-wave-target ant-radio-checked ant-wave-target"
-          name="v-0"
+          class="ant-radio ant-wave-target ant-radio-checked"
         >
           <input
             checked=""
             class="ant-radio-input"
+            name="v-0"
             type="radio"
+            value="topStart"
           />
         </span>
         <span
@@ -25130,12 +25155,13 @@ exports[`table demo > renders pagination correctly 1`] = `
         class="ant-radio-wrapper css-var-root ant-radio-css-var"
       >
         <span
-          class="ant-radio ant-wave-target ant-wave-target"
-          name="v-0"
+          class="ant-radio ant-wave-target"
         >
           <input
             class="ant-radio-input"
+            name="v-0"
             type="radio"
+            value="topCenter"
           />
         </span>
         <span
@@ -25148,12 +25174,13 @@ exports[`table demo > renders pagination correctly 1`] = `
         class="ant-radio-wrapper css-var-root ant-radio-css-var"
       >
         <span
-          class="ant-radio ant-wave-target ant-wave-target"
-          name="v-0"
+          class="ant-radio ant-wave-target"
         >
           <input
             class="ant-radio-input"
+            name="v-0"
             type="radio"
+            value="topEnd"
           />
         </span>
         <span
@@ -25166,12 +25193,13 @@ exports[`table demo > renders pagination correctly 1`] = `
         class="ant-radio-wrapper css-var-root ant-radio-css-var"
       >
         <span
-          class="ant-radio ant-wave-target ant-wave-target"
-          name="v-0"
+          class="ant-radio ant-wave-target"
         >
           <input
             class="ant-radio-input"
+            name="v-0"
             type="radio"
+            value="none"
           />
         </span>
         <span
@@ -25190,12 +25218,13 @@ exports[`table demo > renders pagination correctly 1`] = `
       class="ant-radio-wrapper css-var-root ant-radio-css-var"
     >
       <span
-        class="ant-radio ant-wave-target ant-wave-target"
-        name="v-1"
+        class="ant-radio ant-wave-target"
       >
         <input
           class="ant-radio-input"
+          name="v-1"
           type="radio"
+          value="bottomStart"
         />
       </span>
       <span
@@ -25208,12 +25237,13 @@ exports[`table demo > renders pagination correctly 1`] = `
       class="ant-radio-wrapper css-var-root ant-radio-css-var"
     >
       <span
-        class="ant-radio ant-wave-target ant-wave-target"
-        name="v-1"
+        class="ant-radio ant-wave-target"
       >
         <input
           class="ant-radio-input"
+          name="v-1"
           type="radio"
+          value="bottomCenter"
         />
       </span>
       <span
@@ -25226,13 +25256,14 @@ exports[`table demo > renders pagination correctly 1`] = `
       class="ant-radio-wrapper ant-radio-wrapper-checked css-var-root ant-radio-css-var"
     >
       <span
-        class="ant-radio ant-wave-target ant-radio-checked ant-wave-target"
-        name="v-1"
+        class="ant-radio ant-wave-target ant-radio-checked"
       >
         <input
           checked=""
           class="ant-radio-input"
+          name="v-1"
           type="radio"
+          value="bottomEnd"
         />
       </span>
       <span
@@ -25245,12 +25276,13 @@ exports[`table demo > renders pagination correctly 1`] = `
       class="ant-radio-wrapper css-var-root ant-radio-css-var"
     >
       <span
-        class="ant-radio ant-wave-target ant-wave-target"
-        name="v-1"
+        class="ant-radio ant-wave-target"
       >
         <input
           class="ant-radio-input"
+          name="v-1"
           type="radio"
+          value="none"
         />
       </span>
       <span
@@ -25504,7 +25536,7 @@ exports[`table demo > renders pagination correctly 1`] = `
                     >
                       <!---->
                       <div
-                        class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-middle ant-space-gap-col-middle css-var-root"
+                        class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-medium ant-space-gap-col-medium css-var-root"
                       >
                         <div
                           class="ant-space-item"
@@ -25582,7 +25614,7 @@ exports[`table demo > renders pagination correctly 1`] = `
                     >
                       <!---->
                       <div
-                        class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-middle ant-space-gap-col-middle css-var-root"
+                        class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-medium ant-space-gap-col-medium css-var-root"
                       >
                         <div
                           class="ant-space-item"
@@ -25673,7 +25705,7 @@ exports[`table demo > renders pagination correctly 1`] = `
                     >
                       <!---->
                       <div
-                        class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-middle ant-space-gap-col-middle css-var-root"
+                        class="ant-space ant-space-horizontal ant-space-align-center ant-space-gap-row-medium ant-space-gap-col-medium css-var-root"
                       >
                         <div
                           class="ant-space-item"
@@ -26424,402 +26456,543 @@ exports[`table demo > renders reset-filter correctly 1`] = `
 
 exports[`table demo > renders resizable-column correctly 1`] = `
 <div
-  class="css-var-root ant-table-css-var ant-table-wrapper"
-  data-allow-mismatch="true"
+  class="ant-space ant-space-vertical ant-space-gap-row-small ant-space-gap-col-small css-var-root"
+  style="width: 100%;"
 >
   <div
-    aria-busy="false"
-    aria-live="polite"
-    class="ant-spin css-var-root"
+    class="ant-space-item"
   >
-    <!---->
+    <button
+      class="ant-btn css-var-root ant-btn-default ant-btn-color-default ant-btn-variant-outlined"
+      type="button"
+    >
+      <transition-stub
+        appear="false"
+        css="true"
+        enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
+        enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
+        entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
+        leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
+        leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
+        leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
+        name="ant-btn-loading-icon-motion"
+        persisted="false"
+      >
+        <!---->
+      </transition-stub>
+      <span>
+         Reset widths 
+      </span>
+      <!---->
+    </button>
+  </div>
+  <!---->
+  <div
+    class="ant-space-item"
+  >
     <div
-      class="ant-spin-container"
+      class="css-var-root ant-table-css-var ant-table-wrapper"
+      data-allow-mismatch="true"
     >
       <div
-        class="ant-table ant-table-bordered css-var-root ant-table-css-var"
+        aria-busy="false"
+        aria-live="polite"
+        class="ant-spin css-var-root"
       >
         <!---->
         <div
-          class="ant-table-container"
+          class="ant-spin-container"
         >
           <div
-            class="ant-table-content"
+            class="ant-table ant-table-bordered css-var-root ant-table-css-var ant-table-fix-start-shadow ant-table-fix-end-shadow ant-table-scroll-horizontal"
           >
-            <table
-              style="table-layout: auto;"
+            <!---->
+            <div
+              class="ant-table-container"
             >
-              <!---->
-              <colgroup>
-                <col
-                  style="width: 200px;"
-                />
-                <col
-                  style="width: 100px;"
-                />
-                <col
-                  style="width: 100px;"
-                />
-                <col
-                  style="width: 100px;"
-                />
-              </colgroup>
-              <thead
-                class="ant-table-thead"
+              <div
+                class="ant-table-content"
+                style="overflow-x: auto; overflow-y: hidden;"
               >
-                <tr
-                  class=""
+                <table
+                  style="min-width: 100%; table-layout: fixed;"
                 >
-                  <th
-                    class="resizable-title ant-table-cell"
-                    colend="0"
-                    colstart="0"
-                    scope="col"
-                    style="width: 200px;"
-                  >
-                    <!---->
-                    Date
-                    <span
-                      class="resizable-handle"
+                  <!---->
+                  <colgroup>
+                    <col
+                      style="width: 200px;"
                     />
-                  </th>
-                  <th
-                    aria-description="sortable"
-                    aria-label="Amount"
-                    class="resizable-title ant-table-cell ant-table-column-has-sorters"
-                    colend="1"
-                    colstart="1"
-                    scope="col"
-                    style="width: 100px;"
-                    tabindex="0"
+                    <col
+                      style="width: 120px;"
+                    />
+                    <col
+                      style="width: 120px;"
+                    />
+                    <col
+                      style="width: 160px;"
+                    />
+                  </colgroup>
+                  <thead
+                    class="ant-table-thead"
                   >
-                    <!---->
-                    <div
-                      class="ant-table-column-sorters"
+                    <tr
+                      class=""
                     >
-                      <span
-                        class="ant-table-column-title"
-                      >
-                        Amount
-                      </span>
-                      <span
-                        class="ant-table-column-sorter ant-table-column-sorter-full"
+                      <th
+                        class="ant-table-cell ant-table-cell-with-append"
+                        colend="0"
+                        colstart="0"
+                        scope="col"
                       >
                         <span
-                          aria-hidden="true"
-                          class="ant-table-column-sorter-inner"
+                          class="ant-table-resize-handle"
+                        />
+                        Date
+                      </th>
+                      <th
+                        aria-description="sortable"
+                        aria-label="Amount"
+                        class="ant-table-cell ant-table-cell-with-append ant-table-column-has-sorters"
+                        colend="1"
+                        colstart="1"
+                        scope="col"
+                        tabindex="0"
+                      >
+                        <span
+                          class="ant-table-resize-handle"
+                        />
+                        <div
+                          class="ant-table-column-sorters"
                         >
                           <span
-                            aria-label="caret-up"
-                            class="anticon anticon-caret-up ant-table-column-sorter-up"
-                            role="img"
+                            class="ant-table-column-title"
                           >
-                            <svg
-                              aria-hidden="true"
-                              data-icon="caret-up"
-                              fill="currentColor"
-                              focusable="false"
-                              height="1em"
-                              viewBox="0 0 1024 1024"
-                              width="1em"
-                            >
-                              <path
-                                d="M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z"
-                              />
-                            </svg>
+                            Amount
                           </span>
                           <span
-                            aria-label="caret-down"
-                            class="anticon anticon-caret-down ant-table-column-sorter-down"
-                            role="img"
+                            class="ant-table-column-sorter ant-table-column-sorter-full"
                           >
-                            <svg
+                            <span
                               aria-hidden="true"
-                              data-icon="caret-down"
-                              fill="currentColor"
-                              focusable="false"
-                              height="1em"
-                              viewBox="0 0 1024 1024"
-                              width="1em"
+                              class="ant-table-column-sorter-inner"
                             >
-                              <path
-                                d="M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z"
-                              />
-                            </svg>
+                              <span
+                                aria-label="caret-up"
+                                class="anticon anticon-caret-up ant-table-column-sorter-up"
+                                role="img"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  data-icon="caret-up"
+                                  fill="currentColor"
+                                  focusable="false"
+                                  height="1em"
+                                  viewBox="0 0 1024 1024"
+                                  width="1em"
+                                >
+                                  <path
+                                    d="M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z"
+                                  />
+                                </svg>
+                              </span>
+                              <span
+                                aria-label="caret-down"
+                                class="anticon anticon-caret-down ant-table-column-sorter-down"
+                                role="img"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  data-icon="caret-down"
+                                  fill="currentColor"
+                                  focusable="false"
+                                  height="1em"
+                                  viewBox="0 0 1024 1024"
+                                  width="1em"
+                                >
+                                  <path
+                                    d="M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z"
+                                  />
+                                </svg>
+                              </span>
+                            </span>
                           </span>
-                        </span>
-                      </span>
-                    </div>
-                    <!---->
-                    <span
-                      class="resizable-handle"
-                    />
-                  </th>
-                  <th
-                    class="resizable-title ant-table-cell"
-                    colend="2"
-                    colstart="2"
-                    scope="col"
-                    style="width: 100px;"
+                        </div>
+                        <!---->
+                      </th>
+                      <th
+                        class="ant-table-cell ant-table-cell-with-append"
+                        colend="2"
+                        colstart="2"
+                        scope="col"
+                      >
+                        <span
+                          class="ant-table-resize-handle"
+                        />
+                        Type
+                      </th>
+                      <th
+                        class="ant-table-cell ant-table-cell-with-append"
+                        colend="3"
+                        colstart="3"
+                        scope="col"
+                      >
+                        <span
+                          class="ant-table-resize-handle"
+                        />
+                        Note
+                      </th>
+                      <th
+                        class="ant-table-cell"
+                        colend="4"
+                        colstart="4"
+                        scope="col"
+                      >
+                        <!---->
+                        Action
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    class="ant-table-tbody"
                   >
-                    <!---->
-                    Type
-                    <span
-                      class="resizable-handle"
-                    />
-                  </th>
-                  <th
-                    class="resizable-title ant-table-cell"
-                    colend="3"
-                    colstart="3"
-                    scope="col"
-                    style="width: 100px;"
-                  >
-                    <!---->
-                    Note
-                    <span
-                      class="resizable-handle"
-                    />
-                  </th>
-                  <th
-                    class="ant-table-cell"
-                    colend="4"
-                    colstart="4"
-                    scope="col"
-                  >
-                    <!---->
-                    Action
-                  </th>
-                </tr>
-              </thead>
-              <tbody
-                class="ant-table-tbody"
-              >
-                <!---->
-                <tr
-                  class="ant-table-row ant-table-row-level-0"
-                  data-row-key="0"
-                >
-                  <td
-                    class="ant-table-cell"
-                    scope="row"
-                  >
-                    <!---->
-                    2018-02-11
-                  </td>
-                  <td
-                    class="ant-table-cell"
-                    scope="row"
-                  >
-                    <!---->
-                    120
-                  </td>
-                  <td
-                    class="ant-table-cell"
-                    scope="row"
-                  >
-                    <!---->
-                    income
-                  </td>
-                  <td
-                    class="ant-table-cell"
-                    scope="row"
-                  >
-                    <!---->
-                    transfer
-                  </td>
-                  <td
-                    class="ant-table-cell"
-                    scope="row"
-                  >
-                    <!---->
-                    <a>
-                      Delete
-                    </a>
-                  </td>
-                </tr>
-                <tr
-                  class="ant-table-row ant-table-row-level-0"
-                  data-row-key="1"
-                >
-                  <td
-                    class="ant-table-cell"
-                    scope="row"
-                  >
-                    <!---->
-                    2018-03-11
-                  </td>
-                  <td
-                    class="ant-table-cell"
-                    scope="row"
-                  >
-                    <!---->
-                    243
-                  </td>
-                  <td
-                    class="ant-table-cell"
-                    scope="row"
-                  >
-                    <!---->
-                    income
-                  </td>
-                  <td
-                    class="ant-table-cell"
-                    scope="row"
-                  >
-                    <!---->
-                    transfer
-                  </td>
-                  <td
-                    class="ant-table-cell"
-                    scope="row"
-                  >
-                    <!---->
-                    <a>
-                      Delete
-                    </a>
-                  </td>
-                </tr>
-                <tr
-                  class="ant-table-row ant-table-row-level-0"
-                  data-row-key="2"
-                >
-                  <td
-                    class="ant-table-cell"
-                    scope="row"
-                  >
-                    <!---->
-                    2018-04-11
-                  </td>
-                  <td
-                    class="ant-table-cell"
-                    scope="row"
-                  >
-                    <!---->
-                    98
-                  </td>
-                  <td
-                    class="ant-table-cell"
-                    scope="row"
-                  >
-                    <!---->
-                    income
-                  </td>
-                  <td
-                    class="ant-table-cell"
-                    scope="row"
-                  >
-                    <!---->
-                    transfer
-                  </td>
-                  <td
-                    class="ant-table-cell"
-                    scope="row"
-                  >
-                    <!---->
-                    <a>
-                      Delete
-                    </a>
-                  </td>
-                </tr>
-              </tbody>
-              <!---->
-            </table>
+                    <tr
+                      aria-hidden="true"
+                      class="ant-table-measure-row"
+                      style="height: 0px;"
+                    >
+                      <td
+                        style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
+                      >
+                        <div
+                          style="height: 0px; overflow: hidden; font-weight: bold;"
+                        >
+                          Date
+                        </div>
+                      </td>
+                      <td
+                        style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
+                      >
+                        <div
+                          style="height: 0px; overflow: hidden; font-weight: bold;"
+                        >
+                          <div
+                            class="ant-table-column-sorters"
+                          >
+                            <span
+                              class="ant-table-column-title"
+                            >
+                              Amount
+                            </span>
+                            <span
+                              class="ant-table-column-sorter ant-table-column-sorter-full"
+                            >
+                              <span
+                                aria-hidden="true"
+                                class="ant-table-column-sorter-inner"
+                              >
+                                <span
+                                  aria-label="caret-up"
+                                  class="anticon anticon-caret-up ant-table-column-sorter-up"
+                                  role="img"
+                                >
+                                  <svg
+                                    aria-hidden="true"
+                                    data-icon="caret-up"
+                                    fill="currentColor"
+                                    focusable="false"
+                                    height="1em"
+                                    viewBox="0 0 1024 1024"
+                                    width="1em"
+                                  >
+                                    <path
+                                      d="M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z"
+                                    />
+                                  </svg>
+                                </span>
+                                <span
+                                  aria-label="caret-down"
+                                  class="anticon anticon-caret-down ant-table-column-sorter-down"
+                                  role="img"
+                                >
+                                  <svg
+                                    aria-hidden="true"
+                                    data-icon="caret-down"
+                                    fill="currentColor"
+                                    focusable="false"
+                                    height="1em"
+                                    viewBox="0 0 1024 1024"
+                                    width="1em"
+                                  >
+                                    <path
+                                      d="M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z"
+                                    />
+                                  </svg>
+                                </span>
+                              </span>
+                            </span>
+                          </div>
+                          <!---->
+                        </div>
+                      </td>
+                      <td
+                        style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
+                      >
+                        <div
+                          style="height: 0px; overflow: hidden; font-weight: bold;"
+                        >
+                          Type
+                        </div>
+                      </td>
+                      <td
+                        style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
+                      >
+                        <div
+                          style="height: 0px; overflow: hidden; font-weight: bold;"
+                        >
+                          Note
+                        </div>
+                      </td>
+                      <td
+                        style="padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-bottom: 0px; height: 0px;"
+                      >
+                        <div
+                          style="height: 0px; overflow: hidden; font-weight: bold;"
+                        >
+                          Action
+                        </div>
+                      </td>
+                    </tr>
+                    <tr
+                      class="ant-table-row ant-table-row-level-0"
+                      data-row-key="0"
+                    >
+                      <td
+                        class="ant-table-cell"
+                        scope="row"
+                      >
+                        <!---->
+                        2018-02-11
+                      </td>
+                      <td
+                        class="ant-table-cell"
+                        scope="row"
+                      >
+                        <!---->
+                        120
+                      </td>
+                      <td
+                        class="ant-table-cell"
+                        scope="row"
+                      >
+                        <!---->
+                        income
+                      </td>
+                      <td
+                        class="ant-table-cell"
+                        scope="row"
+                      >
+                        <!---->
+                        transfer
+                      </td>
+                      <td
+                        class="ant-table-cell"
+                        scope="row"
+                      >
+                        <!---->
+                        <a>
+                          Delete
+                        </a>
+                      </td>
+                    </tr>
+                    <tr
+                      class="ant-table-row ant-table-row-level-0"
+                      data-row-key="1"
+                    >
+                      <td
+                        class="ant-table-cell"
+                        scope="row"
+                      >
+                        <!---->
+                        2018-03-11
+                      </td>
+                      <td
+                        class="ant-table-cell"
+                        scope="row"
+                      >
+                        <!---->
+                        243
+                      </td>
+                      <td
+                        class="ant-table-cell"
+                        scope="row"
+                      >
+                        <!---->
+                        income
+                      </td>
+                      <td
+                        class="ant-table-cell"
+                        scope="row"
+                      >
+                        <!---->
+                        transfer
+                      </td>
+                      <td
+                        class="ant-table-cell"
+                        scope="row"
+                      >
+                        <!---->
+                        <a>
+                          Delete
+                        </a>
+                      </td>
+                    </tr>
+                    <tr
+                      class="ant-table-row ant-table-row-level-0"
+                      data-row-key="2"
+                    >
+                      <td
+                        class="ant-table-cell"
+                        scope="row"
+                      >
+                        <!---->
+                        2018-04-11
+                      </td>
+                      <td
+                        class="ant-table-cell"
+                        scope="row"
+                      >
+                        <!---->
+                        98
+                      </td>
+                      <td
+                        class="ant-table-cell"
+                        scope="row"
+                      >
+                        <!---->
+                        income
+                      </td>
+                      <td
+                        class="ant-table-cell"
+                        scope="row"
+                      >
+                        <!---->
+                        transfer
+                      </td>
+                      <td
+                        class="ant-table-cell"
+                        scope="row"
+                      >
+                        <!---->
+                        <a>
+                          Delete
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <!---->
+                </table>
+              </div>
+            </div>
+            <!---->
+            <div
+              class="ant-table-resize-proxy"
+              style="position: absolute; display: none; width: 0px; pointer-events: none;"
+            />
           </div>
+          <!---->
+          <ul
+            class="ant-pagination ant-table-pagination ant-table-pagination-end css-var-root"
+          >
+            <!---->
+            <li
+              aria-disabled="true"
+              aria-label="上一页"
+              class="ant-pagination-prev ant-pagination-disabled"
+              role="button"
+            >
+              <button
+                class="ant-pagination-item-link"
+                disabled=""
+                tabindex="-1"
+                type="button"
+              >
+                <span
+                  aria-label="left"
+                  class="anticon anticon-left"
+                  role="img"
+                >
+                  <svg
+                    aria-hidden="true"
+                    data-icon="left"
+                    fill="currentColor"
+                    focusable="false"
+                    height="1em"
+                    viewBox="64 64 896 896"
+                    width="1em"
+                  >
+                    <path
+                      d="M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </li>
+            <li
+              aria-current="page"
+              aria-label="页 1"
+              class="ant-pagination-item ant-pagination-item-1 ant-pagination-item-active"
+              role="button"
+              tabindex="0"
+              title="1"
+            >
+              <a
+                aria-hidden="true"
+                rel="nofollow"
+                tabindex="-1"
+              >
+                1
+              </a>
+            </li>
+            <li
+              aria-disabled="true"
+              aria-label="下一页"
+              class="ant-pagination-next ant-pagination-disabled"
+              role="button"
+            >
+              <button
+                class="ant-pagination-item-link"
+                disabled=""
+                tabindex="-1"
+                type="button"
+              >
+                <span
+                  aria-label="right"
+                  class="anticon anticon-right"
+                  role="img"
+                >
+                  <svg
+                    aria-hidden="true"
+                    data-icon="right"
+                    fill="currentColor"
+                    focusable="false"
+                    height="1em"
+                    viewBox="64 64 896 896"
+                    width="1em"
+                  >
+                    <path
+                      d="M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </li>
+            <!---->
+          </ul>
         </div>
-        <!---->
       </div>
-      <!---->
-      <ul
-        class="ant-pagination ant-table-pagination ant-table-pagination-end css-var-root"
-      >
-        <!---->
-        <li
-          aria-disabled="true"
-          aria-label="上一页"
-          class="ant-pagination-prev ant-pagination-disabled"
-          role="button"
-        >
-          <button
-            class="ant-pagination-item-link"
-            disabled=""
-            tabindex="-1"
-            type="button"
-          >
-            <span
-              aria-label="left"
-              class="anticon anticon-left"
-              role="img"
-            >
-              <svg
-                aria-hidden="true"
-                data-icon="left"
-                fill="currentColor"
-                focusable="false"
-                height="1em"
-                viewBox="64 64 896 896"
-                width="1em"
-              >
-                <path
-                  d="M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z"
-                />
-              </svg>
-            </span>
-          </button>
-        </li>
-        <li
-          aria-current="page"
-          aria-label="页 1"
-          class="ant-pagination-item ant-pagination-item-1 ant-pagination-item-active"
-          role="button"
-          tabindex="0"
-          title="1"
-        >
-          <a
-            aria-hidden="true"
-            rel="nofollow"
-            tabindex="-1"
-          >
-            1
-          </a>
-        </li>
-        <li
-          aria-disabled="true"
-          aria-label="下一页"
-          class="ant-pagination-next ant-pagination-disabled"
-          role="button"
-        >
-          <button
-            class="ant-pagination-item-link"
-            disabled=""
-            tabindex="-1"
-            type="button"
-          >
-            <span
-              aria-label="right"
-              class="anticon anticon-right"
-              role="img"
-            >
-              <svg
-                aria-hidden="true"
-                data-icon="right"
-                fill="currentColor"
-                focusable="false"
-                height="1em"
-                viewBox="64 64 896 896"
-                width="1em"
-              >
-                <path
-                  d="M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z"
-                />
-              </svg>
-            </span>
-          </button>
-        </li>
-        <!---->
-      </ul>
     </div>
   </div>
+  <!---->
 </div>
 `;
 
@@ -26997,13 +27170,14 @@ exports[`table demo > renders row-selection correctly 1`] = `
       class="ant-radio-wrapper ant-radio-wrapper-checked css-var-root ant-radio-css-var"
     >
       <span
-        class="ant-radio ant-wave-target ant-radio-checked ant-wave-target"
-        name="v-0"
+        class="ant-radio ant-wave-target ant-radio-checked"
       >
         <input
           checked=""
           class="ant-radio-input"
+          name="v-0"
           type="radio"
+          value="checkbox"
         />
       </span>
       <span
@@ -27016,12 +27190,13 @@ exports[`table demo > renders row-selection correctly 1`] = `
       class="ant-radio-wrapper css-var-root ant-radio-css-var"
     >
       <span
-        class="ant-radio ant-wave-target ant-wave-target"
-        name="v-0"
+        class="ant-radio ant-wave-target"
       >
         <input
           class="ant-radio-input"
+          name="v-0"
           type="radio"
+          value="radio"
         />
       </span>
       <span
@@ -27090,7 +27265,7 @@ exports[`table demo > renders row-selection correctly 1`] = `
                           class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                         >
                           <span
-                            class="ant-checkbox ant-wave-target ant-wave-target"
+                            class="ant-checkbox ant-wave-target"
                           >
                             <input
                               class="ant-checkbox-input"
@@ -27149,11 +27324,11 @@ exports[`table demo > renders row-selection correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
-                          name="John Brown"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
+                            name="John Brown"
                             type="checkbox"
                           />
                         </span>
@@ -27198,11 +27373,11 @@ exports[`table demo > renders row-selection correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
-                          name="Jim Green"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
+                            name="Jim Green"
                             type="checkbox"
                           />
                         </span>
@@ -27247,11 +27422,11 @@ exports[`table demo > renders row-selection correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
-                          name="Joe Black"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
+                            name="Joe Black"
                             type="checkbox"
                           />
                         </span>
@@ -27296,12 +27471,12 @@ exports[`table demo > renders row-selection correctly 1`] = `
                         class="ant-checkbox-wrapper ant-checkbox-wrapper-disabled css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-checkbox-disabled ant-wave-target"
-                          name="Disabled User"
+                          class="ant-checkbox ant-wave-target ant-checkbox-disabled"
                         >
                           <input
                             class="ant-checkbox-input"
                             disabled=""
+                            name="Disabled User"
                             type="checkbox"
                           />
                         </span>
@@ -27436,10 +27611,10 @@ exports[`table demo > renders row-selection correctly 1`] = `
 
 exports[`table demo > renders row-selection-and-operation correctly 1`] = `
 <div
-  class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-middle ant-flex-vertical"
+  class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-medium ant-flex-vertical"
 >
   <div
-    class="ant-flex css-var-root ant-flex-align-center ant-flex-gap-middle"
+    class="ant-flex css-var-root ant-flex-align-center ant-flex-gap-medium"
   >
     <button
       class="ant-btn css-var-root ant-btn-primary ant-btn-color-primary ant-btn-variant-solid"
@@ -27520,7 +27695,7 @@ exports[`table demo > renders row-selection-and-operation correctly 1`] = `
                           class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                         >
                           <span
-                            class="ant-checkbox ant-wave-target ant-wave-target"
+                            class="ant-checkbox ant-wave-target"
                           >
                             <input
                               class="ant-checkbox-input"
@@ -27579,7 +27754,7 @@ exports[`table demo > renders row-selection-and-operation correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -27625,7 +27800,7 @@ exports[`table demo > renders row-selection-and-operation correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -27671,7 +27846,7 @@ exports[`table demo > renders row-selection-and-operation correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -27717,7 +27892,7 @@ exports[`table demo > renders row-selection-and-operation correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -27763,7 +27938,7 @@ exports[`table demo > renders row-selection-and-operation correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -27809,7 +27984,7 @@ exports[`table demo > renders row-selection-and-operation correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -27855,7 +28030,7 @@ exports[`table demo > renders row-selection-and-operation correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -27901,7 +28076,7 @@ exports[`table demo > renders row-selection-and-operation correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -27947,7 +28122,7 @@ exports[`table demo > renders row-selection-and-operation correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -27993,7 +28168,7 @@ exports[`table demo > renders row-selection-and-operation correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -28241,7 +28416,7 @@ exports[`table demo > renders row-selection-custom correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -28327,7 +28502,7 @@ exports[`table demo > renders row-selection-custom correctly 1`] = `
                       class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                     >
                       <span
-                        class="ant-checkbox ant-wave-target ant-wave-target"
+                        class="ant-checkbox ant-wave-target"
                       >
                         <input
                           class="ant-checkbox-input"
@@ -28373,7 +28548,7 @@ exports[`table demo > renders row-selection-custom correctly 1`] = `
                       class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                     >
                       <span
-                        class="ant-checkbox ant-wave-target ant-wave-target"
+                        class="ant-checkbox ant-wave-target"
                       >
                         <input
                           class="ant-checkbox-input"
@@ -28419,7 +28594,7 @@ exports[`table demo > renders row-selection-custom correctly 1`] = `
                       class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                     >
                       <span
-                        class="ant-checkbox ant-wave-target ant-wave-target"
+                        class="ant-checkbox ant-wave-target"
                       >
                         <input
                           class="ant-checkbox-input"
@@ -28465,7 +28640,7 @@ exports[`table demo > renders row-selection-custom correctly 1`] = `
                       class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                     >
                       <span
-                        class="ant-checkbox ant-wave-target ant-wave-target"
+                        class="ant-checkbox ant-wave-target"
                       >
                         <input
                           class="ant-checkbox-input"
@@ -28511,7 +28686,7 @@ exports[`table demo > renders row-selection-custom correctly 1`] = `
                       class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                     >
                       <span
-                        class="ant-checkbox ant-wave-target ant-wave-target"
+                        class="ant-checkbox ant-wave-target"
                       >
                         <input
                           class="ant-checkbox-input"
@@ -28557,7 +28732,7 @@ exports[`table demo > renders row-selection-custom correctly 1`] = `
                       class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                     >
                       <span
-                        class="ant-checkbox ant-wave-target ant-wave-target"
+                        class="ant-checkbox ant-wave-target"
                       >
                         <input
                           class="ant-checkbox-input"
@@ -28603,7 +28778,7 @@ exports[`table demo > renders row-selection-custom correctly 1`] = `
                       class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                     >
                       <span
-                        class="ant-checkbox ant-wave-target ant-wave-target"
+                        class="ant-checkbox ant-wave-target"
                       >
                         <input
                           class="ant-checkbox-input"
@@ -28649,7 +28824,7 @@ exports[`table demo > renders row-selection-custom correctly 1`] = `
                       class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                     >
                       <span
-                        class="ant-checkbox ant-wave-target ant-wave-target"
+                        class="ant-checkbox ant-wave-target"
                       >
                         <input
                           class="ant-checkbox-input"
@@ -28695,7 +28870,7 @@ exports[`table demo > renders row-selection-custom correctly 1`] = `
                       class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                     >
                       <span
-                        class="ant-checkbox ant-wave-target ant-wave-target"
+                        class="ant-checkbox ant-wave-target"
                       >
                         <input
                           class="ant-checkbox-input"
@@ -28741,7 +28916,7 @@ exports[`table demo > renders row-selection-custom correctly 1`] = `
                       class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                     >
                       <span
-                        class="ant-checkbox ant-wave-target ant-wave-target"
+                        class="ant-checkbox ant-wave-target"
                       >
                         <input
                           class="ant-checkbox-input"
@@ -28948,7 +29123,7 @@ exports[`table demo > renders size correctly 1`] = `
     <span
       class="ant-divider-inner-text"
     >
-      Middle size table
+      Medium size table
     </span>
     <div
       class="ant-divider-rail ant-divider-rail-end"
@@ -31046,7 +31221,7 @@ exports[`table demo > renders sticky correctly 1`] = `
 
 exports[`table demo > renders style-class correctly 1`] = `
 <div
-  class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-middle ant-flex-vertical"
+  class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-medium ant-flex-vertical"
 >
   <div
     class="css-var-root ant-table-css-var ant-table-wrapper custom-table-root"
@@ -32586,7 +32761,7 @@ exports[`table demo > renders tree-data correctly 1`] = `
                           class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                         >
                           <span
-                            class="ant-checkbox ant-wave-target ant-wave-target"
+                            class="ant-checkbox ant-wave-target"
                           >
                             <input
                               class="ant-checkbox-input"
@@ -32645,7 +32820,7 @@ exports[`table demo > renders tree-data correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -32700,7 +32875,7 @@ exports[`table demo > renders tree-data correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -32951,7 +33126,7 @@ exports[`table demo > renders tree-table-ellipsis correctly 1`] = `
                           class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                         >
                           <span
-                            class="ant-checkbox ant-wave-target ant-wave-target"
+                            class="ant-checkbox ant-wave-target"
                           >
                             <input
                               class="ant-checkbox-input"
@@ -33017,7 +33192,7 @@ exports[`table demo > renders tree-table-ellipsis correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -33079,7 +33254,7 @@ exports[`table demo > renders tree-table-ellipsis correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -33141,7 +33316,7 @@ exports[`table demo > renders tree-table-ellipsis correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -33203,7 +33378,7 @@ exports[`table demo > renders tree-table-ellipsis correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -33265,7 +33440,7 @@ exports[`table demo > renders tree-table-ellipsis correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -33327,7 +33502,7 @@ exports[`table demo > renders tree-table-ellipsis correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -33389,7 +33564,7 @@ exports[`table demo > renders tree-table-ellipsis correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -33451,7 +33626,7 @@ exports[`table demo > renders tree-table-ellipsis correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -33513,7 +33688,7 @@ exports[`table demo > renders tree-table-ellipsis correctly 1`] = `
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -33807,7 +33982,7 @@ exports[`table demo > renders tree-table-preserveSelectedRowKeys correctly 1`] =
                           class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                         >
                           <span
-                            class="ant-checkbox ant-wave-target ant-wave-target"
+                            class="ant-checkbox ant-wave-target"
                           >
                             <input
                               class="ant-checkbox-input"
@@ -33866,7 +34041,7 @@ exports[`table demo > renders tree-table-preserveSelectedRowKeys correctly 1`] =
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -33921,7 +34096,7 @@ exports[`table demo > renders tree-table-preserveSelectedRowKeys correctly 1`] =
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -33976,7 +34151,7 @@ exports[`table demo > renders tree-table-preserveSelectedRowKeys correctly 1`] =
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -34031,7 +34206,7 @@ exports[`table demo > renders tree-table-preserveSelectedRowKeys correctly 1`] =
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -34086,7 +34261,7 @@ exports[`table demo > renders tree-table-preserveSelectedRowKeys correctly 1`] =
                         class="ant-checkbox-wrapper css-var-root ant-checkbox-css-var"
                       >
                         <span
-                          class="ant-checkbox ant-wave-target ant-wave-target"
+                          class="ant-checkbox ant-wave-target"
                         >
                           <input
                             class="ant-checkbox-input"
@@ -34410,7 +34585,6 @@ exports[`table demo > renders virtual-list correctly 1`] = `
             aria-orientation="horizontal"
             class="ant-segmented css-var-root css-var-root"
             role="radiogroup"
-            size="middle"
             tabindex="0"
           >
             <div
@@ -34697,7 +34871,7 @@ exports[`table demo > renders virtual-list correctly 1`] = `
                               class="ant-radio-wrapper css-var-root ant-radio-css-var"
                             >
                               <span
-                                class="ant-radio ant-wave-target ant-wave-target"
+                                class="ant-radio ant-wave-target"
                               >
                                 <input
                                   class="ant-radio-input"
@@ -34825,7 +34999,7 @@ exports[`table demo > renders virtual-list correctly 1`] = `
                               class="ant-radio-wrapper css-var-root ant-radio-css-var"
                             >
                               <span
-                                class="ant-radio ant-wave-target ant-wave-target"
+                                class="ant-radio ant-wave-target"
                               >
                                 <input
                                   class="ant-radio-input"
@@ -34951,7 +35125,7 @@ exports[`table demo > renders virtual-list correctly 1`] = `
                               class="ant-radio-wrapper css-var-root ant-radio-css-var"
                             >
                               <span
-                                class="ant-radio ant-wave-target ant-wave-target"
+                                class="ant-radio ant-wave-target"
                               >
                                 <input
                                   class="ant-radio-input"
@@ -35077,7 +35251,7 @@ exports[`table demo > renders virtual-list correctly 1`] = `
                               class="ant-radio-wrapper css-var-root ant-radio-css-var"
                             >
                               <span
-                                class="ant-radio ant-wave-target ant-wave-target"
+                                class="ant-radio ant-wave-target"
                               >
                                 <input
                                   class="ant-radio-input"
@@ -35203,7 +35377,7 @@ exports[`table demo > renders virtual-list correctly 1`] = `
                               class="ant-radio-wrapper css-var-root ant-radio-css-var"
                             >
                               <span
-                                class="ant-radio ant-wave-target ant-wave-target"
+                                class="ant-radio ant-wave-target"
                               >
                                 <input
                                   class="ant-radio-input"
@@ -35331,7 +35505,7 @@ exports[`table demo > renders virtual-list correctly 1`] = `
                               class="ant-radio-wrapper css-var-root ant-radio-css-var"
                             >
                               <span
-                                class="ant-radio ant-wave-target ant-wave-target"
+                                class="ant-radio ant-wave-target"
                               >
                                 <input
                                   class="ant-radio-input"
@@ -35457,7 +35631,7 @@ exports[`table demo > renders virtual-list correctly 1`] = `
                               class="ant-radio-wrapper css-var-root ant-radio-css-var"
                             >
                               <span
-                                class="ant-radio ant-wave-target ant-wave-target"
+                                class="ant-radio ant-wave-target"
                               >
                                 <input
                                   class="ant-radio-input"
@@ -35583,7 +35757,7 @@ exports[`table demo > renders virtual-list correctly 1`] = `
                               class="ant-radio-wrapper css-var-root ant-radio-css-var"
                             >
                               <span
-                                class="ant-radio ant-wave-target ant-wave-target"
+                                class="ant-radio ant-wave-target"
                               >
                                 <input
                                   class="ant-radio-input"
@@ -35709,7 +35883,7 @@ exports[`table demo > renders virtual-list correctly 1`] = `
                               class="ant-radio-wrapper css-var-root ant-radio-css-var"
                             >
                               <span
-                                class="ant-radio ant-wave-target ant-wave-target"
+                                class="ant-radio ant-wave-target"
                               >
                                 <input
                                   class="ant-radio-input"
@@ -35837,7 +36011,7 @@ exports[`table demo > renders virtual-list correctly 1`] = `
                               class="ant-radio-wrapper css-var-root ant-radio-css-var"
                             >
                               <span
-                                class="ant-radio ant-wave-target ant-wave-target"
+                                class="ant-radio ant-wave-target"
                               >
                                 <input
                                   class="ant-radio-input"

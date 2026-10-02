@@ -201,6 +201,7 @@ export const genActionStyle: GenerateStyle<AlertToken, CSSObject> = (token) => {
     fontSizeIcon,
     colorIcon,
     colorIconHover,
+    colorTextDisabled,
   } = token
 
   return {
@@ -227,13 +228,13 @@ export const genActionStyle: GenerateStyle<AlertToken, CSSObject> = (token) => {
             color: colorIconHover,
           },
         },
-      },
-
-      '&-close-text': {
-        color: colorIcon,
-        transition: `color ${motionDurationMid}`,
-        '&:hover': {
-          color: colorIconHover,
+        '&:disabled': {
+          cursor: 'not-allowed',
+          color: colorTextDisabled,
+          [`${iconCls}-close`]: {
+            color: 'inherit',
+            pointerEvents: 'none',
+          },
         },
       },
     },

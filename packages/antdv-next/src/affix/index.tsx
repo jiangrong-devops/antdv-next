@@ -55,7 +55,6 @@ interface AffixState {
   placeholderStyle?: CSSProperties
   status: AffixStatus
   lastAffix: boolean
-  prevTarget: Window | HTMLElement | null
 }
 
 export interface AffixRef {
@@ -101,7 +100,6 @@ export const Affix = defineComponent<
         status.value !== AFFIX_STATUS_PREPARE
         || !fixedNodeRef.value
         || !placeholderNodeRef.value
-        || !targetFunc.value
       ) {
         return
       }
@@ -127,22 +125,10 @@ export const Affix = defineComponent<
         const targetRect = getTargetRect(targetNode)
         const fixedTop = getFixedTop(placeholderRect, targetRect, internalOffsetTop.value)
         const fixedBottom = getFixedBottom(placeholderRect, targetRect, props.offsetBottom)
-        if (fixedTop !== undefined) {
+        if (fixedTop !== undefined || fixedBottom !== undefined) {
           newState.affixStyle = {
             position: 'fixed',
-            top: `${fixedTop}px`,
-            width: `${placeholderRect.width}px`,
-            height: `${contentHeight}px`,
-          }
-          newState.placeholderStyle = {
-            width: `${placeholderRect.width}px`,
-            height: `${contentHeight}px`,
-          }
-        }
-        else if (fixedBottom !== undefined) {
-          newState.affixStyle = {
-            position: 'fixed',
-            bottom: `${fixedBottom}px`,
+            ...(fixedTop !== undefined ? { top: `${fixedTop}px` } : { bottom: `${fixedBottom}px` }),
             width: `${placeholderRect.width}px`,
             height: `${contentHeight}px`,
           }
@@ -176,7 +162,7 @@ export const Affix = defineComponent<
 
     const lazyUpdatePosition = throttleByAnimationFrameFn(() => {
       // Check position change before measure to make Safari smooth
-      if (targetFunc.value && affixStyle.value) {
+      if (affixStyle.value) {
         const targetNode = targetFunc.value()
         if (targetNode && placeholderNodeRef.value) {
           const targetRect = getTargetRect(targetNode)
@@ -185,8 +171,8 @@ export const Affix = defineComponent<
           const fixedBottom = getFixedBottom(placeholderRect, targetRect, props.offsetBottom)
 
           if (
-            (fixedTop !== undefined && affixStyle.value.top === fixedTop)
-            || (fixedBottom !== undefined && affixStyle.value.bottom === fixedBottom)
+            (fixedTop !== undefined && affixStyle.value.top === `${fixedTop}px`)
+            || (fixedBottom !== undefined && affixStyle.value.bottom === `${fixedBottom}px`)
           ) {
             return
           }
@@ -198,7 +184,7 @@ export const Affix = defineComponent<
     })
 
     const addListeners = () => {
-      const listenerTarget = targetFunc.value?.()
+      const listenerTarget = targetFunc.value()
       if (!listenerTarget) {
         return
       }
@@ -213,7 +199,7 @@ export const Affix = defineComponent<
     }
 
     const removeListeners = () => {
-      const newTarget = targetFunc.value?.()
+      const newTarget = targetFunc.value()
       TRIGGER_EVENTS.forEach((eventName) => {
         newTarget?.removeEventListener(eventName, lazyUpdatePosition)
         if (prevListener.value) {

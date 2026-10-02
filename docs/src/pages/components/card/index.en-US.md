@@ -14,7 +14,7 @@ A card can be used to display content related to a single subject. The content c
 ## Examples {#examples}
 
 <demo-group>
-  <demo src="./demo/basic.vue">Basic card片</demo>
+  <demo src="./demo/basic.vue">Basic card</demo>
   <demo src="./demo/border-less.vue" background="grey">No border</demo>
   <demo src="./demo/simple.vue">Simple card</demo>
   <demo src="./demo/flexible-content.vue">Customized content</demo>
@@ -47,7 +47,7 @@ Common props ref：[Common props](/docs/vue/common-props)
 | loading | Shows a loading indicator while the contents of the card are being fetched | boolean | false | - | × |
 | hoverable | Lift up when hovering card | boolean | false | - | × |
 | id | - | string | - | - | × |
-| size | Size of card | CardSize | `default` | - | × |
+| size | Size of card | CardSize | `medium` | - | × |
 | type | Card style type, can be set to `inner` or not set | CardType | - | - | × |
 | cover | Card cover | VueNode | - | - | × |
 | actions | The action list, shows at the bottom of the Card | VueNode[] | - | - | × |

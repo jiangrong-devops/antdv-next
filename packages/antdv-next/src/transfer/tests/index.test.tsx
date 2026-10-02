@@ -273,6 +273,35 @@ describe('transfer', () => {
     expect(itemBCheckbox.checked).toBe(true)
   })
 
+  it('should clear stale selection when dataSource key type changes', async () => {
+    const stringKey = ref(false)
+    const Demo = defineComponent(() => {
+      return () => (
+        <Transfer
+          dataSource={[{ key: stringKey.value ? '1' : 1, title: 'item' }]}
+          render={item => item.title}
+        />
+      )
+    })
+
+    const wrapper = mount(Demo)
+
+    const getItemCheckbox = () =>
+      wrapper.element.querySelector('.ant-transfer-list-content input') as HTMLInputElement
+
+    clickElement(getItemCheckbox())
+    await nextTick()
+    expect(getItemCheckbox().checked).toBe(true)
+
+    stringKey.value = true
+    await nextTick()
+    expect(getItemCheckbox().checked).toBe(false)
+
+    stringKey.value = false
+    await nextTick()
+    expect(getItemCheckbox().checked).toBe(false)
+  })
+
   it('multiple select/deselect by hold down the shift key', () => {
     const handleSelectChange = vi.fn()
     const wrapper = mount(Transfer, {
@@ -297,6 +326,66 @@ describe('transfer', () => {
     expect(handleSelectChange).toHaveBeenLastCalledWith(['a'], [])
   })
 
+  it('only shift selects items matching the current filter', async () => {
+    const handleSelectChange = vi.fn()
+    const dataSource = [
+      { key: 'a', title: 'Apple 1' },
+      { key: 'b', title: 'Banana' },
+      { key: 'c', title: 'Apple 2', disabled: true },
+      { key: 'd', title: 'Apple 3' },
+    ]
+    const wrapper = mount(Transfer, {
+      props: {
+        dataSource,
+        showSearch: true,
+        targetKeys: [],
+        onSelectChange: handleSelectChange,
+        render: item => item.title,
+      },
+    })
+
+    const search = wrapper.element.querySelectorAll('.ant-transfer-list-search input')[0] as HTMLInputElement
+    await setInputValue(search, 'Apple')
+    expect(getTransferItemByTitle(wrapper, 'Banana')).toBeNull()
+
+    clickElement(getTransferItemByTitle(wrapper, 'Apple 1'))
+    clickElement(getTransferItemByTitle(wrapper, 'Apple 3'), { shiftKey: true })
+
+    expect(handleSelectChange).toHaveBeenLastCalledWith(['a', 'd'], [])
+  })
+
+  it('resets shift selection range when search changes or clears', async () => {
+    const handleSelectChange = vi.fn()
+    const dataSource = [
+      { key: 'a', title: 'Banana' },
+      { key: 'b', title: 'Apple 1' },
+      { key: 'c', title: 'Apple 2' },
+      { key: 'd', title: 'Apple 3' },
+    ]
+    const wrapper = mount(Transfer, {
+      props: {
+        dataSource,
+        showSearch: true,
+        targetKeys: [],
+        onSelectChange: handleSelectChange,
+        render: item => item.title,
+      },
+    })
+
+    clickElement(getTransferItemByTitle(wrapper, 'Banana'))
+    const search = wrapper.element.querySelector('.ant-transfer-list-search input') as HTMLInputElement
+    await setInputValue(search, 'Apple')
+    clickElement(getTransferItemByTitle(wrapper, 'Apple 3'), { shiftKey: true })
+
+    expect(handleSelectChange).toHaveBeenLastCalledWith(['a', 'd'], [])
+
+    const clearIcon = wrapper.element.querySelector('.ant-transfer-section .ant-input-clear-icon')
+    clickElement(clearIcon)
+    await nextTick()
+    clickElement(getTransferItemByTitle(wrapper, 'Apple 1'), { shiftKey: true })
+
+    expect(handleSelectChange).toHaveBeenLastCalledWith(['a', 'd', 'b'], [])
+  })
   it('multiple select targetKeys by hold down the shift key', () => {
     const handleSelectChange = vi.fn()
     const wrapper = mount(Transfer, {
@@ -1052,6 +1141,65 @@ describe('transfer', () => {
     clickElement(removeButton)
 
     expect(onChange).toHaveBeenCalledWith([], 'left', ['b'])
+  })
+
+  it('should not emit selectChange on one-way removal without target selection', () => {
+    const onSelectChange = vi.fn()
+    const wrapper = mount(Transfer, {
+      props: {
+        ...listCommonProps,
+        locale: { remove: 'Remove target item' },
+        onSelectChange,
+        oneWay: true,
+      },
+    })
+
+    clickElement(wrapper.element.querySelector('button[aria-label="Remove target item"]'))
+
+    expect(onSelectChange).not.toHaveBeenCalled()
+  })
+
+  it('should clear controlled target selection when removing a one-way item', async () => {
+    const onChange = vi.fn()
+    const onSelectChange = vi.fn()
+
+    const App = defineComponent(() => {
+      const targetKeys = ref<TransferProps['targetKeys']>(['b'])
+      const selectedKeys = ref<TransferProps['selectedKeys']>(['a', 'b'])
+
+      return () => (
+        <Transfer
+          dataSource={[
+            { key: 'a', title: 'a' },
+            { key: 'b', title: 'b' },
+          ]}
+          targetKeys={targetKeys.value}
+          selectedKeys={selectedKeys.value}
+          oneWay
+          locale={{ remove: 'Remove target item' }}
+          render={(item: any) => item.title}
+          onChange={(nextTargetKeys: any, direction: any, moveKeys: any) => {
+            onChange(nextTargetKeys, direction, moveKeys)
+            targetKeys.value = nextTargetKeys
+          }}
+          onSelectChange={(sourceSelectedKeys: any, targetSelectedKeys: any) => {
+            onSelectChange(sourceSelectedKeys, targetSelectedKeys)
+            selectedKeys.value = [...sourceSelectedKeys, ...targetSelectedKeys]
+          }}
+        />
+      )
+    })
+
+    const wrapper = mount(App)
+    clickElement(wrapper.element.querySelector('button[aria-label="Remove target item"]'))
+    await nextTick()
+
+    expect(onChange).toHaveBeenCalledWith([], 'left', ['b'])
+    expect(onSelectChange).toHaveBeenCalledWith(['a'], [])
+    expect(onSelectChange).toHaveBeenCalledTimes(1)
+    const itemB = Array.from(wrapper.element.querySelectorAll('.ant-transfer-list-content-item'))
+      .find(item => item.textContent === 'b')
+    expect(itemB?.querySelector('input')?.checked).toBe(false)
   })
 
   it('control mode select all should not throw warning', () => {

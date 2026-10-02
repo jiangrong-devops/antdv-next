@@ -48,12 +48,11 @@ describe('tree-select', () => {
         render: () => (
           <TreeSelect
             showSearch
-            clearIcon={<span>clear</span>}
             removeIcon={<span>remove</span>}
             value={['leaf1', 'leaf2']}
             placeholder="Please select"
             multiple
-            allowClear
+            allowClear={{ clearIcon: <span>clear</span> }}
             treeDefaultExpandAll
             treeData={treeData}
           >
@@ -93,6 +92,22 @@ describe('tree-select', () => {
     })
   })
 
+  it('should pass TreeSelect to ConfigProvider renderEmpty', async () => {
+    const renderEmpty = vi.fn((name: string) => name === 'TreeSelect' && <span>tree empty</span>)
+    const wrapper = mount({
+      render: () => (
+        <ConfigProvider renderEmpty={renderEmpty as any}>
+          <TreeSelect open treeData={[]} />
+        </ConfigProvider>
+      ),
+    }, { attachTo: document.body })
+
+    await nextTick()
+    expect(renderEmpty).toHaveBeenCalledWith('TreeSelect')
+    expect(document.querySelector('.ant-select-empty')?.textContent).toBe('tree empty')
+    wrapper.unmount()
+  })
+
   it('should support notFoundContent', async () => {
     const open = ref(true)
     const wrapper = mount({
@@ -120,7 +135,7 @@ describe('tree-select', () => {
     await nextTick()
     expect(errSpy).toHaveBeenCalledWith(
       expect.stringContaining(
-        'Warning: [antd: TreeSelect] `popupClassName` is deprecated. Please use `classNames.popup.root` instead.',
+        'Warning: [antd: TreeSelect] `popupClassName` is deprecated. Please use `classes.popup.root` instead.',
       ),
     )
     expect(document.querySelector('.legacy')).toBeTruthy()
@@ -144,7 +159,7 @@ describe('tree-select', () => {
     await nextTick()
     expect(errSpy).toHaveBeenCalledWith(
       expect.stringContaining(
-        'Warning: [antd: TreeSelect] `dropdownClassName` is deprecated. Please use `classNames.popup.root` instead.',
+        'Warning: [antd: TreeSelect] `dropdownClassName` is deprecated. Please use `classes.popup.root` instead.',
       ),
     )
     expect(document.querySelector('.legacy')).toBeTruthy()

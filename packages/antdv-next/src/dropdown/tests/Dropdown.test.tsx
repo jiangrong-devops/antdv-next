@@ -1,6 +1,6 @@
 import type { DropdownProps } from '..'
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
-import { h, nextTick, ref } from 'vue'
+import { createTextVNode, h, nextTick, ref } from 'vue'
 import Dropdown from '..'
 import ConfigProvider from '../../config-provider'
 import mountTest from '/@tests/shared/mountTest'
@@ -608,6 +608,21 @@ describe('dropdown', () => {
     expect(wrapper.find('.ant-dropdown-trigger').element.tagName).toBe('BUTTON')
   })
 
+  it('should wrap plain text child in span and open on hover', async () => {
+    const wrapper = mount(Dropdown, {
+      attachTo: document.body,
+      props: { menu, mouseEnterDelay: 0, mouseLeaveDelay: 0 },
+      slots: { default: () => [createTextVNode('text trigger')] },
+    })
+    const trigger = wrapper.find('.ant-dropdown-trigger')
+    expect(trigger.element.tagName).toBe('SPAN')
+    expect(trigger.text()).toBe('text trigger')
+
+    await trigger.trigger('mouseenter')
+    await flushDropdownTimer()
+    expect(isDropdownOpen()).toBe(true)
+  })
+
   // =================== popupRender ===================
 
   it('should support popupRender prop', async () => {
@@ -624,6 +639,26 @@ describe('dropdown', () => {
     })
     await flushDropdownTimer()
     expect(document.querySelector('.custom-popup')).toBeTruthy()
+  })
+
+  it.each([
+    ['null', null],
+    ['text', 'Custom popup'],
+    ['number', 1],
+    ['array', ['First', 'Second']],
+  ])('should support popupRender returning %s', async (_, popup) => {
+    expect(() => mount(Dropdown, {
+      attachTo: document.body,
+      props: {
+        menu,
+        popupRender: () => popup,
+        open: true,
+        mouseEnterDelay: 0,
+        mouseLeaveDelay: 0,
+      },
+      slots: { default: () => <span>trigger</span> },
+    })).not.toThrow()
+    await flushDropdownTimer()
   })
 
   it('should support popupRender slot', async () => {

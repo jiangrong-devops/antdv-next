@@ -42,11 +42,12 @@ Common props ref：[Common props](/docs/vue/common-props)
 | allowClear | Show clear button | boolean \| &#123; clearIcon?: VueNode &#125; | false | - | × |
 | classes | Customize class for each semantic structure inside the component. Supports object or function. | Record<[SemanticDOM](#semantic-dom), string> \| (info: { props })=> Record<[SemanticDOM](#semantic-dom), string> | - | - | ✓ |
 | styles | Customize inline style for each semantic structure inside the component. Supports object or function. | Record<[SemanticDOM](#semantic-dom), CSSProperties> \| (info: { props })=> Record<[SemanticDOM](#semantic-dom), CSSProperties> | - | - | ✓ |
+| rootClass | Root container class | string | - | - | × |
 | defaultOpen | Initial open state of dropdown | boolean | - | - | × |
 | defaultValue | To set the initial selected treeNode(s) | string \| string[] | - | - | × |
 | disabled | Disabled or not | boolean | false | - | × |
 | popupMatchSelectWidth | Determine whether the popup menu and the select input are the same width. Default set `min-width` same as input. Will ignore when value less than select width. `false` will disable virtual scroll | boolean \| number | true | - | × |
-| popupRender | Customize dropdown content | (menu: VueNode) =&gt; VueNode | - | - | × |
+| popupRender | Customize dropdown content | (menu: VNode) =&gt; VueNode | - | - | × |
 | fieldNames | Customize node label, value, children field name | object | &#123; label: `label`, value: `value`, children: `children` &#125; | - | × |
 | getPopupContainer | To set the container of the dropdown menu | (triggerNode: HTMLElement) =&gt; HTMLElement | () =&gt; document.body | - | × |
 | labelInValue | Whether to embed label in value, turn the format of value from `string` to &#123; value: string, label: VueNode, halfChecked: boolean &#125; | boolean | false | - | × |
@@ -64,7 +65,7 @@ Common props ref：[Common props](/docs/vue/common-props)
 | prefix | The custom prefix | VueNode | - | - | × |
 | showCheckedStrategy | The way show selected item in box when `treeCheckable` set. **Default:** just show child nodes. **`TreeSelect.SHOW_ALL`:** show all checked treeNodes (include parent treeNode). **`TreeSelect.SHOW_PARENT`:** show checked treeNodes (just show parent treeNode) | `TreeSelect.SHOW_ALL` \| `TreeSelect.SHOW_PARENT` \| `TreeSelect.SHOW_CHILD` | `TreeSelect.SHOW_CHILD` | - | × |
 | showSearch | Support search or not | boolean \| [Object](#showsearch) | single: false \| multiple: true | - | × |
-| size | To set the size of the select input | `large` \| `middle` \| `small` | - | - | × |
+| size | To set the size of the select input | `large` \| `medium` \| `small` | - | - | × |
 | status | Set validation status | `error` \| `warning` | - | - | × |
 | variant | Variants of selector | `outlined` \| `borderless` \| `filled` \| `underlined` | `outlined` | - | ✓ |
 | suffixIcon | The custom suffix icon | VueNode | `&lt;DownOutlined /&gt;` | - | × |
@@ -162,7 +163,7 @@ You can ref Select [FAQ](/components/select).
 
 ### Why `loadData` not trigger when searching? {#faq-load-data-expand}
 
-In earlier version, `loadData` will be triggered when searching. But we got feedback that it will block network when inputting. So we change it to not trigger `loadData` when searching. But you can still handle async logic by `filterTreeNode`:
+`loadData` is not triggered when searching, to avoid blocking the network while typing. You can still handle async logic by `filterTreeNode`:
 
 ```html
 <a-tree-select

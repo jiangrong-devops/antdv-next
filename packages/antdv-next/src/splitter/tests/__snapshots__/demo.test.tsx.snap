@@ -465,14 +465,45 @@ exports[`splitter demo > renders _semantic correctly 1`] = `
 
 exports[`splitter demo > renders collapsible correctly 1`] = `
 <div
-  class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-middle ant-flex-vertical"
+  class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-medium ant-flex-vertical"
 >
+  <div
+    class="ant-flex css-var-root ant-flex-gap-medium"
+  >
+    <button
+      aria-checked="true"
+      checked="true"
+      class="ant-switch css-var-root ant-switch-checked"
+      role="switch"
+      type="button"
+    >
+      <div
+        class="ant-switch-handle"
+      >
+        <!---->
+      </div>
+      <span
+        class="ant-switch-inner"
+      >
+        <span
+          class="ant-switch-inner-checked"
+        >
+          motion
+        </span>
+        <span
+          class="ant-switch-inner-unchecked"
+        >
+          motion
+        </span>
+      </span>
+    </button>
+  </div>
   <div
     class="ant-splitter ant-splitter-horizontal css-var-root ant-splitter-css-var"
     style="height: 200px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);"
   >
     <div
-      class="ant-splitter-panel"
+      class="ant-splitter-panel ant-splitter-panel-transition"
       style="flex-basis: auto; flex-grow: 1;"
     >
       <div
@@ -513,7 +544,7 @@ exports[`splitter demo > renders collapsible correctly 1`] = `
       <!---->
     </div>
     <div
-      class="ant-splitter-panel"
+      class="ant-splitter-panel ant-splitter-panel-transition"
       style="flex-basis: auto; flex-grow: 1;"
     >
       <div
@@ -543,7 +574,7 @@ exports[`splitter demo > renders collapsible correctly 1`] = `
     style="height: 300px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);"
   >
     <div
-      class="ant-splitter-panel"
+      class="ant-splitter-panel ant-splitter-panel-transition"
       style="flex-basis: auto; flex-grow: 1;"
     >
       <div
@@ -584,7 +615,7 @@ exports[`splitter demo > renders collapsible correctly 1`] = `
       <!---->
     </div>
     <div
-      class="ant-splitter-panel"
+      class="ant-splitter-panel ant-splitter-panel-transition"
       style="flex-basis: auto; flex-grow: 1;"
     >
       <div
@@ -631,12 +662,13 @@ exports[`splitter demo > renders collapsibleIcon correctly 1`] = `
         class="ant-radio-wrapper css-var-root ant-radio-css-var"
       >
         <span
-          class="ant-radio ant-wave-target ant-wave-target"
-          name="v-0"
+          class="ant-radio ant-wave-target"
         >
           <input
             class="ant-radio-input"
+            name="v-0"
             type="radio"
+            value="auto"
           />
         </span>
         <span
@@ -649,13 +681,14 @@ exports[`splitter demo > renders collapsibleIcon correctly 1`] = `
         class="ant-radio-wrapper ant-radio-wrapper-checked css-var-root ant-radio-css-var"
       >
         <span
-          class="ant-radio ant-wave-target ant-radio-checked ant-wave-target"
-          name="v-0"
+          class="ant-radio ant-wave-target ant-radio-checked"
         >
           <input
             checked=""
             class="ant-radio-input"
+            name="v-0"
             type="radio"
+            value="true"
           />
         </span>
         <span
@@ -668,12 +701,13 @@ exports[`splitter demo > renders collapsibleIcon correctly 1`] = `
         class="ant-radio-wrapper css-var-root ant-radio-css-var"
       >
         <span
-          class="ant-radio ant-wave-target ant-wave-target"
-          name="v-0"
+          class="ant-radio ant-wave-target"
         >
           <input
             class="ant-radio-input"
+            name="v-0"
             type="radio"
+            value="false"
           />
         </span>
         <span
@@ -801,7 +835,7 @@ exports[`splitter demo > renders collapsibleIcon correctly 1`] = `
 
 exports[`splitter demo > renders control correctly 1`] = `
 <div
-  class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-middle ant-flex-vertical"
+  class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-medium ant-flex-vertical"
 >
   <div
     class="ant-splitter ant-splitter-horizontal css-var-root ant-splitter-css-var"
@@ -875,7 +909,7 @@ exports[`splitter demo > renders control correctly 1`] = `
     <!---->
   </div>
   <div
-    class="ant-flex css-var-root ant-flex-justify-space-between ant-flex-gap-middle"
+    class="ant-flex css-var-root ant-flex-justify-space-between ant-flex-gap-medium"
   >
     <button
       aria-checked="true"
@@ -1668,12 +1702,13 @@ exports[`splitter demo > renders size-mix correctly 1`] = `
     >
       <span
         class="ant-radio-button ant-radio-button-checked"
-        name="v-0"
       >
         <input
           checked=""
           class="ant-radio-button-input"
+          name="v-0"
           type="radio"
+          value="1"
         />
       </span>
       <span
@@ -1687,11 +1722,12 @@ exports[`splitter demo > renders size-mix correctly 1`] = `
     >
       <span
         class="ant-radio-button"
-        name="v-0"
       >
         <input
           class="ant-radio-button-input"
+          name="v-0"
           type="radio"
+          value="2"
         />
       </span>
       <span

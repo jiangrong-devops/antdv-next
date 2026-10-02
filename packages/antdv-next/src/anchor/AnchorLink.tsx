@@ -1,3 +1,4 @@
+import type { VNodeChild } from 'vue'
 import type { VueNode } from '../_util/type.ts'
 import type { ComponentBaseProps } from '../config-provider/context.ts'
 import { classNames } from '@v-c/util'
@@ -19,7 +20,7 @@ export interface AnchorLinkBaseProps extends ComponentBaseProps {
 }
 
 export interface AnchorLinkEmits {
-  click: (e: MouseEvent, params: { title: any, href: any }) => any
+  click: (e: MouseEvent, link: { title: VNodeChild, href: string }) => any
 }
 
 export interface AnchorLinkEmitsProps {
@@ -39,10 +40,10 @@ const AnchorLink = defineComponent<
     const { registerLink, direction, unregisterLink, activeLink, scrollTo, onClick, classes: mergedClassNames, styles: mergedStyles } = useAnchorContext() ?? {}
     const { prefixCls } = useBaseConfig('anchor', props)
     watch(
-      () => props.href,
-      async (href, _, onCleanup) => {
+      [() => props.href, () => props.targetOffset],
+      async ([href, targetOffset], _, onCleanup) => {
         await nextTick()
-        registerLink?.(href)
+        registerLink?.(href, targetOffset)
         onCleanup(() => {
           unregisterLink?.(href)
         })
@@ -69,6 +70,7 @@ const AnchorLink = defineComponent<
           e.preventDefault()
           window.location.replace(href)
         }
+        return
       }
       // Handling internal anchor link
       e.preventDefault()

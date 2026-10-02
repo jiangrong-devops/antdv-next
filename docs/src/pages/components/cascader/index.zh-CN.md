@@ -57,6 +57,7 @@ demo:
 | fieldNames | 自定义 options 中 label value children 的字段 | object | \{ label: `label`, value: `value`, children: `children` \} | - | × |
 | getPopupContainer | 菜单渲染父节点。默认渲染到 body 上，如果你遇到菜单滚动定位问题，试试修改为滚动的区域，并相对其定位。[示例](https://codepen.io/afc163/pen/zEjNOy?editors=0010) | function(triggerNode) | () =&gt; document.body | - | × |
 | loadData | 用于动态加载选项，无法与 `showSearch` 一起使用 | (selectedOptions) =&gt; void | - | - | × |
+| loadingIcon | 自定义动态加载时的加载图标 | VueNode | - | - | ✓ |
 | maxTagCount | 最多显示多少个 tag，响应式模式会对性能产生损耗 | number \| `responsive` | - | - | × |
 | maxTagPlaceholder | 隐藏 tag 时显示的内容 | VueNode \| function(omittedValues) | - | - | × |
 | maxTagTextLength | 最大显示的 tag 文本长度 | number | - | - | × |
@@ -65,10 +66,9 @@ demo:
 | options | 可选项数据源 | [Option](#option)\[] | - | - | × |
 | placeholder | 输入框占位文本 | string | - | - | × |
 | placement | 浮层预设位置 | `bottomLeft` `bottomRight` `topLeft` `topRight` | `bottomLeft` | - | × |
-| popupMenuColumnStyle | 下拉菜单列的样式 | CSSProperties | - | - | × |
 | showCheckedStrategy | 定义选中项回填的方式（仅在 `multiple` 为 `true` 时生效）。`Cascader.SHOW_CHILD`: 只显示选中的子节点。`Cascader.SHOW_PARENT`: 只显示父节点（当父节点下所有子节点都选中时）。 | `Cascader.SHOW_PARENT` \| `Cascader.SHOW_CHILD` | `Cascader.SHOW_PARENT` | - | × |
 | showSearch | 在选择框中显示搜索框 | boolean \| [Object](#showsearch) | false | - | × |
-| size | 输入框大小 | `large` \| `middle` \| `small` | - | - | × |
+| size | 输入框大小 | `large` \| `medium` \| `small` | `medium` | - | × |
 | status | 设置校验状态 | 'error' \| 'warning' | - | - | × |
 | styles | 用于自定义组件内部各语义化结构的行内 style，支持对象或函数 | Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; \| (info: \{ props \})=&gt; Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; | - | - | ✓ |
 | value | 指定选中项，支持 `v-model:value` | string\[] \| number\[] | - | - | × |
@@ -79,7 +79,7 @@ demo:
 | 事件 | 说明 | 类型 | 版本 |
 | --- | --- | --- | --- |
 | change | 选择完成后的回调 | (value, selectedOptions) =&gt; void | - |
-| openChange | 显示/隐藏浮层的回调 | (value) =&gt; void | - |
+| openChange | 显示/隐藏浮层的回调 | (open: boolean) =&gt; void | - |
 
 ### 插槽 {#slots}
 
@@ -87,10 +87,10 @@ demo:
 | --- | --- | --- | --- |
 | displayRender | 选择后展示的渲染函数 | (label, selectedOptions) => VueNode | - |
 | expandIcon | 自定义次级菜单展开图标 | VueNode | - |
-| loadingIcon | 延迟加载的外观（现已无用） | VueNode | - |
+| loadingIcon | 自定义动态加载时的加载图标 | VueNode | - |
 | notFoundContent | 当下拉列表为空时显示的内容 | VueNode | - |
 | optionRender | 自定义渲染下拉选项 | (option: Option) => VueNode | - |
-| popupRender | 自定义下拉框内容 | (menus: VueNode) => VueNode | - |
+| popupRender | 自定义下拉框内容 | (menus: VNode) => VueNode | - |
 | prefix | 自定义前缀 | VueNode | - |
 | removeIcon | 自定义的多选框清除图标 | VueNode | - |
 | suffixIcon | 自定义的选择框后缀图标 | VueNode | - |

@@ -18,7 +18,7 @@ import useStyle, { DotDuration } from './style'
 export type CarouselEffect = 'scrollx' | 'fade'
 export type DotPlacement = 'top' | 'bottom' | 'start' | 'end'
 export interface CarouselProps extends
-  Omit<Settings, 'prevArrow' | 'nextArrow' | 'dots' | 'className' | 'style' | 'dotsClass' | 'autoplay' | 'onInit' | 'onReInit' | 'onEdge' | 'onSwipe' | 'onLazyLoad' | 'onLazyLoadError'>, ComponentBaseProps,
+  Omit<Settings, 'prevArrow' | 'nextArrow' | 'dots' | 'className' | 'style' | 'dotsClass' | 'autoplay' | 'verticalSwiping' | 'onInit' | 'onReInit' | 'onEdge' | 'onSwipe' | 'onLazyLoad' | 'onLazyLoadError'>, ComponentBaseProps,
   /* @vue-ignore */
   CarouselEmitsProps {
   effect?: CarouselEffect
@@ -82,6 +82,10 @@ const omitKeys = [
   'autoplaySpeed',
   'rtl',
 ] as const satisfies readonly (keyof CarouselProps)[]
+
+// `verticalSwiping` is always derived from `vertical`, so it is not a prop. Strip
+// it from attrs to keep it from falling through to the root element.
+const ignoredAttrKeys = ['verticalSwiping', 'vertical-swiping']
 
 const dotsClass = 'slick-dots'
 
@@ -153,14 +157,14 @@ const Carousel = defineComponent<
     expose({
       nativeElement: nativeElementRef,
       goTo,
-      autoPlay: playType => slickRef?.value?.innerSlider?.autoPlay?.(playType),
+      autoPlay: (playType: Parameters<CarouselRef['autoPlay']>[0]) => slickRef?.value?.innerSlider?.autoPlay?.(playType),
       next: () => slickRef?.value?.innerSlider?.slickNext?.(),
       prev: () => slickRef?.value?.innerSlider?.slickPrev?.(),
       innerSlider: computed(() => slickRef.value?.innerSlider),
-    } as CarouselRef)
+    })
 
     const count = shallowRef(0)
-    const isRTL = computed(() => (props?.rtl ?? direction.value === 'rtl') && !props.vertical)
+    const isRTL = computed(() => (props?.rtl ?? direction.value === 'rtl') && !mergedVertical.value)
 
     // Only sync back to `initialSlide` when `initialSlide` / RTL changes, never when the
     // children count changes. Otherwise adding or removing a slide resets the carousel
@@ -238,6 +242,11 @@ const Carousel = defineComponent<
       if (newProps.effect === 'fade') {
         newProps.fade = true
       }
+      // react-slick silently ignores unknown settings, but @v-c/slick leaks them
+      // to the DOM through attrs fallthrough, so strip keys it does not declare.
+      delete newProps.effect
+      delete newProps.prefixCls
+      delete newProps.slickGoTo
       const className = clsx(
         prefixCls.value,
         {
@@ -264,7 +273,7 @@ const Carousel = defineComponent<
       const prevArrow = getSlotPropsFnRun(slots, props, 'prevArrow')
       const nextArrow = getSlotPropsFnRun(slots, props, 'nextArrow')
       return (
-        <div ref={nativeElementRef} {...restAttrs} class={className} id={id} style={dotDurationStyle}>
+        <div ref={nativeElementRef} {...omit(restAttrs, ignoredAttrKeys)} class={className} id={id} style={dotDurationStyle}>
           <SlickCarousel
             ref={slickRef}
             {...onAttrs}

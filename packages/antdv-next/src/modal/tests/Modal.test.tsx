@@ -1,3 +1,4 @@
+import type { MaskType } from '../../_util/hooks'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { defineComponent, onMounted } from 'vue'
 import Modal from '..'
@@ -41,6 +42,36 @@ describe('modal static', () => {
     await waitFakeTimer(1, 5)
 
     expect(document.querySelectorAll('.ant-modal-confirm-btns .ant-btn')).toHaveLength(2)
+  })
+
+  it('should not mutate the mask config object', async () => {
+    const mask: MaskType = { blur: true }
+
+    Modal.confirm({ mask })
+    await waitFakeTimer(1, 5)
+
+    expect(mask).toEqual({ blur: true })
+  })
+
+  it('should keep mask closable when the mask config object is reused', async () => {
+    const mask: MaskType = { blur: true }
+    Modal.confirm({ mask })
+    await waitFakeTimer(1, 5)
+    Modal.destroyAll()
+    await waitFakeTimer(1, 5)
+
+    const onCancel = vi.fn()
+    mount(Modal, {
+      attachTo: document.body,
+      props: { open: true, mask, onCancel },
+    })
+    await waitFakeTimer(20, 10)
+
+    const wrap = document.querySelector<HTMLElement>('.ant-modal-wrap')!
+    wrap.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }))
+    wrap.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+
+    expect(onCancel).toHaveBeenCalled()
   })
 
   it('modal.confirm should support locale from holderRender config', async () => {
@@ -339,6 +370,30 @@ describe('modal integration', () => {
     const content = document.getElementById('force-render-content')
     expect(content).not.toBeNull()
     expect(content!.textContent).toBe('Hello')
+
+    wrapper.unmount()
+  })
+
+  it('should trigger both onCancel and cancelButtonProps.onClick', async () => {
+    const onCancel = vi.fn()
+    const onClick = vi.fn()
+    const wrapper = mount(Modal, {
+      attachTo: document.body,
+      props: {
+        open: true,
+        onCancel,
+        cancelButtonProps: { onClick },
+      },
+    })
+
+    await waitFakeTimer(20, 10)
+
+    const cancelBtn = document.body.querySelectorAll<HTMLButtonElement>('.ant-modal-footer .ant-btn')[0]
+    cancelBtn.click()
+    await waitFakeTimer(20, 10)
+
+    expect(onCancel).toHaveBeenCalledTimes(1)
+    expect(onClick).toHaveBeenCalledTimes(1)
 
     wrapper.unmount()
   })

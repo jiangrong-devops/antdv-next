@@ -1,5 +1,5 @@
-import type { SelectProps as VcSelectProps } from '@v-c/select'
-import type { App, CSSProperties, SlotsType } from 'vue'
+import type { BaseSelectRef, SelectProps as VcSelectProps } from '@v-c/select'
+import type { App, CSSProperties, SlotsType, VNode, VNodeChild } from 'vue'
 import type { SemanticClassNamesType, SemanticStylesType } from '../_util/hooks'
 import type { InputStatus } from '../_util/statusUtils'
 import type { VueNode } from '../_util/type'
@@ -16,7 +16,7 @@ import { clsx } from '@v-c/util'
 import { filterEmpty } from '@v-c/util/dist/props-util'
 import { omit } from 'es-toolkit'
 import { toArray } from 'es-toolkit/compat'
-import { computed, defineComponent, getCurrentInstance, isVNode, Text } from 'vue'
+import { computed, defineComponent, getCurrentInstance, isVNode, shallowRef, Text } from 'vue'
 import { getAttrStyleAndClass, useMergeSemantic, useToArr, useToProps } from '../_util/hooks'
 import genPurePanel from '../_util/PurePanel.tsx'
 import { toPropsRefs } from '../_util/tools'
@@ -110,8 +110,8 @@ export interface AutoCompleteProps extends
   styles?: AutoCompleteStylesType
   classes?: AutoCompleteClassNamesType
   /** @deprecated Please use `popupRender` instead */
-  dropdownRender?: (menu: VueNode) => any
-  popupRender?: (menu: VueNode) => any
+  dropdownRender?: (menu: VNode) => VNodeChild
+  popupRender?: (menu: VNode) => VNodeChild
   /** @deprecated Please use `styles.popup.root` instead */
   dropdownStyle?: CSSProperties
   showSearch?: boolean | Pick<SearchConfig, 'filterOption' | 'onSearch'>
@@ -196,10 +196,17 @@ const InternalAutoComplete = defineComponent<
   string,
   SlotsType<AutoCompleteSlots>
 >(
-  (props, { slots, emit, attrs }) => {
+  (props, { slots, emit, attrs, expose }) => {
     const { prefixCls } = useComponentBaseConfig('select', props)
     const { classes, styles } = toPropsRefs(props, 'classes', 'styles')
     const instance = getCurrentInstance()
+
+    const selectRef = shallowRef<BaseSelectRef>()
+    expose({
+      focus: () => selectRef.value?.focus(),
+      blur: () => selectRef.value?.blur(),
+      scrollTo: (arg: any) => selectRef.value?.scrollTo(arg),
+    })
 
     const mergedOnOpenChange = (open: boolean) => {
       if (instance?.vnode.props?.onOpenChange) {
@@ -415,6 +422,7 @@ const InternalAutoComplete = defineComponent<
           {...selectProps}
           {...onAttrs}
           {...inputProps}
+          ref={selectRef}
           v-slots={forwardedSlots}
           prefixCls={prefixCls.value}
           classes={finalClassNames as any}

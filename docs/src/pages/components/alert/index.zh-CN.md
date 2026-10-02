@@ -43,7 +43,7 @@ group:
 | 属性 | 说明 | 类型 | 默认值 | 版本 | [全局配置](/components/config-provider-cn#component-config) |
 | --- | --- | --- | --- | --- | --- |
 | type | 指定警告提示的样式，有四种选择 `success`、`info`、`warning`、`error` | 'success' \| 'info' \| 'warning' \| 'error' | `info`，`banner` 模式下默认值为 `warning` | - | × |
-| closable | 可关闭配置 | ClosableType | `false` | `closable.closeIcon`、`closable.aria-*`：5.15.0 | ✓ |
+| closable | 可关闭配置 | ClosableType | `false` | - | ✓ |
 | title | 警告提示内容 | VueNode | - | - | × |
 | message | 警告提示内容，请使用 `title` 替换 | VueNode | - | - | × |
 | description | 警告提示的辅助性文字介绍 | VueNode | - | - | × |
@@ -59,14 +59,14 @@ group:
 | warningIcon | （仅支持全局配置）自定义警告图标 | VueNode | - | - | ✓ |
 | errorIcon | （仅支持全局配置）自定义错误图标 | VueNode | - | - | ✓ |
 | closeIcon | - | VueNode | - | - | ✓ |
-| action | 自定义操作项 | VueNode | - | 4.9.0 | × |
+| action | 自定义操作项 | VueNode | - | - | × |
 | id | - | string | - | - | × |
 
 ### 事件 {#events}
 
 | 事件 | 说明 | 类型 | 版本 |
 | --- | --- | --- | --- |
-| close | Callback when close Alert | (e: any) =&gt; any | - |
+| close | 关闭时触发的回调函数 | (e: any) =&gt; any | - |
 | mouseenter | - | (e: any) =&gt; any | - |
 | mouseleave | - | (e: any) =&gt; any | - |
 | click | - | (e: any) =&gt; any | - |
@@ -79,8 +79,17 @@ group:
 | title       | 警告提示内容 | () =&gt; any | - |
 | description | 警告提示的辅助性文字介绍 | () =&gt; any | - |
 | icon        | 自定义图标，`showIcon` 为 true 时有效 | () =&gt; any | - |
-| closeIcon   | - | () =&gt; any | - |
-| action      | 自定义操作项 | () =&gt; any | 4.9.0 |
+| closeIcon   | 自定义关闭图标 | () =&gt; any | - |
+| action      | 自定义操作项 | () =&gt; any | - |
+
+### ClosableType {#closable-type}
+
+| 参数 | 说明 | 类型 | 默认值 | 版本 |
+| --- | --- | --- | --- | --- |
+| afterClose | 关闭动画结束后触发的回调函数 | () =&gt; void | - | - |
+| closeIcon | 自定义关闭图标 | VueNode | - | - |
+| disabled | 是否禁用关闭按钮 | boolean | false | - |
+| onClose | 关闭时触发的回调函数 | (e: MouseEvent) =&gt; void | - | - |
 
 ## 语义化 DOM {#semantic-dom}
 

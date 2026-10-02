@@ -165,16 +165,16 @@ const ColorPicker = defineComponent<
       }
     }
 
-    const triggerOpenChange = (visible: boolean) => {
+    const triggerOpenChange = (nextOpen: boolean) => {
       if (open.value !== undefined) {
-        emit('openChange', visible)
-        emit('update:open', visible)
+        emit('openChange', nextOpen)
+        emit('update:open', nextOpen)
         return
       }
-      if (!visible || !mergedDisabled.value) {
-        internalPopupOpen.value = visible
-        emit('openChange', visible)
-        emit('update:open', visible)
+      if (!nextOpen || !mergedDisabled.value) {
+        internalPopupOpen.value = nextOpen
+        emit('openChange', nextOpen)
+        emit('update:open', nextOpen)
       }
     }
 
@@ -248,16 +248,7 @@ const ColorPicker = defineComponent<
     const [hashId, cssVarCls] = useStyle(prefixCls, rootCls)
 
     const handleClear = () => {
-      const cleared = new AggregationColor('')
-      setColor(cleared)
       emit('clear')
-      emit('change', cleared, cleared.toCssString())
-      emit(
-        'update:value',
-        valueFormat.value
-          ? formatColorValue(cleared, valueFormat.value)
-          : cleared.toCssString(),
-      )
     }
 
     expose({
@@ -278,7 +269,7 @@ const ColorPicker = defineComponent<
         autoAdjustOverflow,
         destroyOnHidden,
       } = props
-      const { className, style, restAttrs } = getAttrStyleAndClass(attrs)
+      const { className, style, restAttrs } = getAttrStyleAndClass(attrs, undefined, props as any)
       const children = filterEmpty(slots?.default?.() ?? [])
       const showText = slots?.showText ?? props?.showText
       const panelRender = slots?.panelRender ?? props?.panelRender
@@ -310,11 +301,9 @@ const ColorPicker = defineComponent<
         autoAdjustOverflow,
         destroyOnHidden,
       }
-      const mergedShowText = showText ? (typeof showText === 'function' ? (color: AggregationColor) => showText({ color }) : showText) : undefined
       const panelNode = (
         <ContextIsolator form>
           <ColorPickerPanel
-            {...restAttrs}
             prefixCls={prefixCls.value}
             presets={presets.value}
             panelRender={panelRender}
@@ -355,8 +344,9 @@ const ColorPicker = defineComponent<
               style={style}
               prefixCls={prefixCls.value}
               disabled={mergedDisabled.value}
-              showText={mergedShowText as any}
+              showText={showText}
               format={formatValue.value}
+              {...restAttrs}
               color={mergedColor.value as any}
               classes={mergedClassNames.value}
               styles={mergedStyles.value}

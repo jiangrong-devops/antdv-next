@@ -20,7 +20,9 @@ describe('rate', () => {
       'should apply %s size class',
       (size) => {
         const wrapper = mount(Rate, { props: { size } })
-        expect(wrapper.find(`.ant-rate-${size}`).exists()).toBe(true)
+        const rate = wrapper.find(`.ant-rate-${size}`)
+        expect(rate.exists()).toBe(true)
+        expect(rate.attributes('size')).toBeUndefined()
       },
     )
 
@@ -28,6 +30,7 @@ describe('rate', () => {
       const wrapper = mount(Rate, { props: { size: 'middle' } })
       expect(wrapper.find('.ant-rate-small').exists()).toBe(false)
       expect(wrapper.find('.ant-rate-large').exists()).toBe(false)
+      expect(wrapper.find('.ant-rate').attributes('size')).toBeUndefined()
     })
 
     it('should inherit size from ConfigProvider', () => {
@@ -173,6 +176,17 @@ describe('rate', () => {
         </ConfigProvider>
       ))
       expect(wrapper.find('.ant-rate-rtl').exists()).toBe(true)
+    })
+
+    it('should ignore direction attribute and follow ConfigProvider', () => {
+      const wrapper = mount(() => (
+        <ConfigProvider direction="ltr">
+          <Rate {...{ direction: 'rtl' } as any} />
+        </ConfigProvider>
+      ))
+      const rate = wrapper.find('.ant-rate')
+      expect(rate.classes()).not.toContain('ant-rate-rtl')
+      expect(rate.attributes('direction')).toBeUndefined()
     })
   })
 

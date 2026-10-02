@@ -57,7 +57,7 @@ Common props ref：[Common props](/docs/vue/common-props)
 | Property | Description | Type | Default | Version |
 | --- | --- | --- | --- | --- |
 | componentDisabled | Config antd component `disabled` | boolean | - | - |
-| componentSize | Config antd component size | `small` \| `middle` \| `large` | - | - |
+| componentSize | Config antd component size | `small` \| `medium` \| `large` | - | - |
 | csp | Set [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) config | CSPConfig | - | - |
 | direction | Set direction of layout. See [demo](#config-provider-demo-direction) | `ltr` \| `rtl` | `ltr` | - |
 | getPopupContainer | To set the container of the popup element. The default is to create a `div` element in `body` | `(trigger?: HTMLElement) => HTMLElement \| ShadowRoot` | () => document.body | - |
@@ -114,7 +114,7 @@ const { componentDisabled, componentSize } = config.value
 | Property | Description | Type | Default | Version |
 | --- | --- | --- | --- | --- |
 | componentDisabled | antd component disabled state | boolean | - | - |
-| componentSize | antd component size state | `small` \| `middle` \| `large` | - | - |
+| componentSize | antd component size state | `small` \| `medium` \| `large` | - | - |
 
 ### Component Config
 
@@ -152,6 +152,7 @@ The following config keys set common props for corresponding components or globa
 - `inputPassword`: [Input.Password](/components/input#input-password)
 - `inputSearch`: [Input.Search](/components/input#input-search)
 - `layout`: [Layout](/components/layout#api)
+- `listy`: [Listy](/components/listy#api)
 - `masonry`: [Masonry](/components/masonry#api)
 - `mentions`: [Mentions](/components/mentions#api)
 - `menu`: [Menu](/components/menu#api)

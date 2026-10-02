@@ -39,15 +39,15 @@ Common props ref：[Common props](/docs/vue/common-props)
 | Property | Description | Type | Default | Version | [Global Config](/components/config-provider#component-config) |
 | --- | --- | --- | --- | --- | --- |
 | closable | Whether the Tag can be closed | boolean | false | - | ✓ |
-| closeIcon | Custom close icon. Setting to `null` or `false` hides the close button | VueNode | - | 4.4.0 | ✓ |
+| closeIcon | Custom close icon. Setting to `null` or `false` hides the close button | VueNode | - | - | ✓ |
 | color | Color of the Tag | string | - | - | × |
 | classes | Customize class for each semantic structure inside the component. Supports object or function | TagClassNamesType | - | - | ✓ |
-| disabled | Whether the tag is disabled | boolean | false | 6.0.0 | × |
-| href | The address to jump when clicking, when specified the tag will be rendered as `<a>` tag | string | - | 6.0.0 | × |
+| disabled | Whether the tag is disabled | boolean | false | - | × |
+| href | The address to jump when clicking, when specified the tag will be rendered as `<a>` tag | string | - | - | × |
 | icon | Set the icon of tag | VueNode | - | - | × |
 | styles | Customize inline style for each semantic structure inside the component. Supports object or function | TagStylesType | - | - | ✓ |
-| target | Same as target attribute of `<a>`, works when href is specified | string | - | 6.0.0 | × |
-| variant | Variant of the tag | `filled` \| `solid` \| `outlined` | `filled` | 6.0.0 | ✓ |
+| target | Same as target attribute of `<a>`, works when href is specified | string | - | - | × |
+| variant | Variant of the tag | `filled` \| `solid` \| `outlined` | `filled` | - | ✓ |
 
 #### Events {#tag-events}
 
@@ -59,10 +59,10 @@ Common props ref：[Common props](/docs/vue/common-props)
 
 | Slot | Description | Type | Version |
 | --- | --- | --- | --- |
-| closeIcon | Custom close icon. Setting to `null` or `false` hides the close button | () =&gt; VueNode | 4.4.0 |
+| closeIcon | Custom close icon. Setting to `null` or `false` hides the close button | () =&gt; VueNode | - |
 | icon | Set the icon of tag | () =&gt; VueNode | - |
 
-### CheckableTag
+### Tag.CheckableTag
 
 #### Props {#checkable-tag-props}
 
@@ -77,7 +77,7 @@ Common props ref：[Common props](/docs/vue/common-props)
 | --- | --- | --- | --- |
 | change | Callback executed when Tag is checked/unchecked | (checked: boolean) =&gt; void | - |
 
-### CheckableTagGroup
+### Tag.CheckableTagGroup
 
 #### Props {#checkable-tag-group-props}
 

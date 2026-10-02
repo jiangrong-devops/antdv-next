@@ -112,15 +112,39 @@ export default function useSelection<RecordType extends AnyObject = AnyObject>(
           record = preserveRecordsRef.value.get(key) as RecordType
         }
 
-        newCache.set(key, record)
+        // Selected keys can be restored before their records have loaded.
+        if (record !== undefined) {
+          newCache.set(key, record)
+        }
       })
       preserveRecordsRef.value = newCache
     }
   }
 
-  watch(mergedSelectedKeys, (nextKeys) => {
-    updatePreserveRecordsCache(nextKeys)
-  })
+  // The input `change` event carries no modifier keys, so keep the triggering
+  // click to read `shiftKey` from, like React's `onChange` nativeEvent does
+  let lastClickEvent: MouseEvent | undefined
+  const takeClickEvent = (event: any): MouseEvent => {
+    const clickEvent = lastClickEvent
+    lastClickEvent = undefined
+    return clickEvent ?? event?.nativeEvent
+  }
+
+  // Preserved keys may no longer exist in `data`, so fall back to their cached records
+  const getSelectedRecord = (key: Key) => {
+    const record = getRecordByKey(key)
+    return !record && preserveSelectedRowKeys.value
+      ? preserveRecordsRef.value.get(key) as RecordType
+      : record
+  }
+
+  watch(
+    [mergedSelectedKeys, data, preserveSelectedRowKeys],
+    ([nextKeys]) => {
+      updatePreserveRecordsCache(nextKeys)
+    },
+    { immediate: true },
+  )
 
   const flattedData = computed(() =>
     flattenData(childrenColumnName.value as keyof RecordType, pageData.value as RecordType[]),
@@ -240,7 +264,7 @@ export default function useSelection<RecordType extends AnyObject = AnyObject>(
 
   const triggerSingleSelection = (key: Key, selected: boolean, keys: Key[], event: Event) => {
     if (selectionConfig.value.onSelect) {
-      const rows = keys.map(k => getRecordByKey(k))
+      const rows = keys.map(k => getSelectedRecord(k))
       selectionConfig.value.onSelect(getRecordByKey(key), selected, rows, event)
     }
 
@@ -378,7 +402,7 @@ export default function useSelection<RecordType extends AnyObject = AnyObject>(
 
       selectionConfig.value.onSelectAll?.(
         !checkedCurrentAll,
-        keys.map(k => getRecordByKey(k)),
+        keys.map(k => getSelectedRecord(k)),
         changeKeys.map(k => getRecordByKey(k)),
       )
 
@@ -482,12 +506,14 @@ export default function useSelection<RecordType extends AnyObject = AnyObject>(
               {...checkboxProps as any}
               checked={checked}
               onClick={(e: any) => {
+                lastClickEvent = e
                 e.stopPropagation()
                 checkboxProps?.onClick?.(e)
               }}
               onChange={(event: any) => {
+                const nativeEvent = takeClickEvent(event)
                 if (!keySet.has(key)) {
-                  triggerSingleSelection(key, true, [key], (event as any).nativeEvent)
+                  triggerSingleSelection(key, true, [key], nativeEvent)
                 }
                 checkboxProps?.onChange?.(event)
               }}
@@ -527,12 +553,13 @@ export default function useSelection<RecordType extends AnyObject = AnyObject>(
               checked={checked}
               skipGroup
               onClick={(e: any) => {
+                lastClickEvent = e
                 e.stopPropagation()
                 checkboxProps?.onClick?.(e)
               }}
               onChange={(event: CheckboxChangeEvent) => {
-                const nativeEvent = event.nativeEvent
-                const { shiftKey } = nativeEvent
+                const nativeEvent = takeClickEvent(event)
+                const shiftKey = !!nativeEvent?.shiftKey
                 const currentSelectedIndex = recordKeys.indexOf(key)
                 const isMultiple
                   = derivedSelectedKeySet.value.size > 0
@@ -544,7 +571,7 @@ export default function useSelection<RecordType extends AnyObject = AnyObject>(
 
                   selectionConfig.value.onSelectMultiple?.(
                     !checked,
-                    keys.map(recordKey => getRecordByKey(recordKey)),
+                    keys.map(recordKey => getSelectedRecord(recordKey)),
                     changedKeys.map(recordKey => getRecordByKey(recordKey)),
                   )
 

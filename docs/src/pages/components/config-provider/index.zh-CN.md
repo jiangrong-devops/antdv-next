@@ -58,7 +58,7 @@ ConfigProvider 使用 Vue 的 provide/inject 特性，只需在应用外围包�
 | 属性 | 说明 | 类型 | 默认值 | 版本 |
 | --- | --- | --- | --- | --- |
 | componentDisabled | 设置 antd 组件禁用状态 | boolean | - | - |
-| componentSize | 设置 antd 组件大小 | `small` \| `middle` \| `large` | - | - |
+| componentSize | 设置 antd 组件大小 | `small` \| `medium` \| `large` | - | - |
 | csp | 设置 [Content Security Policy](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CSP) 配置 | CSPConfig | - | - |
 | direction | 设置文本展示方向。 [示例](#config-provider-demo-direction) | `ltr` \| `rtl` | `ltr` | - |
 | getPopupContainer | 弹出框（Select, Tooltip, Menu 等等）渲染父节点，默认渲染到 body 上。 | `(trigger?: HTMLElement) => HTMLElement \| ShadowRoot` | () => document.body | - |
@@ -115,7 +115,7 @@ const { componentDisabled, componentSize } = config.value
 | 返回值 | 说明 | 类型 | 默认值 | 版本 |
 | --- | --- | --- | --- | --- |
 | componentDisabled | antd 组件禁用状态 | boolean | - | - |
-| componentSize | antd 组件大小状态 | `small` \| `middle` \| `large` | - | - |
+| componentSize | antd 组件大小状态 | `small` \| `medium` \| `large` | - | - |
 
 ### 组件配置 {#component-config}
 
@@ -153,6 +153,7 @@ const { componentDisabled, componentSize } = config.value
 - `inputPassword`：[Input.Password](/components/input-cn#input-password)
 - `inputSearch`：[Input.Search](/components/input-cn#input-search)
 - `layout`：[Layout](/components/layout-cn#api)
+- `listy`：[Listy](/components/listy-cn#api)
 - `masonry`：[Masonry](/components/masonry-cn#api)
 - `mentions`：[Mentions](/components/mentions-cn#api)
 - `menu`：[Menu](/components/menu-cn#api)
@@ -203,7 +204,7 @@ const { componentDisabled, componentSize } = config.value
 
 ### 为什么时间类组件的国际化 locale 设置不生效？ {#faq-locale-not-work}
 
-参考 FAQ [Date-related-components-locale-is-not-working?](/docs/vue/faq#为什么时间类组件的国际化-locale-设置不生效)
+参考 FAQ [Date-related-components-locale-is-not-working?](/docs/vue/faq#date-related-components-locale-is-not-working)
 
 ### 配置 `getPopupContainer` 导致 Modal 报错？ {#faq-get-popup-container}
 

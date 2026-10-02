@@ -48,7 +48,10 @@ Common props ref：[Common props](/docs/vue/common-props)
 
 | Property | Description | Type | Default | Version | [Global Config](/components/config-provider#component-config) |
 | --- | --- | --- | --- | --- | --- |
+| ~~addonAfter~~ | The label text displayed after (on the right side of) the input field, please use Space.Compact instead | VueNode | - | - | × |
+| ~~addonBefore~~ | The label text displayed before (on the left side of) the input field, please use Space.Compact instead | VueNode | - | - | × |
 | allowClear | If allow to remove input content with clear icon | boolean \| &#123; clearIcon: VueNode &#125; | false | - | ✓ |
+| ~~bordered~~ | Whether has border style, please use `variant` instead | boolean | true | - | × |
 | classes | Customize class for each semantic structure inside the component. Supports object or function. | Record&lt;[SemanticDOM](#semantic-input), string&gt; \| (info: &#123; props &#125;) =&gt; Record&lt;[SemanticDOM](#semantic-input), string&gt; | - | - | ✓ |
 | count | Character count config | [CountConfig](#countconfig) | - | - | × |
 | defaultValue | The initial input content | string | - | - | × |
@@ -59,7 +62,7 @@ Common props ref：[Common props](/docs/vue/common-props)
 | showCount | Whether to show character count | boolean \| &#123; formatter: (info: &#123; value: string, count: number, maxLength?: number &#125;) =&gt; VueNode &#125; | false | - | × |
 | status | Set validation status | 'error' \| 'warning' | - | - | × |
 | styles | Customize inline style for each semantic structure inside the component. Supports object or function. | Record&lt;[SemanticDOM](#semantic-input), CSSProperties&gt; \| (info: &#123; props &#125;) =&gt; Record&lt;[SemanticDOM](#semantic-input), CSSProperties&gt; | - | - | ✓ |
-| size | The size of the input box. Note: in the context of a form, the `middle` size is used | `large` \| `middle` \| `small` | - | - | × |
+| size | The size of the input box. Note: in the context of a form, the `medium` size is used | `large` \| `medium` \| `small` | - | - | × |
 | suffix | The suffix icon for the Input | VueNode | - | - | × |
 | type | The type of input, see: [MDN](https://developer.mozilla.org/docs/Web/HTML/Element/input#Form_%3Cinput%3E_types)( use `Input.TextArea` instead of `type="textarea"`) | string | `text` | - | × |
 | value | The input content value, support `v-model:value` | string | - | - | × |
@@ -140,7 +143,6 @@ Supports all props of `Input`.
 
 ### InputOTP {#input-otp}
 
-Added in `5.16.0`.
 
 > Notes for developers
 >
@@ -159,7 +161,7 @@ Added in `5.16.0`.
 | mask | Custom display, the original value will not be modified | boolean \| string | `false` | - | × |
 | length | The number of input elements | number | 6 | - | × |
 | status | Set validation status | 'error' \| 'warning' | - | - | × |
-| size | The size of the input box | `small` \| `middle` \| `large` | `middle` | - | × |
+| size | The size of the input box | `small` \| `medium` \| `large` | `medium` | - | × |
 | variant | Variants of Input | `outlined` \| `borderless` \| `filled` \| `underlined` | `outlined` | - | ✓ |
 | value | The input content value | string | - | - | × |
 
@@ -221,3 +223,34 @@ interface VisibilityToggle {
 ### InputOTP {#semantic-otp}
 
 <demo src="./demo/_semantic-otp.vue" simplify></demo>
+
+## Design Token
+
+<ComponentTokenTable component="Input"></ComponentTokenTable>
+
+See [Customize Theme](/docs/vue/customize-theme) to learn how to use Design Token.
+
+## FAQ
+
+### Why does Input lose focus when `prefix/suffix/showCount` is changed dynamically? {#faq-lose-focus}
+
+When Input dynamically adds or removes `prefix/suffix/showCount`, Vue will re-create the DOM structure and the new input is not focused. You can preset an empty `<span />` to keep the DOM structure unchanged:
+
+```vue
+<template>
+  <a-input>
+    <template #suffix>
+      <template v-if="condition">
+        <Icon type="smile" />
+      </template>
+      <template v-else>
+        <span />
+      </template>
+    </template>
+  </a-input>
+</template>
+```
+
+### Why can `value` exceed `maxLength` when TextArea is controlled? {#faq-textarea-exceed-max}
+
+When controlled, the component should display according to the controlled content, to prevent the displayed value from differing from the submitted value when used inside a form component.

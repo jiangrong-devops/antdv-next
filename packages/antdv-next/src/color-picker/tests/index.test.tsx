@@ -3,6 +3,7 @@ import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } 
 import { nextTick, reactive, shallowRef } from 'vue'
 import ColorPicker from '..'
 import Form, { FormItem } from '../../form'
+import { AggregationColor } from '../color'
 import mountTest from '/@tests/shared/mountTest'
 import rtlTest from '/@tests/shared/rtlTest'
 import { mount, waitFakeTimer } from '/@tests/utils'
@@ -64,6 +65,23 @@ describe('color-picker', () => {
     expect(style).toContain('background: rgb(0, 0, 0)')
   })
 
+  it('does not mutate preset items', () => {
+    const preset = {
+      label: 'Brand',
+      colors: ['#1677ff'],
+    }
+    Object.freeze(preset)
+
+    expect(() => mount(ColorPicker, {
+      attachTo: document.body,
+      props: {
+        open: true,
+        presets: [preset],
+      },
+    })).not.toThrow()
+    expect(preset.colors).toEqual(['#1677ff'])
+  })
+
   it('supports custom trigger slot', async () => {
     mount(ColorPicker, {
       attachTo: document.body,
@@ -108,13 +126,35 @@ describe('color-picker', () => {
     })
     expect(wrapper.find('.ant-color-picker-trigger-disabled').exists()).toBe(true)
 
+    const clear = wrapper.find('.ant-color-picker-clear')
+    expect(clear.classes()).toContain('ant-color-picker-clear-disabled')
+    expect(clear.attributes('aria-disabled')).toBe('true')
+    expect(clear.attributes('tabindex')).toBe('-1')
+
     await wrapper.find('.ant-color-picker-trigger').trigger('click')
     await flushColorPickerTimer()
     expect(document.querySelector('.ant-color-picker')).toBeFalsy()
   })
 
+  it('updates clear disabled state when disabled changes', async () => {
+    const wrapper = mount(ColorPicker, {
+      attachTo: document.body,
+    })
+
+    const clear = () => wrapper.find('.ant-color-picker-clear')
+    expect(clear().attributes('tabindex')).toBe('0')
+    expect(clear().classes()).not.toContain('ant-color-picker-clear-disabled')
+
+    await wrapper.setProps({ disabled: true })
+
+    expect(clear().attributes('tabindex')).toBe('-1')
+    expect(clear().classes()).toContain('ant-color-picker-clear-disabled')
+  })
+
   it('supports allowClear and onClear', async () => {
     const onClear = vi.fn()
+    const onChange = vi.fn()
+    const onUpdateValue = vi.fn()
     mount(ColorPicker, {
       attachTo: document.body,
       props: {
@@ -122,6 +162,8 @@ describe('color-picker', () => {
         defaultValue: '#1677ff',
         allowClear: true,
         onClear,
+        onChange,
+        'onUpdate:value': onUpdateValue,
       },
     })
     await flushColorPickerTimer()
@@ -135,6 +177,11 @@ describe('color-picker', () => {
     expect(
       document.querySelector<HTMLInputElement>('.ant-color-picker-alpha-input input')?.value,
     ).toContain('0')
+
+    expect(onChange).toHaveBeenCalledTimes(1)
+    expect(onChange).toHaveBeenCalledWith(expect.anything(), 'rgba(22,119,255,0)')
+    expect(onUpdateValue).toHaveBeenCalledTimes(1)
+    expect(onUpdateValue.mock.calls[0][0].toCssString()).toBe('rgba(22,119,255,0)')
   })
 
   it('should allowClear work with keyboard', async () => {
@@ -189,12 +236,39 @@ describe('color-picker', () => {
       props: {
         defaultValue: '#1677ff',
         showText: (ctx: any) => {
-          return ctx.color?.toHexString?.() || ctx.color?.color?.toHexString?.() || ''
+          return ctx.color?.toHexString?.() || ''
         },
       },
     })
 
     expect(wrapper.find('.ant-color-picker-trigger-text').text()).toBe('#1677ff')
+  })
+
+  it('passes { color: AggregationColor } to showText function', () => {
+    const showText = vi.fn(({ color }: { color: AggregationColor }) => color.toHexString())
+    const wrapper = mount(ColorPicker, {
+      props: {
+        defaultValue: '#1677ff',
+        showText,
+      },
+    })
+
+    expect(showText).toHaveBeenCalled()
+    expect(showText.mock.calls[0]![0].color).toBeInstanceOf(AggregationColor)
+    expect(wrapper.find('.ant-color-picker-trigger-text').text()).toBe('#1677ff')
+  })
+
+  it('passes { color: AggregationColor } to showText slot', () => {
+    const wrapper = mount(ColorPicker, {
+      props: {
+        defaultValue: '#1677ff',
+      },
+      slots: {
+        showText: ({ color }: { color: AggregationColor }) => `Custom (${color.toHexString()})`,
+      },
+    })
+
+    expect(wrapper.find('.ant-color-picker-trigger-text').text()).toBe('Custom (#1677ff)')
   })
 
   it('shows transparent text for null defaultValue', () => {

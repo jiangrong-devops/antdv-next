@@ -3,6 +3,7 @@
 exports[`cascader demo > renders _semantic correctly 1`] = `
 <div
   class="semantic-preview-container"
+  data-v-a0c14671=""
   data-v-dfc8ebef=""
 >
   <div
@@ -14,17 +15,20 @@ exports[`cascader demo > renders _semantic correctly 1`] = `
       data-v-dfc8ebef=""
     >
       <div
+        class="cascader-semantic-demo"
+        data-v-a0c14671=""
         style="position: absolute; height: 200px;"
       >
         <div
+          data-v-a0c14671=""
           style="display: flex; justify-content: center; margin-bottom: 12px;"
         >
           <div
             aria-label="segmented control"
             aria-orientation="horizontal"
             class="ant-segmented css-var-v-0 css-var-v-0"
+            data-v-a0c14671=""
             role="radiogroup"
-            size="middle"
             tabindex="0"
           >
             <div
@@ -66,6 +70,7 @@ exports[`cascader demo > renders _semantic correctly 1`] = `
           </div>
         </div>
         <div
+          data-v-a0c14671=""
           style="display: flex; flex-direction: column; gap: 12px;"
         >
           <!---->
@@ -125,6 +130,7 @@ exports[`cascader demo > renders _semantic correctly 1`] = `
             <button
               aria-label="Clear"
               class="ant-select-clear semantic-mark-clear"
+              style="opacity: 1; visibility: hidden;"
               type="button"
             >
               <span
@@ -762,7 +768,7 @@ exports[`cascader demo > renders _semantic correctly 1`] = `
               style="margin: 0px; font-size: 12px;"
             >
               <!---->
-              Clear button element with layout, styling and interactive effects for clear button式
+              Clear button element with layout, styling and interactive effects for clear button styles
               <!---->
               <!---->
               <!---->
@@ -2452,12 +2458,13 @@ exports[`cascader demo > renders placement correctly 1`] = `
     >
       <span
         class="ant-radio-button ant-radio-button-checked"
-        name="v-0"
       >
         <input
           checked=""
           class="ant-radio-button-input"
+          name="v-0"
           type="radio"
+          value="topLeft"
         />
       </span>
       <span
@@ -2471,11 +2478,12 @@ exports[`cascader demo > renders placement correctly 1`] = `
     >
       <span
         class="ant-radio-button"
-        name="v-0"
       >
         <input
           class="ant-radio-button-input"
+          name="v-0"
           type="radio"
+          value="topRight"
         />
       </span>
       <span
@@ -2489,11 +2497,12 @@ exports[`cascader demo > renders placement correctly 1`] = `
     >
       <span
         class="ant-radio-button"
-        name="v-0"
       >
         <input
           class="ant-radio-button-input"
+          name="v-0"
           type="radio"
+          value="bottomLeft"
         />
       </span>
       <span
@@ -2507,11 +2516,12 @@ exports[`cascader demo > renders placement correctly 1`] = `
     >
       <span
         class="ant-radio-button"
-        name="v-0"
       >
         <input
           class="ant-radio-button-input"
+          name="v-0"
           type="radio"
+          value="bottomRight"
         />
       </span>
       <span
@@ -2587,8 +2597,6 @@ exports[`cascader demo > renders render-panel correctly 1`] = `
   data-v-app=""
 >
   <div
-    options="[object Object],[object Object]"
-    placeholder="Please select"
     style="padding-bottom: 0px; position: relative; min-width: 0px;"
   >
     <!---->
@@ -3249,7 +3257,7 @@ exports[`cascader demo > renders status correctly 1`] = `
 
 exports[`cascader demo > renders style-class correctly 1`] = `
 <div
-  class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-middle ant-flex-vertical"
+  class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-medium ant-flex-vertical"
   data-v-93405f77=""
 >
   <!---->
@@ -3680,7 +3688,7 @@ exports[`cascader demo > renders suffix correctly 1`] = `
 
 exports[`cascader demo > renders variant correctly 1`] = `
 <div
-  class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-middle ant-flex-vertical"
+  class="ant-flex css-var-root ant-flex-align-stretch ant-flex-gap-medium ant-flex-vertical"
 >
   <!---->
   <div

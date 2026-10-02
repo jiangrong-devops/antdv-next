@@ -13,6 +13,7 @@ import {
   useToArr,
   useToProps,
 } from '../_util/hooks'
+import { isFunction, isRenderable } from '../_util/is.ts'
 import { clsx, getSlotPropsFnRun, toPropsRefs } from '../_util/tools.ts'
 import { useComponentBaseConfig } from '../config-provider/context.ts'
 import Skeleton from '../skeleton'
@@ -200,7 +201,7 @@ const Statistic = defineComponent<
           onMouseenter={handleMouseEnter}
           onMouseleave={handleMouseLeave}
         >
-          {!!title && (
+          {isRenderable(title) && (
             <div class={headerClassNames} style={mergedStyles.value.header}>
               <div class={titleClassNames} style={mergedStyles.value.title}>{title}</div>
             </div>
@@ -210,7 +211,7 @@ const Statistic = defineComponent<
               style={[valueStyle, mergedStyles.value.content]}
               class={contentClassNames}
             >
-              {!!prefix && (
+              {isRenderable(prefix) && (
                 <span
                   class={prefixClassNames}
                   style={mergedStyles.value.prefix}
@@ -218,8 +219,8 @@ const Statistic = defineComponent<
                   {prefix}
                 </span>
               )}
-              {valueRender ? valueRender(valueNode) : valueNode}
-              {!!suffix && (
+              {isFunction(valueRender) ? valueRender(valueNode) : valueNode}
+              {isRenderable(suffix) && (
                 <span
                   class={suffixClassNames}
                   style={mergedStyles.value.suffix}

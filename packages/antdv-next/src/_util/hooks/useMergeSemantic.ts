@@ -3,6 +3,7 @@ import type { AnyObject, EmptyObject, ValidChar } from '../type'
 import { classNames as clsx } from '@v-c/util'
 import { omit } from 'es-toolkit'
 import { computed, unref } from 'vue'
+import { normalizeStyle } from '../styleUtils'
 
 export type SemanticSchema = { _default?: string } & {
   [key: `${ValidChar}${string}`]: SemanticSchema
@@ -76,7 +77,10 @@ export function mergeStyles<StylesType extends AnyObject>(...styles: (Partial<St
     .filter(Boolean)
     .reduce<Record<PropertyKey, CSSProperties>>((acc, cur = {}) => {
       Object.keys(cur).forEach((key) => {
-        acc[key] = { ...acc[key], ...cur[key] }
+        // A semantic part value may be a string/array (e.g.
+        // useSemanticRootStyle wraps a user `style` as { root: 'color: …' });
+        // normalize so merging never produces numeric-indexed keys.
+        acc[key] = { ...acc[key], ...(normalizeStyle(cur[key]) as CSSProperties) }
       })
       return acc
     }, {})
@@ -125,11 +129,17 @@ export function useMergeSemantic<
   info: Ref<{ props: Props }>,
   schema?: Ref<SemanticSchema>,
 ) {
+  // Only touch `info.value` for function-form entries: the merged props object
+  // behind it is usually a full spread of the component props, and evaluating
+  // it for every instance just to pass it to a plain object is pure waste.
+  const resolveLazy = <T extends AnyObject>(value: MaybeFn<T, Props>) =>
+    typeof value === 'function' ? value(info.value) : value
+
   const resolvedClassNamesList = computed(() => {
-    return classNamesList.value.map(classNames => classNames ? resolveStyleOrClass(classNames, info.value) : undefined)
+    return classNamesList.value.map(classNames => classNames ? resolveLazy(classNames) : undefined)
   })
   const resolvedStylesList = computed(() => {
-    return stylesList.value.map(styles => styles ? resolveStyleOrClass(styles, info.value) : undefined)
+    return stylesList.value.map(styles => styles ? resolveLazy(styles) : undefined)
   })
 
   const mergedClassNames = computed(() => useSemanticClassNames(schema?.value, ...resolvedClassNamesList.value) as ObjectOnly<ClassNamesType>)
@@ -235,7 +245,9 @@ export function pureAttrs(attrs: Record<string, any>, options: RemoveBaseAttribu
 export function getAttrStyleAndClass(attrs: Record<string, any>, options?: RemoveBaseAttributesOptions, props?: Record<string, any>) {
   return {
     className: attrs.class ?? props?.class,
-    style: attrs.style ?? props?.style,
+    // Normalize so callers can safely spread the style (a user `style` may be
+    // a string/array, which Vue passes through untouched).
+    style: normalizeStyle(attrs.style ?? props?.style),
     restAttrs: pureAttrs(attrs, options),
   } as { className: any, style: any, restAttrs: Record<string, any> }
 }

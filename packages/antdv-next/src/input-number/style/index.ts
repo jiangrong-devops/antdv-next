@@ -3,7 +3,7 @@ import type { GenerateStyle } from '../../theme/internal'
 
 import type { ComponentToken, InputNumberToken } from './token'
 import { unit } from '@antdv-next/cssinjs'
-import { genBasicInputStyle, genPlaceholderStyle, initInputToken } from '../../input/style'
+import { genAllowClearStyle, genBasicInputStyle, genPlaceholderStyle, initInputToken } from '../../input/style'
 import {
   genBorderlessStyle,
   genFilledStyle,
@@ -102,19 +102,6 @@ const genInputNumberStyles: GenerateStyle<InputNumberToken> = (token) => {
           },
         }),
         ...genBorderlessStyle(token),
-
-        [`&${componentCls}-borderless`]: {
-          paddingBlock: 0,
-          [varName('input-padding-block')]: unit(token.calc(paddingBlock).add(lineWidth).equal()),
-        },
-        [`&${componentCls}-borderless${componentCls}-sm`]: {
-          paddingBlock: 0,
-          [varName('input-padding-block')]: unit(token.calc(paddingBlockSM).add(lineWidth).equal()),
-        },
-        [`&${componentCls}-borderless${componentCls}-lg`]: {
-          paddingBlock: 0,
-          [varName('input-padding-block')]: unit(token.calc(paddingBlockLG).add(lineWidth).equal()),
-        },
 
         // ========================= RTL ==========================
         '&-rtl': {
@@ -276,6 +263,10 @@ const genInputNumberStyles: GenerateStyle<InputNumberToken> = (token) => {
             textAlign: 'center',
             paddingInline: varRef('input-padding-inline'),
           },
+
+          [`${componentCls}-suffix`]: {
+            marginInlineEnd: varRef('input-padding-inline'),
+          },
         },
       },
     },
@@ -310,6 +301,8 @@ const genInputNumberStyles: GenerateStyle<InputNumberToken> = (token) => {
     // ==========================================================
     {
       [componentCls]: {
+        ...genAllowClearStyle(token),
+
         [`${componentCls}-prefix, ${componentCls}-suffix`]: {
           display: 'flex',
           flex: 'none',
@@ -326,11 +319,22 @@ const genInputNumberStyles: GenerateStyle<InputNumberToken> = (token) => {
           height: '100%',
           marginInlineStart: inputAffixPadding,
           transition: `margin ${motionDurationMid}`,
+
+          [`${componentCls}-clear-icon`]: {
+            flex: 'none',
+            pointerEvents: 'auto',
+          },
         },
 
-        [`&:hover:not(${componentCls}-without-controls)`]: {
+        [`&-mode-input:not(${componentCls}-without-controls)`]: {
           [`${componentCls}-suffix`]: {
-            marginInlineEnd: token.handleWidth,
+            marginInlineEnd: token.handleVisibleWidth,
+          },
+
+          [`&:hover, &${componentCls}-focused`]: {
+            [`${componentCls}-suffix`]: {
+              marginInlineEnd: token.handleWidth,
+            },
           },
         },
       },

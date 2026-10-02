@@ -4,9 +4,10 @@ import type { AntdTreeNodeAttribute, TreeEmits, TreeProps, TreeSlots } from './T
 import { FileOutlined, FolderOpenOutlined, FolderOutlined } from '@antdv-next/icons'
 import { conductExpandParent, convertDataToEntities, convertTreeToData } from '@v-c/tree'
 import { clsx } from '@v-c/util'
-import { filterEmpty, getAttrStyleAndClass } from '@v-c/util/dist/props-util'
+import { filterEmpty } from '@v-c/util/dist/props-util'
 import { omit } from 'es-toolkit'
 import { computed, defineComponent, shallowRef, watch } from 'vue'
+import { getAttrStyleAndClass } from '../_util/hooks'
 import { useComponentBaseConfig } from '../config-provider/context.ts'
 import Tree from './Tree.tsx'
 
@@ -68,7 +69,7 @@ const DirectoryTree = defineComponent<
 
       let initExpandedKeys: Key[]
       if (defaultExpandAll) {
-        initExpandedKeys = Object.keys(keyEntities)
+        initExpandedKeys = Object.values(keyEntities).map(({ key }) => key)
       }
       else if (defaultExpandParent) {
         initExpandedKeys = conductExpandParent(
@@ -109,6 +110,11 @@ const DirectoryTree = defineComponent<
         nativeEvent: MouseEvent
       },
     ) => {
+      // Keep the internal expanded state in sync in uncontrolled mode so that
+      // shift range selection can see the currently expanded nodes.
+      if (props.expandedKeys === undefined) {
+        expandedKeys.value = keys
+      }
       emit('update:expandedKeys', keys)
       emit('expand', keys, info)
     }

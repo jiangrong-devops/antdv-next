@@ -7,7 +7,7 @@ cover: https://mdn.alipayobjects.com/huamei_7uahnr/afts/img/A*f0SISaETY0wAAAAAAA
 coverDark: https://mdn.alipayobjects.com/huamei_7uahnr/afts/img/A*y92yRYhObU8AAAAAAAAAAAAADrJ8AQ/original
 demo:
   cols: 1
-tag: 5.21.0
+tag: 1.0.0
 ---
 
 ## When To Use
@@ -26,7 +26,7 @@ Provide a draggable split panel for creating complex multi-column or multi-row l
   <demo src="./demo/group.vue">Layout Group</demo>
   <demo src="./demo/size-mix.vue">Size Mix</demo>
   <demo src="./demo/lazy.vue">Lazy</demo>
-  <demo src="./demo/reset.vue" version="1.0.3">Double-clicked reset</demo>
+  <demo src="./demo/reset.vue">Double-clicked reset</demo>
   <demo src="./demo/style-class.vue">Custom semantic dom styling</demo>
 </demo-group>
 
@@ -41,18 +41,19 @@ Common props ref：[Common props](/docs/vue/common-props)
 | Property | Description | Type | Default | Version | [Global Config](/components/config-provider#component-config) |
 | --- | --- | --- | --- | --- | --- |
 | classes | Customize class for each semantic structure inside the component. Supports object or function | Record&lt;[SemanticDOM](#semantic-dom), string&gt; \| (info: &#123; props &#125;) =&gt; Record&lt;[SemanticDOM](#semantic-dom), string&gt; | - | - | ✓ |
-| collapsibleIcon | Custom collapsible icon | &#123; start?: VueNode; end?: VueNode &#125; | - | 6.0.0 | × |
-| draggerIcon | Custom dragger icon | VueNode | - | 6.0.0 | × |
-| lazy | Lazy rendering mode | boolean | false | 5.23.0 | × |
-| orientation | Layout direction | `vertical` \| `horizontal` | `horizontal` | - | × |
+| collapsible | `motion` to enable collapse animation, `icon` to customize collapse icons | &#123; motion?: boolean; icon?: &#123; start?: VueNode; end?: VueNode &#125; &#125; | - | - | × |
+| collapsibleIcon | Custom collapsible icon | &#123; start?: VueNode; end?: VueNode &#125; | - | 1.0.0 | × |
+| draggerIcon | Custom dragger icon | VueNode | - | 1.0.0 | × |
+| lazy | Lazy rendering mode | boolean | false | 1.0.0 | × |
+| orientation | Layout direction | `vertical` \| `horizontal` | `horizontal` | 1.0.0 | × |
 | styles | Customize inline style for each semantic structure inside the component. Supports object or function | Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; \| (info: &#123; props &#125;) =&gt; Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; | - | - | ✓ |
-| vertical | Orientation, Simultaneously existing with `orientation`, `orientation` takes priority | boolean | false | - | × |
+| vertical | Orientation, Simultaneously existing with `orientation`, `orientation` takes priority | boolean | false | 1.0.0 | × |
 
 #### Events {#splitter-events}
 
 | Event | Description | Type | Version |
 | --- | --- | --- | --- |
-| collapse | Callback when expanding or collapsing | (collapsed: boolean[], sizes: number[]) =&gt; void | 5.28.0 |
+| collapse | Callback when expanding or collapsing | (collapsed: boolean[], sizes: number[]) =&gt; void | 1.0.0 |
 | resize | Panel size change callback | (sizes: number[]) =&gt; void | - |
 | resizeEnd | Drag end callback | (sizes: number[]) =&gt; void | - |
 | resizeStart | Callback before dragging starts | (sizes: number[]) =&gt; void | - |
@@ -63,7 +64,7 @@ Common props ref：[Common props](/docs/vue/common-props)
 | --- | --- | --- | --- |
 | collapsibleIconEnd | Custom collapsible end icon | () =&gt; VueNode | - |
 | collapsibleIconStart | Custom collapsible start icon | () =&gt; VueNode | - |
-| draggerIcon | Custom dragger icon | () =&gt; VueNode | 6.0.0 |
+| draggerIcon | Custom dragger icon | () =&gt; VueNode | 1.0.0 |
 
 ### SplitterPanel
 
@@ -71,8 +72,9 @@ Common props ref：[Common props](/docs/vue/common-props)
 
 | Property | Description | Type | Default | Version |
 | --- | --- | --- | --- | --- |
-| collapsible | Enable collapsible | boolean \| &#123; start?: boolean; end?: boolean; showCollapsibleIcon?: boolean \| 'auto' &#125; | false | 5.28.0 |
+| collapsible | Enable collapsible | boolean \| &#123; start?: boolean; end?: boolean; showCollapsibleIcon?: boolean \| 'auto' &#125; | false | 1.0.0 |
 | defaultSize | Initial panel size, supports px and percentage | number \| string | - | - |
+| destroyOnHidden | Destroy panel content when collapsed (`size` is 0) | boolean | false | - |
 | max | Maximum threshold, supports px and percentage | number \| string | - | - |
 | min | Minimum threshold, supports px and percentage | number \| string | - | - |
 | resizable | Whether to enable resize | boolean | true | - |

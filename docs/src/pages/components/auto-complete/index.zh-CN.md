@@ -62,9 +62,9 @@ demo:
 | optionRender | 自定义下拉选项渲染 | (option: FlattenOptionData&lt;BaseOptionType&gt;, info: &#123; index: number &#125;) =&gt; VueNode | - | - | × |
 | placeholder | 输入框提示 | string | - | - | × |
 | popupMatchSelectWidth | 下拉菜单和选择器同宽。默认将设置 `min-width`，当值小于选择框宽度时会被忽略。false 时会关闭虚拟滚动 | boolean \| number | true | - | × |
-| popupRender | 自定义下拉框内容 | (menu: VueNode) =&gt; VueNode | - | - | × |
+| popupRender | 自定义下拉框内容 | (menu: VNode) =&gt; VueNode | - | - | × |
 | showSearch | 搜索配置 | boolean \| [SearchConfig](#showsearch) | true | - | × |
-| size | 控件大小 | `large` \| `middle` \| `small` | - | - | × |
+| size | 控件大小 | `large` \| `medium` \| `small` | - | - | × |
 | status | 设置校验状态 | `error` \| `warning` | - | - | × |
 | styles | 用于自定义组件内部各语义化结构的行内 style，支持对象或函数 | Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; \| (info: &#123; props &#125;) =&gt; Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; | - | - | × |
 | value | 指定当前选中的条目，支持 `v-model:value` | string | - | - | × |
@@ -85,6 +85,13 @@ demo:
 | search | 搜索补全项的时候调用 | (value: string) =&gt; void | - |
 | select | 被选中时调用，参数为选中项的 value 值 | (value: string, option: Option) =&gt; void | - |
 
+### AutoComplete 方法 {#methods}
+
+| 名称 | 说明 | 版本 |
+| --- | --- | --- |
+| blur() | 取消焦点 | - |
+| focus() | 获取焦点 | - |
+
 ### 插槽 {#slots}
 
 | 插槽 | 说明 | 类型 | 版本 |
@@ -93,7 +100,7 @@ demo:
 | labelRender | 自定义当前选中的 label 内容 render | (props: LabelInValueType) =&gt; VueNode | - |
 | notFoundContent | 当下拉列表为空时显示的内容 | () =&gt; VueNode | - |
 | optionRender | 自定义下拉选项渲染 | (option: FlattenOptionData&lt;BaseOptionType&gt;, info: &#123; index: number &#125;) =&gt; VueNode | - |
-| popupRender | 自定义下拉框内容 | (menu: VueNode) =&gt; VueNode | - |
+| popupRender | 自定义下拉框内容 | (menu: VNode) =&gt; VueNode | - |
 | prefix | 自定义前缀 | () =&gt; VueNode | - |
 | suffixIcon | 自定义后缀图标 | () =&gt; VueNode | - |
 
@@ -110,7 +117,7 @@ demo:
 
 <demo src="./demo/_semantic.vue" simplify></demo>
 
-## 主题变量（Design Token）
+## 主题变量（Design Token） {#design-token}
 
 <ComponentTokenTable component="Select" />
 

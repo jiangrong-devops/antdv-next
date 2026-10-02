@@ -1,5 +1,5 @@
 import type { DefaultOptionType, FieldNames, SearchConfig, CascaderProps as VcCascaderProps } from '@v-c/cascader'
-import type { App, CSSProperties, PublicProps, SlotsType } from 'vue'
+import type { App, CSSProperties, PublicProps, SlotsType, VNode, VNodeChild } from 'vue'
 import type { SemanticClassNamesType, SemanticStylesType } from '../_util/hooks'
 import type { SelectCommonPlacement } from '../_util/motion'
 import type { InputStatus } from '../_util/statusUtils'
@@ -151,6 +151,7 @@ export interface CascaderProps<
     | 'onChange'
     | 'onSearch'
     | 'onPopupVisibleChange'
+    | 'popupRender'
     | 'multiple'
     | 'value'
   >,
@@ -173,20 +174,20 @@ export interface CascaderProps<
   status?: InputStatus
 
   rootClass?: string
-  /** @deprecated Please use `classNames.popup.root` instead */
+  /** @deprecated Please use `classes.popup.root` instead */
   popupClassName?: string
-  /** @deprecated Please use `classNames.popup.root` instead */
+  /** @deprecated Please use `classes.popup.root` instead */
   dropdownClassName?: string
   /** @deprecated Please use `styles.popup.root` instead */
   dropdownStyle?: CSSProperties
   /** @deprecated Please use `popupRender` instead */
-  dropdownRender?: (menu: any) => any
-  popupRender?: (menu: any) => any
-  /** @deprecated Please use `popupMenuColumnStyle` instead */
+  dropdownRender?: (menu: VNode) => VNodeChild
+  popupRender?: (menu: VNode) => VNodeChild
+  /** @deprecated Please use `styles.popup.listItem` instead */
   dropdownMenuColumnStyle?: CSSProperties
+  /** @deprecated Please use `styles.popup.listItem` instead */
   popupMenuColumnStyle?: CSSProperties
   /**
-   * @since 5.13.0
    * @default "outlined"
    */
   variant?: Variant
@@ -197,10 +198,11 @@ export interface CascaderProps<
 export interface CascaderSlots<OptionType extends DefaultOptionType = DefaultOptionType> {
   suffixIcon?: () => any
   notFoundContent?: () => any
-  popupRender?: (menu: any) => any
+  popupRender?: (menu: VNode) => VNodeChild
   displayRender?: (data: { labels: string[], selectedOptions?: OptionType[] }) => any
   optionRender?: (option: OptionType) => any
   expandIcon?: () => any
+  loadingIcon?: () => any
   default?: () => any
 }
 
@@ -209,7 +211,7 @@ export interface CascaderEmits<
   ValueField extends keyof OptionType = keyof OptionType,
   Multiple extends boolean = boolean,
 > {
-  'openChange': (visible: boolean) => void
+  'openChange': (open: boolean) => void
   'dropdownVisibleChange': (visible: boolean) => void
   'popupVisibleChange': (visible: boolean) => void
   'change': NonNullable<VcCascaderProps<OptionType, ValueField, Multiple>['onChange']>
@@ -331,11 +333,12 @@ const InternalCascader = defineComponent<
     if (isDev) {
       const warning = devUseWarning('Cascader')
       const deprecatedProps = {
-        popupClassName: 'classNames.popup.root',
-        dropdownClassName: 'classNames.popup.root',
+        popupClassName: 'classes.popup.root',
+        dropdownClassName: 'classes.popup.root',
         dropdownStyle: 'styles.popup.root',
         dropdownRender: 'popupRender',
-        dropdownMenuColumnStyle: 'popupMenuColumnStyle',
+        dropdownMenuColumnStyle: 'styles.popup.listItem',
+        popupMenuColumnStyle: 'styles.popup.listItem',
         bordered: 'variant',
       }
 
@@ -421,6 +424,7 @@ const InternalCascader = defineComponent<
         showArrow,
         allowClear,
         expandIcon,
+        loadingIcon,
         transitionName,
         choiceTransitionName,
         builtinPlacements,
@@ -437,6 +441,8 @@ const InternalCascader = defineComponent<
         variant: _variant,
         classes: _classes,
         styles: _styles,
+        popupStyle: _popupStyle,
+        dropdownStyle: _dropdownStyle,
         ...rest
       } = props
       const { className, style, restAttrs } = getAttrStyleAndClass(attrs)
@@ -456,23 +462,26 @@ const InternalCascader = defineComponent<
         showSuffixIcon,
         suffixIcon: mergedSuffixIcon,
         removeIcon: (rest as any).removeIcon ?? contextRemoveIcon.value,
-        clearIcon: ((rest as any).allowClear && typeof (rest as any).allowClear === 'object' && (rest as any).allowClear.clearIcon)
-          || contextClearIcon.value,
+        // Only the deprecated `clearIcon` prop reaches useSelectIcons (which warns about it);
+        // the ConfigProvider `cascader.clearIcon` is merged below without a warning.
+        clearIcon: (rest as any).clearIcon,
         prefixCls: prefixCls.value,
         componentName: 'Cascader',
       } as any)
 
-      const mergedAllowClear = (allowClear ?? true) === true ? { clearIcon } : allowClear
+      const mergedClearIcon = (rest as any).clearIcon ?? contextClearIcon.value ?? clearIcon
+      const mergedAllowClear = (allowClear ?? true) === true ? { clearIcon: mergedClearIcon } : allowClear
 
       const mergedPopupRender = usePopupRender((slots.popupRender ?? popupRender) || dropdownRender)
       const mergedPopupMenuColumnStyle = popupMenuColumnStyle ?? dropdownMenuColumnStyle
 
       const customExpandIcon = getSlotPropsFnRun(slots, props, 'expandIcon', false) ?? expandIcon
+      const customLoadingIcon = getSlotPropsFnRun(slots, props, 'loadingIcon', false) ?? loadingIcon
       const { expandIcon: mergedExpandIcon, loadingIcon: mergedLoadingIcon } = useIcons({
         contextExpandIcon: contextExpandIcon.value,
         contextLoadingIcon: contextLoadingIcon.value,
         expandIcon: customExpandIcon,
-        loadingIcon: undefined,
+        loadingIcon: customLoadingIcon,
         isRtl: isRtl.value,
       })
 

@@ -174,6 +174,25 @@ describe('descriptions', () => {
     expect(wrapper.find('td.ant-descriptions-item-content').exists()).toBe(true)
   })
 
+  it('does not render inner span for empty string or false label/content when bordered', () => {
+    const wrapper = mount(Descriptions, {
+      props: {
+        bordered: true,
+        items: [
+          { key: '1', label: '', content: '' },
+          { key: '2', label: 'Product', content: false as any },
+        ],
+      },
+    })
+    const ths = wrapper.findAll('th.ant-descriptions-item-label')
+    const tds = wrapper.findAll('td.ant-descriptions-item-content')
+    expect(ths).toHaveLength(2)
+    expect(tds).toHaveLength(2)
+    expect(ths[0]!.find('span').exists()).toBe(false)
+    expect(ths[1]!.find('span').exists()).toBe(true)
+    tds.forEach(td => expect(td.find('span').exists()).toBe(false))
+  })
+
   it('renders td with container div when not bordered', () => {
     const wrapper = mount(Descriptions, {
       props: {
@@ -482,6 +501,24 @@ describe('descriptions', () => {
 
     await wrapper.setProps({ items: [{ label: 'A', content: '1' }, { label: 'B', content: '2' }] })
     expect(wrapper.findAll('.ant-descriptions-item')).toHaveLength(2)
+  })
+
+  it('should preserve item state after reordering when key is 0', async () => {
+    const items = [
+      { key: 0, label: 'Zero', content: () => h('input', { 'aria-label': 'Zero value' }) },
+      { key: 2, label: 'Two', content: () => h('input', { 'aria-label': 'Two value' }) },
+    ]
+    const wrapper = mount(Descriptions, {
+      props: { column: 2, items },
+    })
+    const input = wrapper.find('input[aria-label="Zero value"]').element as HTMLInputElement
+    input.value = 'edited'
+
+    await wrapper.setProps({ items: [...items].reverse() })
+
+    const nextInput = wrapper.find('input[aria-label="Zero value"]').element as HTMLInputElement
+    expect(nextInput).toBe(input)
+    expect(nextInput.value).toBe('edited')
   })
 
   it('updates when bordered changes', async () => {

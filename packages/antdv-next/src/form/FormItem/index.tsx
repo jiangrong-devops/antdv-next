@@ -8,6 +8,7 @@ import type { ItemHolderProps } from './ItemHolder.tsx'
 import { clsx } from '@v-c/util'
 import { filterEmpty } from '@v-c/util/dist/props-util'
 import { computed, createVNode, defineComponent, isVNode, onBeforeUnmount, shallowRef, watch } from 'vue'
+import { isRenderable } from '../../_util/is.ts'
 import { getSlotPropsFnRun } from '../../_util/tools.ts'
 import { useComponentBaseConfig } from '../../config-provider/context'
 import useCSSVarCls from '../../config-provider/hooks/useCSSVarCls'
@@ -143,6 +144,11 @@ const InternalFormItem = defineComponent<
     const errors = shallowRef<any[]>([])
     const warnings = shallowRef<any[]>([])
     const validateDisabled = shallowRef(false)
+    // Bumped on every validate / clear / reset, mirroring rc-field-form's `validatePromise`:
+    // a pending async validation that is no longer the latest one must not write its result.
+    let validateId = 0
+    // Ends the pending `validateDebounce` wait early (its run then sees a newer validateId and skips)
+    let cancelDebounce: (() => void) | undefined
     const subFieldErrors = shallowRef<Record<string, FieldError>>({})
     // 获取初始值的类型，如果是单个的值，直接复制，如果是个对象，就需要进行深拷贝
     const initialValue = shallowRef<any>(initialValueFormat(formContext.value?.getFieldValue?.(namePath.value)))
@@ -247,6 +253,7 @@ const InternalFormItem = defineComponent<
         if (validateOnly) {
           return Promise.resolve()
         }
+        validateId++
         errors.value = []
         warnings.value = []
         updateMeta({
@@ -263,8 +270,16 @@ const InternalFormItem = defineComponent<
       if (!validateOnly) {
         updateMeta({ validating: true, validated: true })
       }
+      // validateOnly never writes state, so it must not invalidate other pending validations
+      const currentValidateId = validateOnly ? validateId : ++validateId
 
-      const promise = validateRules(
+      // `validateDebounce` postpones the rule run of event driven validation (change / blur /
+      // focus) while `validating` is published right away, matching the upstream `Field`
+      // behaviour. `validateFields`, `submit` and rule checks pass no `triggerName` and stay
+      // immediate. A run already superseded by a newer event, `clearValidate`, `resetField`
+      // (or unmount) skips its rules and resolves with no result, so only the latest value
+      // reports a result.
+      const runRules = () => validateRules(
         namePath.value,
         fieldValue.value,
         filteredRules as RuleObject[],
@@ -275,6 +290,19 @@ const InternalFormItem = defineComponent<
         props.validateFirst ?? false,
         messageVariables.value,
       )
+      const validateDebounce = triggerName && !validateOnly ? props.validateDebounce : undefined
+      const promise = validateDebounce
+        ? new Promise<void>((resolve) => {
+            // Only one timer per item: a newer event releases the previous wait right away
+            cancelDebounce?.()
+            const timer = setTimeout(resolve, validateDebounce)
+            cancelDebounce = () => {
+              clearTimeout(timer)
+              resolve()
+            }
+          })
+            .then(() => (currentValidateId === validateId ? runRules() : []))
+        : runRules()
 
       // Validate only and not trigger UI and Field status update
       if (validateOnly) {
@@ -306,18 +334,21 @@ const InternalFormItem = defineComponent<
             }
           })
 
-          errors.value = mergedErrors
-          warnings.value = mergedWarnings
+          // Stale result (superseded by a newer validation, or cleared / reset meanwhile): drop it
+          if (currentValidateId === validateId) {
+            errors.value = mergedErrors
+            warnings.value = mergedWarnings
 
-          updateMeta({
-            errors: mergedErrors,
-            warnings: mergedWarnings,
-            validating: false,
-            validated: true,
-            touched: meta.value.touched,
-          })
-          formContext.value?.onValidate?.(namePath.value, mergedErrors.length === 0, mergedErrors.length ? mergedErrors : null)
-          formContext.value?.triggerFieldsChange?.([namePath.value])
+            updateMeta({
+              errors: mergedErrors,
+              warnings: mergedWarnings,
+              validating: false,
+              validated: true,
+              touched: meta.value.touched,
+            })
+            formContext.value?.onValidate?.(namePath.value, mergedErrors.length === 0, mergedErrors.length ? mergedErrors : null)
+            formContext.value?.triggerFieldsChange?.([namePath.value])
+          }
 
           if (mergedErrors.length) {
             return Promise.reject(results)
@@ -338,6 +369,7 @@ const InternalFormItem = defineComponent<
     }
 
     const clearValidate = () => {
+      validateId++
       errors.value = []
       warnings.value = []
       updateMeta({
@@ -348,7 +380,7 @@ const InternalFormItem = defineComponent<
     }
 
     const resetField = () => {
-      validateDisabled.value = true
+      validateId++
       errors.value = []
       warnings.value = []
       updateMeta({
@@ -359,10 +391,16 @@ const InternalFormItem = defineComponent<
         validated: false,
       })
       if (hasName.value && formContext.value?.model) {
+        const nextValue = initialValueFormat(initialValue.value)
+        // Only skip the validation triggered by the reset when the value really changes;
+        // otherwise the watcher never runs and the flag would swallow the user's next change.
+        if (!Object.is(fieldValue.value, nextValue)) {
+          validateDisabled.value = true
+        }
         const newStore = setValue(
           formContext.value.model,
           namePath.value,
-          initialValueFormat(initialValue.value),
+          nextValue,
         )
         Object.assign(formContext.value.model, newStore)
       }
@@ -510,6 +548,9 @@ const InternalFormItem = defineComponent<
     )
 
     onBeforeUnmount(() => {
+      // Drop pending (debounced or async) validations so they never report for a removed item
+      validateId++
+      cancelDebounce?.()
       if (props.noStyle && notifyParentMetaChange) {
         notifyParentMetaChange(
           { ...meta.value, destroy: true } as Meta & { destroy: boolean },
@@ -554,10 +595,10 @@ const InternalFormItem = defineComponent<
         const _onBlur = childProps.onBlur
         const _onFocus = childProps.onFocus
         if (_onBlur) {
-          delete child.props.onBlur
+          delete childProps.onBlur
         }
         if (_onFocus) {
-          delete child.props.onFocus
+          delete childProps.onFocus
         }
         const newChildProps: Record<string, any> = {
           id: childProps.id || currentFieldId,
@@ -601,13 +642,14 @@ const InternalFormItem = defineComponent<
         // Accessibility attributes, aligned with antd React FormItem.
         const helpNode = getSlotPropsFnRun(slots, props, 'help')
         const extraNode = getSlotPropsFnRun(slots, props, 'extra')
+        const hasExtra = isRenderable(extraNode)
         const { errors: itemErrors, warnings: itemWarnings } = mergedErrorList.value
-        if (currentFieldId && (helpNode || itemErrors.length > 0 || itemWarnings.length > 0 || extraNode)) {
+        if (currentFieldId && (helpNode || itemErrors.length > 0 || itemWarnings.length > 0 || hasExtra)) {
           const describedbyArr: string[] = []
           if (helpNode || itemErrors.length > 0) {
             describedbyArr.push(`${currentFieldId}_help`)
           }
-          if (extraNode) {
+          if (hasExtra) {
             describedbyArr.push(`${currentFieldId}_extra`)
           }
           newChildProps['aria-describedby'] = describedbyArr.join(' ')

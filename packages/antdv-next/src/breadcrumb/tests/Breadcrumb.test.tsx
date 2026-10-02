@@ -99,7 +99,36 @@ describe('breadcrumb', () => {
       },
     })
     await wrapper.find('.ant-breadcrumb-link').trigger('click')
-    expect(onClick).toHaveBeenCalled()
+    expect(onClick).toHaveBeenCalledTimes(1)
+  })
+
+  it('should emit clickItem with item and event when item clicked', async () => {
+    const onClick = vi.fn()
+    const items = [
+      { title: 'Home', onClick },
+      { title: 'Current' },
+    ]
+    const wrapper = mount(Breadcrumb, {
+      props: { items },
+    })
+    await wrapper.find('.ant-breadcrumb-link').trigger('click')
+    const emitted = wrapper.emitted('clickItem')
+    expect(emitted).toHaveLength(1)
+    expect((emitted![0] as any[])[0]).toStrictEqual(items[0])
+    expect((emitted![0] as any[])[1]).toBeInstanceOf(MouseEvent)
+    expect(onClick).toHaveBeenCalledTimes(1)
+  })
+
+  it('should support onClick on BreadcrumbItem children', async () => {
+    const onClick = vi.fn()
+    const wrapper = mount(() => (
+      <Breadcrumb>
+        <Breadcrumb.Item onClick={onClick}>Home</Breadcrumb.Item>
+        <Breadcrumb.Item>Current</Breadcrumb.Item>
+      </Breadcrumb>
+    ))
+    await wrapper.find('li.ant-breadcrumb-item').trigger('click')
+    expect(onClick).toHaveBeenCalledTimes(1)
   })
 
   it('should render with BreadcrumbItem children', () => {
@@ -207,6 +236,79 @@ describe('breadcrumb', () => {
     })
     expect(wrapper.find('.ant-breadcrumb').exists()).toBe(true)
     expect(wrapper.findAll('.ant-breadcrumb-link').length).toBe(3)
+  })
+
+  it.each([
+    { item: {}, expectedHref: '/child' },
+    { item: { href: '/parent' }, expectedHref: '/parent/child' },
+    { item: { path: 'parent' }, expectedHref: '#/parent/child' },
+  ])('should render menu path as $expectedHref', async ({ item, expectedHref }) => {
+    const wrapper = mount(Breadcrumb, {
+      props: {
+        items: [
+          {
+            ...item,
+            title: 'Parent',
+            menu: { items: [{ path: '/child', title: 'Child' }] },
+            dropdownProps: { open: true },
+          },
+        ],
+      },
+      attachTo: document.body,
+    })
+    await nextTick()
+
+    const link = Array.from(document.body.querySelectorAll('a'))
+      .find(a => a.textContent === 'Child')
+    const href = link?.getAttribute('href')
+    wrapper.unmount()
+
+    expect(href).toBe(expectedHref)
+  })
+
+  it('menu item label should take priority over title', async () => {
+    const wrapper = mount(Breadcrumb, {
+      props: {
+        items: [
+          { title: 'Home' },
+          {
+            title: 'Application',
+            menu: {
+              items: [{ key: '1', title: 'ByTitle', label: 'ByLabel' }],
+            },
+            dropdownProps: { open: true },
+          },
+        ],
+      },
+      attachTo: document.body,
+    })
+    await nextTick()
+
+    const text = document.body.textContent ?? ''
+    expect(text).toContain('ByLabel')
+    expect(text).not.toContain('ByTitle')
+
+    wrapper.unmount()
+  })
+
+  it('should not mutate menu config when using menu render slots', () => {
+    const menu = {
+      items: [{ key: '1', label: 'App1' }],
+    }
+
+    mount(Breadcrumb, {
+      props: {
+        items: [{ title: 'Application', menu }],
+      },
+      slots: {
+        menuLabelRender: ({ menu: menuItem }: any) => menuItem.label,
+        menuExtraRender: ({ menu: menuItem }: any) => menuItem.key,
+      },
+    })
+
+    expect(menu).toEqual({
+      items: [{ key: '1', label: 'App1' }],
+    })
   })
 
   it('should render dropdown icon when using BreadcrumbItem children with menu', () => {

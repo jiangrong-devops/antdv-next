@@ -6,10 +6,10 @@ import type { GenericTimePickerProps, PickerProps } from './interface'
 import Picker from '@v-c/picker'
 import { clsx } from '@v-c/util'
 import { getTransitionName } from '@v-c/util/dist/utils/transition'
-import { omit } from 'es-toolkit/compat'
 import { computed, defineComponent, shallowRef } from 'vue'
 import { ContextIsolator } from '../../_util/ContextIsolator'
 import { getAttrStyleAndClass, useZIndex } from '../../_util/hooks'
+import { omitUndefined } from '../../_util/omitUndefined'
 import { getMergedStatus, getStatusClassNames } from '../../_util/statusUtils'
 import { getSlotPropsFnRun, toPropsRefs } from '../../_util/tools'
 import { devUseWarning, isDev } from '../../_util/warning'
@@ -56,6 +56,7 @@ export interface DatePickerEmits<DateType = AnyObject> {
 
 export interface DatePickerSlots {
   suffixIcon?: () => any
+  prefix?: () => any
   renderExtraFooter?: (mode: PickerMode) => any
   panelRender?: (originPanel: VueNode) => any
   inputRender?: (props: Record<string, any>) => any
@@ -131,7 +132,9 @@ function generatePicker<DateType extends AnyObject = AnyObject>(generateConfig: 
           class: contextClassName,
           style: contextStyle,
           suffixIcon: contextSuffixIcon,
-        } = useComponentBaseConfig(pickerType as any, props as any, ['suffixIcon'], 'picker')
+          allowClear: contextAllowClear,
+          clearIcon: contextClearIcon,
+        } = useComponentBaseConfig(pickerType as any, props as any, ['suffixIcon', 'allowClear', 'clearIcon'], 'picker')
 
         const { compactSize, compactItemClassnames } = useCompactItemContext(prefixCls, direction)
 
@@ -283,7 +286,9 @@ function generatePicker<DateType extends AnyObject = AnyObject>(generateConfig: 
             components,
             placement,
             suffixIcon,
+            prefix,
             allowClear,
+            clearIcon,
             popupClassName: _popupClassName,
             dropdownClassName: _dropdownClassName,
             popupStyle: _popupStyle,
@@ -303,11 +308,16 @@ function generatePicker<DateType extends AnyObject = AnyObject>(generateConfig: 
           const { className, style, restAttrs } = getAttrStyleAndClass(attrs, undefined, props)
 
           const mergedSuffixIcon = getSlotPropsFnRun(slots, { suffixIcon }, 'suffixIcon', false)
+          const mergedPrefix = getSlotPropsFnRun(slots, { prefix }, 'prefix', false)
 
           const [mergedAllowClear, removeIcon] = useIcons({
             allowClear,
+            clearIcon,
             removeIcon: (props as any).removeIcon,
-          }, prefixCls.value)
+          }, prefixCls.value, {
+            allowClear: contextAllowClear?.value,
+            clearIcon: contextClearIcon?.value,
+          })
 
           const mergedComponents = useComponents(components as any)
 
@@ -373,10 +383,11 @@ function generatePicker<DateType extends AnyObject = AnyObject>(generateConfig: 
               <Picker
                 {...restAttrs}
                 {...additionalProps}
-                {...omit(restProps, ['onKeydown']) as any}
+                {...omitUndefined(restProps as any, ['onKeydown'])}
                 ref={innerRef}
                 placeholder={getPlaceholder(locale.value, mergedPicker.value, placeholder)}
-                suffixIcon={suffixNode}
+                suffix={suffixNode}
+                prefix={mergedPrefix}
                 placement={placement}
                 prevIcon={<span class={`${prefixCls.value}-prev-icon`} />}
                 nextIcon={<span class={`${prefixCls.value}-next-icon`} />}

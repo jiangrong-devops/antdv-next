@@ -74,7 +74,7 @@ group:
 | loading | 设置按钮载入状态 | boolean \| &#123; delay: number, icon: VueNode &#125; | false | - | × |
 | loadingIcon | （仅支持全局配置）设置按钮的加载图标 | VueNode | `<LoadingOutlined />` | - | ✓ |
 | shape | 设置按钮形状 | `default` \| `circle` \| `round` | `default` | - | ✓ |
-| size | 设置按钮大小 | `large` \| `middle` \| `small` | `middle` | - | × |
+| size | 设置按钮大小 | `large` \| `medium` \| `small` | `medium` | - | × |
 | styles | 用于自定义组件内部各语义化结构的行内 style，支持对象或函数 | Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; \| (info: &#123; props &#125;)=&gt; Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; | - | - | ✓ |
 | target | 相当于 a 链接的 target 属性，href 存在时生效 | string | - | - | × |
 | type | 语法糖，设置按钮类型。当设置 `variant` 与 `color` 时以后者为准 | `primary` \| `dashed` \| `link` \| `text` \| `default` | `default` | - | × |
@@ -93,7 +93,7 @@ group:
 | `icon` | 设置按钮的图标组件 | - | - |
 | `loadingIcon` | 设置按钮载入的图标组件 | - | - |
 
-## 类型
+## 类型 {#types}
 
 ### PresetColors
 
@@ -103,7 +103,7 @@ group:
 
 <demo src="./demo/_semantic.vue" simplify></demo>
 
-## 主题变量（Design Token）
+## 主题变量（Design Token） {#design-token}
 
 <ComponentTokenTable component="Button" />
 

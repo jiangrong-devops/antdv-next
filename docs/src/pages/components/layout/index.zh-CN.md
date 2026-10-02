@@ -140,10 +140,11 @@ const breakpointWidth = {
   lg: '992px',
   xl: '1200px',
   xxl: '1600px',
+  xxxl: '1920px',
 }
 ```
 
-## 主题变量（Design Token）
+## 主题变量（Design Token） {#design-token}
 
 <ComponentTokenTable component="Layout" />
 
