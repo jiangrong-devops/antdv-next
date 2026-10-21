@@ -30,9 +30,14 @@ const localeValues: Locale = {
     selectInvert: 'Інвертаваць выбар',
     selectNone: 'Ачысціць усе даныя',
     selectionAll: 'Выбраць усе даныя',
+    selectRow: 'Выбраць радок',
+    selectedRow: 'Радок выбраны',
+    selectionMenu: 'Меню выбару',
     sortTitle: 'Сартаванне',
     expand: 'Разгарнуць радок',
     collapse: 'Згарнуць радок',
+    expandAll: 'Разгарнуць усе радкі',
+    collapseAll: 'Згарнуць усе радкі',
     triggerDesc: 'Націсніце для сартавання па ўбыванні',
     triggerAsc: 'Націсніце для сартавання па ўзрастанні',
     cancelSort: 'Націсніце, каб адмяніць сартаванне',
@@ -50,6 +55,10 @@ const localeValues: Locale = {
   Popconfirm: {
     okText: 'OK',
     cancelText: 'Адмена',
+  },
+  Splitter: {
+    toggleStartPanel: 'Пераключыць пачатковую панэль',
+    toggleEndPanel: 'Пераключыць канчатковую панэль',
   },
   Transfer: {
     titles: ['', ''],

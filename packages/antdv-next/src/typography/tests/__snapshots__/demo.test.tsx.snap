@@ -65,7 +65,7 @@ exports[`typography demo > renders _semantic correctly 1`] = `
               <span
                 aria-label="edit"
                 class="anticon anticon-edit"
-                role="button"
+                role="img"
               >
                 <svg
                   aria-hidden="true"
@@ -1360,7 +1360,7 @@ exports[`typography demo > renders editable correctly 1`] = `
         <span
           aria-label="edit"
           class="anticon anticon-edit"
-          role="button"
+          role="img"
         >
           <svg
             aria-hidden="true"
@@ -1404,7 +1404,7 @@ exports[`typography demo > renders editable correctly 1`] = `
         <span
           aria-label="edit"
           class="anticon anticon-edit"
-          role="button"
+          role="img"
         >
           <svg
             aria-hidden="true"
@@ -1553,7 +1553,7 @@ exports[`typography demo > renders editable correctly 1`] = `
         <span
           aria-label="edit"
           class="anticon anticon-edit"
-          role="button"
+          role="img"
         >
           <svg
             aria-hidden="true"
@@ -1682,7 +1682,7 @@ exports[`typography demo > renders editable correctly 1`] = `
         <span
           aria-label="edit"
           class="anticon anticon-edit"
-          role="button"
+          role="img"
         >
           <svg
             aria-hidden="true"
@@ -1725,7 +1725,7 @@ exports[`typography demo > renders editable correctly 1`] = `
         <span
           aria-label="edit"
           class="anticon anticon-edit"
-          role="button"
+          role="img"
         >
           <svg
             aria-hidden="true"
@@ -1769,7 +1769,7 @@ exports[`typography demo > renders editable correctly 1`] = `
         <span
           aria-label="edit"
           class="anticon anticon-edit"
-          role="button"
+          role="img"
         >
           <svg
             aria-hidden="true"
@@ -1813,7 +1813,7 @@ exports[`typography demo > renders editable correctly 1`] = `
         <span
           aria-label="edit"
           class="anticon anticon-edit"
-          role="button"
+          role="img"
         >
           <svg
             aria-hidden="true"
@@ -1857,7 +1857,7 @@ exports[`typography demo > renders editable correctly 1`] = `
         <span
           aria-label="edit"
           class="anticon anticon-edit"
-          role="button"
+          role="img"
         >
           <svg
             aria-hidden="true"
@@ -1901,7 +1901,7 @@ exports[`typography demo > renders editable correctly 1`] = `
         <span
           aria-label="edit"
           class="anticon anticon-edit"
-          role="button"
+          role="img"
         >
           <svg
             aria-hidden="true"
@@ -1945,7 +1945,7 @@ exports[`typography demo > renders editable correctly 1`] = `
         <span
           aria-label="edit"
           class="anticon anticon-edit"
-          role="button"
+          role="img"
         >
           <svg
             aria-hidden="true"
@@ -2193,6 +2193,27 @@ exports[`typography demo > renders ellipsis-middle correctly 1`] = `
     In the process of internal desktop applications development, many different design specs and implementations would be involved, which might cause designers and developers difficulties and duplication and reduce the efficiency of 
     <!---->
     development.
+    <!---->
+    <!---->
+    <!---->
+    <!---->
+  </span>
+</div>
+`;
+
+exports[`typography demo > renders shimmer correctly 1`] = `
+<div
+  data-v-app=""
+>
+  <span
+    aria-busy="true"
+    class="ant-typography ant-typography-shimmer css-var-root"
+    style="--ant-typography-shimmer-motion-time: 1; --ant-typography-shimmer-wait-time: 1;"
+  >
+    <!---->
+     Thinking... 
+    <!---->
+    <!---->
     <!---->
     <!---->
     <!---->

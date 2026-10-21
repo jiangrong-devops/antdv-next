@@ -32,8 +32,13 @@ const localeValues: Locale = {
     emptyText: 'Ei dataa',
     selectNone: 'Tyhjennä kaikki tiedot',
     selectionAll: 'Valitse kaikki tiedot',
+    selectRow: 'Valitse rivi',
+    selectedRow: 'Rivi valittu',
+    selectionMenu: 'Valintavalikko',
     expand: 'Laajenna riviä',
     collapse: 'Tiivistä rivi',
+    expandAll: 'Laajenna kaikki rivit',
+    collapseAll: 'Tiivistä kaikki rivit',
   },
   Tour: {
     Next: 'Seuraava',
@@ -48,6 +53,10 @@ const localeValues: Locale = {
   Popconfirm: {
     okText: 'OK',
     cancelText: 'Peruuta',
+  },
+  Splitter: {
+    toggleStartPanel: 'Vaihda aloituspaneelia',
+    toggleEndPanel: 'Vaihda lopetuspaneelia',
   },
   Transfer: {
     titles: ['', ''],

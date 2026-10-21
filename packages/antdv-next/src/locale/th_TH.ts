@@ -30,9 +30,14 @@ const localeValues: Locale = {
     selectInvert: 'กลับสถานะการเลือกในหน้านี้',
     selectNone: 'ไม่เลือกข้อมูลทั้งหมด',
     selectionAll: 'เลือกข้อมูลทั้งหมด',
+    selectRow: 'เลือกแถว',
+    selectedRow: 'เลือกแถวแล้ว',
+    selectionMenu: 'เมนูการเลือก',
     sortTitle: 'เรียง',
     expand: 'แสดงแถวข้อมูล',
     collapse: 'ย่อแถวข้อมูล',
+    expandAll: 'ขยายแถวทั้งหมด',
+    collapseAll: 'ย่อแถวทั้งหมด',
     triggerDesc: 'คลิกเรียงจากมากไปน้อย',
     triggerAsc: 'คลิกเรียงจากน้อยไปมาก',
     cancelSort: 'คลิกเพื่อยกเลิกการเรียง',
@@ -50,6 +55,10 @@ const localeValues: Locale = {
   Popconfirm: {
     okText: 'ตกลง',
     cancelText: 'ยกเลิก',
+  },
+  Splitter: {
+    toggleStartPanel: 'สลับแผงเริ่มต้น',
+    toggleEndPanel: 'สลับแผงสิ้นสุด',
   },
   Transfer: {
     titles: ['', ''],

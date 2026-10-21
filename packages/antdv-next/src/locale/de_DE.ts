@@ -28,10 +28,15 @@ const localeValues: Locale = {
     selectAll: 'Selektiere Alle',
     selectInvert: 'Selektion Invertieren',
     selectionAll: 'Wählen Sie alle Daten aus',
+    selectRow: 'Zeile auswählen',
+    selectedRow: 'Zeile ausgewählt',
+    selectionMenu: 'Auswahlmenü',
     sortTitle: 'Sortieren',
     emptyText: 'Keine Daten',
     expand: 'Zeile erweitern',
     collapse: 'Zeile reduzieren',
+    expandAll: 'Alle Zeilen erweitern',
+    collapseAll: 'Alle Zeilen reduzieren',
     triggerDesc: 'Klicken zur absteigenden Sortierung',
     triggerAsc: 'Klicken zur aufsteigenden Sortierung',
     cancelSort: 'Klicken zum Abbrechen der Sortierung',
@@ -50,6 +55,10 @@ const localeValues: Locale = {
   Popconfirm: {
     okText: 'OK',
     cancelText: 'Abbrechen',
+  },
+  Splitter: {
+    toggleStartPanel: 'Startpanel umschalten',
+    toggleEndPanel: 'Endpanel umschalten',
   },
   Transfer: {
     titles: ['', ''],

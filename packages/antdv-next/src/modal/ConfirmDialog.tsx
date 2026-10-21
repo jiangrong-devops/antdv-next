@@ -6,8 +6,9 @@ import { CheckCircleFilled, CloseCircleFilled, ExclamationCircleFilled, InfoCirc
 import { clsx } from '@v-c/util'
 import { getTransitionName } from '@v-c/util/dist/utils/transition'
 import { computed, defineComponent } from 'vue'
+import fallbackProp from '../_util/fallbackProp.ts'
 import { CONTAINER_MAX_OFFSET, normalizeMaskConfig } from '../_util/hooks'
-import isNonNullable from '../_util/isNonNullable.ts'
+import { isNonNullable, isRenderable } from '../_util/is.ts'
 import { getSlotPropsFnRun } from '../_util/tools.ts'
 import { devUseWarning, isDev } from '../_util/warning'
 import { useComponentBaseConfig } from '../config-provider/context'
@@ -81,6 +82,13 @@ export const ConfirmContent = defineComponent<
       const okCancel = props.okCancel
       return okCancel ?? mergedType.value === 'confirm'
     })
+
+    const {
+      infoIcon,
+      successIcon,
+      errorIcon,
+      warningIcon,
+    } = useComponentBaseConfig('modal', props, ['infoIcon', 'successIcon', 'errorIcon', 'warningIcon'])
     const autoFocusButton = props.autoFocusButton === null ? false : props.autoFocusButton || 'ok'
 
     const [locale] = useLocale('Modal', getConfirmLocale())
@@ -113,24 +121,24 @@ export const ConfirmContent = defineComponent<
       const icon = getSlotPropsFnRun({}, props, 'icon', false)
       const title = getSlotPropsFnRun({}, props, 'title', false)
       let mergedIcon = icon as any
-      if (!icon && icon !== null) {
+      if (icon === undefined) {
         switch (mergedType.value) {
           case 'info':
-            mergedIcon = <InfoCircleFilled />
+            mergedIcon = fallbackProp(infoIcon.value, <InfoCircleFilled />)
             break
           case 'success':
-            mergedIcon = <CheckCircleFilled />
+            mergedIcon = fallbackProp(successIcon.value, <CheckCircleFilled />)
             break
           case 'error':
-            mergedIcon = <CloseCircleFilled />
+            mergedIcon = fallbackProp(errorIcon.value, <CloseCircleFilled />)
             break
           default:
-            mergedIcon = <ExclamationCircleFilled />
+            mergedIcon = fallbackProp(warningIcon.value, <ExclamationCircleFilled />)
         }
       }
 
       const hasTitle = isNonNullable(title) && title !== ''
-      const hasIcon = isNonNullable(mergedIcon)
+      const hasIcon = isRenderable(mergedIcon)
       const bodyCls = `${confirmPrefixCls}-body`
 
       const footerOriginNode = (

@@ -7724,6 +7724,7 @@ exports[`form demo > renders getValueProps-normalize correctly 1`] = `
                 <input
                   aria-invalid="false"
                   aria-required="false"
+                  autocomplete="off"
                   id="getValueProps_date"
                   placeholder="Select date"
                   size="12"
@@ -12091,7 +12092,28 @@ exports[`form demo > renders required-mark correctly 1`] = `
             class="ant-form-item-tooltip"
             tabindex="-1"
           >
-            [object Object]
+            <span
+              aria-label="info-circle"
+              class="anticon anticon-info-circle"
+              role="img"
+            >
+              <svg
+                aria-hidden="true"
+                data-icon="info-circle"
+                fill="currentColor"
+                focusable="false"
+                height="1em"
+                viewBox="64 64 896 896"
+                width="1em"
+              >
+                <path
+                  d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"
+                />
+                <path
+                  d="M464 336a48 48 0 1096 0 48 48 0 10-96 0zm72 112h-48c-4.4 0-8 3.6-8 8v272c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V456c0-4.4-3.6-8-8-8z"
+                />
+              </svg>
+            </span>
           </span>
           <!---->
           <span
@@ -13309,6 +13331,7 @@ exports[`form demo > renders time-related-controls correctly 1`] = `
                 <input
                   aria-invalid="false"
                   aria-required="false"
+                  autocomplete="off"
                   id="time_related_controls_datePicker"
                   placeholder="Select date"
                   size="12"
@@ -13406,6 +13429,7 @@ exports[`form demo > renders time-related-controls correctly 1`] = `
                 <input
                   aria-invalid="false"
                   aria-required="false"
+                  autocomplete="off"
                   id="time_related_controls_dateTimePicker"
                   placeholder="Select date"
                   size="21"
@@ -13503,6 +13527,7 @@ exports[`form demo > renders time-related-controls correctly 1`] = `
                 <input
                   aria-invalid="false"
                   aria-required="false"
+                  autocomplete="off"
                   id="time_related_controls_monthPicker"
                   placeholder="Select month"
                   size="12"
@@ -13599,6 +13624,7 @@ exports[`form demo > renders time-related-controls correctly 1`] = `
               >
                 <input
                   aria-invalid="false"
+                  autocomplete="off"
                   class="ant-picker-input-start"
                   data-range="start"
                   id="time_related_controls_rangePicker"
@@ -13642,6 +13668,7 @@ exports[`form demo > renders time-related-controls correctly 1`] = `
               >
                 <input
                   aria-invalid="false"
+                  autocomplete="off"
                   class="ant-picker-input-end"
                   data-range="end"
                   placeholder="End date"
@@ -13745,6 +13772,7 @@ exports[`form demo > renders time-related-controls correctly 1`] = `
               >
                 <input
                   aria-invalid="false"
+                  autocomplete="off"
                   class="ant-picker-input-start"
                   data-range="start"
                   id="time_related_controls_rangeTimePicker"
@@ -13788,6 +13816,7 @@ exports[`form demo > renders time-related-controls correctly 1`] = `
               >
                 <input
                   aria-invalid="false"
+                  autocomplete="off"
                   class="ant-picker-input-end"
                   data-range="end"
                   placeholder="End date"
@@ -13892,6 +13921,7 @@ exports[`form demo > renders time-related-controls correctly 1`] = `
                 <input
                   aria-invalid="false"
                   aria-required="false"
+                  autocomplete="off"
                   id="time_related_controls_timePicker"
                   placeholder="Select time"
                   size="10"
@@ -17660,6 +17690,7 @@ exports[`form demo > renders validate-static correctly 1`] = `
                 <input
                   aria-invalid="false"
                   aria-required="false"
+                  autocomplete="off"
                   placeholder="Select date"
                   size="12"
                   value=""

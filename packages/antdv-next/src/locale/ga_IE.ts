@@ -25,9 +25,14 @@ const localeValues: Locale = {
     selectAll: 'Select current page',
     selectInvert: 'Invert current page',
     selectionAll: 'Select all data',
+    selectRow: 'Roghnaigh ró',
+    selectedRow: 'Ró roghnaithe',
+    selectionMenu: 'Roghchlár roghnúcháin',
     sortTitle: 'Sort',
     expand: 'Expand row',
     collapse: 'Collapse row',
+    expandAll: 'Leathnaigh gach ró',
+    collapseAll: 'Laghdaigh gach ró',
     triggerDesc: 'Click to sort descending',
     triggerAsc: 'Click to sort ascending',
     cancelSort: 'Click to cancel sorting',
@@ -50,6 +55,10 @@ const localeValues: Locale = {
   Popconfirm: {
     okText: 'OK',
     cancelText: 'Cancel',
+  },
+  Splitter: {
+    toggleStartPanel: 'Scoránaigh an painéal tosaigh',
+    toggleEndPanel: 'Scoránaigh an painéal deiridh',
   },
   Transfer: {
     titles: ['', ''],

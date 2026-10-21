@@ -8,6 +8,7 @@ import type { InputRef } from '../Input'
 import { clsx } from '@v-c/util'
 import { computed, defineComponent, shallowRef, watch } from 'vue'
 import { getAttrStyleAndClass, useMergeSemantic, useSemanticRootStyle, useToArr, useToProps } from '../../_util/hooks'
+import { isRenderable } from '../../_util/is'
 import { getMergedStatus } from '../../_util/statusUtils'
 import { toPropsRefs } from '../../_util/tools'
 import { devUseWarning, isDev } from '../../_util/warning'
@@ -38,7 +39,7 @@ export type OTPStylesType = SemanticStylesType<OTPProps, OTPSemanticStyles>
 
 export interface OTPProps extends ComponentBaseProps,
   /* @vue-ignore */
-  Omit<HTMLAttributes, 'onChange' | 'onInput'>,
+  Omit<HTMLAttributes, 'onChange' | 'onInput' | 'onFocus'>,
   /* @vue-ignore */
   OTPEmitsProps {
   length?: number
@@ -62,9 +63,11 @@ export interface OTPEmits {
   'change': (value: string) => void
   'input': (cells: string[]) => void
   'update:value': (value: string) => void
+  'focus': (ev: FocusEvent) => void
 }
 export interface OTPEmitsProps {
   onChange?: OTPEmits['change']
+  onFocus?: OTPEmits['focus']
   onInput?: OTPEmits['input']
   'onUpdate:value'?: OTPEmits['update:value']
 }
@@ -172,38 +175,48 @@ const OTP = defineComponent<
       else {
         nextCells = nextCells.slice(0, index).concat(strToArr(txt))
       }
-      nextCells = nextCells.slice(0, mergedLength.value)
       for (let i = nextCells.length - 1; i >= 0; i -= 1) {
         if (nextCells[i])
           break
         nextCells.pop()
       }
+      // Format before limiting the length to avoid losing valid characters.
       const formattedValue = internalFormatter(nextCells.map(cell => cell || ' ').join(''))
       return strToArr(formattedValue).map((cell, i) => {
         if (cell === ' ' && !nextCells[i]) {
           return nextCells[i]
         }
         return cell
-      })
+      }).slice(0, mergedLength.value)
     }
 
     const handleInputChange = (index: number, txt: string) => {
       const nextCells = patchValue(index, txt)
+      triggerValueCellsChange(nextCells as any)
       const nextIndex = Math.min(index + txt.length, mergedLength.value - 1)
       if (nextIndex !== index && nextCells[index] !== undefined) {
         inputRefs.value[nextIndex]?.focus?.()
       }
-      triggerValueCellsChange(nextCells as any)
     }
 
     const handleActiveChange = (nextIndex: number) => {
       inputRefs.value[nextIndex]?.focus?.()
     }
 
+    const handleInputFocus = (event: FocusEvent, index: number) => {
+      for (let i = 0; i < index; i += 1) {
+        if (!valueCells.value[i]) {
+          inputRefs.value[i]?.focus()
+          break
+        }
+      }
+      emit('focus', event)
+    }
+
     const renderSeparator = (index: number) => {
       const separator = slots.separator || props.separator
       const separatorNode = typeof separator === 'function' ? separator({ index }) : separator
-      if (!separatorNode) {
+      if (!isRenderable(separatorNode)) {
         return null
       }
       return (
@@ -249,6 +262,7 @@ const OTP = defineComponent<
                 value={valueCells.value[index] || ''}
                 onChange={handleInputChange}
                 onActiveChange={handleActiveChange}
+                onFocus={(event: FocusEvent) => handleInputFocus(event, index)}
                 autoFocus={index === 0 ? props.autoFocus : undefined}
                 mask={props.mask}
                 type={props.type}

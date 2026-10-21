@@ -83,12 +83,17 @@ const localeValues: Locale = {
     sortTitle: 'Տեսակավորել',
     expand: 'Ընդլայնեք տողը',
     collapse: 'Կրճատել տողը',
+    expandAll: 'Ընդլայնել բոլոր տողերը',
+    collapseAll: 'Կրճատել բոլոր տողերը',
     filterEmptyText: 'Զտիչներ չկան',
     filterCheckAll: 'Ընտրեք բոլոր տարրերը',
     filterSearchPlaceholder: 'Որոնել ֆիլտրերում',
     emptyText: 'Տվյալներ չկան',
     selectNone: 'Մաքրել բոլոր տվյալները',
     selectionAll: 'Ընտրեք բոլոր տվյալները',
+    selectRow: 'Ընտրել տողը',
+    selectedRow: 'Տողն ընտրված է',
+    selectionMenu: 'Ընտրության ընտրացանկ',
     triggerDesc: 'Սեղմեք՝ նվազման կարգով',
     triggerAsc: 'Սեղմեք՝ աճող տեսակավորելու համար',
     cancelSort: 'Սեղմեք՝ տեսակավորումը չեղարկելու համար',
@@ -106,6 +111,10 @@ const localeValues: Locale = {
   Popconfirm: {
     okText: 'Հաստատել',
     cancelText: 'Մերժել',
+  },
+  Splitter: {
+    toggleStartPanel: 'Փոխարկել սկզբնական վահանակը',
+    toggleEndPanel: 'Փոխարկել վերջնական վահանակը',
   },
   Transfer: {
     titles: ['', ''],

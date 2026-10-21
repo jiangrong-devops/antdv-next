@@ -1,13 +1,15 @@
 import type { CheckboxChangeEvent } from '@v-c/checkbox'
 import type { CSSProperties, SlotsType } from 'vue'
+import type { SemanticClassNamesType, SemanticStylesType } from '../_util/hooks'
 import type { VueNode } from '../_util/type.ts'
 import type { ComponentBaseProps } from '../config-provider/context.ts'
 import type { CheckboxGroupContext } from './GroupContext.tsx'
 import { clsx } from '@v-c/util'
 import { omit } from 'es-toolkit'
-import { computed, defineComponent, shallowRef, watch } from 'vue'
-import { getAttrStyleAndClass } from '../_util/hooks'
+import { computed, defineComponent, shallowRef, toRef, watch } from 'vue'
+import { getAttrStyleAndClass, useMergeSemantic, useToArr, useToProps } from '../_util/hooks'
 import { useBaseConfig } from '../config-provider/context.ts'
+import { useDisabledContext } from '../config-provider/DisabledContext'
 import useCSSVarCls from '../config-provider/hooks/useCSSVarCls'
 import Checkbox from './Checkbox'
 import { useGroupContextProvider } from './GroupContext.tsx'
@@ -30,6 +32,24 @@ export interface AbstractCheckboxGroupProps extends ComponentBaseProps {
   disabled?: boolean
 }
 
+export interface CheckboxGroupSemanticClassNames {
+  root?: string
+  item?: string
+  itemIcon?: string
+  itemLabel?: string
+}
+
+export interface CheckboxGroupSemanticStyles {
+  root?: CSSProperties
+  item?: CSSProperties
+  itemIcon?: CSSProperties
+  itemLabel?: CSSProperties
+}
+
+export type CheckboxGroupClassNamesType = SemanticClassNamesType<CheckboxGroupProps, CheckboxGroupSemanticClassNames>
+
+export type CheckboxGroupStylesType = SemanticStylesType<CheckboxGroupProps, CheckboxGroupSemanticStyles>
+
 export interface CheckboxGroupProps extends AbstractCheckboxGroupProps,
   /* @vue-ignore */
   CheckboxGroupEmitsProps {
@@ -38,6 +58,8 @@ export interface CheckboxGroupProps extends AbstractCheckboxGroupProps,
   value?: any[]
   labelRender?: (params: { item: CheckboxOptionType, index: number }) => any
   role?: string
+  classes?: CheckboxGroupClassNamesType
+  styles?: CheckboxGroupStylesType
   'onUpdate:value'?: (value: any[]) => void
 }
 
@@ -68,7 +90,10 @@ const CheckboxGroup = defineComponent<
   (props = defaults, { slots, emit, attrs }) => {
     const { prefixCls, direction } = useBaseConfig('checkbox', props)
     const value = shallowRef(props?.value ?? props?.defaultValue ?? [])
-    const registeredValues = shallowRef<any[]>([])
+    // Only read when toggling, so a plain array is enough. Checkbox cancels from a
+    // watcher cleanup, which on unmount runs inside the parent's render effect,
+    // where reading and writing a ref would re-render the parent.
+    let registeredValues: any[] = []
     watch(
       () => props.value,
       () => {
@@ -92,10 +117,10 @@ const CheckboxGroup = defineComponent<
     })
 
     const cancelValue = (val: any) => {
-      registeredValues.value = registeredValues.value.filter(v => v !== val)
+      registeredValues = registeredValues.filter(v => v !== val)
     }
     const registerValue = (val: any) => {
-      registeredValues.value = [...registeredValues.value, val]
+      registeredValues = [...registeredValues, val]
     }
 
     const toggleOption: CheckboxGroupContext['toggleOption'] = (option) => {
@@ -108,7 +133,7 @@ const CheckboxGroup = defineComponent<
         newValue.splice(optionIndex, 1)
       }
       const sortVals = newValue
-        .filter(val => registeredValues.value.includes(val))
+        .filter(val => registeredValues.includes(val))
         .sort((a, b) => {
           const indexA = memoizedOptions.value.findIndex(opt => opt.value === a)
           const indexB = memoizedOptions.value.findIndex(opt => opt.value === b)
@@ -123,12 +148,41 @@ const CheckboxGroup = defineComponent<
     const groupPrefixCls = computed(() => `${prefixCls.value}-group`)
     const rootCls = useCSSVarCls(prefixCls)
     const [hashId, cssVarCls] = useStyle(prefixCls, rootCls)
+    // =========== Merged Props for Semantic ==========
+    const contextDisabled = useDisabledContext()
+    const mergedProps = computed(() => ({
+      ...props,
+      options: props.options,
+      value: value.value,
+      disabled: props.disabled ?? contextDisabled.value,
+    }) as CheckboxGroupProps)
+
+    const [mergedClassNames, mergedStyles] = useMergeSemantic<
+      CheckboxGroupClassNamesType,
+      CheckboxGroupStylesType,
+      CheckboxGroupProps
+    >(
+      useToArr(toRef(() => props.classes)),
+      useToArr(toRef(() => props.styles)),
+      useToProps(mergedProps),
+    )
+
     const memoizedContext = computed(() => {
       return {
         toggleOption,
         value: value.value,
         disabled: props.disabled,
         name: props.name,
+        classes: {
+          root: mergedClassNames.value.item,
+          icon: mergedClassNames.value.itemIcon,
+          label: mergedClassNames.value.itemLabel,
+        },
+        styles: {
+          root: mergedStyles.value.item,
+          icon: mergedStyles.value.itemIcon,
+          label: mergedStyles.value.itemLabel,
+        },
         // https://github.com/ant-design/ant-design/issues/16376
         registerValue,
         cancelValue,
@@ -138,7 +192,7 @@ const CheckboxGroup = defineComponent<
     useGroupContextProvider(memoizedContext)
     return () => {
       const { rootClass, role } = props
-      const restProps = omit(props, ['options', 'rootClass', 'defaultValue', 'prefixCls'])
+      const restProps = omit(props, ['options', 'rootClass', 'defaultValue', 'prefixCls', 'classes', 'styles'])
       const children = slots?.default?.()
       const { restAttrs, className, style } = getAttrStyleAndClass(attrs)
 
@@ -177,12 +231,13 @@ const CheckboxGroup = defineComponent<
         },
         className,
         rootClass,
+        mergedClassNames.value.root,
         cssVarCls.value,
         rootCls.value,
         hashId.value,
       )
       return (
-        <div class={classString} role={role} style={style} {...restAttrs}>
+        <div class={classString} role={role} style={[mergedStyles.value.root, style]} {...restAttrs}>
           {childrenNode}
         </div>
       )

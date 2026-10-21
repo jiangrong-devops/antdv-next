@@ -2,6 +2,10 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { nextTick, ref } from 'vue'
 import Table from '..'
 import ConfigProvider from '../../config-provider'
+import Dropdown from '../../dropdown'
+import enUS from '../../locale/en_US'
+import frFR from '../../locale/fr_FR'
+import zhTW from '../../locale/zh_TW'
 import { mount } from '/@tests/utils'
 
 const columns = [
@@ -14,6 +18,22 @@ const data = [
   { key: '2', name: 'Jim', age: 42 },
   { key: '3', name: 'Joe', age: 22 },
 ]
+
+function getSelections(wrapper: any) {
+  return wrapper
+    .findAll('tbody tr.ant-table-row')
+    .filter((row: any) => (row.find('input[type="checkbox"]').element as HTMLInputElement).checked)
+    .map((row: any) => row.attributes('data-row-key'))
+}
+
+async function clickSelectionMenuItem(wrapper: any) {
+  await wrapper.find('.ant-table-selection .ant-dropdown-trigger').trigger('mouseenter')
+  vi.runAllTimers()
+  await nextTick()
+  const item = document.body.querySelector<HTMLElement>('li.ant-dropdown-menu-item')!
+  item.click()
+  await nextTick()
+}
 
 describe('table row selection', () => {
   beforeEach(() => {
@@ -44,9 +64,132 @@ describe('table row selection', () => {
       props: { columns, dataSource: data, pagination: false, rowSelection: {} },
     })
     const checkboxes = wrapper.findAll('tbody .ant-checkbox-wrapper')
-    expect(checkboxes[0]!.attributes('aria-label')).toBe('Select row 1')
-    expect(checkboxes[1]!.attributes('aria-label')).toBe('Select row 2')
-    expect(checkboxes[2]!.attributes('aria-label')).toBe('Select row 3')
+    expect(checkboxes[0]!.attributes('aria-label')).toBe('Select row')
+    expect(checkboxes[1]!.attributes('aria-label')).toBe('Select row')
+    expect(checkboxes[2]!.attributes('aria-label')).toBe('Select row')
+  })
+
+  it('should have default aria-label on radios and selected rows', () => {
+    const radioWrapper = mount(Table, {
+      props: { columns, dataSource: data, pagination: false, rowSelection: { type: 'radio' } },
+    })
+    const radios = radioWrapper.findAll('tbody .ant-radio-wrapper')
+    expect(radios[0]!.attributes('aria-label')).toBe('Select row')
+    expect(radios[1]!.attributes('aria-label')).toBe('Select row')
+
+    const wrapper = mount(Table, {
+      props: { columns, dataSource: data, pagination: false, rowSelection: { defaultSelectedRowKeys: ['1', '2'] } },
+    })
+    const checkboxes = wrapper.findAll('tbody .ant-checkbox-wrapper')
+    expect(checkboxes[0]!.attributes('aria-label')).toBe('Row selected')
+    expect(checkboxes[1]!.attributes('aria-label')).toBe('Row selected')
+    expect(checkboxes[2]!.attributes('aria-label')).toBe('Select row')
+  })
+
+  it('should localize row selection accessible names', async () => {
+    const locale = ref<any>(zhTW)
+    const type = ref<'checkbox' | 'radio'>('checkbox')
+    const wrapper = mount(() => (
+      <ConfigProvider locale={locale.value}>
+        <Table
+          columns={columns}
+          dataSource={data}
+          pagination={false}
+          rowSelection={{ type: type.value, defaultSelectedRowKeys: ['1'], selections: true }}
+        />
+      </ConfigProvider>
+    ))
+
+    expect(wrapper.find('thead .ant-checkbox-wrapper').attributes('aria-label')).toBe('選取目前頁面')
+    const checkboxes = wrapper.findAll('tbody .ant-checkbox-wrapper')
+    expect(checkboxes[0]!.attributes('aria-label')).toBe('列已選取')
+    expect(checkboxes[1]!.attributes('aria-label')).toBe('選取列')
+    expect(wrapper.find('.ant-table-selection-extra [role="button"]').attributes('aria-label')).toBe('選取選單')
+
+    locale.value = frFR
+    await nextTick()
+    const frCheckboxes = wrapper.findAll('tbody .ant-checkbox-wrapper')
+    expect(frCheckboxes[0]!.attributes('aria-label')).toBe('Ligne sélectionnée')
+    expect(frCheckboxes[1]!.attributes('aria-label')).toBe('Sélectionner la ligne')
+    expect(wrapper.find('.ant-table-selection-extra [role="button"]').attributes('aria-label')).toBe('Menu de sélection')
+
+    locale.value = {
+      ...enUS,
+      locale: 'custom',
+      Table: {
+        ...enUS.Table,
+        selectAll: 'Choose all rows',
+        selectRow: 'Choose row',
+        selectedRow: 'Row chosen',
+        selectionMenu: 'Choose rows menu',
+      },
+    }
+    await nextTick()
+    expect(wrapper.find('thead .ant-checkbox-wrapper').attributes('aria-label')).toBe('Choose all rows')
+    expect(wrapper.findAll('tbody .ant-checkbox-wrapper')[1]!.attributes('aria-label')).toBe('Choose row')
+    expect(wrapper.find('.ant-table-selection-extra [role="button"]').attributes('aria-label')).toBe('Choose rows menu')
+
+    type.value = 'radio'
+    locale.value = zhTW
+    await nextTick()
+    expect(wrapper.findAll('tbody .ant-radio-wrapper')[1]!.attributes('aria-label')).toBe('選取列')
+  })
+
+  it('should fall back to English accessible names for a custom locale', () => {
+    const wrapper = mount(() => (
+      <ConfigProvider locale={{ locale: 'custom' } as any}>
+        <Table
+          columns={columns}
+          dataSource={data}
+          pagination={false}
+          rowSelection={{ defaultSelectedRowKeys: ['1'], selections: true }}
+        />
+      </ConfigProvider>
+    ))
+    const checkboxes = wrapper.findAll('tbody .ant-checkbox-wrapper')
+    expect(checkboxes[0]!.attributes('aria-label')).toBe('Row selected')
+    expect(checkboxes[1]!.attributes('aria-label')).toBe('Select row')
+    expect(wrapper.find('.ant-table-selection-extra [role="button"]').attributes('aria-label')).toBe('Selection menu')
+  })
+
+  it('should fall back when selectAll is not a string', () => {
+    const wrapper = mount(() => (
+      <ConfigProvider locale={{ ...enUS, Table: { ...enUS.Table, selectAll: <span>Select all rows</span> } } as any}>
+        <Table columns={columns} dataSource={data} pagination={false} rowSelection={{}} />
+      </ConfigProvider>
+    ))
+    expect(wrapper.find('thead .ant-checkbox-wrapper').attributes('aria-label')).toBe('Select all')
+  })
+
+  it('should make the selection menu keyboard accessible', async () => {
+    const wrapper = mount(() => (
+      <ConfigProvider locale={zhTW}>
+        <Table columns={columns} dataSource={data} pagination={false} rowSelection={{ selections: true }} />
+      </ConfigProvider>
+    ), { attachTo: document.body })
+    const menuTrigger = wrapper.find('.ant-table-selection-extra [role="button"]')
+
+    expect(menuTrigger.element.tagName).toBe('SPAN')
+    expect(menuTrigger.attributes('tabindex')).toBe('0')
+    expect(menuTrigger.attributes('aria-label')).toBe('選取選單')
+    expect(menuTrigger.attributes('aria-haspopup')).toBe('menu')
+    expect(menuTrigger.attributes('aria-expanded')).toBe('false')
+
+    await menuTrigger.trigger('keydown', { key: 'Enter' })
+    vi.runAllTimers()
+    await nextTick()
+    expect(wrapper.find('.ant-table-selection-extra [role="button"]').attributes('aria-expanded')).toBe('true')
+
+    await wrapper.find('.ant-table-selection-extra [role="button"]').trigger('click')
+    vi.runAllTimers()
+    await nextTick()
+    expect(wrapper.find('.ant-table-selection-extra [role="button"]').attributes('aria-expanded')).toBe('false')
+
+    await wrapper.find('.ant-table-selection-extra [role="button"]').trigger('keydown', { key: ' ' })
+    vi.runAllTimers()
+    await nextTick()
+    expect(wrapper.find('.ant-table-selection-extra [role="button"]').attributes('aria-expanded')).toBe('true')
+    wrapper.unmount()
   })
 
   it('should support custom aria-label from getCheckboxProps', () => {
@@ -278,6 +421,45 @@ describe('table row selection', () => {
     expect(wrapper.findAll('tbody tr.ant-table-row-selected')).toHaveLength(0)
   })
 
+  it('should include tree descendants when SELECTION_ALL is used', async () => {
+    const onChange = vi.fn()
+    const treeData = [
+      {
+        key: 'parent',
+        name: 'Parent',
+        children: [
+          { key: 'child-1', name: 'Child 1' },
+          { key: 'child-2', name: 'Child 2' },
+        ],
+      },
+    ]
+    const wrapper = mount(Table, {
+      props: {
+        columns,
+        dataSource: treeData,
+        pagination: false,
+        expandable: { defaultExpandAllRows: true },
+        rowSelection: {
+          onChange,
+          selections: [Table.SELECTION_ALL],
+        },
+      },
+      attachTo: document.body,
+    })
+
+    const dropdown = wrapper.findComponent(Dropdown)
+    expect(dropdown.exists()).toBe(true)
+    dropdown.vm.$emit('menuClick', { key: 'all' })
+    await nextTick()
+    vi.advanceTimersByTime(100)
+    await nextTick()
+    expect(onChange).toHaveBeenCalledWith(
+      ['parent', 'child-1', 'child-2'],
+      expect.anything(),
+      { type: 'all' },
+    )
+    wrapper.unmount()
+  })
   it('should render selection dropdown when selections is true', () => {
     const wrapper = mount(Table, {
       props: {
@@ -346,6 +528,158 @@ describe('table row selection', () => {
     await nextTick()
 
     expect(onSelect).toHaveBeenCalled()
+  })
+
+  it.each(['children', 'nodes'])(
+    'SELECTION_ALL should select tree descendants across pages with %s',
+    async (childrenColumnName) => {
+      const onChange = vi.fn()
+      const grandchild = { key: 'grandchild', name: 'Grandchild' }
+      const child = { key: 'child', name: 'Child', [childrenColumnName]: [grandchild] }
+      const parent = { key: 'parent', name: 'Parent', [childrenColumnName]: [child] }
+      const disabledChild = { key: 'disabled', name: 'Disabled', disabled: true }
+      const selectedChild = { key: 'selected', name: 'Selected', disabled: true }
+      const otherChild = { key: 'other-child', name: 'Other child' }
+      const otherParent = {
+        key: 'other-parent',
+        name: 'Other parent',
+        [childrenColumnName]: [disabledChild, selectedChild, otherChild],
+      }
+      const wrapper = mount(Table, {
+        props: {
+          columns,
+          dataSource: [parent, otherParent],
+          pagination: { pageSize: 1 },
+          expandable: { childrenColumnName, defaultExpandAllRows: true },
+          rowSelection: {
+            onChange,
+            defaultSelectedRowKeys: ['selected'],
+            getCheckboxProps: (record: any) => ({ disabled: record.disabled }),
+            selections: [Table.SELECTION_ALL],
+          },
+        },
+        attachTo: document.body,
+      })
+
+      await clickSelectionMenuItem(wrapper)
+
+      expect(onChange).toHaveBeenCalledWith(
+        ['parent', 'child', 'grandchild', 'other-parent', 'selected', 'other-child'],
+        [parent, child, grandchild, otherParent, selectedChild, otherChild],
+        { type: 'all' },
+      )
+      expect(getSelections(wrapper)).toEqual(['parent', 'child', 'grandchild'])
+      expect((wrapper.find('thead input[type="checkbox"]').element as HTMLInputElement).checked).toBe(true)
+      expect(wrapper.find('thead .ant-checkbox-indeterminate').exists()).toBe(false)
+
+      await wrapper.find('.ant-pagination-item-2').trigger('click')
+      await wrapper.find('.ant-table-row-expand-icon').trigger('click')
+      expect(getSelections(wrapper)).toEqual(['other-parent', 'selected', 'other-child'])
+      wrapper.unmount()
+    },
+  )
+
+  it.each(['children', 'nodes'])(
+    'SELECTION_INVERT should invert current-page descendants with %s',
+    async (childrenColumnName) => {
+      const onChange = vi.fn()
+      const grandchild = { key: 'grandchild', name: 'Grandchild' }
+      const child = { key: 'child', name: 'Child', [childrenColumnName]: [grandchild] }
+      const disabledChild = { key: 'disabled', name: 'Disabled', disabled: true }
+      const selectedChild = { key: 'selected', name: 'Selected', disabled: true }
+      const parent = {
+        key: 'parent',
+        name: 'Parent',
+        [childrenColumnName]: [child, disabledChild, selectedChild],
+      }
+      const otherParent = { key: 'other-parent', name: 'Other parent' }
+      const wrapper = mount(Table, {
+        props: {
+          columns,
+          dataSource: [parent, otherParent],
+          pagination: { pageSize: 1 },
+          expandable: { childrenColumnName, defaultExpandAllRows: true },
+          rowSelection: {
+            onChange,
+            defaultSelectedRowKeys: ['child', 'selected', 'other-parent'],
+            getCheckboxProps: (record: any) => ({ disabled: record.disabled }),
+            selections: [Table.SELECTION_INVERT],
+          },
+        },
+        attachTo: document.body,
+      })
+
+      await clickSelectionMenuItem(wrapper)
+
+      expect(onChange).toHaveBeenLastCalledWith(
+        ['selected', 'other-parent', 'parent', 'grandchild'],
+        [selectedChild, otherParent, parent, grandchild],
+        { type: 'invert' },
+      )
+      expect(getSelections(wrapper)).toEqual(['parent', 'grandchild', 'selected'])
+
+      await clickSelectionMenuItem(wrapper)
+
+      expect(onChange).toHaveBeenLastCalledWith(
+        ['selected', 'other-parent', 'child'],
+        [selectedChild, otherParent, child],
+        { type: 'invert' },
+      )
+      expect(getSelections(wrapper)).toEqual(['child', 'selected'])
+      wrapper.unmount()
+    },
+  )
+
+  const presetData = [
+    { key: 0, name: 'Jack' },
+    { key: 1, name: 'Lucy', disabled: true },
+    { key: 2, name: 'Tom' },
+  ]
+
+  it.each([1, 2])('SELECTION_NONE should preserve disabled rows from page %s', async (current) => {
+    const onChange = vi.fn()
+    const wrapper = mount(Table, {
+      props: {
+        columns,
+        dataSource: presetData,
+        pagination: { defaultCurrent: current, pageSize: 1 },
+        rowSelection: {
+          onChange,
+          defaultSelectedRowKeys: [0, 1, 2],
+          getCheckboxProps: (record: any) => ({ disabled: record.disabled }),
+          selections: [Table.SELECTION_NONE],
+        },
+      },
+      attachTo: document.body,
+    })
+
+    await clickSelectionMenuItem(wrapper)
+
+    expect(onChange).toHaveBeenCalledWith([1], [presetData[1]], { type: 'none' })
+    await wrapper.find('.ant-pagination-item-2').trigger('click')
+    expect(getSelections(wrapper)).toEqual(['1'])
+    wrapper.unmount()
+  })
+
+  it('SELECTION_NONE should use preserved records and ignore missing records', async () => {
+    const onChange = vi.fn()
+    const rowSelection = {
+      onChange,
+      defaultSelectedRowKeys: [1, 2, 'missing'],
+      preserveSelectedRowKeys: true,
+      getCheckboxProps: (record: any) => ({ disabled: record.disabled }),
+      selections: [Table.SELECTION_NONE],
+    }
+    const wrapper = mount(Table, {
+      props: { columns, dataSource: presetData, rowSelection },
+      attachTo: document.body,
+    })
+
+    await wrapper.setProps({ dataSource: [presetData[0]] })
+    await clickSelectionMenuItem(wrapper)
+
+    expect(onChange).toHaveBeenCalledWith([1], [presetData[1]], { type: 'none' })
+    wrapper.unmount()
   })
 
   it('selects a range when shift-clicking row checkboxes', async () => {

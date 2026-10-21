@@ -30,9 +30,14 @@ const localeValues: Locale = {
     emptyText: 'Няма данни',
     selectNone: 'Изчистване на всички данни',
     selectionAll: 'Изберете всички данни',
+    selectRow: 'Избиране на ред',
+    selectedRow: 'Редът е избран',
+    selectionMenu: 'Меню за избор',
     sortTitle: 'Сортиране',
     expand: 'Разширяване на реда',
     collapse: 'Свиване на ред',
+    expandAll: 'Разширяване на всички редове',
+    collapseAll: 'Свиване на всички редове',
     triggerDesc: 'Кликнете, за да сортирате в низходящ ред',
     triggerAsc: 'Кликнете, за да сортирате във възходящ ред',
     cancelSort: 'Кликнете, за да отмените сортирането',
@@ -50,6 +55,10 @@ const localeValues: Locale = {
   Popconfirm: {
     okText: 'Добре',
     cancelText: 'Отказ',
+  },
+  Splitter: {
+    toggleStartPanel: 'Превключване на началния панел',
+    toggleEndPanel: 'Превключване на крайния панел',
   },
   Transfer: {
     titles: ['', ''],

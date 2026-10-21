@@ -39,7 +39,7 @@ const genBaseStyle: GenerateStyle<SelectToken, CSSObject> = (token) => {
       // ======================== Selection ========================
       [`${componentCls}-selection-item`]: {
         flex: 1,
-        fontWeight: 'normal',
+        fontWeight: 400,
         position: 'relative',
         userSelect: 'none',
         ...textEllipsis,
@@ -70,7 +70,7 @@ const genBaseStyle: GenerateStyle<SelectToken, CSSObject> = (token) => {
         color: token.colorTextQuaternary,
         fontSize: token.fontSizeIcon,
         fontStyle: 'normal',
-        lineHeight: 1,
+        lineHeight: 0, // keeping the focus outline tight
         textAlign: 'center',
         textTransform: 'none',
         // The clear affordance is a real `<button>` for keyboard access, so

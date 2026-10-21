@@ -138,6 +138,22 @@ describe('slider', () => {
     expect(wrapper.find('strong').text()).toBe('100°C')
   })
 
+  it('should render custom mark content via mark slot', () => {
+    const marks = { 0: '0°C', 100: '100°C' }
+    const wrapper = mount(Slider, {
+      props: { marks, defaultValue: 0 },
+      slots: {
+        mark: ({ point, label }: { point: number, label?: any }) => (
+          <span class="custom-mark">{`${point}#${label}`}</span>
+        ),
+      },
+    })
+    const customMarks = wrapper.findAll('.custom-mark')
+    expect(customMarks.length).toBe(2)
+    expect(customMarks[0]?.text()).toBe('0#0°C')
+    expect(customMarks[1]?.text()).toBe('100#100°C')
+  })
+
   it('should render dots when dots=true', () => {
     const wrapper = mount(Slider, {
       props: { dots: true, step: 10, defaultValue: 50 },
@@ -349,23 +365,29 @@ describe('slider', () => {
       expect(wrapper.find('.ant-slider').exists()).toBe(true)
     })
 
-    it('should default to right placement for vertical slider', () => {
+    it('should default to right placement for vertical slider', async () => {
       // getTooltipPlacement(undefined, true) → 'right'
       const wrapper = mount(Slider, {
-        props: { vertical: true, defaultValue: 30 },
+        props: { vertical: true, defaultValue: 30, tooltip: { open: true } },
+        attachTo: document.body,
       })
-      expect(wrapper.find('.ant-slider-vertical').exists()).toBe(true)
+      await nextTick()
+      const tooltip = document.querySelector('.ant-slider-tooltip')
+      expect(tooltip?.className).toContain('ant-tooltip-placement-right')
+      wrapper.unmount()
     })
 
-    it('should default to left placement for vertical in RTL', () => {
+    it('should default to left placement for vertical in RTL', async () => {
       // getTooltipPlacement(undefined, true) in RTL → 'left'
       const wrapper = mount(() => (
         <ConfigProvider direction="rtl">
-          <Slider vertical defaultValue={30} />
+          <Slider vertical defaultValue={30} tooltip={{ open: true }} />
         </ConfigProvider>
-      ))
-      expect(wrapper.find('.ant-slider-vertical').exists()).toBe(true)
-      expect(wrapper.find('.ant-slider-rtl').exists()).toBe(true)
+      ), { attachTo: document.body })
+      await nextTick()
+      const tooltip = document.querySelector('.ant-slider-tooltip')
+      expect(tooltip?.className).toContain('ant-tooltip-placement-left')
+      wrapper.unmount()
     })
   })
 
@@ -376,6 +398,30 @@ describe('slider', () => {
   // value changes in VcSlider's jsdom environment.
   // Event forwarding (onChange → emit('change') + emit('update:value'))
   // is verified structurally through handle interaction tests below.
+  describe('changeComplete emission', () => {
+    it('should report the finished value through changeComplete only', async () => {
+      const onChangeComplete = vi.fn()
+      const onAfterChange = vi.fn()
+      const wrapper = mount(Slider, {
+        props: { defaultValue: 30, onChangeComplete },
+        attrs: { onAfterChange },
+        attachTo: document.body,
+      })
+      const handle = wrapper.find('.ant-slider-handle')
+      await handle.trigger('mousedown')
+      await nextTick()
+      document.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }))
+      await nextTick()
+
+      // `afterChange` is no longer part of the emits contract; the finished value
+      // is reported through `changeComplete` only, and a leftover `@after-change`
+      // listener is not forwarded to vc-slider (which would run it twice).
+      expect(wrapper.emitted('changeComplete')?.[0]).toEqual([30])
+      expect(onChangeComplete).toHaveBeenCalledWith(30)
+      expect(onAfterChange).not.toHaveBeenCalled()
+      wrapper.unmount()
+    })
+  })
 
   // ========================= Expose =========================
   describe('expose', () => {
@@ -693,6 +739,18 @@ describe('slider', () => {
       vi.advanceTimersByTime(100)
       // vc-slider's Handle never declares `onBlur` as a prop, so it never lands on the
       // handle vnode and passedProps must dispatch it — exactly once.
+      expect(onBlur).toHaveBeenCalledTimes(1)
+      wrapper.unmount()
+    })
+
+    it('should forward onBlur to user handler exactly once in range mode', async () => {
+      const onBlur = vi.fn()
+      const wrapper = mount(Slider, {
+        props: { range: true, defaultValue: [20, 50] },
+        attrs: { onBlur },
+        attachTo: document.body,
+      })
+      await wrapper.find('.ant-slider-handle').trigger('blur')
       expect(onBlur).toHaveBeenCalledTimes(1)
       wrapper.unmount()
     })

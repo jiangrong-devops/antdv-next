@@ -13,7 +13,7 @@ import { clsx } from '@v-c/util'
 import { getTransitionName } from '@v-c/util/dist/utils/transition'
 import { omit } from 'es-toolkit/compat'
 import { computed, defineComponent, shallowRef } from 'vue'
-import { getAttrStyleAndClass, useMergeSemantic, useToArr, useToProps, useZIndex } from '../_util/hooks'
+import { getAttrStyleAndClass, useMergeSemantic, useSemanticRootStyle, useToArr, useToProps, useZIndex } from '../_util/hooks'
 import genPurePanel from '../_util/PurePanel.tsx'
 import { getMergedStatus, getStatusClassNames } from '../_util/statusUtils'
 import { getSlotPropsFnRun, toPropsRefs } from '../_util/tools'
@@ -25,6 +25,7 @@ import useCSSVarCls from '../config-provider/hooks/useCSSVarCls'
 import { useSize } from '../config-provider/hooks/useSize'
 import { useFormItemInputContext } from '../form/context'
 import useVariant from '../form/hooks/useVariant'
+import { useLocaleGetter } from '../locale/useLocale'
 import mergedBuiltinPlacements from '../select/mergedBuiltinPlacements.ts'
 import useSelectStyle from '../select/style'
 import useIcons from '../select/useIcons'
@@ -267,6 +268,8 @@ const InternalTreeSelect = defineComponent<
       prefixCls: treeSelectPrefixCls,
       getPopupContainer: getContextPopupContainer,
       direction,
+      class: contextClassName,
+      style: contextStyle,
       styles: contextStyles,
       classes: contextClassNames,
       switcherIcon,
@@ -274,6 +277,7 @@ const InternalTreeSelect = defineComponent<
       getPrefixCls,
       rootPrefixCls,
     } = useComponentBaseConfig('treeSelect', props, ['switcherIcon'], 'tree-select')
+    const getGlobalLocale = useLocaleGetter('global')
     const configCtx = useConfig()
     const {
       prefixCls: customizePrefixCls,
@@ -362,13 +366,14 @@ const InternalTreeSelect = defineComponent<
       variant: variant.value,
     } as TreeSelectProps))
 
+    const contextStyleRoot = useSemanticRootStyle(contextStyle)
     const [mergedClassNames, mergedStyles] = useMergeSemantic<
       TreeSelectClassNamesType,
       TreeSelectStylesType,
       TreeSelectProps
     >(
       useToArr(contextClassNames, classes),
-      useToArr(contextStyles, styles),
+      useToArr(contextStyles, contextStyleRoot as any, styles),
       useToProps(mergedProps),
       computed(() => {
         return {
@@ -441,7 +446,6 @@ const InternalTreeSelect = defineComponent<
           [`${treeSelectPrefixCls.value}-dropdown-rtl`]: direction.value === 'rtl',
         },
         rootClass,
-        mergedClassNames.value.root,
         mergedClassNames.value.popup?.root,
         cssVarCls.value,
         rootCls.value,
@@ -471,7 +475,13 @@ const InternalTreeSelect = defineComponent<
         componentName: 'TreeSelect',
       } as any)
 
-      const mergedAllowClear = allowClear === true ? { clearIcon } : allowClear
+      const mergedAllowClear = allowClear
+        ? {
+            clearIcon,
+            label: getGlobalLocale().clear,
+            ...(typeof allowClear === 'object' ? allowClear : {}),
+          }
+        : allowClear
       const notFoundContent = getSlotPropsFnRun(slots, props, 'notFoundContent', false)
 
       // ===================== Empty =====================
@@ -538,6 +548,7 @@ const InternalTreeSelect = defineComponent<
         },
         getStatusClassNames(prefixCls.value, mergedStatus.value, hasFeedback),
         compactItemClassnames.value,
+        contextClassName.value,
         className,
         rootClass,
         mergedClassNames?.value?.root,
@@ -596,7 +607,7 @@ const InternalTreeSelect = defineComponent<
           getPopupContainer={getPopupContainer || getContextPopupContainer}
           treeMotion={null}
           popupClassName={mergedPopupClassName}
-          popupStyle={{ ...mergedStyles.value.root, ...mergedStyles.value.popup?.root, zIndex: zIndex.value }}
+          popupStyle={{ ...mergedStyles.value.popup?.root, zIndex: zIndex.value }}
           popupRender={mergedPopupRender}
           onPopupVisibleChange={mergedOnOpenChange}
           choiceTransitionName={getTransitionName(rootPrefixCls.value, '', choiceTransitionName)}

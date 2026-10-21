@@ -17,6 +17,14 @@ describe('pagination', () => {
     expect(wrapper.find('.ant-pagination').exists()).toBe(true)
   })
 
+  it('should use en_US as default locale', () => {
+    const wrapper = mount(() => (
+      <Pagination total={50} showQuickJumper />
+    ))
+
+    expect(wrapper.text()).toContain('Go to')
+  })
+
   it('should update current before change callback runs in controlled mode', async () => {
     const current = ref(1)
     const currentInChange: number[] = []
@@ -104,6 +112,28 @@ describe('pagination', () => {
 
     expect(wrapper.find('.ant-pagination-options-size-changer').exists()).toBe(true)
     expect(wrapper.find('.custom-size-changer').exists()).toBe(false)
+    wrapper.unmount()
+  })
+
+  it('inherits config provider size changer select props when showSizeChanger is boolean', () => {
+    const wrapper = mount(() => (
+      <ConfigProvider pagination={{ showSizeChanger: { showSearch: false } }}>
+        <Pagination total={500} showSizeChanger />
+      </ConfigProvider>
+    ), { attachTo: document.body })
+
+    expect(wrapper.find('.ant-pagination-options-size-changer.ant-select-show-search').exists()).toBe(false)
+    wrapper.unmount()
+  })
+
+  it('replaces config provider size changer select props when component passes an object', () => {
+    const wrapper = mount(() => (
+      <ConfigProvider pagination={{ showSizeChanger: { showSearch: false } }}>
+        <Pagination total={500} showSizeChanger={{}} />
+      </ConfigProvider>
+    ), { attachTo: document.body })
+
+    expect(wrapper.find('.ant-pagination-options-size-changer.ant-select-show-search').exists()).toBe(true)
     wrapper.unmount()
   })
 

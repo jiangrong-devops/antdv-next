@@ -22,7 +22,7 @@ import {
 } from '../_util/hooks'
 import genPurePanel from '../_util/PurePanel.tsx'
 import { getMergedStatus, getStatusClassNames } from '../_util/statusUtils'
-import { getSlotPropsFnRun, toPropsRefs } from '../_util/tools'
+import { getSlotPropsFnRun, getSlotPropsFnRunWithFallback, toPropsRefs } from '../_util/tools'
 import { devUseWarning, isDev } from '../_util/warning'
 import { useComponentBaseConfig } from '../config-provider/context'
 import { DefaultRenderEmpty } from '../config-provider/defaultRenderEmpty'
@@ -31,6 +31,7 @@ import useCSSVarCls from '../config-provider/hooks/useCSSVarCls'
 import { useSize } from '../config-provider/hooks/useSize'
 import { useFormItemInputContext } from '../form/context'
 import { useVariants } from '../form/hooks/useVariant'
+import { useLocaleGetter } from '../locale/useLocale'
 import mergedBuiltinPlacements from '../select/mergedBuiltinPlacements'
 import useSelectStyle from '../select/style'
 import useSelectIcons from '../select/useIcons'
@@ -253,6 +254,7 @@ const InternalCascader = defineComponent<
       removeIcon: contextRemoveIcon,
       suffixIcon: contextSuffixIcon,
     } = useComponentBaseConfig('cascader', props, ['expandIcon', 'loadingIcon', 'searchIcon', 'clearIcon', 'removeIcon', 'suffixIcon'])
+    const getGlobalLocale = useLocaleGetter('global')
     // contextSearchIcon is consumed downstream by useShowSearch; reserved for future inline search icon wiring
     void _contextSearchIcon
     const {
@@ -470,13 +472,20 @@ const InternalCascader = defineComponent<
       } as any)
 
       const mergedClearIcon = (rest as any).clearIcon ?? contextClearIcon.value ?? clearIcon
-      const mergedAllowClear = (allowClear ?? true) === true ? { clearIcon: mergedClearIcon } : allowClear
+      const finalAllowClear = allowClear ?? true
+      const mergedAllowClear = finalAllowClear
+        ? {
+            clearIcon: mergedClearIcon,
+            label: getGlobalLocale().clear,
+            ...(typeof finalAllowClear === 'object' ? finalAllowClear : {}),
+          }
+        : finalAllowClear
 
       const mergedPopupRender = usePopupRender((slots.popupRender ?? popupRender) || dropdownRender)
       const mergedPopupMenuColumnStyle = popupMenuColumnStyle ?? dropdownMenuColumnStyle
 
-      const customExpandIcon = getSlotPropsFnRun(slots, props, 'expandIcon', false) ?? expandIcon
-      const customLoadingIcon = getSlotPropsFnRun(slots, props, 'loadingIcon', false) ?? loadingIcon
+      const customExpandIcon = getSlotPropsFnRunWithFallback(slots, props, 'expandIcon')
+      const customLoadingIcon = getSlotPropsFnRunWithFallback(slots, props, 'loadingIcon')
       const { expandIcon: mergedExpandIcon, loadingIcon: mergedLoadingIcon } = useIcons({
         contextExpandIcon: contextExpandIcon.value,
         contextLoadingIcon: contextLoadingIcon.value,

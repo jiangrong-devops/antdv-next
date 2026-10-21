@@ -5,6 +5,7 @@ import type {
 } from '@v-c/mentions'
 import type { App, CSSProperties, SlotsType } from 'vue'
 import type { SemanticClassNamesType, SemanticStylesType } from '../_util/hooks'
+import type { AllowClear } from '../_util/hooks/useAllowClear'
 import type { InputStatus } from '../_util/statusUtils'
 import type { VueNode } from '../_util/type.ts'
 import type { ComponentBaseProps, Variant } from '../config-provider/context'
@@ -14,8 +15,8 @@ import { clsx } from '@v-c/util'
 import { filterEmpty } from '@v-c/util/dist/props-util'
 import { omit } from 'es-toolkit'
 import { computed, defineComponent, shallowRef } from 'vue'
-import getAllowClear from '../_util/getAllowClear'
 import { getAttrStyleAndClass, useMergeSemantic, useSemanticRootStyle, useToArr, useToProps } from '../_util/hooks'
+import useAllowClear, { useAllowClearLabel } from '../_util/hooks/useAllowClear'
 import { useZIndex } from '../_util/hooks/useZIndex'
 import genPurePanel from '../_util/PurePanel.tsx'
 import { getMergedStatus, getStatusClassNames } from '../_util/statusUtils'
@@ -95,9 +96,7 @@ export interface MentionProps extends
   styles?: MentionsStylesType
   size?: SizeType
   labelRender?: (ctx: { option: MentionsOptionProps, index: number }) => any
-  allowClear?: boolean | {
-    clearIcon?: VueNode
-  }
+  allowClear?: AllowClear
   disabled?: boolean
 }
 
@@ -181,7 +180,8 @@ const InternalMentions = defineComponent<
       styles: contextStyles,
       renderEmpty,
       getPopupContainer,
-    } = useComponentBaseConfig('mentions', props)
+      allowClear: contextAllowClear,
+    } = useComponentBaseConfig('mentions', props, ['allowClear'])
 
     const {
       classes,
@@ -224,7 +224,12 @@ const InternalMentions = defineComponent<
       MentionProps
     >(useToArr(contextClassNames, classes), useToArr(contextStyles, contextStyleRoot as any, styles), useToProps(mergedProps))
 
-    const mergedAllowClear = computed(() => getAllowClear(props.allowClear))
+    const getClearLabel = useAllowClearLabel()
+    const mergedAllowClear = computed(() => useAllowClear({
+      allowClear: props.allowClear,
+      contextAllowClear: contextAllowClear.value,
+      defaultLabel: getClearLabel(),
+    }))
 
     const [mergedVariant, enableVariantCls] = useVariant('mentions', customVariant)
 

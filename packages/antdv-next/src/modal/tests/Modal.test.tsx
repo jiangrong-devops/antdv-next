@@ -44,6 +44,24 @@ describe('modal static', () => {
     expect(document.querySelectorAll('.ant-modal-confirm-btns .ant-btn')).toHaveLength(2)
   })
 
+  it('icon can be false to hide default icon', async () => {
+    Modal.confirm({
+      title: 'some title',
+      content: 'some descriptions',
+      icon: false,
+    })
+    await waitFakeTimer(1, 5)
+
+    expect(
+      document.querySelector('.ant-modal-confirm-body')!.querySelector('.anticon'),
+    ).toBeFalsy()
+    expect(
+      document
+        .querySelector('.ant-modal-confirm-body')!
+        .classList.contains('ant-modal-confirm-body-no-icon'),
+    ).toBe(true)
+  })
+
   it('should not mutate the mask config object', async () => {
     const mask: MaskType = { blur: true }
 
@@ -237,6 +255,44 @@ describe('modal static', () => {
     expect(modalBody.style.width).toBe('')
     expect(content.classList.contains('custom-focusable-content')).toBe(true)
     expect(content.style.width).toBe('500px')
+  })
+
+  it('should support config confirm icons via ConfigProvider modal', async () => {
+    const Confirm = defineComponent(() => {
+      const { modal } = App.useApp()
+      onMounted(() => {
+        modal.info({ title: 'Info' })
+        modal.success({ title: 'Success' })
+        modal.error({ title: 'Error' })
+        modal.warning({ title: 'Warning' })
+      })
+      return () => null
+    })
+
+    mount(
+      () => (
+        <ConfigProvider
+          modal={{
+            infoIcon: <span class="custom-info-icon" />,
+            successIcon: <span class="custom-success-icon" />,
+            errorIcon: <span class="custom-error-icon" />,
+            warningIcon: <span class="custom-warning-icon" />,
+          }}
+        >
+          <App>
+            <Confirm />
+          </App>
+        </ConfigProvider>
+      ),
+      { attachTo: document.body },
+    )
+
+    await waitFakeTimer()
+
+    expect(document.querySelector('.ant-modal-confirm-info .custom-info-icon')).toBeTruthy()
+    expect(document.querySelector('.ant-modal-confirm-success .custom-success-icon')).toBeTruthy()
+    expect(document.querySelector('.ant-modal-confirm-error .custom-error-icon')).toBeTruthy()
+    expect(document.querySelector('.ant-modal-confirm-warning .custom-warning-icon')).toBeTruthy()
   })
 })
 

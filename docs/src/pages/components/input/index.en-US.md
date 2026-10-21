@@ -50,7 +50,7 @@ Common props ref：[Common props](/docs/vue/common-props)
 | --- | --- | --- | --- | --- | --- |
 | ~~addonAfter~~ | The label text displayed after (on the right side of) the input field, please use Space.Compact instead | VueNode | - | - | × |
 | ~~addonBefore~~ | The label text displayed before (on the left side of) the input field, please use Space.Compact instead | VueNode | - | - | × |
-| allowClear | If allow to remove input content with clear icon | boolean \| &#123; clearIcon: VueNode &#125; | false | - | ✓ |
+| allowClear | Whether to show a clear button | boolean \| [AllowClearConfig](#allowclearconfig) | false | - | ✓ |
 | ~~bordered~~ | Whether has border style, please use `variant` instead | boolean | true | - | × |
 | classes | Customize class for each semantic structure inside the component. Supports object or function. | Record&lt;[SemanticDOM](#semantic-input), string&gt; \| (info: &#123; props &#125;) =&gt; Record&lt;[SemanticDOM](#semantic-input), string&gt; | - | - | ✓ |
 | count | Character count config | [CountConfig](#countconfig) | - | - | × |
@@ -118,6 +118,7 @@ The rest of the props of `Input.TextArea` are the same as the original [textarea
 | classes | Customize class for each semantic structure inside the component. Supports object or function. | Record&lt;[SemanticDOM](#semantic-search), string&gt; \| (info: &#123; props &#125;) =&gt; Record&lt;[SemanticDOM](#semantic-search), string&gt; | - | - | ✓ |
 | enterButton | false displays the default button color, true uses the primary color, or you can provide a custom button. Conflicts with addonAfter. | VueNode | false | - | × |
 | loading | Search box with loading | boolean | false | - | × |
+| searchIcon | Customize the search icon | VueNode | - | - | ✓ |
 | styles | Customize inline style for each semantic structure inside the component. Supports object or function. | Record&lt;[SemanticDOM](#semantic-search), CSSProperties&gt; \| (info: &#123; props &#125;) =&gt; Record&lt;[SemanticDOM](#semantic-search), CSSProperties&gt; | - | - | ✓ |
 | variant | Variants of Input | `outlined` \| `borderless` \| `filled` \| `underlined` | `outlined` | - | ✓ |
 
@@ -128,6 +129,14 @@ Supports all props of `Input`.
 | Event | Description | Type | Version |
 | --- | --- | --- | --- |
 | search | The callback function triggered when you click on the search-icon, the clear-icon or press the Enter key | function(value, event, &#123; source: "input" \| "clear" &#125;) | - |
+
+#### Slots {#input-search-slots}
+
+| Slot | Description | Type | Version |
+| --- | --- | --- | --- |
+| searchIcon | Customize the search icon, effective when `enterButton` is a boolean, takes priority over the `searchIcon` prop | - | - |
+
+Supports all slots of `Input`.
 
 ### InputPassword {#input-password}
 
@@ -171,9 +180,20 @@ Supports all props of `Input`.
 | Event | Description | Type | Version |
 | --- | --- | --- | --- |
 | change | Trigger when all the fields are filled | (value: string) =&gt; void | - |
+| focus | Trigger when an input gets focus | (event: FocusEvent) =&gt; void | - |
 | input | Trigger when the input value changes | (value: string[]) =&gt; void | - |
 
 ### Types {#types}
+
+#### AllowClearConfig {#allowclearconfig}
+
+Fields that support global configuration use component values first, then global values, then defaults. `allowClear: true` inherits the global configuration; `disabled: false` and `tabIndex: 0` override global values.
+
+| Property | Description | Type | Default | Version | [Global Config](/components/config-provider#component-config) |
+| --- | --- | --- | --- | --- | --- |
+| clearIcon | Custom clear icon | VueNode | - | - | ✓ |
+| disabled | Disable the clear button | boolean | false | - | ✓ |
+| tabIndex | Tab order of the clear button. `-1` excludes it from Tab navigation | number | 0 | 1.7.0 | ✓ |
 
 #### CountConfig
 

@@ -30,9 +30,14 @@ const localeValues: Locale = {
     filterSearchPlaceholder: 'Filterlərdə axtar',
     selectNone: 'Bütün məlumatı sil',
     selectionAll: 'Bütün məlumatı seç',
+    selectRow: 'Sətri seç',
+    selectedRow: 'Sətir seçildi',
+    selectionMenu: 'Seçim menyusu',
     sortTitle: 'Sırala',
     expand: 'Sıranı genişləndir',
     collapse: 'Sıranı qapadın',
+    expandAll: 'Bütün sətirləri genişləndir',
+    collapseAll: 'Bütün sətirləri yığ',
     triggerDesc: 'Azalan sıralama üçün klik edin',
     triggerAsc: 'Artan sıralama üçün klik edin',
     cancelSort: 'Sıralamayı ləğv edin',
@@ -50,6 +55,10 @@ const localeValues: Locale = {
   Popconfirm: {
     okText: 'Bəli',
     cancelText: 'Ləğv et',
+  },
+  Splitter: {
+    toggleStartPanel: 'Başlanğıc panelini dəyişdir',
+    toggleEndPanel: 'Son paneli dəyişdir',
   },
   Transfer: {
     titles: ['', ''],
