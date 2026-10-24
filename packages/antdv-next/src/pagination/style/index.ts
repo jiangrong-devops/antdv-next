@@ -654,6 +654,7 @@ const genPaginationStyle: GenerateStyle<PaginationToken, CSSObject> = (token) =>
       ...resetComponent(token),
       display: 'flex',
       alignItems: 'center',
+      userSelect: 'none',
 
       '&-start': {
         justifyContent: 'start',
@@ -688,6 +689,7 @@ const genPaginationStyle: GenerateStyle<PaginationToken, CSSObject> = (token) =>
         marginInlineEnd: varRef(`item-spacing-actual`),
         lineHeight: unit(token.calc(varRef(`item-size-actual`)).sub(2).equal()),
         verticalAlign: 'middle',
+        userSelect: 'text',
       },
 
       // item style
@@ -739,10 +741,14 @@ const genPaginationFocusStyle: GenerateStyle<PaginationToken, CSSObject> = (toke
     [`${componentCls}:not(${componentCls}-disabled)`]: {
       [`${componentCls}-item`]: {
         ...genFocusStyle(token),
+        '> a, > button': {
+          borderRadius: 'inherit',
+          ...genFocusStyle(token),
+        },
       },
 
       [`${componentCls}-jump-prev, ${componentCls}-jump-next`]: {
-        '&:focus-visible': {
+        '&:focus-visible, &:has(> :focus-visible)': {
           [`${componentCls}-item-link-icon`]: {
             opacity: 1,
           },
@@ -754,7 +760,8 @@ const genPaginationFocusStyle: GenerateStyle<PaginationToken, CSSObject> = (toke
       },
 
       [`${componentCls}-prev, ${componentCls}-next`]: {
-        [`&:focus-visible ${componentCls}-item-link`]: genFocusOutline(token),
+        [`&:focus-visible ${componentCls}-item-link, ${componentCls}-item-link:focus-visible`]:
+          genFocusOutline(token),
       },
     },
   }

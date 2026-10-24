@@ -1,6 +1,6 @@
 import type { MaskType } from '../../_util/hooks'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { defineComponent, onMounted } from 'vue'
+import { defineComponent, h, onMounted } from 'vue'
 import Modal from '..'
 import App from '../../app'
 import ConfigProvider from '../../config-provider'
@@ -128,6 +128,34 @@ describe('modal static', () => {
       .map(node => node.textContent?.replace(/\s+/g, '').trim())
 
     expect(buttons).toEqual(['取消', '确定'])
+  })
+
+  // https://github.com/ant-design/ant-design/pull/59627
+  it('applies body typography to static and hook confirmation content', async () => {
+    const Confirm = defineComponent(() => {
+      const [modal, contextHolder] = Modal.useModal()
+      onMounted(() => {
+        modal.confirm({ content: 'Hook content' })
+      })
+      return () => h(contextHolder)
+    })
+
+    mount(Confirm, { attachTo: document.body })
+
+    ;(['info', 'success', 'error', 'warning', 'confirm'] as const).forEach((type) => {
+      Modal[type]({ content: `${type} content` })
+    })
+
+    await waitFakeTimer(1, 5)
+
+    const contents = document.querySelectorAll<HTMLElement>('.ant-modal-confirm-content')
+    expect(contents).toHaveLength(6)
+    contents.forEach((content) => {
+      const style = getComputedStyle(content)
+      expect(style.color).toBe('var(--ant-color-text)')
+      expect(style.fontSize).toBe('var(--ant-font-size)')
+      expect(style.lineHeight).toBe('var(--ant-line-height)')
+    })
   })
 
   it('bodyStyle should apply to confirm content instead of modal body', async () => {
@@ -452,6 +480,46 @@ describe('modal integration', () => {
     expect(onClick).toHaveBeenCalledTimes(1)
 
     wrapper.unmount()
+  })
+
+  // https://github.com/ant-design/ant-design/pull/59294
+  it('should trigger both onOk and okButtonProps.onClick', async () => {
+    const onOk = vi.fn()
+    const onClick = vi.fn()
+    const wrapper = mount(Modal, {
+      attachTo: document.body,
+      props: {
+        open: true,
+        onOk,
+        okButtonProps: { onClick } as any,
+      },
+    })
+
+    await waitFakeTimer(20, 10)
+
+    const btns = document.body.querySelectorAll<HTMLButtonElement>('.ant-modal-footer .ant-btn')
+    btns[btns.length - 1].click()
+    await waitFakeTimer(20, 10)
+
+    expect(onOk).toHaveBeenCalledTimes(1)
+    expect(onClick).toHaveBeenCalledTimes(1)
+
+    wrapper.unmount()
+  })
+
+  it('should trigger both confirm onOk and okButtonProps.onClick once', async () => {
+    const onOk = vi.fn()
+    const onClick = vi.fn()
+    Modal.confirm({ onOk, okButtonProps: { onClick } as any })
+
+    await waitFakeTimer(20, 10)
+
+    document.body.querySelector<HTMLButtonElement>('.ant-modal-confirm-btns .ant-btn-primary')!.click()
+    await waitFakeTimer(20, 10)
+
+    expect(onOk).toHaveBeenCalledTimes(1)
+    expect(onClick).toHaveBeenCalledTimes(1)
+    Modal.destroyAll()
   })
 
   it('should localize the close button accessible name', async () => {
