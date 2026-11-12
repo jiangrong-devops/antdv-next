@@ -10,13 +10,13 @@ import { filterEmpty } from '@v-c/util/dist/props-util'
 import { computed, createVNode, defineComponent, shallowRef } from 'vue'
 import { pureAttrs, useMergeSemantic, useSemanticRootStyle, useToArr, useToProps } from '../_util/hooks'
 import useClosable, { pickClosable } from '../_util/hooks/useClosable.tsx'
-import { isRenderable } from '../_util/is.ts'
 import { normalizeStyle } from '../_util/styleUtils'
 import { getSlotPropsFnRun, toPropsRefs } from '../_util/tools.ts'
 import { replaceElement } from '../_util/vueNode.ts'
 import Wave from '../_util/wave'
 import { useComponentBaseConfig, useConfig } from '../config-provider/context.ts'
 import { useDisabledContext } from '../config-provider/DisabledContext.tsx'
+import useVariant from '../form/hooks/useVariant'
 import CheckableTag from './CheckableTag.tsx'
 import CheckableTagGroup from './CheckableTagGroup.tsx'
 import useColor from './hooks/useColor.ts'
@@ -50,7 +50,7 @@ export interface TagProps extends ComponentBaseProps,
   /* @vue-ignore */
   TagEmitsProps {
   color?: LiteralUnion<PresetColorType | PresetStatusColorType>
-  /** Advised to use closeIcon instead. */
+  /** Configure the close button and its accessibility attributes. */
   closable?: ClosableType
   closeIcon?: VueNode
   icon?: VueNode
@@ -93,15 +93,18 @@ const InternalTag = defineComponent<
       prefixCls,
       direction,
       class: contextClassName,
-      variant: contextVariant,
       style: contextStyle,
       classes: contextClassNames,
       styles: contextStyles,
-    } = useComponentBaseConfig('tag', props, ['variant'])
+    } = useComponentBaseConfig('tag', props)
     const { variant, href, target, disabled: customDisabled, color, bordered, classes, styles } = toPropsRefs(props, 'classes', 'styles', 'variant', 'href', 'target', 'disabled', 'color', 'bordered')
     const [hashId, cssVarCls] = useStyle(prefixCls)
 
     // ====================== Colors ======================
+    const [contextVariant] = useVariant('tag', undefined, {
+      variants: ['filled', 'solid', 'outlined'],
+      defaultVariant: 'filled',
+    })
     const [mergedVariant, mergedColor, isPreset, isStatus, customTagStyle] = useColor(
       { bordered, variant, color },
       contextVariant,
@@ -243,9 +246,9 @@ const InternalTag = defineComponent<
         hashId.value,
         cssVarCls.value,
       )
-      const children = filterEmpty(slots?.default?.())[0]
+      const children = filterEmpty(slots?.default?.())
       // ====================== Render ======================
-      const isNeedWave = (children && children.type === 'a') || typeof props.onClick === 'function'
+      const isNeedWave = (children.length === 1 && children[0].type === 'a') || typeof props.onClick === 'function'
       const iconNode = getSlotPropsFnRun(slots, props, 'icon')
       let iconNodes = iconNode
       if (iconNode) {
@@ -259,7 +262,7 @@ const InternalTag = defineComponent<
         ? (
             <>
               {iconNodes}
-              {isRenderable(children) && (
+              {children.length > 0 && (
                 <span
                   class={mergedClassNames.value.content}
                   style={mergedStyles.value.content}

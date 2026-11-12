@@ -1,4 +1,5 @@
 import type { Locale } from '.'
+import Pagination from '@v-c/pagination/locale/sq_AL'
 import Calendar from '../calendar/locale/sq_AL'
 import DatePicker from '../date-picker/locale/sq_AL'
 import TimePicker from '../time-picker/locale/sq_AL'
@@ -7,18 +8,7 @@ const typeTemplate = '${label} nuk është një ${type} i vlefshëm'
 
 const localeValues: Locale = {
   locale: 'sq',
-  Pagination: {
-    items_per_page: '/ faqe',
-    jump_to: 'Shko te',
-    jump_to_confirm: 'konfirmo',
-    page: 'Faqe',
-    prev_page: 'Faqja e mëparshme',
-    next_page: 'Faqja tjetër',
-    prev_5: '5 faqet e mëparshme',
-    next_5: '5 faqet e tjera',
-    prev_3: '3 faqet e mëparshme',
-    next_3: '3 faqet e tjera',
-  },
+  Pagination,
   DatePicker,
   TimePicker,
   Calendar,
@@ -26,6 +16,8 @@ const localeValues: Locale = {
     placeholder: 'Ju lutemi zgjidhni',
     close: 'Mbyll',
     sortable: 'i renditshëm',
+    show: 'Shfaq',
+    hide: 'Fshih',
   },
   Table: {
     filterTitle: 'Menuja e filtrimit',

@@ -40,7 +40,7 @@ demo:
 
 | 参数 | 说明 | 类型 | 默认值 | 版本 | [全局配置](/components/config-provider-cn#component-config) |
 | --- | --- | --- | --- | --- | --- |
-| allowClear | 显示清除按钮 | boolean \| &#123; clearIcon?: VueNode; label?: string &#125; | false | - | × |
+| allowClear | 是否显示清除按钮 | boolean \| [AllowClearConfig](#allowclearconfig) | false | - | 1.8.0 |
 | classes | 用于自定义组件内部各语义化结构的 class，支持对象或函数 | Record&lt;[SemanticDOM](#semantic-dom), string&gt; \| (info: &#123; props &#125;) =&gt; Record&lt;[SemanticDOM](#semantic-dom), string&gt; | - | - | ✓ |
 | styles | 用于自定义组件内部各语义化结构的行内 style，支持对象或函数 | Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; \| (info: &#123; props &#125;) =&gt; Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; | - | - | ✓ |
 | rootClass | 根节点 class | string | - | - | × |
@@ -69,7 +69,8 @@ demo:
 | size | 选择框大小 | `large` \| `medium` \| `small` | - | - | × |
 | status | 设置校验状态 | 'error' \| 'warning' | - | - | × |
 | variant | 形态变体 | `outlined` \| `borderless` \| `filled` \| `underlined` | `outlined` | - | ✓ |
-| suffixIcon | 自定义的选择框后缀图标 | VueNode | `&lt;DownOutlined /&gt;` | - | × |
+| suffix | 自定义的选择框后缀。以防止后缀被用于其他交互，替换的后缀默认不会响应展开、收缩事件，可以通过添加 `pointer-events: none` 样式透传 | VueNode \| (info: &#123; open: boolean, searchValue: string, focused: boolean, showSearch?: boolean, loading?: boolean &#125;) =&gt; VueNode | `&lt;DownOutlined /&gt;` | 1.8.0 | × |
+| suffixIcon | 自定义的选择框后缀图标。已废弃，请使用 `suffix` 替代 | VueNode | `&lt;DownOutlined /&gt;` | - | × |
 | switcherIcon | 自定义树节点的展开/折叠图标 | VueNode \| ((props: AntTreeNodeProps) =&gt; VueNode) | - | - | ✓ |
 | tagRender | 自定义 tag 内容，多选时生效 | (props: any) =&gt; VueNode | - | - | × |
 | treeCheckable | 显示 Checkbox | boolean | false | - | × |
@@ -88,13 +89,14 @@ demo:
 | value | 指定当前选中的条目，支持 `v-model:value` | string \| string[] | - | - | × |
 | virtual | 设置 false 时关闭虚拟滚动 | boolean | true | - | × |
 | bordered | 已废弃。请使用 `variant` | boolean | - | - | × |
-| showArrow | 已废弃，设置 `suffixIcon` 为 null 可隐藏 | boolean | - | - | × |
+| showArrow | 已废弃，设置 `suffix` 为 null 可隐藏 | boolean | - | - | × |
 
 ### 事件 {#events}
 
 | 事件 | 说明 | 类型 | 版本 |
 | --- | --- | --- | --- |
 | change | 选中树节点时调用此函数 | function(value, label, extra) | - |
+| clear | 清除内容时回调 | () =&gt; void | - |
 | openChange | 展开下拉菜单的回调 | (open: boolean) =&gt; void | - |
 | select | 被选中时调用 | function(value, node, extra) | - |
 | treeExpand | 展示节点时调用 | function(expandedKeys) | - |
@@ -104,7 +106,8 @@ demo:
 
 | 插槽 | 说明 | 类型 | 版本 |
 | --- | --- | --- | --- |
-| suffixIcon | 自定义的选择框后缀图标 | () =&gt; any | - |
+| suffix | 自定义的选择框后缀 | (info: &#123; open: boolean, searchValue: string, focused: boolean, showSearch?: boolean, loading?: boolean &#125;) =&gt; VueNode | 1.8.0 |
+| suffixIcon | 自定义的选择框后缀图标。已废弃，请使用 `suffix` 插槽替代 | () =&gt; any | - |
 | tagRender | 自定义 tag 内容，多选时生效 | (props: any) =&gt; any | - |
 | notFoundContent | 当下拉列表为空时显示的内容 | () =&gt; any | - |
 | switcherIcon | 自定义树节点的展开/折叠图标 | () =&gt; any | - |
@@ -118,6 +121,17 @@ demo:
 | focus() | 获取焦点 | - |
 
 ## 类型 {#types}
+
+### AllowClearConfig {#allowclearconfig}
+
+支持通过 `ConfigProvider.treeSelect.allowClear` 进行全局配置（1.8.0）。字段按组件配置、全局配置、默认值的顺序取值。`allowClear` 为 `true` 时继承全局配置；`disabled: false` 和 `tabIndex: 0` 可覆盖全局值。
+
+| 参数 | 说明 | 类型 | 默认值 | 版本 | [全局配置](/components/config-provider-cn#component-config) |
+| --- | --- | --- | --- | --- | --- |
+| clearIcon | 自定义清除图标 | VueNode | - | - | 1.8.0 |
+| disabled | `true` 时等同于 `allowClear: false` | boolean | false | 1.8.0 | 1.8.0 |
+| label | 清除按钮的无障碍名称 | string | 组件的本地化文案 | - | 1.8.0 |
+| tabIndex | 清除按钮的 Tab 键顺序。`-1` 表示不参与 Tab 键导航 | number | 0 | 1.8.0 | 1.8.0 |
 
 ### showSearch {#showsearch}
 

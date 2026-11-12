@@ -43,10 +43,11 @@ demo:
 
 | 参数 | 说明 | 类型 | 默认值 | 版本 | [全局配置](/components/config-provider-cn#component-config) |
 | --- | --- | --- | --- | --- | --- |
-| allowClear | 自定义清除按钮 | boolean \| \{ clearIcon?: VueNode \} | true | - | ✓ |
+| allowClear | 是否显示清除按钮 | boolean \| [AllowClearConfig](#allowclearconfig) | true | - | ✓ |
 | ~~addon~~ | TimePicker 面板底部的附加内容渲染函数，请使用 `renderExtraFooter` 替代 | () => VueNode | - | - | × |
 | cellRender | 自定义单元格的内容 | (current: number, info: \{ originNode: VueNode, today: dayjs, range?: 'start' \| 'end', subType: 'hour' \| 'minute' \| 'second' \| 'meridiem' \}) => VueNode | - | - | × |
 | changeOnScroll | 在滚动时改变选择值 | boolean | false | - | × |
+| components | 自定义面板、输入框和底部按钮，详见 [DatePicker Components](/components/date-picker-cn#components) | [Components](/components/date-picker-cn#components) | - | `nowButton` 和 `okButton`：1.8.1 | × |
 | classes | 用于自定义组件内部各语义化结构的 class，支持对象或函数 | Record<[SemanticDOM](#semantic-dom), string> \| (info: \{ props \})=> Record<[SemanticDOM](#semantic-dom), string> | - |  | ✓ |
 | defaultValue | 默认时间 | [dayjs](http://day.js.org/) | - |  | × |
 | disabled | 禁用全部操作 | boolean | false |  | × |
@@ -72,12 +73,22 @@ demo:
 | size | 输入框大小，`large` 高度为 40px，`small` 为 24px，默认是 32px | `large` \| `medium` \| `small` | - |  | × |
 | status | 设置校验状态 | 'error' \| 'warning' \| 'success' \| 'validating' | - | - | × |
 | styles | 用于自定义组件内部各语义化结构的行内 style，支持对象或函数 | Record<[SemanticDOM](#semantic-dom), CSSProperties> \| (info: \{ props \})=> Record<[SemanticDOM](#semantic-dom), CSSProperties> | - |  | ✓ |
-| suffixIcon | 自定义的选择框后缀图标 | VueNode | - |  | ✓ |
+| suffix | 自定义后缀 | VueNode | - | 1.8.0 | 1.8.0 |
+| ~~suffixIcon~~ | 自定义的选择框后缀图标，请使用 `suffix` 替代 | VueNode | - |  | ✓ |
 | use12Hours | 使用 12 小时制，为 true 时 `format` 默认为 `h:mm:ss a` | boolean | false |  | × |
 | value | 当前时间，支持 `v-model:value` | [dayjs](http://day.js.org/) | - |  | × |
 | variant | 形态变体 | `outlined` \| `borderless` \| `filled` \| `underlined` | `outlined` | - | ✓ |
-| onChange | 时间发生变化的回调 | function(time: dayjs, timeString: string): void | - |  | × |
-| onOpenChange | 面板打开/关闭时的回调 | (open: boolean) => void | - |  | × |
+
+### AllowClearConfig {#allowclearconfig}
+
+支持全局配置的字段按组件配置、全局配置、默认值的顺序取值。`allowClear` 为 `true` 时继承全局配置；`disabled: false` 和 `tabIndex: 0` 可覆盖全局值。
+
+| 参数 | 说明 | 类型 | 默认值 | 版本 | [全局配置](/components/config-provider-cn#component-config) |
+| --- | --- | --- | --- | --- | --- |
+| clearIcon | 自定义清除图标 | VueNode | - | - | ✓ |
+| disabled | `true` 时等同于 `allowClear: false` | boolean | false | 1.8.0 | 1.8.0 |
+| label | 清除按钮的无障碍名称 | string | 组件的本地化文案 | 1.8.0 | 1.8.0 |
+| tabIndex | 清除按钮的 Tab 键顺序。`-1` 表示不参与 Tab 键导航 | number | 0 | 1.8.0 | 1.8.0 |
 
 #### DisabledTime
 
@@ -108,7 +119,8 @@ type DisabledTime = (now: Dayjs) => {
 | --- | --- | --- | --- |
 | ~~addon~~ | 已弃用，请使用 `renderExtraFooter` | () => any | - |
 | renderExtraFooter | 在时间选择面板底部显示自定义内容 | (mode: PickerMode) => any | - |
-| suffixIcon | 自定义的选择框后缀图标 | () => any | - |
+| suffix | 自定义后缀 | () => any | 1.8.0 |
+| ~~suffixIcon~~ | 自定义的选择框后缀图标，请使用 `suffix` 替代 | () => any | - |
 | prefix | 自定义前缀 | () => any | - |
 
 ### RangePicker
@@ -132,6 +144,15 @@ type RangeDisabledTime = (
   disabledSeconds?: (selectedHour: number, selectedMinute: number) => number[]
 }
 ```
+
+### 事件 {#events}
+
+| 事件 | 说明 | 类型 | 版本 |
+| --- | --- | --- | --- |
+| calendarChange | 待选时间发生变化的回调。支持 `info` 参数 | (date: Dayjs \| Dayjs[], dateString: string \| string[], info: { range: 'start' \| 'end' }) => void | - |
+| change | 时间发生变化的回调 | (date: Dayjs \| Dayjs[] \| null, dateString: string \| string[] \| null) => void | - |
+| clear | 点击清除按钮时的回调 | () => void | 1.4.0 |
+| openChange | 面板打开/关闭时的回调 | (open: boolean) => void | - |
 
 ## 语义化 DOM {#semantic-dom}
 

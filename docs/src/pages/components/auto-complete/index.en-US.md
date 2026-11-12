@@ -48,7 +48,7 @@ Common props ref：[Common props](/docs/vue/common-props)
 
 | Property | Description | Type | Default | Version | [Global Config](/components/config-provider#component-config) |
 | --- | --- | --- | --- | --- | --- |
-| allowClear | Show clear button | boolean \| &#123; clearIcon?: VueNode &#125; | false | - | × |
+| allowClear | Whether to show a clear button | boolean \| [AllowClearConfig](#allowclearconfig) | false | - | 1.8.0 |
 | backfill | If backfill selected item the input when using keyboard | boolean | false | - | × |
 | classes | Customize class for each semantic structure inside the component. Supports object or function | Record&lt;[SemanticDOM](#semantic-dom), string&gt; \| (info: &#123; props &#125;) =&gt; Record&lt;[SemanticDOM](#semantic-dom), string&gt; | - | - | × |
 | defaultActiveFirstOption | Whether active first option by default | boolean | true | - | × |
@@ -65,6 +65,8 @@ Common props ref：[Common props](/docs/vue/common-props)
 | showSearch | Search configuration | boolean \| [SearchConfig](#showsearch) | true | - | × |
 | size | The size of the input box | `large` \| `medium` \| `small` | - | - | × |
 | status | Set validation status | `error` \| `warning` | - | - | × |
+| suffix | The custom suffix | VueNode \| (info: &#123; open: boolean, searchValue: string, focused: boolean, showSearch?: boolean, loading?: boolean &#125;) =&gt; VueNode | - | 1.8.0 | × |
+| suffixIcon | The custom suffix icon. Deprecated. Use `suffix` instead | VueNode | - | - | × |
 | styles | Customize inline style for each semantic structure inside the component. Supports object or function | Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; \| (info: &#123; props &#125;) =&gt; Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; | - | - | × |
 | value | Selected option, support `v-model:value` | string | - | - | × |
 | variant | Variants of input | `outlined` \| `borderless` \| `filled` \| `underlined` | `outlined` | - | × |
@@ -101,9 +103,21 @@ Common props ref：[Common props](/docs/vue/common-props)
 | optionRender | Customize the rendering dropdown options | (option: FlattenOptionData&lt;BaseOptionType&gt;, info: &#123; index: number &#125;) =&gt; VueNode | - |
 | popupRender | Customize dropdown content | (menu: VNode) =&gt; VueNode | - |
 | prefix | The custom prefix | () =&gt; VueNode | - |
-| suffixIcon | The custom suffix icon | () =&gt; VueNode | - |
+| suffix | The custom suffix | (info: &#123; open: boolean, searchValue: string, focused: boolean, showSearch?: boolean, loading?: boolean &#125;) =&gt; VueNode | 1.8.0 |
+| suffixIcon | The custom suffix icon. Deprecated. Use `suffix` slot instead | () =&gt; VueNode | - |
 
 ## Types
+
+### AllowClearConfig {#allowclearconfig}
+
+Supports global configuration through `ConfigProvider.autoComplete.allowClear` (1.8.0). Fields use component values first, then global values, then defaults. `allowClear: true` inherits the global configuration; `disabled: false` and `tabIndex: 0` override global values.
+
+| Property | Description | Type | Default | Version | [Global Config](/components/config-provider#component-config) |
+| --- | --- | --- | --- | --- | --- |
+| clearIcon | Custom clear icon | VueNode | - | - | 1.8.0 |
+| disabled | When `true`, equivalent to `allowClear: false` | boolean | false | 1.8.0 | 1.8.0 |
+| label | Accessible name of the clear button | string | Component locale text | - | 1.8.0 |
+| tabIndex | Tab order of the clear button. `-1` excludes it from Tab navigation | number | 0 | 1.8.0 | 1.8.0 |
 
 ### showSearch
 

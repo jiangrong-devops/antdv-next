@@ -1,12 +1,13 @@
 import type { DerivativeFunc } from '@antdv-next/cssinjs'
 import type { MoreProps as TabsMoreProps } from '@v-c/tabs'
-import type { CSSProperties, InjectionKey, Ref } from 'vue'
+import type { AriaAttributes, CSSProperties, InjectionKey, Ref } from 'vue'
 import type { MaskType } from '../_util/hooks'
 import type { AnyObject, VueNode } from '../_util/type.ts'
 import type { WarningContextProps } from '../_util/warning.ts'
 import type { ShowWaveEffect } from '../_util/wave/interface.ts'
 import type { AlertProps } from '../alert'
 import type { AnchorProps } from '../anchor'
+import type { AutoCompleteProps } from '../auto-complete'
 import type { BadgeProps } from '../badge'
 import type { RibbonProps } from '../badge/Ribbon.tsx'
 import type { BreadcrumbProps } from '../breadcrumb/Breadcrumb.tsx'
@@ -249,7 +250,8 @@ export type ButtonConfig = ComponentStyleConfig
 
 export type FlexConfig = ComponentStyleConfig & Pick<FlexProps, 'vertical'>
 
-export type AlertConfig = ComponentStyleConfig & Pick<AlertProps, 'variant' | 'closeIcon' | 'closable' | 'classes' | 'styles'> & {
+export type AlertConfig = ComponentStyleConfig & Pick<AlertProps, 'variant' | 'closeIcon' | 'classes' | 'styles'> & {
+  closable?: boolean | (Pick<Exclude<NonNullable<AlertProps['closable']>, boolean>, 'closeIcon'> & AriaAttributes)
   successIcon?: VueNode
   infoIcon?: VueNode
   warningIcon?: VueNode
@@ -276,7 +278,7 @@ export type AnchorStyleConfig = ComponentStyleConfig & Pick<AnchorProps, 'classe
 
 export type PaginationConfig = ComponentStyleConfig & Pick<PaginationProps, 'showSizeChanger'>
 
-export type DividerConfig = ComponentStyleConfig & Pick<DividerProps, 'classes' | 'styles'>
+export type DividerConfig = ComponentStyleConfig & Pick<DividerProps, 'classes' | 'styles' | 'variant'>
 
 export type SkeletonConfig = ComponentStyleConfig & Pick<SkeletonProps, 'styles' | 'classes'>
 
@@ -356,6 +358,8 @@ export type TransferConfig = ComponentStyleConfig & Pick<TransferProps, 'selecti
 export type InputConfig = ComponentStyleConfig
   & Pick<InputProps, 'autoComplete' | 'autocomplete' | 'classes' | 'styles' | 'allowClear' | 'variant' | 'changeOnComposing'>
 
+export type AutoCompleteConfig = Pick<AutoCompleteProps, 'allowClear'>
+
 export type InputNumberConfig = ComponentStyleConfig
   & Pick<InputNumberProps, 'classes' | 'styles' | 'variant' | 'allowClear'>
 
@@ -400,7 +404,7 @@ export type TabsConfig = ComponentStyleConfig
   & TabsMoreConfig
 
 export type SelectConfig = ComponentStyleConfig
-  & Pick<SelectProps, 'showSearch' | 'variant' | 'classes' | 'styles' | 'allowClear' | 'suffixIcon' | 'removeIcon'>
+  & Pick<SelectProps, 'showSearch' | 'variant' | 'classes' | 'styles' | 'allowClear' | 'autoComplete' | 'suffix' | 'suffixIcon' | 'removeIcon'>
   & {
     clearIcon?: any
     loadingIcon?: any
@@ -408,8 +412,8 @@ export type SelectConfig = ComponentStyleConfig
   }
 
 export type CascaderConfig = ComponentStyleConfig
-  & Pick<CascaderProps, 'variant' | 'classes' | 'styles' | 'expandIcon' | 'loadingIcon'>
-  & { searchIcon?: any, clearIcon?: any, removeIcon?: any, suffixIcon?: any }
+  & Pick<CascaderProps, 'allowClear' | 'variant' | 'classes' | 'styles' | 'expandIcon' | 'loadingIcon'>
+  & { searchIcon?: any, clearIcon?: any, removeIcon?: any, suffix?: CascaderProps['suffix'], suffixIcon?: any }
 
 export type CardMetaConfig = ComponentStyleConfig & Pick<CardMetaProps, 'classes' | 'styles'>
 
@@ -440,9 +444,9 @@ export type ModalConfig = ComponentStyleConfig
     errorIcon?: any
   }
 
-export type StepsConfig = ComponentStyleConfig & Pick<StepsProps, 'classes' | 'styles'>
+export type StepsConfig = ComponentStyleConfig & Pick<StepsProps, 'classes' | 'styles' | 'variant'>
 
-export type TimelineConfig = ComponentStyleConfig & Pick<TimelineProps, 'classes' | 'styles'>
+export type TimelineConfig = ComponentStyleConfig & Pick<TimelineProps, 'classes' | 'styles' | 'variant'>
 
 export type ImageConfig = ComponentStyleConfig
   & Pick<ImageProps, 'classes' | 'styles'> & {
@@ -454,13 +458,13 @@ export type ImageConfig = ComponentStyleConfig
 export type TreeConfig = ComponentStyleConfig & Pick<TreeProps, 'classes' | 'styles'>
 
 export type TreeSelectConfig = ComponentStyleConfig
-  & Pick<TreeSelectProps, 'variant' | 'classes' | 'styles' | 'switcherIcon'>
+  & Pick<TreeSelectProps, 'allowClear' | 'variant' | 'classes' | 'styles' | 'switcherIcon'>
 
 export type UploadConfig = ComponentStyleConfig
   & Pick<UploadProps, 'classes' | 'styles' | 'customRequest' | 'progress' | 'accept'>
 
 export type DatePickerConfig = ComponentStyleConfig
-  & Pick<DatePickerProps, 'classes' | 'styles' | 'variant' | 'suffixIcon' | 'allowClear'>
+  & Pick<DatePickerProps, 'classes' | 'styles' | 'variant' | 'suffix' | 'suffixIcon' | 'allowClear'>
   & { clearIcon?: any }
 
 // RangePicker reads allowClear / clearIcon from the datePicker / timePicker config, so only `variant` / `separator` live here
@@ -468,7 +472,7 @@ export type RangePickerConfig = ComponentStyleConfig
   & Pick<RangePickerProps, 'variant' | 'separator'>
 
 export type TimePickerConfig = ComponentStyleConfig
-  & Pick<TimePickerProps, 'classes' | 'styles' | 'variant' | 'suffixIcon' | 'allowClear'>
+  & Pick<TimePickerProps, 'classes' | 'styles' | 'variant' | 'suffix' | 'suffixIcon' | 'allowClear'>
   & { clearIcon?: any }
 
 export interface TableConfig<RecordType extends AnyObject = AnyObject>
@@ -506,6 +510,7 @@ export interface ConfigComponentProps {
   space?: SpaceConfig
   splitter?: SplitterConfig
   form?: FormConfig
+  autoComplete?: AutoCompleteConfig
   select?: SelectConfig
   app?: ComponentStyleConfig
   alert?: AlertConfig

@@ -504,7 +504,6 @@ describe('directory Tree', () => {
     const wrapper = mount(DirectoryTree, {
       props: {
         defaultExpandAll: true,
-        // @ts-expect-error test field names mapping
         treeData,
         onSelect,
         fieldNames: { key: 'id', title: 'label', children: 'child' },

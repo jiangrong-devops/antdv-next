@@ -87,11 +87,11 @@ dayjs.locale('zh-cn')
 
 | 参数 | 说明 | 类型 | 默认值 | 版本 | [全局配置](/components/config-provider-cn#component-config) |
 | --- | --- | --- | --- | --- | --- |
-| allowClear | 自定义清除按钮 | boolean \| \{ clearIcon?: VueNode \} | true | - | ✓ |
+| allowClear | 是否显示清除按钮 | boolean \| [AllowClearConfig](#allowclearconfig) | true | - | ✓ |
 | classes | 用于自定义组件内部各语义化结构的 class，支持对象或函数 | Record<[SemanticDOM](#semantic-dom), string> \| (info: { props })=> Record<[SemanticDOM](#semantic-dom), string> | - | - | ✓ |
 | dateRender | 自定义日期单元格的内容，已弃用，请使用 `cellRender` 替代 | function(currentDate: dayjs, today: dayjs) => VueNode | - | - | × |
 | cellRender | 自定义单元格的内容 | (current: dayjs, info: { originNode: VueNode, today: DateType, range?: 'start' \| 'end', type: PanelMode, locale?: Locale, subType?: 'hour' \| 'minute' \| 'second' \| 'meridiem' }) => VueNode | - | - | × |
-| components | 自定义面板。自定义面板组件请设置 `inheritAttrs: false`，否则 DatePicker 注入的 `prefixCls` 等会透传到根节点，导致子组件（如 Flex）以错误前缀生成样式并破坏面板布局 | Record<Panel \| 'input', Component> | - | - | × |
+| components | 自定义面板、输入框和底部按钮。自定义面板组件请设置 `inheritAttrs: false`，否则 DatePicker 注入的 `prefixCls` 等会透传到根节点，导致子组件（如 Flex）以错误前缀生成样式并破坏面板布局 | [Components](#components) | - | - | × |
 | defaultOpen | 是否默认展开控制弹层 | boolean | - | - | × |
 | disabled | 禁用 | boolean | false | - | × |
 | disabledDate | 不可选择的日期 | (currentDate: dayjs, info: { from?: dayjs, type: Picker }) => boolean | - | - | × |
@@ -122,11 +122,36 @@ dayjs.locale('zh-cn')
 | size | 输入框大小，`large` 高度为 40px，`small` 为 24px，默认是 32px | `large` \| `medium` \| `small` | - | - | × |
 | status | 设置校验状态 | 'error' \| 'warning' | - | - | × |
 | styles | 用于自定义组件内部各语义化结构的行内 style，支持对象或函数 | Record<[SemanticDOM](#semantic-dom), CSSProperties> \| (info: { props })=> Record<[SemanticDOM](#semantic-dom), CSSProperties> | - | - | ✓ |
-| suffixIcon | 自定义的选择框后缀图标 | VueNode | - | - | ✓ |
+| suffix | 自定义后缀 | VueNode | - | 1.8.0 | 1.8.0 |
+| ~~suffixIcon~~ | 自定义的选择框后缀图标，请使用 `suffix` 替代 | VueNode | - | - | ✓ |
 | superNextIcon | 自定义 `>>` 切换图标 | VueNode | - | - | × |
 | superPrevIcon | 自定义 `<<` 切换图标 | VueNode | - | - | × |
 | clearIcon | （仅支持全局配置）自定义清除图标 | VueNode | - | - | ✓ |
 | variant | 形态变体 | `outlined` \| `borderless` \| `filled` \| `underlined` | `outlined` | - | ✓ |
+
+### Components {#components}
+
+`components` 支持按面板类型自定义面板组件，以及通过 `input` 自定义输入框组件，还支持以下底部按钮。这些配置同样适用于 RangePicker、TimePicker 和 TimePicker.RangePicker。
+
+| 参数 | 说明 | 类型 | 默认值 | 版本 | [全局配置](/components/config-provider-cn#component-config) |
+| --- | --- | --- | --- | --- | --- |
+| nowButton | 自定义“今天／此刻”按钮 | Component \| string | `button` | 1.8.1 | × |
+| okButton | 自定义确认按钮 | Component \| string | 小号主按钮 | 1.8.1 | × |
+
+自定义按钮组件应将 `class`、`disabled`、`onClick` 和默认插槽传给实际渲染的按钮，并使用 `type="button"` 避免提交表单。
+
+`components.button` 已废弃，仍作为 `components.okButton` 的兼容回退；同时配置时，`components.okButton` 优先。`components.button` 不会自定义“今天／此刻”按钮。
+
+### AllowClearConfig {#allowclearconfig}
+
+支持全局配置的字段按组件配置、全局配置、默认值的顺序取值。`allowClear` 为 `true` 时继承全局配置；`disabled: false` 和 `tabIndex: 0` 可覆盖全局值。
+
+| 参数 | 说明 | 类型 | 默认值 | 版本 | [全局配置](/components/config-provider-cn#component-config) |
+| --- | --- | --- | --- | --- | --- |
+| clearIcon | 自定义清除图标 | VueNode | - | - | ✓ |
+| disabled | `true` 时等同于 `allowClear: false` | boolean | false | 1.8.0 | 1.8.0 |
+| label | 清除按钮的无障碍名称 | string | 组件的本地化文案 | 1.8.0 | 1.8.0 |
+| tabIndex | 清除按钮的 Tab 键顺序。`-1` 表示不参与 Tab 键导航 | number | 0 | 1.8.0 | 1.8.0 |
 
 ### 共同的方法 {#common-methods}
 
@@ -240,7 +265,6 @@ export type FormatType
 | 事件 | 说明 | 类型 | 版本 |
 | --- | --- | --- | --- |
 | change | 时间发生变化的回调 | (date: Dayjs \| Dayjs[] \| null, dateString: string \| string[] \| null) => void | - |
-| update:value | - | (date: Dayjs \| Dayjs[] \| null) => void | - |
 | calendarChange | 待选日期发生变化的回调。支持 `info` 参数 | (dates: [Dayjs, Dayjs], dateStrings: [string, string], info: { range: 'start' \| 'end' }) => void | - |
 | panelChange | 日历面板切换的回调 | (value: Dayjs, mode: PickerMode) => void | - |
 | openChange | 弹出日历和关闭日历的回调 | (open: boolean) => void | - |
@@ -256,7 +280,8 @@ export type FormatType
 | 插槽 | 说明 | 类型 | 版本 |
 | --- | --- | --- | --- |
 | prefix | 自定义前缀 | () => any | - |
-| suffixIcon | 自定义的选择框后缀图标 | () => any | - |
+| suffix | 自定义后缀 | () => any | 1.8.0 |
+| ~~suffixIcon~~ | 自定义的选择框后缀图标，请使用 `suffix` 替代 | () => any | - |
 | renderExtraFooter | 在面板中添加额外的页脚 | (mode: PickerMode) => any | - |
 | panelRender | 自定义渲染面板 | (originPanel: VueNode) => any | - |
 | inputRender | - | (props: Record<string, any>) => any | - |

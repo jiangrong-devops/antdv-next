@@ -58,8 +58,9 @@ demo:
 
 | 属性 | 说明 | 类型 | 默认值 | 版本 | [全局配置](/components/config-provider-cn#component-config) |
 | --- | --- | --- | --- | --- | --- |
-| allowClear | 支持清除 | boolean \| &#123; clearIcon?: VueNode; label?: string &#125; | false | - | ✓ |
+| allowClear | 是否显示清除按钮 | boolean \| [AllowClearConfig](#allowclearconfig) | false | - | ✓ |
 | autoClearSearchValue | 是否在选中项后清空搜索框，只在 `mode` 为 `multiple` 或 `tags` 时有效 | boolean | true | - | × |
+| autoComplete | 输入框的 HTML `autocomplete` 属性 | string | `new-password` | - | 1.8.0 |
 | classes | 用于自定义组件内部各语义化结构的 class，支持对象或函数 | Record&lt;[SemanticDOM](#semantic-dom), string&gt; \| (info: &#123; props &#125;) =&gt; Record&lt;[SemanticDOM](#semantic-dom), string&gt; | - | - | ✓ |
 | defaultActiveFirstOption | 是否默认高亮第一个选项 | boolean | true | - | × |
 | disabled | 是否禁用 | boolean | false | - | × |
@@ -97,7 +98,8 @@ demo:
 | size | 选择框大小 | `large` \| `medium` \| `small` | `medium` | - | × |
 | status | 设置校验状态 | 'error' \| 'warning' | - | - | × |
 | styles | 用于自定义组件内部各语义化结构的行内 style，支持对象或函数 | Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; \| (info: &#123; props &#125;) =&gt; Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; | - | - | ✓ |
-| suffixIcon | 自定义的选择框后缀图标。以防止图标被用于其他交互，替换的图标默认不会响应展开、收缩事件，可以通过添加 `pointer-events: none` 样式透传 | VueNode | `<DownOutlined />` | - | ✓ |
+| suffix | 自定义的选择框后缀。以防止后缀被用于其他交互，替换的后缀默认不会响应展开、收缩事件，可以通过添加 `pointer-events: none` 样式透传 | VueNode \| (info: &#123; open: boolean, searchValue: string, focused: boolean, showSearch?: boolean, loading?: boolean &#125;) =&gt; VueNode | `<DownOutlined />` | 1.8.0 | 1.8.0 |
+| suffixIcon | 自定义的选择框后缀图标，**已废弃，请使用 `suffix` 替代** | VueNode | `<DownOutlined />` | - | ✓ |
 | tagRender | 自定义 tag 内容 render，仅在 `mode` 为 `multiple` 或 `tags` 时生效 | (props) =&gt; VueNode | - | - | × |
 | labelRender | 自定义当前选中的 label 内容 render | (props: LabelInValueType) =&gt; VueNode | - | - | × |
 | tokenSeparators | 自动分词的分隔符，仅在 `mode="tags"` 时生效 | string[] | - | - | × |
@@ -134,7 +136,8 @@ demo:
 | popupRender | 自定义下拉框内容 | (originNode: VNode) =&gt; VueNode | - |
 | prefix | 自定义前缀 | VueNode | - |
 | removeIcon | 自定义的多选框清除图标 | VueNode | - |
-| suffixIcon | 自定义的选择框后缀图标。以防止图标被用于其他交互，替换的图标默认不会响应展开、收缩事件，可以通过添加 `pointer-events: none` 样式透传 | VueNode | - |
+| suffix | 自定义的选择框后缀。以防止后缀被用于其他交互，替换的后缀默认不会响应展开、收缩事件，可以通过添加 `pointer-events: none` 样式透传 | (info: &#123; open: boolean, searchValue: string, focused: boolean, showSearch?: boolean, loading?: boolean &#125;) =&gt; VueNode | 1.8.0 |
+| suffixIcon | 自定义的选择框后缀图标，**已废弃，请使用 `suffix` 插槽替代** | VueNode | - |
 | tagRender | 自定义 tag 内容 render，仅在 `mode` 为 `multiple` 或 `tags` 时生效 | (props) =&gt; VueNode | - |
 
 ### Select 方法 {#methods}
@@ -143,6 +146,17 @@ demo:
 | --- | --- | --- |
 | blur() | 取消焦点 | - |
 | focus() | 获取焦点 | - |
+
+### AllowClearConfig {#allowclearconfig}
+
+支持全局配置的字段按组件配置、全局配置、默认值的顺序取值。`allowClear` 为 `true` 时继承全局配置；`disabled: false` 和 `tabIndex: 0` 可覆盖全局值。
+
+| 参数 | 说明 | 类型 | 默认值 | 版本 | [全局配置](/components/config-provider-cn#component-config) |
+| --- | --- | --- | --- | --- | --- |
+| clearIcon | 自定义清除图标 | VueNode | - | - | ✓ |
+| disabled | `true` 时等同于 `allowClear: false` | boolean | false | 1.8.0 | 1.8.0 |
+| label | 清除按钮的无障碍名称 | string | 组件的本地化文案 | - | 1.8.0 |
+| tabIndex | 清除按钮的 Tab 键顺序。`-1` 表示不参与 Tab 键导航 | number | 0 | 1.8.0 | 1.8.0 |
 
 ### showSearch {#showsearch}
 

@@ -1,5 +1,4 @@
 import type { Component } from 'vue'
-// @ts-expect-error this is an internal util
 import { _rs as onResize } from '@v-c/resize-observer/dist/utils/observerUtil'
 import { flushPromises, mount } from '@vue/test-utils'
 import MockDate from 'mockdate'
@@ -19,11 +18,22 @@ export function resetMockDate() {
   MockDate.reset()
 }
 
-const globalTimeout = global.setTimeout
+const globalTimeout = globalThis.setTimeout
 
 export async function sleep(timeout = 0) {
   await new Promise(resolve => globalTimeout(resolve, timeout))
   await nextTick()
+}
+
+/**
+ * Wait for one requestAnimationFrame tick plus a Vue nextTick.
+ */
+export function waitRaf() {
+  return new Promise<void>((resolve) => {
+    requestAnimationFrame(() => {
+      nextTick().then(resolve)
+    })
+  })
 }
 
 /**

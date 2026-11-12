@@ -19,9 +19,7 @@ exports[`tooltip demo > renders _semantic correctly 1`] = `
         <span
           aria-describedby="test-id"
           class="ant-tooltip-open"
-        >
-          <!---->
-        </span>
+        />
         <!---->
       </div>
     </div>
@@ -1670,6 +1668,7 @@ exports[`tooltip demo > renders disabled-children correctly 1`] = `
         class="ant-select-suffix"
       >
         <span
+          aria-hidden="true"
           aria-label="down"
           class="anticon anticon-down"
           role="img"

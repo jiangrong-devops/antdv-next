@@ -51,6 +51,7 @@ exports[`input demo > renders _semantic correctly 1`] = `
             class="ant-input-suffix semantic-mark-suffix"
           >
             <button
+              aria-label="Clear"
               class="ant-input-clear-icon semantic-mark-clear ant-input-clear-icon-has-suffix"
               type="button"
             >
@@ -881,7 +882,7 @@ exports[`input demo > renders _semantic-otp correctly 1`] = `
         >
           <!---->
           <input
-            aria-label="OTP Input 1"
+            aria-label="Character 1 of 6"
             class="ant-input ant-input-outlined ant-otp-input semantic-mark-input css-var-v-0 ant-input-css-var"
             size="1"
             type="text"
@@ -899,7 +900,7 @@ exports[`input demo > renders _semantic-otp correctly 1`] = `
         >
           <!---->
           <input
-            aria-label="OTP Input 2"
+            aria-label="Character 2 of 6"
             class="ant-input ant-input-outlined ant-otp-input semantic-mark-input css-var-v-0 ant-input-css-var"
             size="1"
             type="text"
@@ -917,7 +918,7 @@ exports[`input demo > renders _semantic-otp correctly 1`] = `
         >
           <!---->
           <input
-            aria-label="OTP Input 3"
+            aria-label="Character 3 of 6"
             class="ant-input ant-input-outlined ant-otp-input semantic-mark-input css-var-v-0 ant-input-css-var"
             size="1"
             type="text"
@@ -935,7 +936,7 @@ exports[`input demo > renders _semantic-otp correctly 1`] = `
         >
           <!---->
           <input
-            aria-label="OTP Input 4"
+            aria-label="Character 4 of 6"
             class="ant-input ant-input-outlined ant-otp-input semantic-mark-input css-var-v-0 ant-input-css-var"
             size="1"
             type="text"
@@ -953,7 +954,7 @@ exports[`input demo > renders _semantic-otp correctly 1`] = `
         >
           <!---->
           <input
-            aria-label="OTP Input 5"
+            aria-label="Character 5 of 6"
             class="ant-input ant-input-outlined ant-otp-input semantic-mark-input css-var-v-0 ant-input-css-var"
             size="1"
             type="text"
@@ -971,7 +972,7 @@ exports[`input demo > renders _semantic-otp correctly 1`] = `
         >
           <!---->
           <input
-            aria-label="OTP Input 6"
+            aria-label="Character 6 of 6"
             class="ant-input ant-input-outlined ant-otp-input semantic-mark-input css-var-v-0 ant-input-css-var"
             size="1"
             type="text"
@@ -1419,6 +1420,7 @@ exports[`input demo > renders _semantic-password correctly 1`] = `
             </span>
             <span
               aria-disabled="false"
+              aria-label="Show"
               aria-pressed="false"
               class="ant-input-password-icon"
               role="button"
@@ -3782,6 +3784,7 @@ exports[`input demo > renders allowClear correctly 1`] = `
       class="ant-input-suffix"
     >
       <button
+        aria-label="Clear"
         class="ant-input-clear-icon ant-input-clear-icon-hidden"
         type="button"
       >
@@ -3825,6 +3828,7 @@ exports[`input demo > renders allowClear correctly 1`] = `
       class="ant-input-suffix"
     >
       <button
+        aria-label="Clear"
         class="ant-input-clear-icon ant-input-clear-icon-hidden"
         tabindex="-1"
         type="button"
@@ -3868,6 +3872,7 @@ exports[`input demo > renders allowClear correctly 1`] = `
       class="ant-input-suffix"
     >
       <button
+        aria-label="Clear"
         class="ant-input-clear-icon ant-input-clear-icon-hidden"
         type="button"
       >
@@ -4000,6 +4005,7 @@ exports[`input demo > renders compact-style correctly 1`] = `
             class="ant-input-suffix"
           >
             <button
+              aria-label="Clear"
               class="ant-input-clear-icon ant-input-clear-icon-hidden"
               type="button"
             >
@@ -4270,87 +4276,56 @@ exports[`input demo > renders focus correctly 1`] = `
         </button>
       </div>
       <!---->
+      <div
+        class="ant-space-item"
+      >
+        <button
+          aria-checked="true"
+          checked="true"
+          class="ant-switch css-var-root ant-switch-checked"
+          role="switch"
+          type="button"
+        >
+          <div
+            class="ant-switch-handle"
+          >
+            <!---->
+          </div>
+          <span
+            class="ant-switch-inner"
+          >
+            <span
+              class="ant-switch-inner-checked"
+            >
+              Input
+            </span>
+            <span
+              class="ant-switch-inner-unchecked"
+            >
+              TextArea
+            </span>
+          </span>
+        </button>
+      </div>
+      <!---->
     </div>
   </div>
   <!---->
   <div
     class="ant-space-item"
   >
-    <div
-      class="ant-input-number ant-input-number-mode-input css-var-root ant-input-number-css-var ant-input-number-outlined"
+    <br />
+  </div>
+  <!---->
+  <div
+    class="ant-space-item"
+  >
+    <input
+      class="ant-input ant-input-outlined css-var-root ant-input-css-var"
       style="width: 100%;"
-    >
-      <!---->
-      <!---->
-      <input
-        aria-valuenow="999"
-        autocomplete="off"
-        class="ant-input-number-input"
-        role="spinbutton"
-        step="1"
-        value="999"
-      />
-      <!---->
-      <!---->
-      <div
-        class="ant-input-number-actions"
-      >
-        <span
-          aria-disabled="false"
-          aria-label="Increase Value"
-          class="ant-input-number-action ant-input-number-action-up"
-          role="button"
-          unselectable="on"
-        >
-          <span
-            aria-label="up"
-            class="anticon anticon-up"
-            role="img"
-          >
-            <svg
-              aria-hidden="true"
-              data-icon="up"
-              fill="currentColor"
-              focusable="false"
-              height="1em"
-              viewBox="64 64 896 896"
-              width="1em"
-            >
-              <path
-                d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"
-              />
-            </svg>
-          </span>
-        </span>
-        <span
-          aria-disabled="false"
-          aria-label="Decrease Value"
-          class="ant-input-number-action ant-input-number-action-down"
-          role="button"
-          unselectable="on"
-        >
-          <span
-            aria-label="down"
-            class="anticon anticon-down"
-            role="img"
-          >
-            <svg
-              aria-hidden="true"
-              data-icon="down"
-              fill="currentColor"
-              focusable="false"
-              height="1em"
-              viewBox="64 64 896 896"
-              width="1em"
-            >
-              <path
-                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
-              />
-            </svg>
-          </span>
-        </span>
-      </div>
-    </div>
+      type="text"
+      value="Ant Design love you!"
+    />
   </div>
   <!---->
 </div>
@@ -4382,7 +4357,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 1"
+        aria-label="Character 1 of 6"
         class="ant-input ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         size="1"
         type="text"
@@ -4396,7 +4371,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 2"
+        aria-label="Character 2 of 6"
         class="ant-input ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         size="1"
         type="text"
@@ -4410,7 +4385,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 3"
+        aria-label="Character 3 of 6"
         class="ant-input ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         size="1"
         type="text"
@@ -4424,7 +4399,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 4"
+        aria-label="Character 4 of 6"
         class="ant-input ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         size="1"
         type="text"
@@ -4438,7 +4413,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 5"
+        aria-label="Character 5 of 6"
         class="ant-input ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         size="1"
         type="text"
@@ -4452,7 +4427,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 6"
+        aria-label="Character 6 of 6"
         class="ant-input ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         size="1"
         type="text"
@@ -4483,7 +4458,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 1"
+        aria-label="Character 1 of 6"
         class="ant-input ant-input-disabled ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         disabled=""
         size="1"
@@ -4498,7 +4473,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 2"
+        aria-label="Character 2 of 6"
         class="ant-input ant-input-disabled ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         disabled=""
         size="1"
@@ -4513,7 +4488,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 3"
+        aria-label="Character 3 of 6"
         class="ant-input ant-input-disabled ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         disabled=""
         size="1"
@@ -4528,7 +4503,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 4"
+        aria-label="Character 4 of 6"
         class="ant-input ant-input-disabled ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         disabled=""
         size="1"
@@ -4543,7 +4518,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 5"
+        aria-label="Character 5 of 6"
         class="ant-input ant-input-disabled ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         disabled=""
         size="1"
@@ -4558,7 +4533,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 6"
+        aria-label="Character 6 of 6"
         class="ant-input ant-input-disabled ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         disabled=""
         size="1"
@@ -4590,7 +4565,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 1"
+        aria-label="Character 1 of 8"
         class="ant-input ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         size="1"
         type="text"
@@ -4604,7 +4579,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 2"
+        aria-label="Character 2 of 8"
         class="ant-input ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         size="1"
         type="text"
@@ -4618,7 +4593,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 3"
+        aria-label="Character 3 of 8"
         class="ant-input ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         size="1"
         type="text"
@@ -4632,7 +4607,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 4"
+        aria-label="Character 4 of 8"
         class="ant-input ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         size="1"
         type="text"
@@ -4646,7 +4621,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 5"
+        aria-label="Character 5 of 8"
         class="ant-input ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         size="1"
         type="text"
@@ -4660,7 +4635,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 6"
+        aria-label="Character 6 of 8"
         class="ant-input ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         size="1"
         type="text"
@@ -4674,7 +4649,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 7"
+        aria-label="Character 7 of 8"
         class="ant-input ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         size="1"
         type="text"
@@ -4688,7 +4663,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 8"
+        aria-label="Character 8 of 8"
         class="ant-input ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         size="1"
         type="text"
@@ -4719,7 +4694,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 1"
+        aria-label="Character 1 of 6"
         class="ant-input ant-input-filled ant-otp-input css-var-root ant-input-css-var"
         size="1"
         type="text"
@@ -4733,7 +4708,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 2"
+        aria-label="Character 2 of 6"
         class="ant-input ant-input-filled ant-otp-input css-var-root ant-input-css-var"
         size="1"
         type="text"
@@ -4747,7 +4722,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 3"
+        aria-label="Character 3 of 6"
         class="ant-input ant-input-filled ant-otp-input css-var-root ant-input-css-var"
         size="1"
         type="text"
@@ -4761,7 +4736,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 4"
+        aria-label="Character 4 of 6"
         class="ant-input ant-input-filled ant-otp-input css-var-root ant-input-css-var"
         size="1"
         type="text"
@@ -4775,7 +4750,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 5"
+        aria-label="Character 5 of 6"
         class="ant-input ant-input-filled ant-otp-input css-var-root ant-input-css-var"
         size="1"
         type="text"
@@ -4789,7 +4764,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 6"
+        aria-label="Character 6 of 6"
         class="ant-input ant-input-filled ant-otp-input css-var-root ant-input-css-var"
         size="1"
         type="text"
@@ -4820,7 +4795,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 1"
+        aria-label="Character 1 of 6"
         class="ant-input ant-input-outlined ant-otp-input ant-otp-mask-input css-var-root ant-input-css-var"
         size="1"
         type="password"
@@ -4834,7 +4809,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 2"
+        aria-label="Character 2 of 6"
         class="ant-input ant-input-outlined ant-otp-input ant-otp-mask-input css-var-root ant-input-css-var"
         size="1"
         type="password"
@@ -4848,7 +4823,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 3"
+        aria-label="Character 3 of 6"
         class="ant-input ant-input-outlined ant-otp-input ant-otp-mask-input css-var-root ant-input-css-var"
         size="1"
         type="password"
@@ -4862,7 +4837,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 4"
+        aria-label="Character 4 of 6"
         class="ant-input ant-input-outlined ant-otp-input ant-otp-mask-input css-var-root ant-input-css-var"
         size="1"
         type="password"
@@ -4876,7 +4851,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 5"
+        aria-label="Character 5 of 6"
         class="ant-input ant-input-outlined ant-otp-input ant-otp-mask-input css-var-root ant-input-css-var"
         size="1"
         type="password"
@@ -4890,7 +4865,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 6"
+        aria-label="Character 6 of 6"
         class="ant-input ant-input-outlined ant-otp-input ant-otp-mask-input css-var-root ant-input-css-var"
         size="1"
         type="password"
@@ -4921,7 +4896,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 1"
+        aria-label="Character 1 of 6"
         class="ant-input ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         size="1"
         type="text"
@@ -4941,7 +4916,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 2"
+        aria-label="Character 2 of 6"
         class="ant-input ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         size="1"
         type="text"
@@ -4961,7 +4936,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 3"
+        aria-label="Character 3 of 6"
         class="ant-input ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         size="1"
         type="text"
@@ -4981,7 +4956,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 4"
+        aria-label="Character 4 of 6"
         class="ant-input ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         size="1"
         type="text"
@@ -5001,7 +4976,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 5"
+        aria-label="Character 5 of 6"
         class="ant-input ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         size="1"
         type="text"
@@ -5021,7 +4996,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 6"
+        aria-label="Character 6 of 6"
         class="ant-input ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         size="1"
         type="text"
@@ -5052,7 +5027,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 1"
+        aria-label="Character 1 of 6"
         class="ant-input ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         size="1"
         type="text"
@@ -5074,7 +5049,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 2"
+        aria-label="Character 2 of 6"
         class="ant-input ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         size="1"
         type="text"
@@ -5096,7 +5071,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 3"
+        aria-label="Character 3 of 6"
         class="ant-input ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         size="1"
         type="text"
@@ -5118,7 +5093,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 4"
+        aria-label="Character 4 of 6"
         class="ant-input ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         size="1"
         type="text"
@@ -5140,7 +5115,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 5"
+        aria-label="Character 5 of 6"
         class="ant-input ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         size="1"
         type="text"
@@ -5162,7 +5137,7 @@ exports[`input demo > renders otp correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 6"
+        aria-label="Character 6 of 6"
         class="ant-input ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         size="1"
         type="text"
@@ -5198,6 +5173,7 @@ exports[`input demo > renders password-input correctly 1`] = `
         <!---->
         <span
           aria-disabled="false"
+          aria-label="Show"
           aria-pressed="false"
           class="ant-input-password-icon"
           role="button"
@@ -5251,6 +5227,7 @@ exports[`input demo > renders password-input correctly 1`] = `
         <!---->
         <span
           aria-disabled="false"
+          aria-label="Show"
           aria-pressed="false"
           class="ant-input-password-icon"
           role="button"
@@ -5310,6 +5287,7 @@ exports[`input demo > renders password-input correctly 1`] = `
             <!---->
             <span
               aria-disabled="false"
+              aria-label="Show"
               aria-pressed="false"
               class="ant-input-password-icon"
               role="button"
@@ -5396,6 +5374,7 @@ exports[`input demo > renders password-input correctly 1`] = `
         <!---->
         <span
           aria-disabled="true"
+          aria-label="Show"
           aria-pressed="false"
           class="ant-input-password-icon"
           role="button"
@@ -5567,6 +5546,7 @@ exports[`input demo > renders presuffix correctly 1`] = `
       <!---->
       <span
         aria-disabled="false"
+        aria-label="Show"
         aria-pressed="false"
         class="ant-input-password-icon"
         role="button"
@@ -5691,6 +5671,7 @@ exports[`input demo > renders search-input correctly 1`] = `
           class="ant-input-suffix"
         >
           <button
+            aria-label="Clear"
             class="ant-input-clear-icon ant-input-clear-icon-hidden"
             type="button"
           >
@@ -5779,6 +5760,7 @@ exports[`input demo > renders search-input correctly 1`] = `
             class="ant-input-suffix"
           >
             <button
+              aria-label="Clear"
               class="ant-input-clear-icon ant-input-clear-icon-hidden"
               type="button"
             >
@@ -5905,6 +5887,7 @@ exports[`input demo > renders search-input correctly 1`] = `
           class="ant-input-suffix"
         >
           <button
+            aria-label="Clear"
             class="ant-input-clear-icon ant-input-clear-icon-hidden"
             type="button"
           >
@@ -6544,6 +6527,7 @@ exports[`input demo > renders style-class correctly 1`] = `
       <!---->
       <span
         aria-disabled="false"
+        aria-label="Show"
         aria-pressed="false"
         class="ant-input-password-icon"
         role="button"
@@ -6588,7 +6572,7 @@ exports[`input demo > renders style-class correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 1"
+        aria-label="Character 1 of 6"
         class="ant-input ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         size="1"
         style="border-color: rgb(110, 140, 251); width: 32px;"
@@ -6607,7 +6591,7 @@ exports[`input demo > renders style-class correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 2"
+        aria-label="Character 2 of 6"
         class="ant-input ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         size="1"
         style="border-color: rgb(110, 140, 251); width: 32px;"
@@ -6626,7 +6610,7 @@ exports[`input demo > renders style-class correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 3"
+        aria-label="Character 3 of 6"
         class="ant-input ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         size="1"
         style="border-color: rgb(110, 140, 251); width: 32px;"
@@ -6645,7 +6629,7 @@ exports[`input demo > renders style-class correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 4"
+        aria-label="Character 4 of 6"
         class="ant-input ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         size="1"
         style="border-color: rgb(110, 140, 251); width: 32px;"
@@ -6664,7 +6648,7 @@ exports[`input demo > renders style-class correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 5"
+        aria-label="Character 5 of 6"
         class="ant-input ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         size="1"
         style="border-color: rgb(110, 140, 251); width: 32px;"
@@ -6683,7 +6667,7 @@ exports[`input demo > renders style-class correctly 1`] = `
     >
       <!---->
       <input
-        aria-label="OTP Input 6"
+        aria-label="Character 6 of 6"
         class="ant-input ant-input-outlined ant-otp-input css-var-root ant-input-css-var"
         size="1"
         style="border-color: rgb(110, 140, 251); width: 32px;"
@@ -6974,6 +6958,7 @@ exports[`input demo > renders subcomponent-variant correctly 1`] = `
         <!---->
         <span
           aria-disabled="false"
+          aria-label="Show"
           aria-pressed="false"
           class="ant-input-password-icon"
           role="button"
@@ -7036,6 +7021,7 @@ exports[`input demo > renders subcomponent-variant correctly 1`] = `
         <!---->
         <span
           aria-disabled="false"
+          aria-label="Show"
           aria-pressed="false"
           class="ant-input-password-icon"
           role="button"
@@ -7098,6 +7084,7 @@ exports[`input demo > renders subcomponent-variant correctly 1`] = `
         <!---->
         <span
           aria-disabled="false"
+          aria-label="Show"
           aria-pressed="false"
           class="ant-input-password-icon"
           role="button"
@@ -7171,7 +7158,7 @@ exports[`input demo > renders subcomponent-variant correctly 1`] = `
       >
         <!---->
         <input
-          aria-label="OTP Input 1"
+          aria-label="Character 1 of 6"
           class="ant-input ant-input-filled ant-otp-input css-var-root ant-input-css-var"
           size="1"
           type="text"
@@ -7185,7 +7172,7 @@ exports[`input demo > renders subcomponent-variant correctly 1`] = `
       >
         <!---->
         <input
-          aria-label="OTP Input 2"
+          aria-label="Character 2 of 6"
           class="ant-input ant-input-filled ant-otp-input css-var-root ant-input-css-var"
           size="1"
           type="text"
@@ -7199,7 +7186,7 @@ exports[`input demo > renders subcomponent-variant correctly 1`] = `
       >
         <!---->
         <input
-          aria-label="OTP Input 3"
+          aria-label="Character 3 of 6"
           class="ant-input ant-input-filled ant-otp-input css-var-root ant-input-css-var"
           size="1"
           type="text"
@@ -7213,7 +7200,7 @@ exports[`input demo > renders subcomponent-variant correctly 1`] = `
       >
         <!---->
         <input
-          aria-label="OTP Input 4"
+          aria-label="Character 4 of 6"
           class="ant-input ant-input-filled ant-otp-input css-var-root ant-input-css-var"
           size="1"
           type="text"
@@ -7227,7 +7214,7 @@ exports[`input demo > renders subcomponent-variant correctly 1`] = `
       >
         <!---->
         <input
-          aria-label="OTP Input 5"
+          aria-label="Character 5 of 6"
           class="ant-input ant-input-filled ant-otp-input css-var-root ant-input-css-var"
           size="1"
           type="text"
@@ -7241,7 +7228,7 @@ exports[`input demo > renders subcomponent-variant correctly 1`] = `
       >
         <!---->
         <input
-          aria-label="OTP Input 6"
+          aria-label="Character 6 of 6"
           class="ant-input ant-input-filled ant-otp-input css-var-root ant-input-css-var"
           size="1"
           type="text"
@@ -7274,7 +7261,7 @@ exports[`input demo > renders subcomponent-variant correctly 1`] = `
       >
         <!---->
         <input
-          aria-label="OTP Input 1"
+          aria-label="Character 1 of 6"
           class="ant-input ant-input-filled ant-otp-input css-var-root ant-input-css-var"
           size="1"
           type="text"
@@ -7288,7 +7275,7 @@ exports[`input demo > renders subcomponent-variant correctly 1`] = `
       >
         <!---->
         <input
-          aria-label="OTP Input 2"
+          aria-label="Character 2 of 6"
           class="ant-input ant-input-filled ant-otp-input css-var-root ant-input-css-var"
           size="1"
           type="text"
@@ -7302,7 +7289,7 @@ exports[`input demo > renders subcomponent-variant correctly 1`] = `
       >
         <!---->
         <input
-          aria-label="OTP Input 3"
+          aria-label="Character 3 of 6"
           class="ant-input ant-input-filled ant-otp-input css-var-root ant-input-css-var"
           size="1"
           type="text"
@@ -7316,7 +7303,7 @@ exports[`input demo > renders subcomponent-variant correctly 1`] = `
       >
         <!---->
         <input
-          aria-label="OTP Input 4"
+          aria-label="Character 4 of 6"
           class="ant-input ant-input-filled ant-otp-input css-var-root ant-input-css-var"
           size="1"
           type="text"
@@ -7330,7 +7317,7 @@ exports[`input demo > renders subcomponent-variant correctly 1`] = `
       >
         <!---->
         <input
-          aria-label="OTP Input 5"
+          aria-label="Character 5 of 6"
           class="ant-input ant-input-filled ant-otp-input css-var-root ant-input-css-var"
           size="1"
           type="text"
@@ -7344,7 +7331,7 @@ exports[`input demo > renders subcomponent-variant correctly 1`] = `
       >
         <!---->
         <input
-          aria-label="OTP Input 6"
+          aria-label="Character 6 of 6"
           class="ant-input ant-input-filled ant-otp-input css-var-root ant-input-css-var"
           size="1"
           type="text"
@@ -7377,7 +7364,7 @@ exports[`input demo > renders subcomponent-variant correctly 1`] = `
       >
         <!---->
         <input
-          aria-label="OTP Input 1"
+          aria-label="Character 1 of 6"
           class="ant-input ant-input-filled ant-otp-input css-var-root ant-input-css-var"
           size="1"
           type="text"
@@ -7391,7 +7378,7 @@ exports[`input demo > renders subcomponent-variant correctly 1`] = `
       >
         <!---->
         <input
-          aria-label="OTP Input 2"
+          aria-label="Character 2 of 6"
           class="ant-input ant-input-filled ant-otp-input css-var-root ant-input-css-var"
           size="1"
           type="text"
@@ -7405,7 +7392,7 @@ exports[`input demo > renders subcomponent-variant correctly 1`] = `
       >
         <!---->
         <input
-          aria-label="OTP Input 3"
+          aria-label="Character 3 of 6"
           class="ant-input ant-input-filled ant-otp-input css-var-root ant-input-css-var"
           size="1"
           type="text"
@@ -7419,7 +7406,7 @@ exports[`input demo > renders subcomponent-variant correctly 1`] = `
       >
         <!---->
         <input
-          aria-label="OTP Input 4"
+          aria-label="Character 4 of 6"
           class="ant-input ant-input-filled ant-otp-input css-var-root ant-input-css-var"
           size="1"
           type="text"
@@ -7433,7 +7420,7 @@ exports[`input demo > renders subcomponent-variant correctly 1`] = `
       >
         <!---->
         <input
-          aria-label="OTP Input 5"
+          aria-label="Character 5 of 6"
           class="ant-input ant-input-filled ant-otp-input css-var-root ant-input-css-var"
           size="1"
           type="text"
@@ -7447,7 +7434,7 @@ exports[`input demo > renders subcomponent-variant correctly 1`] = `
       >
         <!---->
         <input
-          aria-label="OTP Input 6"
+          aria-label="Character 6 of 6"
           class="ant-input ant-input-filled ant-otp-input css-var-root ant-input-css-var"
           size="1"
           type="text"

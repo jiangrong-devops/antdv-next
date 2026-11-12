@@ -18,6 +18,8 @@ const localeValues: Locale = {
     close: 'Close',
     sortable: 'sortable',
     clear: 'Clear',
+    show: 'Show',
+    hide: 'Hide',
   },
   Table: {
     filterTitle: 'Filter menu',
@@ -161,6 +163,9 @@ const localeValues: Locale = {
     transparent: 'Transparent',
     singleColor: 'Single',
     gradientColor: 'Gradient',
+  },
+  Input: {
+    otpCell: 'Character ${index} of ${total}',
   },
 }
 

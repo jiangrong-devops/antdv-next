@@ -56,7 +56,29 @@ describe('tag', () => {
     })
 
     expect(wrapper.find('.ant-tag').text()).toContain('0')
-    expect(wrapper.findAll('.ant-tag > span').at(-1)?.text()).toBe('0')
+    const spans = wrapper.findAll('.ant-tag > span')
+    expect(spans[spans.length - 1]?.text()).toBe('0')
+  })
+
+  it('should render all children when the default slot has multiple nodes', () => {
+    const wrapper = mount(Tag, {
+      slots: {
+        default: () => [h('span', 'A'), 'B', h('i', 'C')],
+      },
+    })
+    expect(wrapper.text()).toBe('ABC')
+  })
+
+  it('should render all children in content span when icon is present', () => {
+    const wrapper = mount(Tag, {
+      props: { icon: h('span', { class: 'my-icon' }, '!') },
+      slots: {
+        default: () => [h('span', 'A'), 'B'],
+      },
+    })
+    expect(wrapper.text()).toBe('!AB')
+    const spans = wrapper.findAll('.ant-tag > span')
+    expect(spans[spans.length - 1]?.text()).toBe('AB')
   })
 
   // ===================== color prop =====================
@@ -280,7 +302,7 @@ describe('tag', () => {
     expect(closeIcon.attributes('tabindex')).toBe('0')
     await closeIcon.trigger('keydown', { key })
     expect(onClose).toHaveBeenCalled()
-    expect(onClose.mock.calls[0][0].type).toBe('click')
+    expect(onClose.mock.calls[0]![0].type).toBe('click')
     expect(wrapper.find('span').classes()).toContain(`${prefixCls}-hidden`)
   })
 
@@ -937,6 +959,19 @@ describe('checkable-tag-group', () => {
   })
 
   // ===================== id / role =====================
+
+  it('should pass role through to the group root', () => {
+    const wrapper = mount(CheckableTagGroup, {
+      attrs: {
+        role: 'group',
+        'aria-label': 'Tags',
+      },
+      props: { options },
+    })
+    const root = wrapper.find(`.${prefixCls}-checkable-group`)
+    expect(root.attributes('role')).toBe('group')
+    expect(root.attributes('aria-label')).toBe('Tags')
+  })
 
   it('should apply id prop', () => {
     const wrapper = mount(CheckableTagGroup, {

@@ -100,7 +100,6 @@ exports[`form demo > renders _semantic correctly 1`] = `
                 <!---->
               </div>
             </div>
-            <!---->
           </div>
           <!---->
         </div>
@@ -149,6 +148,7 @@ exports[`form demo > renders _semantic correctly 1`] = `
                       <!---->
                       <span
                         aria-disabled="false"
+                        aria-label="Show"
                         aria-pressed="false"
                         class="ant-input-password-icon"
                         role="button"
@@ -207,7 +207,6 @@ exports[`form demo > renders _semantic correctly 1`] = `
                 </div>
               </div>
             </div>
-            <!---->
           </div>
           <!---->
         </div>
@@ -1084,6 +1083,7 @@ exports[`form demo > renders advanced-search correctly 1`] = `
                       class="ant-select-suffix"
                     >
                       <span
+                        aria-hidden="true"
                         aria-label="down"
                         class="anticon anticon-down"
                         role="img"
@@ -1130,7 +1130,6 @@ exports[`form demo > renders advanced-search correctly 1`] = `
                 <!---->
               </div>
             </div>
-            <!---->
           </div>
           <!---->
         </div>
@@ -1195,7 +1194,6 @@ exports[`form demo > renders advanced-search correctly 1`] = `
                 <!---->
               </div>
             </div>
-            <!---->
           </div>
           <!---->
         </div>
@@ -1260,7 +1258,6 @@ exports[`form demo > renders advanced-search correctly 1`] = `
                 <!---->
               </div>
             </div>
-            <!---->
           </div>
           <!---->
         </div>
@@ -1328,6 +1325,7 @@ exports[`form demo > renders advanced-search correctly 1`] = `
                       class="ant-select-suffix"
                     >
                       <span
+                        aria-hidden="true"
                         aria-label="down"
                         class="anticon anticon-down"
                         role="img"
@@ -1374,7 +1372,6 @@ exports[`form demo > renders advanced-search correctly 1`] = `
                 <!---->
               </div>
             </div>
-            <!---->
           </div>
           <!---->
         </div>
@@ -1439,7 +1436,6 @@ exports[`form demo > renders advanced-search correctly 1`] = `
                 <!---->
               </div>
             </div>
-            <!---->
           </div>
           <!---->
         </div>
@@ -1504,7 +1500,6 @@ exports[`form demo > renders advanced-search correctly 1`] = `
                 <!---->
               </div>
             </div>
-            <!---->
           </div>
           <!---->
         </div>
@@ -1691,7 +1686,6 @@ exports[`form demo > renders basic correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -1739,6 +1733,7 @@ exports[`form demo > renders basic correctly 1`] = `
                 <!---->
                 <span
                   aria-disabled="false"
+                  aria-label="Show"
                   aria-pressed="false"
                   class="ant-input-password-icon"
                   role="button"
@@ -1792,7 +1787,6 @@ exports[`form demo > renders basic correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -1853,7 +1847,6 @@ exports[`form demo > renders basic correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -1918,7 +1911,6 @@ exports[`form demo > renders basic correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -1990,7 +1982,6 @@ exports[`form demo > renders col-24-debug correctly 1`] = `
             <!---->
           </div>
         </div>
-        <!---->
       </div>
       <!---->
     </div>
@@ -2038,6 +2029,7 @@ exports[`form demo > renders col-24-debug correctly 1`] = `
                   <!---->
                   <span
                     aria-disabled="false"
+                    aria-label="Show"
                     aria-pressed="false"
                     class="ant-input-password-icon"
                     role="button"
@@ -2091,7 +2083,6 @@ exports[`form demo > renders col-24-debug correctly 1`] = `
             <!---->
           </div>
         </div>
-        <!---->
       </div>
       <!---->
     </div>
@@ -2198,6 +2189,7 @@ exports[`form demo > renders col-24-debug correctly 1`] = `
                   class="ant-select-suffix"
                 >
                   <span
+                    aria-hidden="true"
                     aria-label="down"
                     class="anticon anticon-down"
                     role="img"
@@ -2244,7 +2236,6 @@ exports[`form demo > renders col-24-debug correctly 1`] = `
             <!---->
           </div>
         </div>
-        <!---->
       </div>
       <!---->
     </div>
@@ -2309,7 +2300,6 @@ exports[`form demo > renders col-24-debug correctly 1`] = `
             <!---->
           </div>
         </div>
-        <!---->
       </div>
       <!---->
     </div>
@@ -2374,7 +2364,6 @@ exports[`form demo > renders col-24-debug correctly 1`] = `
             <!---->
           </div>
         </div>
-        <!---->
       </div>
       <!---->
     </div>
@@ -2422,6 +2411,7 @@ exports[`form demo > renders col-24-debug correctly 1`] = `
                   <!---->
                   <span
                     aria-disabled="false"
+                    aria-label="Show"
                     aria-pressed="false"
                     class="ant-input-password-icon"
                     role="button"
@@ -2475,7 +2465,6 @@ exports[`form demo > renders col-24-debug correctly 1`] = `
             <!---->
           </div>
         </div>
-        <!---->
       </div>
       <!---->
     </div>
@@ -2540,7 +2529,6 @@ exports[`form demo > renders col-24-debug correctly 1`] = `
             <!---->
           </div>
         </div>
-        <!---->
       </div>
       <!---->
     </div>
@@ -2657,6 +2645,7 @@ exports[`form demo > renders col-24-debug correctly 1`] = `
                   class="ant-select-suffix"
                 >
                   <span
+                    aria-hidden="true"
                     aria-label="down"
                     class="anticon anticon-down"
                     role="img"
@@ -2703,7 +2692,6 @@ exports[`form demo > renders col-24-debug correctly 1`] = `
             <!---->
           </div>
         </div>
-        <!---->
       </div>
       <!---->
     </div>
@@ -2760,7 +2748,6 @@ exports[`form demo > renders col-24-debug correctly 1`] = `
             <!---->
           </div>
         </div>
-        <!---->
       </div>
       <!---->
     </div>
@@ -2859,7 +2846,6 @@ exports[`form demo > renders complex-form-control correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -2923,6 +2909,7 @@ exports[`form demo > renders complex-form-control correctly 1`] = `
                   class="ant-select-suffix"
                 >
                   <span
+                    aria-hidden="true"
                     aria-label="down"
                     class="anticon anticon-down"
                     role="img"
@@ -2979,7 +2966,6 @@ exports[`form demo > renders complex-form-control correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -3055,7 +3041,6 @@ exports[`form demo > renders complex-form-control correctly 1`] = `
                     <!---->
                   </div>
                 </div>
-                <!---->
               </div>
               <!---->
             </div>
@@ -3106,7 +3091,6 @@ exports[`form demo > renders complex-form-control correctly 1`] = `
                     <!---->
                   </div>
                 </div>
-                <!---->
               </div>
               <!---->
             </div>
@@ -3132,7 +3116,6 @@ exports[`form demo > renders complex-form-control correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -3197,7 +3180,6 @@ exports[`form demo > renders complex-form-control correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -3267,7 +3249,6 @@ exports[`form demo > renders component-token correctly 1`] = `
             <!---->
           </div>
         </div>
-        <!---->
       </div>
       <!---->
     </div>
@@ -3315,6 +3296,7 @@ exports[`form demo > renders component-token correctly 1`] = `
                   <!---->
                   <span
                     aria-disabled="false"
+                    aria-label="Show"
                     aria-pressed="false"
                     class="ant-input-password-icon"
                     role="button"
@@ -3368,7 +3350,6 @@ exports[`form demo > renders component-token correctly 1`] = `
             <!---->
           </div>
         </div>
-        <!---->
       </div>
       <!---->
     </div>
@@ -3433,7 +3414,6 @@ exports[`form demo > renders component-token correctly 1`] = `
             <!---->
           </div>
         </div>
-        <!---->
       </div>
       <!---->
     </div>
@@ -3503,7 +3483,6 @@ exports[`form demo > renders control-hooks correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -3566,6 +3545,7 @@ exports[`form demo > renders control-hooks correctly 1`] = `
                 class="ant-select-suffix"
               >
                 <span
+                  aria-hidden="true"
                   aria-label="down"
                   class="anticon anticon-down"
                   role="img"
@@ -3612,7 +3592,6 @@ exports[`form demo > renders control-hooks correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -3743,7 +3722,6 @@ exports[`form demo > renders control-hooks correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -3846,7 +3824,6 @@ exports[`form demo > renders custom-feedback-icons correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -3939,7 +3916,6 @@ exports[`form demo > renders custom-feedback-icons correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -3983,6 +3959,7 @@ exports[`form demo > renders custom-feedback-icons correctly 1`] = `
                 class="ant-mentions-suffix"
               >
                 <button
+                  aria-label="Clear"
                   class="ant-mentions-clear-icon ant-mentions-clear-icon-has-suffix"
                   type="button"
                 >
@@ -4054,7 +4031,6 @@ exports[`form demo > renders custom-feedback-icons correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -4119,7 +4095,6 @@ exports[`form demo > renders custom-feedback-icons correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -4266,6 +4241,7 @@ exports[`form demo > renders customized-form-controls correctly 1`] = `
                   class="ant-select-suffix"
                 >
                   <span
+                    aria-hidden="true"
                     aria-label="down"
                     class="anticon anticon-down"
                     role="img"
@@ -4313,7 +4289,6 @@ exports[`form demo > renders customized-form-controls correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -4378,7 +4353,6 @@ exports[`form demo > renders customized-form-controls correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -4487,7 +4461,6 @@ exports[`form demo > renders disabled correctly 1`] = `
               <!---->
             </div>
           </div>
-          <!---->
         </div>
         <!---->
       </div>
@@ -4584,7 +4557,6 @@ exports[`form demo > renders disabled correctly 1`] = `
               <!---->
             </div>
           </div>
-          <!---->
         </div>
         <!---->
       </div>
@@ -4642,7 +4614,6 @@ exports[`form demo > renders disabled correctly 1`] = `
               <!---->
             </div>
           </div>
-          <!---->
         </div>
         <!---->
       </div>
@@ -4704,6 +4675,7 @@ exports[`form demo > renders disabled correctly 1`] = `
                     class="ant-select-suffix"
                   >
                     <span
+                      aria-hidden="true"
                       aria-label="down"
                       class="anticon anticon-down"
                       role="img"
@@ -4750,7 +4722,6 @@ exports[`form demo > renders disabled correctly 1`] = `
               <!---->
             </div>
           </div>
-          <!---->
         </div>
         <!---->
       </div>
@@ -4830,7 +4801,6 @@ exports[`form demo > renders disabled correctly 1`] = `
               <!---->
             </div>
           </div>
-          <!---->
         </div>
         <!---->
       </div>
@@ -4904,7 +4874,6 @@ exports[`form demo > renders disabled correctly 1`] = `
               <!---->
             </div>
           </div>
-          <!---->
         </div>
         <!---->
       </div>
@@ -4973,7 +4942,6 @@ exports[`form demo > renders disabled-input-debug correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -5032,6 +5000,7 @@ exports[`form demo > renders disabled-input-debug correctly 1`] = `
                 class="ant-select-suffix"
               >
                 <span
+                  aria-hidden="true"
                   aria-label="down"
                   class="anticon anticon-down"
                   role="img"
@@ -5078,7 +5047,6 @@ exports[`form demo > renders disabled-input-debug correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -5149,7 +5117,6 @@ exports[`form demo > renders disabled-input-debug correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -5223,7 +5190,6 @@ exports[`form demo > renders disabled-input-debug correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -5294,7 +5260,6 @@ exports[`form demo > renders dynamic-form-item correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -5421,7 +5386,6 @@ exports[`form demo > renders dynamic-form-item correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -5486,7 +5450,6 @@ exports[`form demo > renders dynamic-form-item correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -5554,7 +5517,6 @@ exports[`form demo > renders dynamic-form-items correctly 1`] = `
               <!---->
             </div>
           </div>
-          <!---->
         </div>
         <!---->
       </div>
@@ -5609,7 +5571,6 @@ exports[`form demo > renders dynamic-form-items correctly 1`] = `
               <!---->
             </div>
           </div>
-          <!---->
         </div>
         <!---->
       </div>
@@ -5717,7 +5678,6 @@ exports[`form demo > renders dynamic-form-items correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -5782,7 +5742,6 @@ exports[`form demo > renders dynamic-form-items correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -5898,7 +5857,6 @@ exports[`form demo > renders dynamic-form-items-complex correctly 1`] = `
                 <!---->
               </div>
             </div>
-            <!---->
           </div>
           <!---->
         </div>
@@ -6029,7 +5987,6 @@ exports[`form demo > renders dynamic-form-items-complex correctly 1`] = `
                 <!---->
               </div>
             </div>
-            <!---->
           </div>
           <!---->
         </div>
@@ -6204,7 +6161,6 @@ exports[`form demo > renders dynamic-form-items-no-style correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -6281,7 +6237,6 @@ exports[`form demo > renders dynamic-form-items-no-style correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -6351,7 +6306,6 @@ exports[`form demo > renders dynamic-rule correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -6409,7 +6363,6 @@ exports[`form demo > renders dynamic-rule correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -6468,7 +6421,6 @@ exports[`form demo > renders dynamic-rule correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -6533,7 +6485,6 @@ exports[`form demo > renders dynamic-rule correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -6605,7 +6556,6 @@ exports[`form demo > renders form-context correctly 1`] = `
             <!---->
           </div>
         </div>
-        <!---->
       </div>
       <!---->
     </div>
@@ -6687,7 +6637,6 @@ exports[`form demo > renders form-context correctly 1`] = `
             <!---->
           </div>
         </div>
-        <!---->
       </div>
       <!---->
     </div>
@@ -6776,7 +6725,6 @@ exports[`form demo > renders form-context correctly 1`] = `
             <!---->
           </div>
         </div>
-        <!---->
       </div>
       <!---->
     </div>
@@ -6899,7 +6847,6 @@ exports[`form demo > renders form-dependencies correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -6958,7 +6905,6 @@ exports[`form demo > renders form-dependencies correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -7089,7 +7035,6 @@ exports[`form demo > renders form-item-path correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -7146,7 +7091,6 @@ exports[`form demo > renders form-item-path correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -7236,7 +7180,6 @@ exports[`form demo > renders form-item-path correctly 1`] = `
                         <!---->
                       </div>
                     </div>
-                    <!---->
                   </div>
                   <!---->
                 </div>
@@ -7298,7 +7241,6 @@ exports[`form demo > renders form-item-path correctly 1`] = `
                         <!---->
                       </div>
                     </div>
-                    <!---->
                   </div>
                   <!---->
                 </div>
@@ -7327,7 +7269,6 @@ exports[`form demo > renders form-item-path correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -7394,7 +7335,6 @@ exports[`form demo > renders form-zod correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -7451,7 +7391,6 @@ exports[`form demo > renders form-zod correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -7497,6 +7436,7 @@ exports[`form demo > renders form-zod correctly 1`] = `
                 <!---->
                 <span
                   aria-disabled="false"
+                  aria-label="Show"
                   aria-pressed="false"
                   class="ant-input-password-icon"
                   role="button"
@@ -7550,7 +7490,6 @@ exports[`form demo > renders form-zod correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -7608,7 +7547,6 @@ exports[`form demo > renders form-zod correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -7673,7 +7611,6 @@ exports[`form demo > renders form-zod correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -7806,7 +7743,6 @@ exports[`form demo > renders getValueProps-normalize correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -7871,7 +7807,6 @@ exports[`form demo > renders getValueProps-normalize correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -7942,7 +7877,6 @@ exports[`form demo > renders global-state correctly 1`] = `
             <!---->
           </div>
         </div>
-        <!---->
       </div>
       <!---->
     </div>
@@ -7999,7 +7933,6 @@ exports[`form demo > renders global-state correctly 1`] = `
             <!---->
           </div>
         </div>
-        <!---->
       </div>
       <!---->
     </div>
@@ -8105,7 +8038,6 @@ exports[`form demo > renders inline-login correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -8183,7 +8115,6 @@ exports[`form demo > renders inline-login correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -8248,7 +8179,6 @@ exports[`form demo > renders inline-login correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -8327,7 +8257,6 @@ exports[`form demo > renders label-debug correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -8385,6 +8314,7 @@ exports[`form demo > renders label-debug correctly 1`] = `
                 <!---->
                 <span
                   aria-disabled="false"
+                  aria-label="Show"
                   aria-pressed="false"
                   class="ant-input-password-icon"
                   role="button"
@@ -8438,7 +8368,6 @@ exports[`form demo > renders label-debug correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -8560,7 +8489,6 @@ exports[`form demo > renders layout correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -8618,7 +8546,6 @@ exports[`form demo > renders layout correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -8676,7 +8603,6 @@ exports[`form demo > renders layout correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -8741,7 +8667,6 @@ exports[`form demo > renders layout correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -8762,7 +8687,7 @@ exports[`form demo > renders layout-can-wrap correctly 1`] = `
       class="ant-row css-var-root ant-form-item-row"
     >
       <div
-        class="ant-col css-var-root ant-form-item-label ant-form-item-label-left ant-form-item-label-wrap"
+        class="ant-col css-var-root ant-form-item-label ant-form-item-label-start ant-form-item-label-left ant-form-item-label-wrap"
         style="flex: 0 0 110px;"
       >
         <label
@@ -8812,7 +8737,6 @@ exports[`form demo > renders layout-can-wrap correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -8823,7 +8747,7 @@ exports[`form demo > renders layout-can-wrap correctly 1`] = `
       class="ant-row css-var-root ant-form-item-row"
     >
       <div
-        class="ant-col css-var-root ant-form-item-label ant-form-item-label-left ant-form-item-label-wrap"
+        class="ant-col css-var-root ant-form-item-label ant-form-item-label-start ant-form-item-label-left ant-form-item-label-wrap"
         style="flex: 0 0 110px;"
       >
         <label
@@ -8873,7 +8797,6 @@ exports[`form demo > renders layout-can-wrap correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -8884,7 +8807,7 @@ exports[`form demo > renders layout-can-wrap correctly 1`] = `
       class="ant-row css-var-root ant-form-item-row"
     >
       <div
-        class="ant-col css-var-root ant-form-item-label ant-form-item-label-left ant-form-item-label-wrap"
+        class="ant-col css-var-root ant-form-item-label ant-form-item-label-start ant-form-item-label-left ant-form-item-label-wrap"
         style="flex: 0 0 110px;"
       >
         <label
@@ -8933,7 +8856,6 @@ exports[`form demo > renders layout-can-wrap correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -8944,7 +8866,7 @@ exports[`form demo > renders layout-can-wrap correctly 1`] = `
       class="ant-row css-var-root ant-form-item-row"
     >
       <div
-        class="ant-col css-var-root ant-form-item-label ant-form-item-label-left ant-form-item-label-wrap"
+        class="ant-col css-var-root ant-form-item-label ant-form-item-label-start ant-form-item-label-left ant-form-item-label-wrap"
         style="flex: 0 0 110px;"
       >
         <label
@@ -9008,7 +8930,6 @@ exports[`form demo > renders layout-can-wrap correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -9079,7 +9000,6 @@ exports[`form demo > renders layout-multiple correctly 1`] = `
             <!---->
           </div>
         </div>
-        <!---->
       </div>
       <!---->
     </div>
@@ -9138,7 +9058,6 @@ exports[`form demo > renders layout-multiple correctly 1`] = `
             <!---->
           </div>
         </div>
-        <!---->
       </div>
       <!---->
     </div>
@@ -9197,7 +9116,6 @@ exports[`form demo > renders layout-multiple correctly 1`] = `
             <!---->
           </div>
         </div>
-        <!---->
       </div>
       <!---->
     </div>
@@ -9268,7 +9186,6 @@ exports[`form demo > renders layout-multiple correctly 1`] = `
             <!---->
           </div>
         </div>
-        <!---->
       </div>
       <!---->
     </div>
@@ -9327,7 +9244,6 @@ exports[`form demo > renders layout-multiple correctly 1`] = `
             <!---->
           </div>
         </div>
-        <!---->
       </div>
       <!---->
     </div>
@@ -9386,7 +9302,6 @@ exports[`form demo > renders layout-multiple correctly 1`] = `
             <!---->
           </div>
         </div>
-        <!---->
       </div>
       <!---->
     </div>
@@ -9475,7 +9390,6 @@ exports[`form demo > renders login correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -9553,7 +9467,6 @@ exports[`form demo > renders login correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -9623,7 +9536,6 @@ exports[`form demo > renders login correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -9694,7 +9606,6 @@ exports[`form demo > renders login correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -9817,7 +9728,6 @@ exports[`form demo > renders message-render correctly 1`] = `
               <!---->
             </div>
           </div>
-          <!---->
         </div>
         <!---->
       </div>
@@ -9877,7 +9787,6 @@ exports[`form demo > renders message-render correctly 1`] = `
               <!---->
             </div>
           </div>
-          <!---->
         </div>
         <!---->
       </div>
@@ -9942,7 +9851,6 @@ exports[`form demo > renders message-render correctly 1`] = `
               <!---->
             </div>
           </div>
-          <!---->
         </div>
         <!---->
       </div>
@@ -10014,7 +9922,6 @@ exports[`form demo > renders nest-messages correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -10071,7 +9978,6 @@ exports[`form demo > renders nest-messages correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -10197,7 +10103,6 @@ exports[`form demo > renders nest-messages correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -10254,7 +10159,6 @@ exports[`form demo > renders nest-messages correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -10310,7 +10214,6 @@ exports[`form demo > renders nest-messages correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -10375,7 +10278,6 @@ exports[`form demo > renders nest-messages correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -10440,7 +10342,6 @@ exports[`form demo > renders ref-item correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -10488,7 +10389,6 @@ exports[`form demo > renders ref-item correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -10617,7 +10517,6 @@ exports[`form demo > renders register correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -10665,6 +10564,7 @@ exports[`form demo > renders register correctly 1`] = `
                 <!---->
                 <span
                   aria-disabled="false"
+                  aria-label="Show"
                   aria-pressed="false"
                   class="ant-input-password-icon"
                   role="button"
@@ -10718,7 +10618,6 @@ exports[`form demo > renders register correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -10766,6 +10665,7 @@ exports[`form demo > renders register correctly 1`] = `
                 <!---->
                 <span
                   aria-disabled="false"
+                  aria-label="Show"
                   aria-pressed="false"
                   class="ant-input-password-icon"
                   role="button"
@@ -10819,7 +10719,6 @@ exports[`form demo > renders register correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -10906,7 +10805,6 @@ exports[`form demo > renders register correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -10966,6 +10864,7 @@ exports[`form demo > renders register correctly 1`] = `
                 class="ant-select-suffix"
               >
                 <span
+                  aria-hidden="true"
                   aria-label="down"
                   class="anticon anticon-down"
                   role="img"
@@ -11037,7 +10936,6 @@ exports[`form demo > renders register correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -11102,6 +11000,7 @@ exports[`form demo > renders register correctly 1`] = `
                   class="ant-select-suffix"
                 >
                   <span
+                    aria-hidden="true"
                     aria-label="down"
                     class="anticon anticon-down"
                     role="img"
@@ -11155,7 +11054,6 @@ exports[`form demo > renders register correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -11294,6 +11192,7 @@ exports[`form demo > renders register correctly 1`] = `
                   class="ant-select-suffix"
                 >
                   <span
+                    aria-hidden="true"
                     aria-label="down"
                     class="anticon anticon-down"
                     role="img"
@@ -11341,7 +11240,6 @@ exports[`form demo > renders register correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -11426,7 +11324,6 @@ exports[`form demo > renders register correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -11501,7 +11398,6 @@ exports[`form demo > renders register correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -11561,6 +11457,7 @@ exports[`form demo > renders register correctly 1`] = `
                 class="ant-select-suffix"
               >
                 <span
+                  aria-hidden="true"
                   aria-label="down"
                   class="anticon anticon-down"
                   role="img"
@@ -11607,7 +11504,6 @@ exports[`form demo > renders register correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -11706,7 +11602,6 @@ exports[`form demo > renders register correctly 1`] = `
           </div>
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -11771,7 +11666,6 @@ exports[`form demo > renders register correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -11836,7 +11730,6 @@ exports[`form demo > renders register correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -11984,7 +11877,6 @@ exports[`form demo > renders required-mark correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -12070,7 +11962,6 @@ exports[`form demo > renders required-mark correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -12161,7 +12052,6 @@ exports[`form demo > renders required-mark correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -12226,7 +12116,6 @@ exports[`form demo > renders required-mark correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -12348,7 +12237,6 @@ exports[`form demo > renders size correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -12405,7 +12293,6 @@ exports[`form demo > renders size correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -12466,6 +12353,7 @@ exports[`form demo > renders size correctly 1`] = `
                 class="ant-select-suffix"
               >
                 <span
+                  aria-hidden="true"
                   aria-label="down"
                   class="anticon anticon-down"
                   role="img"
@@ -12512,7 +12400,6 @@ exports[`form demo > renders size correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -12638,7 +12525,6 @@ exports[`form demo > renders size correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -12717,7 +12603,6 @@ exports[`form demo > renders size correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -12790,7 +12675,6 @@ exports[`form demo > renders size correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -12866,7 +12750,6 @@ exports[`form demo > renders style-class correctly 1`] = `
             <!---->
           </div>
         </div>
-        <!---->
       </div>
       <!---->
     </div>
@@ -12930,7 +12813,6 @@ exports[`form demo > renders style-class correctly 1`] = `
             <!---->
           </div>
         </div>
-        <!---->
       </div>
       <!---->
     </div>
@@ -13037,7 +12919,6 @@ exports[`form demo > renders style-class correctly 1`] = `
             <!---->
           </div>
         </div>
-        <!---->
       </div>
       <!---->
     </div>
@@ -13108,7 +12989,6 @@ exports[`form demo > renders style-class correctly 1`] = `
             <!---->
           </div>
         </div>
-        <!---->
       </div>
       <!---->
     </div>
@@ -13172,7 +13052,6 @@ exports[`form demo > renders style-class correctly 1`] = `
             <!---->
           </div>
         </div>
-        <!---->
       </div>
       <!---->
     </div>
@@ -13231,7 +13110,7 @@ exports[`form demo > renders style-class correctly 1`] = `
                   class="ant-space-item"
                 >
                   <button
-                    class="ant-btn css-var-root ant-btn-default ant-btn-color-default ant-btn-variant-outlined"
+                    class="ant-btn css-var-root ant-btn-default ant-btn-color-default ant-btn-variant-filled"
                     data-v-86e4aa7a=""
                     type="reset"
                   >
@@ -13279,7 +13158,6 @@ exports[`form demo > renders style-class correctly 1`] = `
             <!---->
           </div>
         </div>
-        <!---->
       </div>
       <!---->
     </div>
@@ -13388,7 +13266,6 @@ exports[`form demo > renders time-related-controls correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -13486,7 +13363,6 @@ exports[`form demo > renders time-related-controls correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -13584,7 +13460,6 @@ exports[`form demo > renders time-related-controls correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -13732,7 +13607,6 @@ exports[`form demo > renders time-related-controls correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -13880,7 +13754,6 @@ exports[`form demo > renders time-related-controls correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -13981,7 +13854,6 @@ exports[`form demo > renders time-related-controls correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -14046,7 +13918,6 @@ exports[`form demo > renders time-related-controls correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -14115,7 +13986,6 @@ exports[`form demo > renders use-form correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -14178,6 +14048,7 @@ exports[`form demo > renders use-form correctly 1`] = `
                 class="ant-select-suffix"
               >
                 <span
+                  aria-hidden="true"
                   aria-label="down"
                   class="anticon anticon-down"
                   role="img"
@@ -14224,7 +14095,6 @@ exports[`form demo > renders use-form correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -14382,7 +14252,6 @@ exports[`form demo > renders use-form correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -14479,7 +14348,6 @@ exports[`form demo > renders use-form-name correctly 1`] = `
                   <!---->
                 </div>
               </div>
-              <!---->
             </div>
             <!---->
           </div>
@@ -14525,6 +14393,7 @@ exports[`form demo > renders use-form-name correctly 1`] = `
                         <!---->
                         <span
                           aria-disabled="false"
+                          aria-label="Show"
                           aria-pressed="false"
                           class="ant-input-password-icon"
                           role="button"
@@ -14578,7 +14447,6 @@ exports[`form demo > renders use-form-name correctly 1`] = `
                   <!---->
                 </div>
               </div>
-              <!---->
             </div>
             <!---->
           </div>
@@ -14671,7 +14539,6 @@ exports[`form demo > renders use-form-name correctly 1`] = `
                   <!---->
                 </div>
               </div>
-              <!---->
             </div>
             <!---->
           </div>
@@ -14728,7 +14595,6 @@ exports[`form demo > renders use-form-name correctly 1`] = `
                   <!---->
                 </div>
               </div>
-              <!---->
             </div>
             <!---->
           </div>
@@ -14911,7 +14777,6 @@ exports[`form demo > renders useWatch correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -15038,7 +14903,6 @@ exports[`form demo > renders useWatch correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -15096,7 +14960,6 @@ exports[`form demo > renders useWatch correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -15164,7 +15027,6 @@ exports[`form demo > renders validate-only correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -15213,6 +15075,7 @@ exports[`form demo > renders validate-only correctly 1`] = `
                 <!---->
                 <span
                   aria-disabled="false"
+                  aria-label="Show"
                   aria-pressed="false"
                   class="ant-input-password-icon"
                   role="button"
@@ -15266,7 +15129,6 @@ exports[`form demo > renders validate-only correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -15368,7 +15230,6 @@ exports[`form demo > renders validate-only correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -15433,7 +15294,6 @@ exports[`form demo > renders validate-other correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -15496,6 +15356,7 @@ exports[`form demo > renders validate-other correctly 1`] = `
                 class="ant-select-suffix"
               >
                 <span
+                  aria-hidden="true"
                   aria-label="down"
                   class="anticon anticon-down"
                   role="img"
@@ -15542,7 +15403,6 @@ exports[`form demo > renders validate-other correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -15616,6 +15476,7 @@ exports[`form demo > renders validate-other correctly 1`] = `
                 class="ant-select-suffix"
               >
                 <span
+                  aria-hidden="true"
                   aria-label="down"
                   class="anticon anticon-down"
                   role="img"
@@ -15662,7 +15523,6 @@ exports[`form demo > renders validate-other correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -15795,7 +15655,6 @@ exports[`form demo > renders validate-other correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -15874,7 +15733,6 @@ exports[`form demo > renders validate-other correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -16020,7 +15878,6 @@ exports[`form demo > renders validate-other correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -16134,7 +15991,6 @@ exports[`form demo > renders validate-other correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -16250,7 +16106,6 @@ exports[`form demo > renders validate-other correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -16418,7 +16273,6 @@ exports[`form demo > renders validate-other correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -16765,7 +16619,6 @@ exports[`form demo > renders validate-other correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -16830,7 +16683,6 @@ exports[`form demo > renders validate-other correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -16903,7 +16755,6 @@ exports[`form demo > renders validate-scroll-to-field correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -16962,7 +16813,6 @@ exports[`form demo > renders validate-scroll-to-field correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -17023,6 +16873,7 @@ exports[`form demo > renders validate-scroll-to-field correctly 1`] = `
                 class="ant-select-suffix"
               >
                 <span
+                  aria-hidden="true"
                   aria-label="down"
                   class="anticon anticon-down"
                   role="img"
@@ -17069,7 +16920,6 @@ exports[`form demo > renders validate-scroll-to-field correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -17126,7 +16976,6 @@ exports[`form demo > renders validate-scroll-to-field correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -17185,7 +17034,6 @@ exports[`form demo > renders validate-scroll-to-field correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -17277,7 +17125,6 @@ exports[`form demo > renders validate-scroll-to-field correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -17363,7 +17210,6 @@ exports[`form demo > renders validate-static correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -17447,7 +17293,6 @@ exports[`form demo > renders validate-static correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -17560,7 +17405,6 @@ exports[`form demo > renders validate-static correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -17651,7 +17495,6 @@ exports[`form demo > renders validate-static correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -17769,7 +17612,6 @@ exports[`form demo > renders validate-static correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -17829,6 +17671,7 @@ exports[`form demo > renders validate-static correctly 1`] = `
                 class="ant-select-suffix"
               >
                 <span
+                  aria-hidden="true"
                   aria-label="down"
                   class="anticon anticon-down"
                   role="img"
@@ -17897,7 +17740,6 @@ exports[`form demo > renders validate-static correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -18049,7 +17891,6 @@ exports[`form demo > renders validate-static correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -18090,6 +17931,7 @@ exports[`form demo > renders validate-static correctly 1`] = `
                 class="ant-input-suffix"
               >
                 <button
+                  aria-label="Clear"
                   class="ant-input-clear-icon ant-input-clear-icon-hidden ant-input-clear-icon-has-suffix"
                   type="button"
                 >
@@ -18171,7 +18013,6 @@ exports[`form demo > renders validate-static correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -18239,7 +18080,6 @@ exports[`form demo > renders validate-trigger correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -18299,7 +18139,6 @@ exports[`form demo > renders validate-trigger correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -18440,7 +18279,6 @@ exports[`form demo > renders variant correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -18500,7 +18338,6 @@ exports[`form demo > renders variant correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -18549,6 +18386,7 @@ exports[`form demo > renders variant correctly 1`] = `
                 <!---->
                 <span
                   aria-disabled="false"
+                  aria-label="Show"
                   aria-pressed="false"
                   class="ant-input-password-icon"
                   role="button"
@@ -18602,7 +18440,6 @@ exports[`form demo > renders variant correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -18669,7 +18506,6 @@ exports[`form demo > renders warning-only correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -18771,7 +18607,6 @@ exports[`form demo > renders warning-only correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>
@@ -18927,7 +18762,6 @@ exports[`form demo > renders without-form-create correctly 1`] = `
           <!---->
         </div>
       </div>
-      <!---->
     </div>
     <!---->
   </div>

@@ -315,6 +315,27 @@ describe('tour', () => {
     expect(onUpdateOpen).toHaveBeenCalledWith(false)
   })
 
+  it('should only emit update:open once when finish clicked', async () => {
+    const onFinish = vi.fn()
+    const onUpdateOpen = vi.fn()
+    mount(Tour, {
+      attachTo: document.body,
+      props: {
+        open: true,
+        steps: [{ title: 'Only Step' }],
+        onFinish,
+        'onUpdate:open': onUpdateOpen,
+      },
+    })
+    await flushTour()
+
+    queryNextBtn()?.click()
+    await flushTour()
+    expect(onFinish).toHaveBeenCalledTimes(1)
+    expect(onUpdateOpen).toHaveBeenCalledTimes(1)
+    expect(onUpdateOpen).toHaveBeenCalledWith(false)
+  })
+
   it('should emit update:current when step changes', async () => {
     const onUpdateCurrent = vi.fn()
     mount(Tour, {
@@ -420,6 +441,26 @@ describe('tour', () => {
 
     expect(queryTitle()?.textContent).toBe('Only Title')
     expect(queryDescription()).toBeFalsy()
+  })
+
+  it.each(['', false] as const)('should not render empty header/description/cover blocks when the value is %j', async (falsyValue) => {
+    for (const step of [{ title: falsyValue }, { description: falsyValue }, { cover: falsyValue }]) {
+      const wrapper = mount(Tour, {
+        attachTo: document.body,
+        props: {
+          open: true,
+          steps: [step as any],
+        },
+      })
+      await flushTour()
+
+      expect(queryHeader()).toBeFalsy()
+      expect(queryDescription()).toBeFalsy()
+      expect(queryCover()).toBeFalsy()
+
+      wrapper.unmount()
+      document.body.innerHTML = ''
+    }
   })
 
   // =================== Indicators ===================
@@ -560,7 +601,7 @@ describe('tour', () => {
     ['Next', 0, 'next'],
     ['Previous', 1, 'prev'],
     ['Finish', 1, 'next'],
-  ] as const)('should pass click event to %s button callback', async (buttonName, current, type) => {
+  ] as const)('should pass click event to %s button callback', async (_buttonName, current, type) => {
     const onClick = vi.fn((event: MouseEvent) => event.currentTarget)
     const steps: any[] = [
       { title: 'First' },

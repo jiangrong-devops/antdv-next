@@ -261,7 +261,7 @@ describe('tree-select', () => {
     const wrapper = mount(<TreeSelect showArrow />)
     expect(errSpy).toHaveBeenCalledWith(
       expect.stringContaining(
-        'Warning: [antd: TreeSelect] `showArrow` is deprecated which will be removed in next major version. It will be a default behavior, you can hide it by setting `suffixIcon` to null.',
+        'Warning: [antd: TreeSelect] `showArrow` is deprecated which will be removed in next major version. It will be a default behavior, you can hide it by setting `suffix` to null.',
       ),
     )
     expect(wrapper.find('.ant-select-show-arrow').exists()).toBeTruthy()
@@ -647,5 +647,83 @@ describe('tree-select', () => {
     warnSpy.mockRestore()
     wrapper.unmount()
     formWrapper.unmount()
+  })
+
+  describe('clear event', () => {
+    const treeData = [{ value: 'light', title: 'Light' }]
+
+    it('should emit clear exactly once when clear button is clicked', async () => {
+      const onClear = vi.fn()
+      const wrapper = mount(TreeSelect, {
+        props: {
+          allowClear: true,
+          value: 'light',
+          treeData,
+          onClear,
+        },
+      })
+      expect(wrapper.find('.ant-select-clear').exists()).toBe(true)
+      await wrapper.find('.ant-select-clear').trigger('click')
+      expect(onClear).toHaveBeenCalledTimes(1)
+      wrapper.unmount()
+    })
+
+    it('does not declare onClear as a runtime prop', () => {
+      expect((TreeSelect as any).props).not.toHaveProperty('onClear')
+      expect((TreeSelect as any).emits).toContain('clear')
+    })
+  })
+
+  describe('event listeners', () => {
+    const treeData = [{ value: 'light', title: 'Light' }]
+
+    it('does not declare any on* key as a runtime prop', () => {
+      const onKeys = Object.keys((TreeSelect as any).props).filter(key => /^on[A-Z]/.test(key))
+      expect(onKeys).toEqual([])
+      expect((TreeSelect as any).emits).toEqual(expect.arrayContaining([
+        'focus',
+        'blur',
+        'keydown',
+        'keyup',
+        'click',
+        'inputKeydown',
+        'mousedown',
+        'mouseenter',
+        'mouseleave',
+      ]))
+    })
+
+    it('calls each keyboard/mouse/focus listener exactly once', async () => {
+      const handlers = {
+        onFocus: vi.fn(),
+        onBlur: vi.fn(),
+        onKeydown: vi.fn(),
+        onKeyup: vi.fn(),
+        onClick: vi.fn(),
+        onInputKeydown: vi.fn(),
+        onMousedown: vi.fn(),
+        onMouseenter: vi.fn(),
+        onMouseleave: vi.fn(),
+      }
+      const wrapper = mount(TreeSelect, {
+        props: { treeData, showSearch: true, ...handlers },
+        attachTo: document.body,
+      })
+      const root = wrapper.find('.ant-select')
+      const input = wrapper.find('input')
+
+      await input.trigger('focus')
+      await input.trigger('keydown', { key: 'a' })
+      await input.trigger('keyup', { key: 'a' })
+      await root.trigger('mousedown')
+      await root.trigger('click')
+      await root.trigger('mouseenter')
+      await root.trigger('mouseleave')
+      await input.trigger('focusout')
+
+      for (const [name, fn] of Object.entries(handlers))
+        expect(fn, name).toHaveBeenCalledTimes(1)
+      wrapper.unmount()
+    })
   })
 })

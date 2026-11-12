@@ -19,12 +19,12 @@ import type {
 } from './types.ts'
 import { clsx, get, set } from '@v-c/util'
 import { getDOM } from '@v-c/util/dist/Dom/findDOMNode'
-import { pick } from 'es-toolkit'
+import { cloneDeep, pick } from 'es-toolkit'
 import scrollIntoView from 'scroll-into-view-if-needed'
-import { computed, defineComponent, getCurrentInstance, inject, onBeforeUnmount, onMounted, provide, shallowRef, watch } from 'vue'
+import { computed, defineComponent, getCurrentInstance, inject, onBeforeUnmount, onMounted, provide, shallowRef, toRaw, watch } from 'vue'
 import { getAttrStyleAndClass, useMergeSemantic, useSemanticRootStyle, useToArr, useToProps } from '../_util/hooks'
 import { toPropsRefs } from '../_util/tools.ts'
-import warning from '../_util/warning'
+import warning, { devUseWarning, isDev } from '../_util/warning'
 import { useComponentBaseConfig } from '../config-provider/context'
 import { useDisabledContext, useDisabledContextProvider } from '../config-provider/DisabledContext.tsx'
 import useCSSVarCls from '../config-provider/hooks/useCSSVarCls.ts'
@@ -37,7 +37,7 @@ import useStyle from './style'
 import { getFieldId, toArray, toNamePathStr } from './util.ts'
 import { allPromiseFinish } from './utils/asyncUtil'
 import { defaultValidateMessages } from './utils/messages'
-import { cloneByNamePathList, containsNamePath, getNamePath, setValue } from './utils/valueUtil.ts'
+import { cloneByNamePathList, containsNamePath, getNamePath, getValue, matchNamePath, setValue } from './utils/valueUtil.ts'
 
 import { useValidateMessagesContext, useValidateMessagesProvider } from './validateMessagesContext.tsx'
 
@@ -216,6 +216,16 @@ const InternalForm = defineComponent<
 
     const mergedColon = computed(() => props.colon ?? contextColon.value)
     const mergedLabelAlign = computed(() => props.labelAlign ?? contextLabelAlign.value)
+
+    if (isDev) {
+      const formWarning = devUseWarning('Form')
+      const align = mergedLabelAlign.value
+      formWarning.deprecated(
+        align !== 'left' && align !== 'right',
+        'labelAlign=left|right',
+        'labelAlign=start|end',
+      )
+    }
     const mergedLabelWrap = computed(() => props.labelWrap ?? contextLabelWrap.value)
     const mergedAutoComplete = computed(() => props.autoComplete ?? props.autocomplete ?? contextAutoComplete.value ?? contextAutocomplete.value)
     const mergedTooltip = computed(() => {
@@ -254,6 +264,10 @@ const InternalForm = defineComponent<
       FormStylesType,
       FormProps
     >(useToArr(contextClassNames, classes), useToArr(contextStyles, contextStyleRoot as any, styles), useToProps(mergedProps))
+
+    // Plain snapshots updated during render; used by Form unmount cleanup.
+    let currentModel = model.value
+    let currentClearOnDestroy = props.clearOnDestroy
 
     // Plain bookkeeping (never rendered): FormItem unregisters from a watcher
     // cleanup, which on unmount runs inside the parent's render effect.
@@ -304,12 +318,14 @@ const InternalForm = defineComponent<
       return get(model.value ?? {}, namePath)
     }
 
-    const getFieldsValue = (nameList: InternalNamePath[] | true = true) => {
-      if (nameList === true) {
-        const allNameList = Object.values(fields).map(field => field.namePath())
-        return cloneByNamePathList(model.value ?? {}, allNameList)
-      }
-      return cloneByNamePathList(model.value ?? {}, nameList)
+    const getFieldsValue = (nameList?: InternalNamePath[] | true) => {
+      if (nameList === true)
+        return cloneDeep(model.value ?? {})
+
+      const registeredNameList = nameList === undefined
+        ? Object.values(fields).map(field => field.namePath())
+        : nameList
+      return cloneByNamePathList(model.value ?? {}, registeredNameList)
     }
 
     const getFields = (namePathList?: InternalNamePath[]): FieldData[] => {
@@ -334,6 +350,36 @@ const InternalForm = defineComponent<
         emit('valuesChange', changedValues, model.value)
       }
       triggerFieldsChange([namePath])
+    }
+
+    const isMergedPreserve = (field: FormFieldRegister): boolean => {
+      return field.isPreserve?.() ?? props.preserve ?? true
+    }
+
+    /**
+     * Drop a value after the last owner is unregistered. The caller removes the
+     * current registration first, matching rc-field-form's unregister order.
+     */
+    const removeFieldValue = (field: FormFieldRegister) => {
+      if (isMergedPreserve(field))
+        return
+
+      const namePath = field.namePath()
+      const modelValue = model.value
+      if (!namePath.length || !modelValue)
+        return
+
+      const hasSamePathField = getFieldsByNameList().some(registeredField =>
+        matchNamePath(registeredField.namePath(), namePath),
+      )
+      if (hasSamePathField)
+        return
+
+      const lastIndex = namePath.length - 1
+      const parentPath = namePath.slice(0, lastIndex)
+      const parent = parentPath.length ? getValue(modelValue, parentPath) : modelValue
+      if (parent && typeof parent === 'object')
+        delete (parent as any)[namePath[lastIndex]!]
     }
 
     const onValidate = (name: InternalNamePath, status: boolean, errors: any[] | null) => {
@@ -466,6 +512,7 @@ const InternalForm = defineComponent<
         feedbackIcons: feedbackIcons.value,
         addField,
         removeField,
+        removeFieldValue,
         addItem,
         removeItem,
         onValidate,
@@ -716,6 +763,12 @@ const InternalForm = defineComponent<
     })
 
     onBeforeUnmount(() => {
+      const modelValue = currentModel
+      if (currentClearOnDestroy && modelValue) {
+        Object.keys(toRaw(modelValue)).forEach((key) => {
+          delete modelValue[key]
+        })
+      }
       if (boundEntry && vm && boundEntry.boundBy === vm.uid) {
         boundEntry.boundBy = undefined
         boundEntry.instanceRef.value = undefined
@@ -755,6 +808,8 @@ const InternalForm = defineComponent<
     }
 
     return () => {
+      currentModel = model.value
+      currentClearOnDestroy = props.clearOnDestroy
       const {
         layout,
         rootClass,

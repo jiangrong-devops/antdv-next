@@ -2,6 +2,141 @@
 title: Component Changelog
 ---
 
+## V1.8.1
+
+Release Date: 2026-11-06
+
+This is a patch release. The Today / Now and OK buttons in the DatePicker / TimePicker footer are now native buttons: they can be focused with the keyboard, and clicking them inside a form no longer submits it. The new `components.nowButton` and `components.okButton` customize each of them. It also fixes the Table expand-all icon not lining up with the row expand icons in the small and medium sizes, and upgrades a batch of `@v-c/*` packages that improve keyboard and accessibility behavior in Menu, Collapse and Table. Starting with this version, antdv-next is published automatically by GitHub Actions through npm trusted publishing, with provenance.
+
+**✨ Features**
+
+* feat(date-picker, time-picker): the Today / Now and OK footer buttons are native `type="button"` buttons that can be focused with the keyboard and no longer submit a surrounding form; the Today button is `disabled` when today cannot be selected. Add `components.nowButton` and `components.okButton`; `components.button` is deprecated and only kept as a fallback for `okButton`, which takes precedence when both are set (#59778). Note that the footer DOM changes: `ul.ant-picker-ranges > li` becomes `div.ant-picker-ranges` with the buttons directly inside, `.ant-picker-now-btn` is gone, and `.ant-picker-now` / `.ant-picker-ok` are on the buttons themselves. Projects that restyle the footer need to update their selectors
+
+**🐞 Fixes**
+
+* fix(table): the header expand-all icon lines up with the row expand icons in the small and medium sizes (#59795)
+
+**📖 Documentation**
+
+* docs(date-picker, time-picker): add a Components section covering `nowButton`, `okButton` and which props a custom button should pass through
+* fix(site): the border no longer flashes when the search box on the component overview page becomes affixed ([#1081](https://github.com/antdv-next/antdv-next/pull/1081))
+
+**🧰 Infrastructure & Dependencies**
+
+* chore(deps): upgrade `@v-c/picker` 1.7.0 (the footer change above); `@v-c/menu` 1.4.6, where Escape on the menu root closes every open submenu outside inline mode, and Escape inside a submenu no longer bubbles to outer handlers; `@v-c/collapse` 1.0.3, where the Space key toggles a panel header, an expanded header points at its content with `aria-controls`, and keyboard events from interactive elements inside the header no longer toggle the panel; `@v-c/table` 1.3.7, where the hidden row used to measure column widths is invisible and `inert`, so its controls stay out of the tab order; `@v-c/virtual-list` 1.1.5, which resets the touch state when a touch is interrupted (`touchcancel`)
+* ci: add a Release workflow; pushing a version tag publishes antdv-next and @antdv-next/cssinjs from GitHub Actions through npm trusted publishing
+
+## V1.8.0
+
+Release Date: 2026-11-05
+
+This release advances ant-design upstream tracking to 6.7.0 (`550d75dbb3`) and adds a batch of ConfigProvider-level settings: Timeline, Steps, Divider, Alert, Tag and Button can set `variant` globally, AutoComplete, Cascader and TreeSelect can set `allowClear` globally, and Select can set `autoComplete` globally. Select-like components and DatePicker / TimePicker gain a `suffix` prop and slot, and `allowClear` options are unified across the selection and date components. Form's `labelAlign` accepts the logical values `start` / `end`, and Form now implements `preserve` and `clearOnDestroy`. Space supports `align="stretch"`, Listy supports `scrollWidth`, Pagination's `change` event provides `recommendPage`, and ColorPicker adds a `popup.container` semantic part. It also fixes a group of issues in Tour, Tooltip, Tag, Timeline, Tabs, TreeSelect and others, and makes vue-tsc pass for both antdv-next and the docs site.
+
+**✨ Features**
+
+* feat(config-provider): Timeline, Steps, Divider, Alert, Tag and Button can configure `variant` through ConfigProvider; `useVariant` supports per-component allowed values and defaults (#59576, #59577, #59578, #59587, #59588, #59589, #59581)
+* feat(select, cascader, tree-select, auto-complete): add a `suffix` prop and `#suffix` slot; the slot receives the open / search state. `suffixIcon` is deprecated but still works, and ConfigProvider `suffix` / `suffixIcon` are read (#59185)
+* feat(date-picker, time-picker): DatePicker, RangePicker and TimePicker add a `suffix` prop and slot, and `suffixIcon` is deprecated; RangePicker now reads `suffix` / `suffixIcon` from ConfigProvider; `suffix` set to `false` / `null` no longer renders an empty suffix wrapper (#59240)
+* feat(select, cascader, tree-select, date-picker, time-picker): `allowClear` is merged field by field with the ConfigProvider config and supports `disabled`, `label` and `tabIndex` (#59566, #59567)
+* feat(auto-complete, cascader, tree-select): support configuring `allowClear` through ConfigProvider, which gains an `autoComplete` component config (#59591, #59592, #59593)
+* feat(select): support configuring `autoComplete` through ConfigProvider (#59632)
+* feat(form): `labelAlign` accepts `start` / `end`; `left` / `right` are deprecated and warn (#59760); implement `preserve` and `clearOnDestroy`, and with `preserve={false}` a removed field's value is also deleted from `model` ([#1078](https://github.com/antdv-next/antdv-next/pull/1078))
+* feat(color-picker): add `popup.container` to `classes` / `styles`; the deprecated `styles.popupOverlayInner` is now read from the merged styles, so it works from ConfigProvider and in function form too (#59743)
+* feat(pagination): when pageSize changes, the `change` event receives `{ recommendPage }` as its third argument, and Table pagination forwards it; export the `PaginationOnChangeInfo` type (#58604)
+* feat(space): `align` supports `stretch` (#59005)
+* feat(listy): support horizontal scrolling with `scrollWidth` (#59197); a `rowKey` function receives `index` (#59347)
+* feat(tree): in non-checkable mode, `selectable={false}` nodes share the disabled style (#58906); Tree and DirectoryTree are generic over the data node type (`TreeConstructor` / `DirectoryTreeConstructor`)
+* feat(input): each Input.OTP cell gets a localized accessible name (`locale.Input.otpCell`), and `aria-invalid` is set on the cells instead of the container (#59722)
+* feat(time-picker): emit `clear` when the clear icon is clicked (#58403, [#1063](https://github.com/antdv-next/antdv-next/pull/1063))
+* feat(locale): add the clear button text to fr_FR, de_DE and it_IT (#59723); hy_AM and sq_AL use the Pagination locales shipped by `@v-c/pagination` (#59500)
+
+**🐞 Fixes**
+
+* fix(select): the default arrow, loading and search icons get `aria-hidden` (#59709); `showArrow` was overwritten internally and had no effect, and is now computed as `showArrow ?? suffix !== null`; Cascader's ConfigProvider `suffixIcon` replaces only the default down arrow and no longer the loading and search icons, matching upstream
+* fix(select, tree-select): declare `on*` listeners as emits, so `mouseenter` / `mouseleave` reach the native events and the `search` event is declared ([#1080](https://github.com/antdv-next/antdv-next/pull/1080)); TreeSelect declares the `clear` event ([#1079](https://github.com/antdv-next/antdv-next/pull/1079)); TreeSelect reads the popup `zIndex` from `styles.popup.root` instead of `styles.root` ([#1074](https://github.com/antdv-next/antdv-next/pull/1074))
+* fix(button): keep `tabIndex` when `href` is set, and use `-1` when disabled (#59732)
+* fix(statistic): expand exponential notation of very large or very small numbers before formatting (#59693)
+* fix(pagination): restore the disabled styles of custom links (#59780)
+* fix(splitter): finish the drag when a touch drag is cancelled (`touchcancel`) (#59712)
+* fix(form): edited `noStyle` items keep the parent's validation status (#59708)
+* fix(theme): `getDesignToken` supports an empty `algorithm` array (#59695)
+* fix(input): the password visibility toggle has an accessible name ([#1077](https://github.com/antdv-next/antdv-next/pull/1077)); Input.OTP cells update when `status`, `disabled` or `aria-*` change
+* fix(tour): `update:open` fires only once when finish is clicked ([#1070](https://github.com/antdv-next/antdv-next/pull/1070)); the title, `description` and `cover` areas are not rendered for empty strings or `false` ([#1069](https://github.com/antdv-next/antdv-next/pull/1069))
+* fix(tooltip, tag): render every child of the default slot instead of only the first ([#1065](https://github.com/antdv-next/antdv-next/pull/1065), [#1059](https://github.com/antdv-next/antdv-next/pull/1059))
+* fix(popover, tooltip): stop text shifting after the open motion on Windows ([#1062](https://github.com/antdv-next/antdv-next/pull/1062))
+* fix(timeline): `mode`, `reverse`, `pending` and `pendingDot` no longer leak into root DOM attributes ([#1064](https://github.com/antdv-next/antdv-next/pull/1064))
+* fix(tabs): read `indicator`, `indicatorSize`, `icons` and `more` from ConfigProvider ([#1058](https://github.com/antdv-next/antdv-next/pull/1058))
+* fix(drawer): keep `aria-labelledby` when the title comes from a slot ([#1071](https://github.com/antdv-next/antdv-next/pull/1071))
+* fix(tree): add the `switcher-line-custom-icon` class to the result of a function-form `showLeafIcon` ([#1073](https://github.com/antdv-next/antdv-next/pull/1073))
+* fix(menu): render the first letter as a fallback icon when collapsed and the item has no icon ([#1076](https://github.com/antdv-next/antdv-next/pull/1076))
+* fix(checkbox): emit `focus` when the native input gains focus ([#1060](https://github.com/antdv-next/antdv-next/pull/1060))
+* fix(message): prevent the message stack from flickering in Safari ([#1061](https://github.com/antdv-next/antdv-next/pull/1061))
+* fix(locale): ne_NP uses its own Pagination locale instead of falling back to en_US (#59499); improve the cs_CZ translations (#59787)
+* fix(types): vue-tsc now passes for the antdv-next source and the docs site, closing typing gaps in TimePicker (Dayjs values), Calendar (generic slots), Listy (Key-typed `ListyRef`), Cascader (the `clear` semantic part) and others, and fixing several demos the typecheck showed were broken at runtime
+
+**⚡ Performance**
+
+* perf(table): tree data filtering no longer re-filters descendants repeatedly (#59719)
+
+**📖 Documentation**
+
+* docs(tag): document the `closable` configuration and make the basic demo closable (#59720)
+* docs(dropdown): remove an outdated note from the `openChange` event (#59747)
+* docs(input-number): add the `clear` part to the semantic demo (#59251)
+* docs(auto-complete): fix the popup styles of the category search demo (#59767)
+* docs(tour): add the `keyboard` prop to the API tables ([#1068](https://github.com/antdv-next/antdv-next/pull/1068))
+* docs: remove leftover `update:value` rows from the event tables ([#1067](https://github.com/antdv-next/antdv-next/pull/1067))
+
+**🛠 Refactor & Maintenance**
+
+* refactor(form): remove the obsolete IE style fallback (`fallbackCmp`), so each form item renders one fewer comment node (#59510)
+* refactor(style): remove unused styles from Space (#59766) and QRCode (#59716), and unused constants from Watermark (#59407)
+* chore(sync): advance ant-design upstream tracking to 6.7.0 (`550d75dbb3`)
+
+## V1.7.1
+
+Release Date: 2026-10-27
+
+This release advances ant-design upstream tracking to master after 6.6.8 (`912d4066db`) and is mostly bug fixes. Splitter can set `destroyOnHidden` once at the top level. A group of fixes stops unmounted components from staying referenced and never being collected (module-level shared vnodes, watcher cleanups on unmount, DOM held by FormItem). It also fixes FormItem field registration after a rename, Steps rendering clickable semantics without a `change` binding, the Statistic `#formatter` slot being ignored, and more. A batch of `@v-c/*` packages is upgraded: `allowClear` is unified across the input components, and Pagination moves its interaction semantics onto the inner controls.
+
+**✨ Features**
+
+* feat(splitter): support a top-level `destroyOnHidden` that applies to every panel and can be overridden per panel ([#1046](https://github.com/antdv-next/antdv-next/pull/1046))
+
+**🐞 Fixes**
+
+* fix(empty, popconfirm, float-button, cascader, qrcode): module-level built-in image / icon vnodes, and vnodes passed in through props, slots or ConfigProvider, kept the component instance they were first mounted in, so it was never collected after unmounting; they are now cloned at render time ([#1056](https://github.com/antdv-next/antdv-next/pull/1056))
+* fix(anchor, checkbox, form, grid, affix): watcher cleanups on unmount no longer read reactive state, so unmounting a child no longer re-renders the parent and the parent no longer holds the unmounted component's computeds. This covers Anchor, CheckboxGroup, Form, Affix, and the components using `useBreakpoint`: Row, Table, Avatar, Pagination, Descriptions, Steps, Masonry and FormItem
+* fix(form): FormItem releases detached DOM after unmounting ([#1040](https://github.com/antdv-next/antdv-next/pull/1040)); FormItem re-registers its field when `name` changes, so in dynamic lists a newly added item no longer overwrites a renamed one and `validateFields` / `resetFields` no longer skip fields; a trailing `|` in a string label is kept (#59599)
+* fix(steps): steps no longer render clickable semantics such as `role="button"` and `tabindex` when neither `change` nor `v-model:current` is bound, and the wave effect is back when only `v-model:current` is bound ([#1057](https://github.com/antdv-next/antdv-next/pull/1057)); props no longer leak into root DOM attributes ([#1054](https://github.com/antdv-next/antdv-next/pull/1054)); the error step icon renders `CloseOutlined` ([#1049](https://github.com/antdv-next/antdv-next/pull/1049))
+* fix(statistic): implement the documented `#formatter` slot with a `{ value }` scope; it takes precedence over the `formatter` prop and works for Statistic.Timer too ([#1047](https://github.com/antdv-next/antdv-next/pull/1047))
+* fix(modal): restore the confirm content typography styles ([#1051](https://github.com/antdv-next/antdv-next/pull/1051)); the internal panel (PurePanel) called the `#footer` slot without `originNode` / `extra`, which threw when destructured
+* fix(table): a dynamically registered `expandedRowRender` slot did not render the expand column ([#1048](https://github.com/antdv-next/antdv-next/pull/1048))
+* fix(switch): expose `nativeElement`, `focus` and `blur` through the ref ([#1055](https://github.com/antdv-next/antdv-next/pull/1055))
+* fix(slider): `blur` fires exactly once in range mode ([#1037](https://github.com/antdv-next/antdv-next/pull/1037)); support rendering the `mark` slot ([#1041](https://github.com/antdv-next/antdv-next/pull/1041))
+* fix(spin): semantic classes / styles apply to a custom indicator ([#1043](https://github.com/antdv-next/antdv-next/pull/1043))
+* fix(space): the separator class is derived from `prefixCls`, matching upstream ([#1042](https://github.com/antdv-next/antdv-next/pull/1042))
+* fix(listy): the virtual scrollbar background uses `colorSplit` ([#1053](https://github.com/antdv-next/antdv-next/pull/1053))
+* fix(message): the message list content no longer captures pointer events ([#1045](https://github.com/antdv-next/antdv-next/pull/1045))
+* fix(upload): ignore the query and hash of a URL when detecting thumbnails (#59649); the preview promise settles and resources are cleaned up when an image fails to decode (#59583)
+* fix(pagination): keep the pagination unselectable (#59638); preserve focus styles on the inner controls (#59573)
+* fix(progress): `aria-valuenow` uses `percent` instead of the success percent (#59634); the line progress respects a string `width` (#59597)
+* fix(card): reset the margins of Typography titles in the card title (#59613)
+* fix(color-picker): restore the format selector font size and spacing (#59610)
+
+**📖 Documentation**
+
+* docs(config-provider): the wave demo uses `HappyProvider` from happy-work-theme ([#1052](https://github.com/antdv-next/antdv-next/pull/1052))
+* docs(spin): add `section` / `description` / `container` to the semantic demo ([#1044](https://github.com/antdv-next/antdv-next/pull/1044))
+* docs: fix typos in the FAQ (#59656); bump the CDN example to 1.7.0; replace the site's Qixi easter egg with a 1024 Programmer's Day egg (`/1024`)
+
+**🧰 Infrastructure & Dependencies**
+
+* chore(deps): upgrade `@v-c/util` 1.4.0, `input` 1.3.0, `textarea` 1.2.0, `input-number` 1.2.0, `select` 1.3.0, `picker` 1.6.0 and `mentions` 1.3.0, which unify the `allowClear` config (`allowClear.disabled: true` no longer renders a clear button at all); `@v-c/pagination` 1.3.0 moves the interaction semantics of page items and the prev / next buttons from the `li` onto the inner control
+* chore(deps): upgrade `@v-c/menu` 1.4.4, `tabs` 1.4.3, `tour` 1.1.3, `slick` 1.0.3 and `color-picker` 1.0.8 (unmount cleanup fixes: unmounting Menu or ColorPicker no longer re-renders the parent, and Tour no longer leaves window listeners behind), plus `virtual-list` 1.1.4, `progress` 1.1.0, `upload` 1.1.1, `switch` 1.0.2, `image` 1.1.3 and `table` 1.3.5
+* refactor(style): remove obsolete selectors and styles from Tabs (#59662), Tooltip (#59644), Notification (#59645), Dropdown (#59605) and Input (#59604); Anchor drops the unused `anchorBallSize` component token (#59389)
+* chore(sync): advance ant-design upstream tracking to master after 6.6.8 (`912d4066db`)
+
 ## V1.7.0
 
 Release Date: 2026-10-17

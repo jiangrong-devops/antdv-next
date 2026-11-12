@@ -1,10 +1,11 @@
 import type { PropType } from 'vue'
-import type { UploadFile } from '../interface'
+import type { UploadChangeParam, UploadFile } from '../interface'
 
 import { mount } from '@vue/test-utils'
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import { defineComponent, nextTick, ref } from 'vue'
 import Upload from '..'
+import ConfigProvider from '../../config-provider'
 import { setup, teardown } from './mock'
 import mountTest from '/@tests/shared/mountTest'
 import rtlTest from '/@tests/shared/rtlTest'
@@ -116,7 +117,7 @@ describe('upload', () => {
           }, 100)
         }),
       data,
-      onChange: ({ file }: { file: File & { status: string } }) => {
+      onChange: ({ file }: UploadChangeParam) => {
         if (file.status !== 'uploading') {
           expect(data).toHaveBeenCalled()
           expect(file.name).toEqual('test.png')
@@ -687,5 +688,33 @@ describe('upload', () => {
 
     await wrapper.trigger('mouseleave')
     expect(onMouseleave).toHaveBeenCalled()
+  })
+
+  it('should consume accept from ConfigProvider upload config', () => {
+    const wrapper = mount({
+      render: () => (
+        <ConfigProvider upload={{ accept: '.jpg,image/jpeg' }}>
+          <Upload>
+            <button type="button">upload</button>
+          </Upload>
+        </ConfigProvider>
+      ),
+    })
+
+    expect(wrapper.find('input[type="file"]').attributes('accept')).toBe('.jpg,image/jpeg')
+  })
+
+  it('accept prop should override ConfigProvider upload config', () => {
+    const wrapper = mount({
+      render: () => (
+        <ConfigProvider upload={{ accept: '.jpg,image/jpeg' }}>
+          <Upload accept=".png">
+            <button type="button">upload</button>
+          </Upload>
+        </ConfigProvider>
+      ),
+    })
+
+    expect(wrapper.find('input[type="file"]').attributes('accept')).toBe('.png')
   })
 })

@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
-import { h, nextTick, ref } from 'vue'
+import { defineComponent, h, nextTick, ref } from 'vue'
 import Select, { SelectOption } from '..'
 import { resetWarned } from '../../_util/warning'
 import ConfigProvider from '../../config-provider'
@@ -421,6 +421,39 @@ describe('select', () => {
     errSpy.mockRestore()
     wrapper.unmount()
   })
+  // https://github.com/ant-design/ant-design/pull/59632
+  it.each([undefined, 'multiple', 'tags'] as const)(
+    'should support autoComplete configuration in %s mode',
+    async (mode) => {
+      const config = ref<Record<string, any> | undefined>()
+      const autoComplete = ref<string | undefined>()
+      const wrapper = mount(defineComponent(() => () => (
+        <ConfigProvider select={config.value}>
+          <Select mode={mode} autoComplete={autoComplete.value} />
+        </ConfigProvider>
+      )))
+      const getAutoComplete = () => wrapper.find('input').attributes('autocomplete')
+      expect(getAutoComplete()).toBe('new-password')
+
+      config.value = { autoComplete: 'off' }
+      await nextTick()
+      expect(getAutoComplete()).toBe('off')
+
+      autoComplete.value = 'on'
+      await nextTick()
+      expect(getAutoComplete()).toBe('on')
+
+      autoComplete.value = undefined
+      await nextTick()
+      expect(getAutoComplete()).toBe('off')
+
+      config.value = undefined
+      await nextTick()
+      expect(getAutoComplete()).toBe('new-password')
+      wrapper.unmount()
+    },
+  )
+
   describe('allowClear with ConfigProvider', () => {
     const options = [{ value: 'value', label: 'Label' }]
     const mountWithConfig = (selectConfig: Record<string, any>, selectProps: Record<string, any> = {}) =>
@@ -459,6 +492,62 @@ describe('select', () => {
       )
       expect(wrapper.find('.context-icon').exists()).toBe(false)
       expect(wrapper.find('.prop-icon').exists()).toBe(true)
+    })
+  })
+
+  describe('event listeners', () => {
+    const options = [{ value: 'jack', label: 'Jack' }]
+
+    it('does not declare any on* key as a runtime prop', () => {
+      const onKeys = Object.keys((Select as any).props).filter(key => /^on[A-Z]/.test(key))
+      expect(onKeys).toEqual([])
+      expect((Select as any).emits).toContain('search')
+    })
+
+    it('emits search exactly once per input change', async () => {
+      const onSearch = vi.fn()
+      const wrapper = mount(Select, {
+        props: { options, showSearch: true, onSearch },
+      })
+      const input = wrapper.find('input')
+      input.element.value = 'ja'
+      await input.trigger('input')
+      expect(onSearch).toHaveBeenCalledTimes(1)
+      expect(onSearch).toHaveBeenCalledWith('ja')
+      wrapper.unmount()
+    })
+
+    it('calls each keyboard/mouse/focus listener exactly once', async () => {
+      const handlers = {
+        onFocus: vi.fn(),
+        onBlur: vi.fn(),
+        onKeydown: vi.fn(),
+        onKeyup: vi.fn(),
+        onClick: vi.fn(),
+        onInputKeydown: vi.fn(),
+        onMousedown: vi.fn(),
+        onMouseenter: vi.fn(),
+        onMouseleave: vi.fn(),
+      }
+      const wrapper = mount(Select, {
+        props: { options, showSearch: true, ...handlers },
+        attachTo: document.body,
+      })
+      const root = wrapper.find('.ant-select')
+      const input = wrapper.find('input')
+
+      await input.trigger('focus')
+      await input.trigger('keydown', { key: 'a' })
+      await input.trigger('keyup', { key: 'a' })
+      await root.trigger('mousedown')
+      await root.trigger('click')
+      await root.trigger('mouseenter')
+      await root.trigger('mouseleave')
+      await input.trigger('focusout')
+
+      for (const [name, fn] of Object.entries(handlers))
+        expect(fn, name).toHaveBeenCalledTimes(1)
+      wrapper.unmount()
     })
   })
 })

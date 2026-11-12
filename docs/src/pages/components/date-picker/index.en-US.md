@@ -85,11 +85,11 @@ The following APIs are shared by DatePicker, RangePicker.
 
 | Property | Description | Type | Default | Version | [Global Config](/components/config-provider#component-config) |
 | --- | --- | --- | --- | --- | --- |
-| allowClear | Customize clear button | boolean \| \{ clearIcon?: VueNode \} | true | - | ✓ |
+| allowClear | Whether to show a clear button | boolean \| [AllowClearConfig](#allowclearconfig) | true | - | ✓ |
 | classes | Customize class for each semantic structure inside the component. Supports object or function. | Record<[SemanticDOM](#semantic-dom), string> \| (info: { props })=> Record<[SemanticDOM](#semantic-dom), string> | - | - | ✓ |
 | dateRender | Custom rendering function for date cells, Deprecated. Please use `cellRender` instead. | function(currentDate: dayjs, today: dayjs) => VueNode | - | - | × |
 | cellRender | Custom rendering function for picker cells | (current: dayjs, info: { originNode: VueNode, today: DateType, range?: 'start' \| 'end', type: PanelMode, locale?: Locale, subType?: 'hour' \| 'minute' \| 'second' \| 'meridiem' }) => VueNode | - | - | × |
-| components | Custom panels. A custom panel component should set `inheritAttrs: false`; otherwise the picker-injected props (e.g. `prefixCls`) fall through to its root node, causing child components (such as Flex) to emit styles under the wrong prefix and break the panel layout | Record<Panel \| 'input', Component> | - | - | × |
+| components | Custom panels, input, and footer buttons. A custom panel component should set `inheritAttrs: false`; otherwise the picker-injected props (e.g. `prefixCls`) fall through to its root node, causing child components (such as Flex) to emit styles under the wrong prefix and break the panel layout | [Components](#components) | - | - | × |
 | defaultOpen | Initial open state of picker | boolean | - | - | × |
 | disabled | Determine whether the DatePicker is disabled | boolean | false | - | × |
 | disabledDate | Specify the date that cannot be selected | (currentDate: dayjs, info: { from?: dayjs, type: Picker }) => boolean | - | - | × |
@@ -120,11 +120,36 @@ The following APIs are shared by DatePicker, RangePicker.
 | size | To determine the size of the input box, the height of `large` and `small`, are 40px and 24px respectively, while default size is 32px | `large` \| `medium` \| `small` | - | - | × |
 | status | Set validation status | 'error' \| 'warning' | - | - | × |
 | styles | Customize inline style for each semantic structure inside the component. Supports object or function. | Record<[SemanticDOM](#semantic-dom), CSSProperties> \| (info: { props })=> Record<[SemanticDOM](#semantic-dom), CSSProperties> | - | - | ✓ |
-| suffixIcon | The custom suffix icon | VueNode | - | - | ✓ |
+| suffix | The custom suffix | VueNode | - | 1.8.0 | 1.8.0 |
+| ~~suffixIcon~~ | The custom suffix icon, please use `suffix` instead | VueNode | - | - | ✓ |
 | superNextIcon | The custom super next icon | VueNode | - | - | × |
 | superPrevIcon | The custom super prev icon | VueNode | - | - | × |
 | clearIcon | (Only supports global configuration) Custom clear icon | VueNode | - | - | ✓ |
 | variant | Variants of picker | `outlined` \| `borderless` \| `filled` \| `underlined` | `outlined` | - | ✓ |
+
+### Components {#components}
+
+`components` supports custom panel components keyed by panel type and an `input` component, as well as the following footer buttons. These options also apply to RangePicker, TimePicker, and TimePicker.RangePicker.
+
+| Property | Description | Type | Default | Version | [Global Config](/components/config-provider#component-config) |
+| --- | --- | --- | --- | --- | --- |
+| nowButton | Custom Today/Now button | Component \| string | `button` | 1.8.1 | × |
+| okButton | Custom confirmation button | Component \| string | Small primary Button | 1.8.1 | × |
+
+Custom button components should pass `class`, `disabled`, `onClick`, and the default slot through to the rendered button, and use `type="button"` to avoid submitting a form.
+
+`components.button` is deprecated. It remains supported as a fallback for `components.okButton`, which takes precedence when both are provided. It does not customize the Today/Now button.
+
+### AllowClearConfig {#allowclearconfig}
+
+Fields that support global configuration use component values first, then global values, then defaults. `allowClear: true` inherits the global configuration; `disabled: false` and `tabIndex: 0` override the global values.
+
+| Property | Description | Type | Default | Version | [Global Config](/components/config-provider#component-config) |
+| --- | --- | --- | --- | --- | --- |
+| clearIcon | Custom clear icon | VueNode | - | - | ✓ |
+| disabled | When `true`, equivalent to `allowClear: false` | boolean | false | 1.8.0 | 1.8.0 |
+| label | Accessible name of the clear button | string | Component locale text | 1.8.0 | 1.8.0 |
+| tabIndex | Tab order of the clear button. `-1` excludes it from Tab navigation | number | 0 | 1.8.0 | 1.8.0 |
 
 ### Common Methods
 
@@ -238,7 +263,6 @@ export type FormatType
 | Event | Description | Type | Version |
 | --- | --- | --- | --- |
 | change | Callback function, can be executed when the selected time is changing | (date: Dayjs \| Dayjs[] \| null, dateString: string \| string[] \| null) => void | - |
-| update:value | - | (date: Dayjs \| Dayjs[] \| null) => void | - |
 | calendarChange | Callback function, can be executed when the start time or the end time of the range is changing. The `info` argument is available. | (dates: [Dayjs, Dayjs], dateStrings: [string, string], info: { range: 'start' \| 'end' }) => void | - |
 | panelChange | Callback when picker panel mode is changed | (value: Dayjs, mode: PickerMode) => void | - |
 | openChange | Callback function, can be executed whether the popup calendar is popped up or closed | (open: boolean) => void | - |
@@ -254,7 +278,8 @@ export type FormatType
 | Slot | Description | Type | Version |
 | --- | --- | --- | --- |
 | prefix | The custom prefix | () => any | - |
-| suffixIcon | The custom suffix icon | () => any | - |
+| suffix | The custom suffix | () => any | 1.8.0 |
+| ~~suffixIcon~~ | The custom suffix icon, please use `suffix` instead | () => any | - |
 | renderExtraFooter | Render extra footer in panel | (mode: PickerMode) => any | - |
 | panelRender | Customize panel render | (originPanel: VueNode) => any | - |
 | inputRender | - | (props: Record<string, any>) => any | - |

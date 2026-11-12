@@ -49,7 +49,7 @@ demo:
 
 | 参数 | 说明 | 类型 | 默认值 | 版本 | [全局配置](/components/config-provider-cn#component-config) |
 | --- | --- | --- | --- | --- | --- |
-| allowClear | 支持清除 | boolean \| &#123; clearIcon?: VueNode &#125; | false | - | × |
+| allowClear | 是否显示清除按钮 | boolean \| [AllowClearConfig](#allowclearconfig) | false | - | 1.8.0 |
 | backfill | 使用键盘选择选项的时候把选中项回填到输入框中 | boolean | false | - | × |
 | classes | 用于自定义组件内部各语义化结构的 class，支持对象或函数 | Record&lt;[SemanticDOM](#semantic-dom), string&gt; \| (info: &#123; props &#125;) =&gt; Record&lt;[SemanticDOM](#semantic-dom), string&gt; | - | - | × |
 | defaultActiveFirstOption | 是否默认高亮第一个选项 | boolean | true | - | × |
@@ -66,6 +66,8 @@ demo:
 | showSearch | 搜索配置 | boolean \| [SearchConfig](#showsearch) | true | - | × |
 | size | 控件大小 | `large` \| `medium` \| `small` | - | - | × |
 | status | 设置校验状态 | `error` \| `warning` | - | - | × |
+| suffix | 自定义后缀 | VueNode \| (info: &#123; open: boolean, searchValue: string, focused: boolean, showSearch?: boolean, loading?: boolean &#125;) =&gt; VueNode | - | 1.8.0 | × |
+| suffixIcon | 自定义后缀图标。已废弃，请使用 `suffix` 替代 | VueNode | - | - | × |
 | styles | 用于自定义组件内部各语义化结构的行内 style，支持对象或函数 | Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; \| (info: &#123; props &#125;) =&gt; Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; | - | - | × |
 | value | 指定当前选中的条目，支持 `v-model:value` | string | - | - | × |
 | variant | 形态变体 | `outlined` \| `borderless` \| `filled` \| `underlined` | `outlined` | - | × |
@@ -102,9 +104,21 @@ demo:
 | optionRender | 自定义下拉选项渲染 | (option: FlattenOptionData&lt;BaseOptionType&gt;, info: &#123; index: number &#125;) =&gt; VueNode | - |
 | popupRender | 自定义下拉框内容 | (menu: VNode) =&gt; VueNode | - |
 | prefix | 自定义前缀 | () =&gt; VueNode | - |
-| suffixIcon | 自定义后缀图标 | () =&gt; VueNode | - |
+| suffix | 自定义后缀 | (info: &#123; open: boolean, searchValue: string, focused: boolean, showSearch?: boolean, loading?: boolean &#125;) =&gt; VueNode | 1.8.0 |
+| suffixIcon | 自定义后缀图标。已废弃，请使用 `suffix` 插槽替代 | () =&gt; VueNode | - |
 
 ## 类型 {#types}
+
+### AllowClearConfig {#allowclearconfig}
+
+支持通过 `ConfigProvider.autoComplete.allowClear` 进行全局配置（1.8.0）。字段按组件配置、全局配置、默认值的顺序取值。`allowClear` 为 `true` 时继承全局配置；`disabled: false` 和 `tabIndex: 0` 可覆盖全局值。
+
+| 参数 | 说明 | 类型 | 默认值 | 版本 | [全局配置](/components/config-provider-cn#component-config) |
+| --- | --- | --- | --- | --- | --- |
+| clearIcon | 自定义清除图标 | VueNode | - | - | 1.8.0 |
+| disabled | `true` 时等同于 `allowClear: false` | boolean | false | 1.8.0 | 1.8.0 |
+| label | 清除按钮的无障碍名称 | string | 组件的本地化文案 | - | 1.8.0 |
+| tabIndex | 清除按钮的 Tab 键顺序。`-1` 表示不参与 Tab 键导航 | number | 0 | 1.8.0 | 1.8.0 |
 
 ### showSearch {#showsearch}
 

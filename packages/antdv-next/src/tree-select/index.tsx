@@ -6,6 +6,7 @@ import type { InputStatus } from '../_util/statusUtils'
 import type { VueNode } from '../_util/type'
 import type { Variant } from '../config-provider/context'
 import type { SizeType } from '../config-provider/SizeContext'
+import type { SelectSuffixRenderInfo } from '../select/useIcons'
 import type { AntTreeNodeProps, TreeProps } from '../tree'
 import type { SwitcherIcon } from '../tree/Tree'
 import VcTreeSelect, { SHOW_ALL, SHOW_CHILD, SHOW_PARENT, TreeNode } from '@v-c/tree-select'
@@ -14,6 +15,7 @@ import { getTransitionName } from '@v-c/util/dist/utils/transition'
 import { omit } from 'es-toolkit/compat'
 import { computed, defineComponent, shallowRef } from 'vue'
 import { getAttrStyleAndClass, useMergeSemantic, useSemanticRootStyle, useToArr, useToProps, useZIndex } from '../_util/hooks'
+import useAllowClear from '../_util/hooks/useAllowClear'
 import genPurePanel from '../_util/PurePanel.tsx'
 import { getMergedStatus, getStatusClassNames } from '../_util/statusUtils'
 import { getSlotPropsFnRun, toPropsRefs } from '../_util/tools'
@@ -28,7 +30,7 @@ import useVariant from '../form/hooks/useVariant'
 import { useLocaleGetter } from '../locale/useLocale'
 import mergedBuiltinPlacements from '../select/mergedBuiltinPlacements.ts'
 import useSelectStyle from '../select/style'
-import useIcons from '../select/useIcons'
+import useIcons, { getCustomSuffix } from '../select/useIcons'
 import usePopupRender from '../select/usePopupRender'
 import useShowArrow from '../select/useShowArrow'
 import { useCompactItemContext } from '../space/Compact'
@@ -122,6 +124,16 @@ interface BaseTreeSelectProps<ValueType = any, OptionType extends DataNode = Dat
     | 'onPopupVisibleChange'
     | 'onSearch'
     | 'popupRender'
+    | 'onClear'
+    | 'onBlur'
+    | 'onFocus'
+    | 'onKeyUp'
+    | 'onKeyDown'
+    | 'onMouseDown'
+    | 'onInputKeyDown'
+    | 'onMouseEnter'
+    | 'onMouseLeave'
+    | 'onClick'
   > {
   size?: SizeType
   disabled?: boolean
@@ -135,6 +147,9 @@ export interface TreeSelectProps<ValueType = any, OptionType extends DataNode = 
   TreeSelectEmitsProps<ValueType, OptionType> {
   styles?: TreeSelectStylesType
   classes?: TreeSelectClassNamesType
+  /** @since 1.8.0 */
+  suffix?: VueNode<[SelectSuffixRenderInfo]>
+  /** @deprecated Please use `suffix` instead. */
   suffixIcon?: VueNode
   size?: SizeType
   disabled?: boolean
@@ -164,7 +179,7 @@ export interface TreeSelectProps<ValueType = any, OptionType extends DataNode = 
   popupMatchSelectWidth?: boolean | number
   /**
    * @deprecated `showArrow` is deprecated which will be removed in next major version. It will be a
-   *   default behavior, you can hide it by setting `suffixIcon` to null.
+   *   default behavior, you can hide it by setting `suffix` to null.
    */
   showArrow?: boolean
   /**
@@ -176,8 +191,16 @@ export interface TreeSelectProps<ValueType = any, OptionType extends DataNode = 
 export interface TreeSelectEmits<ValueType = any, OptionType extends DataNode = DataNode> {
   'focus': (e: FocusEvent) => void
   'blur': (e: FocusEvent) => void
+  'keydown': NonNullable<VcTreeSelectProps['onKeyDown']>
+  'keyup': NonNullable<VcTreeSelectProps['onKeyUp']>
+  'click': NonNullable<VcTreeSelectProps['onClick']>
+  'inputKeydown': NonNullable<VcTreeSelectProps['onInputKeyDown']>
+  'mousedown': NonNullable<VcTreeSelectProps['onMouseDown']>
+  'mouseenter': NonNullable<VcTreeSelectProps['onMouseEnter']>
+  'mouseleave': NonNullable<VcTreeSelectProps['onMouseLeave']>
   'openChange': (open: boolean) => void
   'dropdownVisibleChange': (open: boolean) => void
+  'clear': NonNullable<VcTreeSelectProps['onClear']>
   'select': NonNullable<VcTreeSelectProps<ValueType, OptionType>['onSelect']>
   'treeExpand': NonNullable<VcTreeSelectProps<ValueType, OptionType>['onTreeExpand']>
   'treeLoad': NonNullable<VcTreeSelectProps<ValueType, OptionType>['onTreeLoad']>
@@ -190,8 +213,16 @@ export interface TreeSelectEmits<ValueType = any, OptionType extends DataNode = 
 export interface TreeSelectEmitsProps<ValueType = any, OptionType extends DataNode = DataNode> {
   onFocus?: TreeSelectEmits['focus']
   onBlur?: TreeSelectEmits['blur']
+  onKeydown?: TreeSelectEmits['keydown']
+  onKeyup?: TreeSelectEmits['keyup']
+  onClick?: TreeSelectEmits['click']
+  onInputKeydown?: TreeSelectEmits['inputKeydown']
+  onMousedown?: TreeSelectEmits['mousedown']
+  onMouseenter?: TreeSelectEmits['mouseenter']
+  onMouseleave?: TreeSelectEmits['mouseleave']
   onOpenChange?: TreeSelectEmits['openChange']
   onDropdownVisibleChange?: TreeSelectEmits['dropdownVisibleChange']
+  onClear?: TreeSelectEmits['clear']
   onSelect?: TreeSelectEmits<ValueType, OptionType>['select']
   onTreeExpand?: TreeSelectEmits<ValueType, OptionType>['treeExpand']
   onTreeLoad?: TreeSelectEmits<ValueType, OptionType>['treeLoad']
@@ -203,6 +234,8 @@ export interface TreeSelectEmitsProps<ValueType = any, OptionType extends DataNo
 }
 
 export interface TreeSelectSlots<OptionType extends DataNode = DataNode> {
+  suffix?: (info: SelectSuffixRenderInfo) => any
+  /** @deprecated Please use `suffix` slot instead. */
   suffixIcon?: () => any
   tagRender?: (props: any) => any
   notFoundContent?: () => any
@@ -273,10 +306,11 @@ const InternalTreeSelect = defineComponent<
       styles: contextStyles,
       classes: contextClassNames,
       switcherIcon,
+      allowClear: contextAllowClear,
       virtual,
       getPrefixCls,
       rootPrefixCls,
-    } = useComponentBaseConfig('treeSelect', props, ['switcherIcon'], 'tree-select')
+    } = useComponentBaseConfig('treeSelect', props, ['switcherIcon', 'allowClear'], 'tree-select')
     const getGlobalLocale = useLocaleGetter('global')
     const configCtx = useConfig()
     const {
@@ -315,11 +349,13 @@ const InternalTreeSelect = defineComponent<
         dropdownRender: 'popupRender',
         onDropdownVisibleChange: 'onOpenChange',
         bordered: 'variant',
+        suffixIcon: 'suffix',
       }
 
       Object.entries(deprecatedProps).forEach(([oldProp, newProp]) => {
         warning.deprecated(!((props as any)[oldProp] !== undefined), oldProp, newProp)
       })
+      warning.deprecated(!slots.suffixIcon, 'suffixIcon', 'suffix')
 
       warning(
         multiple !== false || !treeCheckable,
@@ -330,7 +366,7 @@ const InternalTreeSelect = defineComponent<
       warning(
         !(props.showArrow !== undefined),
         'deprecated',
-        '`showArrow` is deprecated which will be removed in next major version. It will be a default behavior, you can hide it by setting `suffixIcon` to null.',
+        '`showArrow` is deprecated which will be removed in next major version. It will be a default behavior, you can hide it by setting `suffix` to null.',
       )
     }
 
@@ -406,7 +442,7 @@ const InternalTreeSelect = defineComponent<
     })
 
     // ============================ zIndex ============================
-    const [zIndex] = useZIndex('SelectLike', computed(() => mergedStyles.value?.root?.zIndex as number))
+    const [zIndex] = useZIndex('SelectLike', computed(() => mergedStyles.value?.popup?.root?.zIndex as number))
     const treeSelectRef = shallowRef()
     expose({
       focus: () => treeSelectRef.value?.focus(),
@@ -454,8 +490,11 @@ const InternalTreeSelect = defineComponent<
       )
       const { style, className, restAttrs } = getAttrStyleAndClass(attrs)
       const mergedPopupRender = usePopupRender(popupRender || dropdownRender)
-      const customSuffixIcon = getSlotPropsFnRun(slots, props, 'suffixIcon', false)
-      const showSuffixIcon = useShowArrow(customSuffixIcon, props.showArrow)
+      const customSuffix = getCustomSuffix(slots, props)
+      const mergedCustomSuffix = customSuffix !== undefined
+        ? customSuffix
+        : getSlotPropsFnRun(slots, props, 'suffixIcon', false)
+      const showSuffix = useShowArrow(mergedCustomSuffix, props.showArrow)
       const mergedPopupMatchSelectWidth = popupMatchSelectWidth ?? dropdownMatchSelectWidth ?? configCtx.value?.popupMatchSelectWidth
       const isMultiple = !!(treeCheckable || multiple)
       const {
@@ -464,24 +503,24 @@ const InternalTreeSelect = defineComponent<
         isFormItemInput,
       } = formItemInputContext.value
       // ===================== Icons =====================
-      const { suffixIcon, removeIcon, clearIcon } = useIcons({
+      const { suffix: mergedSuffix, removeIcon } = useIcons({
         ...restProps,
-        suffixIcon: customSuffixIcon,
+        suffix: mergedCustomSuffix,
         multiple: isMultiple,
-        showSuffixIcon,
+        showSuffix,
+        showArrow: props.showArrow,
         hasFeedback,
         feedbackIcon,
         prefixCls: prefixCls.value,
         componentName: 'TreeSelect',
       } as any)
 
-      const mergedAllowClear = allowClear
-        ? {
-            clearIcon,
-            label: getGlobalLocale().clear,
-            ...(typeof allowClear === 'object' ? allowClear : {}),
-          }
-        : allowClear
+      const mergedAllowClear = useAllowClear({
+        allowClear,
+        contextAllowClear: contextAllowClear.value,
+        clearIcon: (restProps as any).clearIcon,
+        defaultLabel: getGlobalLocale().clear,
+      })
       const notFoundContent = getSlotPropsFnRun(slots, props, 'notFoundContent', false)
 
       // ===================== Empty =====================
@@ -501,8 +540,26 @@ const InternalTreeSelect = defineComponent<
         onBlur(e) {
           emit('blur', e)
         },
+        onKeyDown(e) {
+          emit('keydown', e)
+        },
+        onKeyUp(e) {
+          emit('keyup', e)
+        },
+        onClick(e) {
+          emit('click', e)
+        },
+        onInputKeyDown(e) {
+          emit('inputKeydown', e)
+        },
+        onMouseDown(e) {
+          emit('mousedown', e)
+        },
         onSelect(value, option) {
           emit('select', value, option)
+        },
+        onClear() {
+          emit('clear')
         },
         onChange(value, labelList, extra) {
           emit('change', value, labelList, extra)
@@ -525,7 +582,20 @@ const InternalTreeSelect = defineComponent<
         },
       }
 
+      // @v-c/select spreads onMouseEnter/onMouseLeave onto its root div as-is, and Vue
+      // binds camelCase DOM listeners as `mouse-enter`. Forward DOM-cased listeners
+      // instead so they fall through to the native events.
+      const mouseListeners = {
+        onMouseenter: (e: MouseEvent) => {
+          emit('mouseenter', e)
+        },
+        onMouseleave: (e: MouseEvent) => {
+          emit('mouseleave', e)
+        },
+      }
+
       const selectProps = omit(restProps, [
+        'suffix',
         'suffixIcon',
         'removeIcon',
         'clearIcon',
@@ -576,6 +646,7 @@ const InternalTreeSelect = defineComponent<
         <VcTreeSelect
           {...restAttrs}
           {...onAttrs}
+          {...mouseListeners}
           ref={treeSelectRef}
           classNames={mergedClassNames.value}
           styles={mergedStyles.value}
@@ -596,7 +667,7 @@ const InternalTreeSelect = defineComponent<
             treeCheckable ? <span class={`${prefixCls.value}-tree-checkbox-inner`} /> : treeCheckable
           }
           treeLine={!!treeLine}
-          suffixIcon={suffixIcon}
+          suffix={mergedSuffix}
           multiple={isMultiple}
           placement={memoizedPlacement.value}
           removeIcon={removeIcon}
@@ -633,8 +704,16 @@ interface TreeSelectInstance<ValueType = any, OptionType extends DataNode = Data
   $emit: {
     (event: 'focus', ...args: Parameters<TreeSelectEmits['focus']>): void
     (event: 'blur', ...args: Parameters<TreeSelectEmits['blur']>): void
+    (event: 'keydown', ...args: Parameters<TreeSelectEmits['keydown']>): void
+    (event: 'keyup', ...args: Parameters<TreeSelectEmits['keyup']>): void
+    (event: 'click', ...args: Parameters<TreeSelectEmits['click']>): void
+    (event: 'inputKeydown', ...args: Parameters<TreeSelectEmits['inputKeydown']>): void
+    (event: 'mousedown', ...args: Parameters<TreeSelectEmits['mousedown']>): void
+    (event: 'mouseenter', ...args: Parameters<TreeSelectEmits['mouseenter']>): void
+    (event: 'mouseleave', ...args: Parameters<TreeSelectEmits['mouseleave']>): void
     (event: 'openChange', ...args: Parameters<TreeSelectEmits['openChange']>): void
     (event: 'dropdownVisibleChange', ...args: Parameters<TreeSelectEmits['dropdownVisibleChange']>): void
+    (event: 'clear', ...args: Parameters<TreeSelectEmits['clear']>): void
     (event: 'select', ...args: Parameters<TreeSelectEmits<ValueType, OptionType>['select']>): void
     (event: 'treeExpand', ...args: Parameters<TreeSelectEmits<ValueType, OptionType>['treeExpand']>): void
     (event: 'treeLoad', ...args: Parameters<TreeSelectEmits<ValueType, OptionType>['treeLoad']>): void

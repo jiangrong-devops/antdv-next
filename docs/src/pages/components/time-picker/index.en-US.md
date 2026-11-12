@@ -42,10 +42,11 @@ Common props ref：[Common props](/docs/vue/common-props)
 
 | Property | Description | Type | Default | Version | [Global Config](/components/config-provider#component-config) |
 | --- | --- | --- | --- | --- | --- |
-| allowClear | Customize clear icon | boolean \| \{ clearIcon?: VueNode \} | true | - | ✓ |
+| allowClear | Whether to show a clear button | boolean \| [AllowClearConfig](#allowclearconfig) | true | - | ✓ |
 | ~~addon~~ | Called from time picker panel to render an addon to its bottom, please use `renderExtraFooter` instead | () => VueNode | - | - | × |
 | cellRender | Custom rendering function for picker cells | (current: number, info: \{ originNode: VueNode, today: dayjs, range?: 'start' \| 'end', subType: 'hour' \| 'minute' \| 'second' \| 'meridiem' \}) => VueNode | - | - | × |
 | changeOnScroll | Trigger selection when scroll the column | boolean | false | - | × |
+| components | Custom panels, input, and footer buttons. See [DatePicker Components](/components/date-picker#components) | [Components](/components/date-picker#components) | - | `nowButton` and `okButton`: 1.8.1 | × |
 | classes | Customize class for each semantic structure inside the component. Supports object or function. | Record<[SemanticDOM](#semantic-dom), string> \| (info: \{ props \})=> Record<[SemanticDOM](#semantic-dom), string> | - |  | ✓ |
 | defaultValue | To set default time | [dayjs](http://day.js.org/) | - |  | × |
 | disabled | Determine whether the TimePicker is disabled | boolean | false |  | × |
@@ -71,12 +72,22 @@ Common props ref：[Common props](/docs/vue/common-props)
 | size | To determine the size of the input box, the height of `large` and `small`, are 40px and 24px respectively, while default size is 32px | `large` \| `medium` \| `small` | - |  | × |
 | status | Set validation status | 'error' \| 'warning' \| 'success' \| 'validating' | - | - | × |
 | styles | Customize inline style for each semantic structure inside the component. Supports object or function. | Record<[SemanticDOM](#semantic-dom), CSSProperties> \| (info: \{ props \})=> Record<[SemanticDOM](#semantic-dom), CSSProperties> | - |  | ✓ |
-| suffixIcon | The custom suffix icon | VueNode | - |  | ✓ |
+| suffix | The custom suffix | VueNode | - | 1.8.0 | 1.8.0 |
+| ~~suffixIcon~~ | The custom suffix icon, please use `suffix` instead | VueNode | - |  | ✓ |
 | use12Hours | Display as 12 hours format, with default format `h:mm:ss a` | boolean | false |  | × |
 | value | To set time, support `v-model:value` | [dayjs](http://day.js.org/) | - |  | × |
 | variant | Variants of picker | `outlined` \| `borderless` \| `filled` \| `underlined` | `outlined` | - | ✓ |
-| onChange | A callback function, can be executed when the selected time is changing | function(time: dayjs, timeString: string): void | - |  | × |
-| onOpenChange | A callback function which will be called while panel opening/closing | (open: boolean) => void | - |  | × |
+
+### AllowClearConfig {#allowclearconfig}
+
+Fields that support global configuration use component values first, then global values, then defaults. `allowClear: true` inherits the global configuration; `disabled: false` and `tabIndex: 0` override the global values.
+
+| Property | Description | Type | Default | Version | [Global Config](/components/config-provider#component-config) |
+| --- | --- | --- | --- | --- | --- |
+| clearIcon | Custom clear icon | VueNode | - | - | ✓ |
+| disabled | When `true`, equivalent to `allowClear: false` | boolean | false | 1.8.0 | 1.8.0 |
+| label | Accessible name of the clear button | string | Component locale text | 1.8.0 | 1.8.0 |
+| tabIndex | Tab order of the clear button. `-1` excludes it from Tab navigation | number | 0 | 1.8.0 | 1.8.0 |
 
 #### DisabledTime
 
@@ -107,7 +118,8 @@ type DisabledTime = (now: Dayjs) => {
 | --- | --- | --- | --- |
 | ~~addon~~ | Deprecated. Use `renderExtraFooter` instead | () => any | - |
 | renderExtraFooter | Called from time picker panel to render some addon to its bottom | (mode: PickerMode) => any | - |
-| suffixIcon | The custom suffix icon | () => any | - |
+| suffix | The custom suffix | () => any | 1.8.0 |
+| ~~suffixIcon~~ | The custom suffix icon, please use `suffix` instead | () => any | - |
 | prefix | The custom prefix | () => any | - |
 
 ### RangePicker
@@ -131,6 +143,15 @@ type RangeDisabledTime = (
   disabledSeconds?: (selectedHour: number, selectedMinute: number) => number[]
 }
 ```
+
+### Events {#events}
+
+| Event | Description | Type | Version |
+| --- | --- | --- | --- |
+| calendarChange | A callback function, can be executed when the pending selected time is changing. The `info` argument is available. | (date: Dayjs \| Dayjs[], dateString: string \| string[], info: { range: 'start' \| 'end' }) => void | - |
+| change | A callback function, can be executed when the selected time is changing | (date: Dayjs \| Dayjs[] \| null, dateString: string \| string[] \| null) => void | - |
+| clear | Callback when click the clear button | () => void | 1.4.0 |
+| openChange | A callback function which will be called while panel opening/closing | (open: boolean) => void | - |
 
 ## Semantic DOM
 

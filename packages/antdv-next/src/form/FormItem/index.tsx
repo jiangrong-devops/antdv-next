@@ -6,11 +6,12 @@ import type { FormItemInputProps } from '../FormItemInput'
 import type { FormItemLabelProps } from '../FormItemLabel'
 import type { InternalNamePath, Meta, NamePath, Rule, RuleError, RuleObject, TriggerType, ValidateOptions } from '../types'
 import type { ItemHolderProps } from './ItemHolder.tsx'
-import { clsx } from '@v-c/util'
+import { clsx, omit } from '@v-c/util'
 import { filterEmpty } from '@v-c/util/dist/props-util'
 import { computed, createVNode, defineComponent, isVNode, onBeforeUnmount, shallowRef, watch } from 'vue'
 import { isRenderable } from '../../_util/is.ts'
 import { getSlotPropsFnRun } from '../../_util/tools.ts'
+import { devUseWarning, isDev } from '../../_util/warning'
 import { useComponentBaseConfig } from '../../config-provider/context'
 import useCSSVarCls from '../../config-provider/hooks/useCSSVarCls'
 import { useFormContext, useFormItemProvider, useNoStyleItemContext } from '../context.tsx'
@@ -46,6 +47,7 @@ export interface BaseFormItemProps {
   validateTrigger?: TriggerType | TriggerType[] | false
   validateDebounce?: number
   validateFirst?: boolean | 'parallel'
+  preserve?: boolean
 }
 
 export type FormItemProps = BaseFormItemProps
@@ -109,6 +111,15 @@ const InternalFormItem = defineComponent<
           : formContext.value?.validateTrigger) as TriggerType | TriggerType[] | false
     })
     const { prefixCls } = useComponentBaseConfig('form', props)
+
+    if (isDev) {
+      const warning = devUseWarning('Form.Item')
+      warning.deprecated(
+        props.labelAlign !== 'left' && props.labelAlign !== 'right',
+        'labelAlign=left|right',
+        'labelAlign=start|end',
+      )
+    }
     const notifyParentMetaChange = useNoStyleItemContext()
     const hasName = computed(() => !(props.name === undefined || props.name === null))
     const namePath = computed<InternalNamePath>(() => (hasName.value ? getNamePath(props.name!) : []))
@@ -529,6 +540,7 @@ const InternalFormItem = defineComponent<
             rules: () => getMergedRules(),
             // Touched or validated or has initialValue
             isFieldDirty: () => meta.value.touched || meta.value.validated || initialValue.value !== undefined,
+            isPreserve: () => props.preserve,
             // @ts-expect-error this
             validateRules: (options?: ValidateOptions) => validateRulesInner(options),
             resetField,
@@ -550,6 +562,11 @@ const InternalFormItem = defineComponent<
           // 只移除自己注册的那一项：同一轮更新里 key 可能已被其他 FormItem 接手
           onCleanup(() => {
             formCtx.removeField?.(fieldKey, field)
+            // Cleanup runs inside the parent render effect. Defer value cleanup
+            // so it does not collect `model` / Form props as parent deps.
+            Promise.resolve().then(() => {
+              formCtx.removeFieldValue?.(field)
+            })
           })
         }
       },
@@ -715,7 +732,7 @@ const InternalFormItem = defineComponent<
 
       return (
         <ItemHolder
-          {...props}
+          {...omit(props, ['preserve'])}
           tooltip={mergedTooltip}
           label={getSlotPropsFnRun(slots, props, 'label')}
           extra={getSlotPropsFnRun(slots, props, 'extra')}

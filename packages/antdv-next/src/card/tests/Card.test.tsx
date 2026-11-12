@@ -136,7 +136,7 @@ describe('card', () => {
     expect(wrapper.find('.ant-card-actions').exists()).toBe(true)
     const items = wrapper.findAll('.ant-card-actions li')
     expect(items).toHaveLength(2)
-    expect(items[0].attributes('style')).toContain('width: 50%')
+    expect(items[0]!.attributes('style')).toContain('width: 50%')
   })
 
   it('should render actions via slot', () => {
@@ -204,7 +204,28 @@ describe('card', () => {
     })
     const tabs = wrapper.findAll('.ant-tabs-tab')
     expect(tabs.length).toBeGreaterThan(1)
-    await tabs[1].trigger('click')
+    await tabs[1]!.trigger('click')
+    expect(onTabChange).toHaveBeenCalledWith('tab2')
+  })
+
+  // https://github.com/ant-design/ant-design/pull/59655
+  it('should trigger tabProps.onChange when switching tabs', async () => {
+    const onTabPropsChange = vi.fn()
+    const onTabChange = vi.fn()
+    const wrapper = mount(Card, {
+      props: {
+        tabList: [
+          { key: 'tab1', label: 'Tab 1' },
+          { key: 'tab2', label: 'Tab 2' },
+        ],
+        tabProps: { onChange: onTabPropsChange },
+        onTabChange,
+      },
+      slots: { default: () => 'content' },
+    })
+    await wrapper.findAll('.ant-tabs-tab')[1]!.trigger('click')
+    expect(onTabPropsChange).toHaveBeenCalledTimes(1)
+    expect(onTabPropsChange).toHaveBeenCalledWith('tab2')
     expect(onTabChange).toHaveBeenCalledWith('tab2')
   })
 
@@ -222,7 +243,7 @@ describe('card', () => {
       slots: { default: () => 'content' },
     })
     const tabs = wrapper.findAll('.ant-tabs-tab')
-    await tabs[1].trigger('click')
+    await tabs[1]!.trigger('click')
     expect(onUpdate).toHaveBeenCalledWith('tab2')
   })
 
@@ -256,7 +277,7 @@ describe('card', () => {
 
     expect(wrapper.find('.ant-tabs-tab-active').text()).toBe('Tab 2')
 
-    await wrapper.findAll('.ant-tabs-tab')[0].trigger('click')
+    await wrapper.findAll('.ant-tabs-tab')[0]!.trigger('click')
     expect(wrapper.find('.ant-tabs-tab-active').text()).toBe('Tab 1')
   })
 

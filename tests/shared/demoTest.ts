@@ -17,7 +17,7 @@ export default function demoTest(component: string, options: DemoTestOptions = {
 
   let files: string[] = []
   try {
-    files = readdirSync(demoDir).filter(f => f.endsWith('.vue')).sort()
+    files = readdirSync(demoDir).filter((f: string) => f.endsWith('.vue')).sort()
   }
   catch {
     // No demo directory found

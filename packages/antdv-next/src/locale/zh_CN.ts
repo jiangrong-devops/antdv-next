@@ -18,6 +18,8 @@ const localeValues: Locale = {
     close: '关闭',
     sortable: '可排序',
     clear: '清除',
+    show: '显示',
+    hide: '隐藏',
   },
   Table: {
     filterTitle: '筛选',
@@ -161,6 +163,9 @@ const localeValues: Locale = {
     transparent: '无色',
     singleColor: '单色',
     gradientColor: '渐变色',
+  },
+  Input: {
+    otpCell: '第 ${index} 位，共 ${total} 位',
   },
 }
 

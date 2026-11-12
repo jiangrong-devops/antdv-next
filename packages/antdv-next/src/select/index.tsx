@@ -6,6 +6,7 @@ import type { InputStatus } from '../_util/statusUtils'
 import type { VueNode } from '../_util/type'
 import type { ComponentBaseProps, Variant } from '../config-provider/context'
 import type { SizeType } from '../config-provider/SizeContext'
+import type { SelectSuffixRenderInfo } from './useIcons'
 import VcSelect, { OptGroup, Option } from '@v-c/select'
 import { clsx } from '@v-c/util'
 import { getTransitionName } from '@v-c/util/dist/utils/transition'
@@ -18,12 +19,13 @@ import {
   useToProps,
   useZIndex,
 } from '../_util/hooks'
+import useAllowClear from '../_util/hooks/useAllowClear'
 import { omitUndefined } from '../_util/omitUndefined'
 import genPurePanel from '../_util/PurePanel.tsx'
 import { getMergedStatus, getStatusClassNames } from '../_util/statusUtils'
 import { getSlotPropsFnRun, toPropsRefs } from '../_util/tools'
 import { devUseWarning, isDev } from '../_util/warning'
-import { useComponentBaseConfig } from '../config-provider/context'
+import { useComponentBaseConfig, useConfig } from '../config-provider/context'
 import { DefaultRenderEmpty } from '../config-provider/defaultRenderEmpty'
 import { useDisabledContext } from '../config-provider/DisabledContext'
 import useCSSVarCls from '../config-provider/hooks/useCSSVarCls'
@@ -35,12 +37,13 @@ import { useCompactItemContext } from '../space/Compact'
 import { useToken } from '../theme/internal'
 import mergedBuiltinPlacements from './mergedBuiltinPlacements'
 import useStyle from './style'
-import useIcons from './useIcons'
+import useIcons, { getCustomSuffix } from './useIcons'
 import usePopupRender from './usePopupRender'
 import useShowArrow from './useShowArrow'
 
 type RawValue = string | number
 
+export type { SelectSuffixRenderInfo } from './useIcons'
 export type { SearchConfig } from '@v-c/select'
 
 export interface LabeledValue {
@@ -54,6 +57,9 @@ export type SelectValue = RawValue | RawValue[] | LabeledValue | LabeledValue[] 
 export interface InternalSelectProps
   extends ComponentBaseProps, Omit<VcSelectProps, 'mode' | 'classNames' | 'className' | 'style' | 'prefix' | 'styles' | 'onPopupVisibleChange' | 'popupRender'> {
   prefix?: VueNode
+  /** @since 1.8.0 */
+  suffix?: VueNode<[SelectSuffixRenderInfo]>
+  /** @deprecated Please use `suffix` instead. */
   suffixIcon?: VueNode
   size?: SizeType
   disabled?: boolean
@@ -62,7 +68,7 @@ export interface InternalSelectProps
   bordered?: boolean
   /**
    * @deprecated `showArrow` is deprecated which will be removed in next major version. It will be a
-   *   default behavior, you can hide it by setting `suffixIcon` to null.
+   *   default behavior, you can hide it by setting `suffix` to null.
    */
   showArrow?: boolean
   /**
@@ -140,6 +146,7 @@ type RcEventKeys
     | 'onFocus'
     | 'onPopupScroll'
     | 'onSelect'
+    | 'onSearch'
     | 'optionRender'
 
 export interface SelectProps
@@ -193,6 +200,7 @@ const omitKeys = [
   'onPopupScroll',
   'onPopupVisibleChange',
   'onSelect',
+  'onSearch',
   'popupRender',
   'labelRender',
   'optionRender',
@@ -219,6 +227,7 @@ export interface SelectEmits {
   'focus': NonNullable<VcSelectProps['onFocus']>
   'popupScroll': NonNullable<VcSelectProps['onPopupScroll']>
   'select': NonNullable<VcSelectProps['onSelect']>
+  'search': NonNullable<VcSelectProps['onSearch']>
 }
 export interface SelectEmitsProps {
   onOpenChange?: SelectEmits['openChange']
@@ -239,11 +248,14 @@ export interface SelectEmitsProps {
   onFocus?: SelectEmits['focus']
   onPopupScroll?: SelectEmits['popupScroll']
   onSelect?: SelectEmits['select']
+  onSearch?: SelectEmits['search']
 }
 
 type OptionParams = Parameters<NonNullable<VcSelectProps['optionRender']>>
 
 export interface SelectSlots {
+  suffix?: (info: SelectSuffixRenderInfo) => any
+  /** @deprecated Please use `suffix` slot instead. */
   suffixIcon?: () => any
   prefix?: () => any
   tagRender?: SelectProps['tagRender']
@@ -282,8 +294,13 @@ const Select = defineComponent<
       classes: contextClassNames,
       prefixCls,
       allowClear: contextAllowClear,
-    } = useComponentBaseConfig('select', props, ['showSearch', 'allowClear'])
+      autoComplete: contextAutoComplete,
+      clearIcon: contextClearIcon,
+      suffix: contextSuffix,
+      suffixIcon: contextSuffixIcon,
+    } = useComponentBaseConfig('select', props, ['showSearch', 'allowClear', 'autoComplete', 'clearIcon', 'suffix', 'suffixIcon'])
     const getGlobalLocale = useLocaleGetter('global')
+    const configCtx = useConfig()
     const {
       listItemHeight: customListItemHeight,
       direction: propDirection,
@@ -390,16 +407,18 @@ const Select = defineComponent<
         dropdownRender: 'popupRender',
         onDropdownVisibleChange: 'onOpenChange',
         bordered: 'variant',
+        suffixIcon: 'suffix',
       }
 
       Object.entries(deprecatedProps).forEach(([oldProp, newProp]) => {
         warning.deprecated(!((props as any)[oldProp]), oldProp, newProp)
       })
+      warning.deprecated(!slots.suffixIcon, 'suffixIcon', 'suffix')
 
       warning(
         !(props.showArrow),
         'deprecated',
-        '`showArrow` is deprecated which will be removed in next major version. It will be a default behavior, you can hide it by setting `suffixIcon` to null.',
+        '`showArrow` is deprecated which will be removed in next major version. It will be a default behavior, you can hide it by setting `suffix` to null.',
       )
 
       warning(
@@ -446,8 +465,11 @@ const Select = defineComponent<
         ...rest
       } = props
       const { className, style, restAttrs } = getAttrStyleAndClass(attrs)
-      const mergedSuffixIcon = getSlotPropsFnRun(slots, props, 'suffixIcon', false)
-      const showSuffixIcon = useShowArrow(mergedSuffixIcon, showArrow)
+      const customSuffix = getCustomSuffix(slots, props)
+      const mergedCustomSuffix = customSuffix !== undefined
+        ? customSuffix
+        : getSlotPropsFnRun(slots, props, 'suffixIcon', false)
+      const showSuffix = useShowArrow(mergedCustomSuffix, showArrow)
       const tagRender = slots?.tagRender ?? props?.tagRender
       const mergedPopupMatchSelectWidth = popupMatchSelectWidth ?? dropdownMatchSelectWidth ?? contextPopupMatchSelectWidth.value
       const popupRender = slots?.popupRender ?? props?.popupRender
@@ -473,29 +495,32 @@ const Select = defineComponent<
       }
 
       // ===================== Icons =====================
-      const { suffixIcon, itemIcon, removeIcon, clearIcon } = useIcons({
+      const { suffix: mergedSuffix, itemIcon, removeIcon } = useIcons({
         ...rest,
         multiple: isMultiple.value,
         hasFeedback,
         feedbackIcon,
-        showSuffixIcon,
-        suffixIcon: mergedSuffixIcon,
+        showSuffix,
+        showArrow,
+        suffix: mergedCustomSuffix,
+        contextSuffix: contextSuffix.value !== undefined ? contextSuffix.value : contextSuffixIcon.value,
         prefixCls: prefixCls.value,
         componentName: 'Select',
       } as any)
 
-      const finalAllowClear = allowClear ?? contextAllowClear.value
-      const mergedAllowClear = finalAllowClear
-        ? {
-            clearIcon,
-            label: getGlobalLocale().clear,
-            ...(typeof finalAllowClear === 'object' ? finalAllowClear : {}),
-          }
-        : finalAllowClear
+      const mergedAllowClear = useAllowClear({
+        allowClear,
+        clearIcon: (rest as any).clearIcon,
+        // AutoComplete uses its own allowClear configuration instead of Select's.
+        contextAllowClear: mode.value === 'combobox' ? configCtx.value.autoComplete?.allowClear : contextAllowClear.value,
+        contextClearIcon: contextClearIcon.value,
+        defaultLabel: getGlobalLocale().clear,
+      })
 
       // Forward only props that are set: every undefined key costs a normalisation
       // pass in @v-c/select and each layer below it.
       const selectProps: Record<string, any> = omitUndefined(rest as any, [
+        'suffix',
         'suffixIcon',
         'classes',
         'styles',
@@ -575,14 +600,20 @@ const Select = defineComponent<
         onMouseDown: (e: any) => {
           emit('mousedown', e)
         },
-        onMouseLeave: (e: any) => {
+        // @v-c/select spreads onMouseEnter/onMouseLeave onto its root div as-is, and Vue
+        // binds camelCase DOM listeners as `mouse-enter`. Forward DOM-cased listeners
+        // instead so they fall through to the native events.
+        onMouseleave: (e: any) => {
           emit('mouseleave', e)
         },
-        onMouseEnter: (e: any) => {
+        onMouseenter: (e: any) => {
           emit('mouseenter', e)
         },
         onPopupScroll: (e: any) => {
           emit('popupScroll', e)
+        },
+        onSearch: (value: string) => {
+          emit('search', value)
         },
       }
       const labelRender = slots?.labelRender ?? props?.labelRender
@@ -619,10 +650,11 @@ const Select = defineComponent<
           direction={direction.value}
           prefix={prefix}
           value={value.value}
-          suffixIcon={suffixIcon}
+          suffix={mergedSuffix}
           menuItemSelectedIcon={itemIcon}
           removeIcon={removeIcon}
           allowClear={mergedAllowClear}
+          autoComplete={props.autoComplete ?? contextAutoComplete.value}
           notFoundContent={mergedNotFound}
           className={mergedClassName}
           getPopupContainer={getPopupContainer || getContextPopupContainer}

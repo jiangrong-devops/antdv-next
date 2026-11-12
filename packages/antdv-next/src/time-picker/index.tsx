@@ -1,4 +1,5 @@
 import type { PickerMode, PickerRef } from '@v-c/picker'
+import type { Dayjs } from 'dayjs'
 import type { App, CSSProperties, SlotsType } from 'vue'
 import type {
   SemanticClassNamesType,
@@ -90,7 +91,7 @@ export interface TimePickerLocale {
   rangePlaceholder?: [string, string]
 }
 
-type BaseTimeRangePickerProps = Omit<RangePickerTimeProps<AnyObject>, 'picker' | 'onKeydown'>
+type BaseTimeRangePickerProps = Omit<RangePickerTimeProps<Dayjs>, 'picker' | 'onKeydown'>
 
 export interface TimeRangePickerProps extends BaseTimeRangePickerProps,
   /* @vue-ignore */
@@ -101,13 +102,14 @@ export interface TimeRangePickerProps extends BaseTimeRangePickerProps,
   popupStyle?: CSSProperties
 }
 
-export interface TimeRangePickerEmits<DateType = AnyObject> {
+export interface TimeRangePickerEmits<DateType = Dayjs> {
   'change': (dates: DateType[] | null, dateStrings: [string, string]) => void
   'update:value': (dates: DateType[] | null) => void
   'calendarChange': (dates: DateType[], dateStrings: [string, string], info: any) => void
   'panelChange': (dates: DateType[], modes: [PickerMode, PickerMode]) => void
   'openChange': (open: boolean) => void
   'ok': (dates: DateType[]) => void
+  'clear': () => void
   'focus': (e: FocusEvent, info: any) => void
   'blur': (e: FocusEvent, info: any) => void
   'keydown': (e: KeyboardEvent, preventDefault: VoidFunction) => void
@@ -124,16 +126,16 @@ const RangePicker = defineComponent<
   (props, { slots, emit, expose, attrs }) => {
     const rangeRef = shallowRef<PickerRef>()
 
-    const onChange = (dates: AnyObject[] | null, dateStrings: [string, string]) => {
+    const onChange = (dates: Dayjs[] | null, dateStrings: [string, string]) => {
       emit('update:value', dates)
       emit('change', dates, dateStrings)
     }
 
-    const onCalendarChange = (dates: AnyObject[], dateStrings: [string, string], info: any) => {
+    const onCalendarChange = (dates: Dayjs[], dateStrings: [string, string], info: any) => {
       emit('calendarChange', dates, dateStrings, info)
     }
 
-    const onPanelChange = (dates: AnyObject[], modes: [PickerMode, PickerMode]) => {
+    const onPanelChange = (dates: Dayjs[], modes: [PickerMode, PickerMode]) => {
       emit('panelChange', dates, modes)
     }
 
@@ -141,8 +143,12 @@ const RangePicker = defineComponent<
       emit('openChange', open)
     }
 
-    const onOk = (dates: AnyObject[]) => {
+    const onOk = (dates: Dayjs[]) => {
       emit('ok', dates)
+    }
+
+    const onClear = () => {
+      emit('clear')
     }
 
     const onFocus = (e: FocusEvent, info: any) => {
@@ -176,6 +182,7 @@ const RangePicker = defineComponent<
           onPanelChange={onPanelChange}
           onOpenChange={onOpenChange}
           onOk={onOk}
+          onClear={onClear}
           onFocus={onFocus}
           onBlur={onBlur}
           onKeydown={onKeyDown}
@@ -190,7 +197,7 @@ const RangePicker = defineComponent<
   },
 )
 
-type BaseTimePickerProps = Omit<PickerTimeProps<AnyObject>, 'picker' | 'classes' | 'styles' | 'onKeydown'>
+type BaseTimePickerProps = Omit<PickerTimeProps<Dayjs>, 'picker' | 'classes' | 'styles' | 'onKeydown'>
 
 export interface TimePickerProps
   extends BaseTimePickerProps,
@@ -213,42 +220,47 @@ export interface TimePickerSlots {
   /** @deprecated Please use `renderExtraFooter` instead */
   addon?: () => any
   renderExtraFooter?: (mode: PickerMode) => any
+  suffix?: () => any
+  /** @deprecated Please use `suffix` instead */
   suffixIcon?: () => any
   prefix?: () => any
   [key: string]: any
 }
 
-export interface TimePickerEmits<DateType = AnyObject> {
+export interface TimePickerEmits<DateType = Dayjs> {
   'change': (date: DateType | DateType[] | null, dateString: string | string[]) => void
   'update:value': (date: DateType | DateType[] | null) => void
   'calendarChange': (date: DateType | DateType[], dateString: string | string[], info: any) => void
   'panelChange': (date: DateType, mode: PickerMode) => void
   'openChange': (open: boolean) => void
   'ok': (date: DateType | DateType[]) => void
+  'clear': () => void
   'select': (date: DateType) => void
   'focus': (e: FocusEvent, info: any) => void
   'blur': (e: FocusEvent, info: any) => void
   'keydown': (e: KeyboardEvent, preventDefault: VoidFunction) => void
 }
-export interface TimeRangePickerEmitsProps<DateType = AnyObject> {
+export interface TimeRangePickerEmitsProps<DateType = Dayjs> {
   onChange?: TimeRangePickerEmits<DateType>['change']
   'onUpdate:value'?: TimeRangePickerEmits<DateType>['update:value']
   onCalendarChange?: TimeRangePickerEmits<DateType>['calendarChange']
   onPanelChange?: TimeRangePickerEmits<DateType>['panelChange']
   onOpenChange?: TimeRangePickerEmits<DateType>['openChange']
   onOk?: TimeRangePickerEmits<DateType>['ok']
+  onClear?: TimeRangePickerEmits<DateType>['clear']
   onFocus?: TimeRangePickerEmits<DateType>['focus']
   onBlur?: TimeRangePickerEmits<DateType>['blur']
   onKeydown?: TimeRangePickerEmits<DateType>['keydown']
 }
 
-export interface TimePickerEmitsProps<DateType = AnyObject> {
+export interface TimePickerEmitsProps<DateType = Dayjs> {
   onChange?: TimePickerEmits<DateType>['change']
   'onUpdate:value'?: TimePickerEmits<DateType>['update:value']
   onCalendarChange?: TimePickerEmits<DateType>['calendarChange']
   onPanelChange?: TimePickerEmits<DateType>['panelChange']
   onOpenChange?: TimePickerEmits<DateType>['openChange']
   onOk?: TimePickerEmits<DateType>['ok']
+  onClear?: TimePickerEmits<DateType>['clear']
   onSelect?: TimePickerEmits<DateType>['select']
   onFocus?: TimePickerEmits<DateType>['focus']
   onBlur?: TimePickerEmits<DateType>['blur']
@@ -302,16 +314,16 @@ const TimePicker = defineComponent<
 
     const pickerRef = shallowRef<PickerRef>()
 
-    const onChange = (date: AnyObject | AnyObject[] | null, dateString: string | string[]) => {
+    const onChange = (date: Dayjs | Dayjs[] | null, dateString: string | string[]) => {
       emit('update:value', date)
       emit('change', date, dateString)
     }
 
-    const onCalendarChange = (date: AnyObject | AnyObject[], dateString: string | string[], info: any) => {
+    const onCalendarChange = (date: Dayjs | Dayjs[], dateString: string | string[], info: any) => {
       emit('calendarChange', date, dateString, info)
     }
 
-    const onPanelChange = (date: AnyObject, mode: PickerMode) => {
+    const onPanelChange = (date: Dayjs, mode: PickerMode) => {
       emit('panelChange', date, mode)
     }
 
@@ -319,11 +331,15 @@ const TimePicker = defineComponent<
       emit('openChange', open)
     }
 
-    const onOk = (date: AnyObject | AnyObject[]) => {
+    const onOk = (date: Dayjs | Dayjs[]) => {
       emit('ok', date)
     }
 
-    const onSelect = (date: AnyObject) => {
+    const onClear = () => {
+      emit('clear')
+    }
+
+    const onSelect = (date: Dayjs) => {
       emit('select', date)
     }
 
@@ -395,6 +411,7 @@ const TimePicker = defineComponent<
               onPanelChange,
               onOpenChange,
               onOk,
+              onClear,
               onSelect,
               onFocus,
               onBlur,

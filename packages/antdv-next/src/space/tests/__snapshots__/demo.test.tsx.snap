@@ -712,6 +712,58 @@ exports[`space demo > renders align correctly 1`] = `
       <!---->
     </div>
   </div>
+  <div
+    class="flex-none my-2 mx-1 p-1 border border-solid border-[#40a9ff]"
+  >
+    <div
+      class="ant-space ant-space-horizontal ant-space-align-stretch ant-space-gap-row-small ant-space-gap-col-small css-var-root"
+    >
+      <div
+        class="ant-space-item"
+      >
+         stretch 
+      </div>
+      <!---->
+      <div
+        class="ant-space-item"
+      >
+        <button
+          class="ant-btn css-var-root ant-btn-primary ant-btn-color-primary ant-btn-variant-solid"
+          type="button"
+        >
+          <transition-stub
+            appear="false"
+            css="true"
+            enteractiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare "
+            enterfromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-prepare ant-btn-loading-icon-motion-enter-prepare ant-btn-loading-icon-motion-enter-start"
+            entertoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-enter ant-btn-loading-icon-motion-appear ant-btn-loading-icon-motion-appear-active ant-btn-loading-icon-motion-enter-active"
+            leaveactiveclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
+            leavefromclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave"
+            leavetoclass="ant-btn-loading-icon-motion ant-btn-loading-icon-motion-leave ant-btn-loading-icon-motion-leave-active"
+            name="ant-btn-loading-icon-motion"
+            persisted="false"
+          >
+            <!---->
+          </transition-stub>
+          <span>
+             Primary 
+          </span>
+          <!---->
+        </button>
+      </div>
+      <!---->
+      <div
+        class="ant-space-item"
+      >
+        <span
+          class="inline-block pt-8 px-2 pb-4 bg-[rgba(150,150,150,0.2)]"
+        >
+          Block
+        </span>
+      </div>
+      <!---->
+    </div>
+  </div>
 </div>
 `;
 
@@ -1043,6 +1095,7 @@ exports[`space demo > renders compact correctly 1`] = `
           class="ant-select-suffix"
         >
           <span
+            aria-hidden="true"
             aria-label="down"
             class="anticon anticon-down"
             role="img"
@@ -1184,6 +1237,7 @@ exports[`space demo > renders compact correctly 1`] = `
           class="ant-select-suffix"
         >
           <span
+            aria-hidden="true"
             aria-label="down"
             class="anticon anticon-down"
             role="img"
@@ -1305,6 +1359,7 @@ exports[`space demo > renders compact correctly 1`] = `
             class="ant-input-suffix"
           >
             <button
+              aria-label="Clear"
               class="ant-input-clear-icon"
               type="button"
             >
@@ -1441,6 +1496,7 @@ exports[`space demo > renders compact correctly 1`] = `
           class="ant-select-suffix"
         >
           <span
+            aria-hidden="true"
             aria-label="down"
             class="anticon anticon-down"
             role="img"
@@ -1886,6 +1942,7 @@ exports[`space demo > renders compact correctly 1`] = `
           class="ant-select-suffix"
         >
           <span
+            aria-hidden="true"
             aria-label="down"
             class="anticon anticon-down"
             role="img"
@@ -1939,6 +1996,7 @@ exports[`space demo > renders compact correctly 1`] = `
           class="ant-select-suffix"
         >
           <span
+            aria-hidden="true"
             aria-label="down"
             class="anticon anticon-down"
             role="img"
@@ -2001,6 +2059,7 @@ exports[`space demo > renders compact correctly 1`] = `
           class="ant-select-suffix"
         >
           <span
+            aria-hidden="true"
             aria-label="down"
             class="anticon anticon-down"
             role="img"
@@ -2086,6 +2145,7 @@ exports[`space demo > renders compact correctly 1`] = `
           class="ant-select-suffix"
         >
           <span
+            aria-hidden="true"
             aria-label="down"
             class="anticon anticon-down"
             role="img"
@@ -2233,6 +2293,7 @@ exports[`space demo > renders compact correctly 1`] = `
           class="ant-select-suffix"
         >
           <span
+            aria-hidden="true"
             aria-label="down"
             class="anticon anticon-down"
             role="img"
@@ -2371,7 +2432,6 @@ exports[`space demo > renders compact correctly 1`] = `
         <!---->
         <div
           class="ant-select-content ant-select-content-has-value"
-          title="leaf1"
         >
           leaf1
           <input
@@ -2392,6 +2452,7 @@ exports[`space demo > renders compact correctly 1`] = `
           class="ant-select-suffix"
         >
           <span
+            aria-hidden="true"
             aria-label="down"
             class="anticon anticon-down"
             role="img"

@@ -71,6 +71,33 @@ describe('tree.TypeScript', () => {
     expect(wrapper.exists()).toBeTruthy()
   })
 
+  it('generic data node flows into callbacks', () => {
+    interface MyDataNode extends BasicDataNode {
+      bamboo: string
+      list?: MyDataNode[]
+    }
+
+    const treeData: MyDataNode[] = [{ bamboo: 'good', list: [{ bamboo: 'well' }] }]
+    // `BasicDataNode` has an index signature, so assert the field type instead of its presence.
+    const isString = (value: string) => value.length > 0
+
+    const wrapper = mount(() => (
+      <div>
+        <Tree<MyDataNode>
+          treeData={treeData}
+          loadData={async node => void isString(node.bamboo)}
+          allowDrop={({ dragNode }) => isString(dragNode.bamboo)}
+          onSelect={(_keys, info) => isString(info.node.bamboo)}
+        />
+        {/* @ts-expect-error `bamboo` is required by MyDataNode */}
+        <Tree<MyDataNode> treeData={[{ list: [] }]} />
+        {/* @ts-expect-error `bamboo` is inferred from treeData as a string */}
+        <DirectoryTree treeData={treeData} titleRender={(node): number => node.bamboo} />
+      </div>
+    ))
+    expect(wrapper.exists()).toBeTruthy()
+  })
+
   it('draggable/icon/switcherIcon params type', () => {
     const props: TreeProps = {
       treeData: [

@@ -39,7 +39,7 @@ Common props ref：[Common props](/docs/vue/common-props)
 
 | Property | Description | Type | Default | Version | [Global Config](/components/config-provider#component-config) |
 | --- | --- | --- | --- | --- | --- |
-| allowClear | Show clear button | boolean \| &#123; clearIcon?: VueNode; label?: string &#125; | false | - | × |
+| allowClear | Whether to show a clear button | boolean \| [AllowClearConfig](#allowclearconfig) | false | - | 1.8.0 |
 | classes | Customize class for each semantic structure inside the component. Supports object or function. | Record<[SemanticDOM](#semantic-dom), string> \| (info: { props })=> Record<[SemanticDOM](#semantic-dom), string> | - | - | ✓ |
 | styles | Customize inline style for each semantic structure inside the component. Supports object or function. | Record<[SemanticDOM](#semantic-dom), CSSProperties> \| (info: { props })=> Record<[SemanticDOM](#semantic-dom), CSSProperties> | - | - | ✓ |
 | rootClass | Root container class | string | - | - | × |
@@ -68,7 +68,8 @@ Common props ref：[Common props](/docs/vue/common-props)
 | size | To set the size of the select input | `large` \| `medium` \| `small` | - | - | × |
 | status | Set validation status | `error` \| `warning` | - | - | × |
 | variant | Variants of selector | `outlined` \| `borderless` \| `filled` \| `underlined` | `outlined` | - | ✓ |
-| suffixIcon | The custom suffix icon | VueNode | `&lt;DownOutlined /&gt;` | - | × |
+| suffix | The custom suffix. Custom suffixes will not respond to clicks to open, because the replaced suffix may be designed for other interactions. You can use `pointer-events: none` style to bypass | VueNode \| (info: &#123; open: boolean, searchValue: string, focused: boolean, showSearch?: boolean, loading?: boolean &#125;) =&gt; VueNode | `&lt;DownOutlined /&gt;` | 1.8.0 | × |
+| suffixIcon | The custom suffix icon. Deprecated. Use `suffix` instead | VueNode | `&lt;DownOutlined /&gt;` | - | × |
 | switcherIcon | Customize collapse/expand icon of tree node | VueNode \| ((props: AntTreeNodeProps) =&gt; VueNode) | - | - | ✓ |
 | tagRender | Customize tag render when `multiple` | (props: any) =&gt; VueNode | - | - | × |
 | treeCheckable | Whether to show checkbox on the treeNodes | boolean | false | - | × |
@@ -87,13 +88,14 @@ Common props ref：[Common props](/docs/vue/common-props)
 | value | To set the current selected treeNode(s), support `v-model:value` | string \| string[] | - | - | × |
 | virtual | Disable virtual scroll when set to false | boolean | true | - | × |
 | bordered | Deprecated. Use `variant` instead | boolean | - | - | × |
-| showArrow | Deprecated. Set `suffixIcon` to null to hide | boolean | - | - | × |
+| showArrow | Deprecated. Set `suffix` to null to hide | boolean | - | - | × |
 
 ### Events {#events}
 
 | Event | Description | Type | Version |
 | --- | --- | --- | --- |
 | change | A callback function, can be executed when selected treeNodes or input value change | function(value, label, extra) | - |
+| clear | Called when clear | () =&gt; void | - |
 | openChange | Callback when dropdown open state changes | (open: boolean) =&gt; void | - |
 | select | A callback function, can be executed when you select a treeNode | function(value, node, extra) | - |
 | treeExpand | A callback function, can be executed when treeNode expanded | function(expandedKeys) | - |
@@ -103,7 +105,8 @@ Common props ref：[Common props](/docs/vue/common-props)
 
 | Slot | Description | Type | Version |
 | --- | --- | --- | --- |
-| suffixIcon | The custom suffix icon | () =&gt; any | - |
+| suffix | The custom suffix | (info: &#123; open: boolean, searchValue: string, focused: boolean, showSearch?: boolean, loading?: boolean &#125;) =&gt; VueNode | 1.8.0 |
+| suffixIcon | The custom suffix icon. Deprecated. Use `suffix` slot instead | () =&gt; any | - |
 | tagRender | Customize tag render when `multiple` | (props: any) =&gt; any | - |
 | notFoundContent | Specify content to show when no result matches | () =&gt; any | - |
 | switcherIcon | Customize collapse/expand icon of tree node | () =&gt; any | - |
@@ -117,6 +120,17 @@ Common props ref：[Common props](/docs/vue/common-props)
 | focus() | Get focus | - |
 
 ## Types {#types}
+
+### AllowClearConfig {#allowclearconfig}
+
+Supports global configuration through `ConfigProvider.treeSelect.allowClear` (1.8.0). Fields use component values first, then global values, then defaults. `allowClear: true` inherits the global configuration; `disabled: false` and `tabIndex: 0` override global values.
+
+| Property | Description | Type | Default | Version | [Global Config](/components/config-provider#component-config) |
+| --- | --- | --- | --- | --- | --- |
+| clearIcon | Custom clear icon | VueNode | - | - | 1.8.0 |
+| disabled | When `true`, equivalent to `allowClear: false` | boolean | false | 1.8.0 | 1.8.0 |
+| label | Accessible name of the clear button | string | Component locale text | - | 1.8.0 |
+| tabIndex | Tab order of the clear button. `-1` excludes it from Tab navigation | number | 0 | 1.8.0 | 1.8.0 |
 
 ### showSearch {#showsearch}
 

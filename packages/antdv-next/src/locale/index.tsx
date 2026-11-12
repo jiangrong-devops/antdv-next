@@ -46,6 +46,8 @@ export interface Locale {
     close?: string
     sortable?: string
     clear?: string
+    show?: string
+    hide?: string
   }
   Icon?: Record<string, any>
   Text?: {
@@ -70,6 +72,10 @@ export interface Locale {
   Carousel?: {
     prevSlide: string
     nextSlide: string
+  }
+  Input?: {
+    /** Accessible name of each `InputOTP` cell, `${index}` and `${total}` are replaced */
+    otpCell?: string
   }
   ColorPicker?: {
     presetEmpty: string

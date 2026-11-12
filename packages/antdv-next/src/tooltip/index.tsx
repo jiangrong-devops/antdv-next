@@ -285,8 +285,7 @@ const InternalTooltip = defineComponent<
         <ContextIsolator space form>{memoOverlay}</ContextIsolator>
       )
       const children = filterEmpty(slots.default?.())
-      let child = children?.[0]
-      child = isVNode(child) && typeof child.type !== 'symbol' ? child : <span>{child}</span>
+      const child = children.length === 1 && isVNode(children[0]) && typeof children[0].type !== 'symbol' ? children[0] : <span>{children}</span>
       const childProps = child?.props ?? {}
       const childCls = !childProps?.class || typeof childProps?.class === 'string' ? clsx(childProps.class, openClass || `${prefixCls.value}-open`) : childProps.class
 
@@ -354,7 +353,6 @@ const InternalTooltip = defineComponent<
                 'zoom-big-fast',
                 typeof motion?.name === 'string' ? motion?.name : undefined,
               ),
-              duration: 1000,
             } as any
           }
           destroyOnHidden={destroyOnHidden}

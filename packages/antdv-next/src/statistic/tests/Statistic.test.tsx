@@ -119,6 +119,19 @@ describe('statistic', () => {
       expect(wrapper.find('.ant-statistic-content-value-int').text()).toBe('0')
       expect(wrapper.find('.ant-statistic-content-value-decimal').text()).toBe('.5')
     })
+
+    // https://github.com/ant-design/ant-design/pull/59693
+    it('should expand exponential notation', () => {
+      ([
+        [0.0000001, 2, '0.00'],
+        [-0.00000012345, 9, '-0.000000123'],
+        [1.5e21, undefined, '1,500,000,000,000,000,000,000'],
+        [Number.MIN_VALUE, 2, '0.00'],
+      ] as const).forEach(([value, precision, expectValue]) => {
+        const wrapper = mount(Statistic, { props: { value, precision } })
+        expect(wrapper.find('.ant-statistic-content-value').text()).toBe(expectValue)
+      })
+    })
   })
 
   // ============= Formatter slot =============
@@ -304,7 +317,7 @@ describe('statistic', () => {
     })
 
     it('should pass role attribute', () => {
-      const wrapper = mount(() => <Statistic role="status" value={100} />)
+      const wrapper = mount(Statistic, { props: { value: 100 }, attrs: { role: 'status' } })
       expect(wrapper.find('.ant-statistic').attributes('role')).toBe('status')
     })
 

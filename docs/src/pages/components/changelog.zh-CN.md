@@ -2,6 +2,141 @@
 title: 组件更新日志
 ---
 
+## V1.8.1
+
+发布日期：2026-11-06
+
+本次是补丁版本。DatePicker / TimePicker 底部的“今天／此刻”和确认按钮改为原生按钮，可以用键盘聚焦，放在表单里点击也不会提交表单；新增 `components.nowButton` 和 `components.okButton`，可分别自定义这两个按钮。同时修复了 Table 在小号、中号尺寸下“展开全部”图标没有和行展开图标对齐的问题，并升级一批 `@v-c/*` 基础组件，改进 Menu、Collapse、Table 的键盘操作和无障碍表现。从这个版本起，antdv-next 由 GitHub Actions 通过 npm trusted publishing 自动发布，发布的包带有 provenance 签名。
+
+**✨ 新功能 Features**
+
+* feat(date-picker, time-picker)：底部的“今天／此刻”按钮和确认按钮改为 `type="button"` 的原生按钮，可以通过键盘聚焦，在表单中点击不会触发提交；当天不可选时，“今天”按钮使用 `disabled` 禁用。新增 `components.nowButton`、`components.okButton`；`components.button` 废弃，仅作为 `okButton` 的回退，同时配置时 `okButton` 优先（#59778）。注意底部的 DOM 结构有变化：`ul.ant-picker-ranges > li` 改为 `div.ant-picker-ranges`，按钮直接放在其中；`.ant-picker-now-btn` 不再存在，`.ant-picker-now`、`.ant-picker-ok` 直接加在按钮上。自定义了这部分样式的项目需要调整选择器
+
+**🐞 问题修复 Fixes**
+
+* fix(table)：小号和中号尺寸下，表头的“展开全部”图标与行展开图标对齐（#59795）
+
+**📖 文档 Documentation**
+
+* docs(date-picker, time-picker)：新增 Components 说明，介绍 `nowButton`、`okButton` 以及自定义按钮需要透传的属性
+* fix(site)：组件总览页的搜索框吸顶时，边框不再闪烁（[#1081](https://github.com/antdv-next/antdv-next/pull/1081)）
+
+**🧰 基础设施与依赖 Infrastructure & Dependencies**
+
+* chore(deps)：升级 `@v-c/picker` 1.7.0（即上面的底部按钮改动）；`@v-c/menu` 1.4.6，非内联模式下在菜单根节点按 Esc 会关闭所有展开的子菜单，子菜单内按 Esc 不再冒泡到外层；`@v-c/collapse` 1.0.3，面板标题支持用空格键展开 / 收起，展开时通过 `aria-controls` 关联内容区域，标题内部交互元素的键盘事件不再触发折叠；`@v-c/table` 1.3.7，用于测量列宽的隐藏行设为不可见并加上 `inert`，其中的控件不再进入 Tab 顺序；`@v-c/virtual-list` 1.1.5，触摸被中断（`touchcancel`）后正确重置触摸状态
+* ci：新增 Release 工作流，推送版本 tag 后由 GitHub Actions 通过 npm trusted publishing 自动发布 antdv-next 和 @antdv-next/cssinjs
+
+## V1.8.0
+
+发布日期：2026-11-05
+
+本次版本将 ant-design 上游跟踪推进到 6.7.0（`550d75dbb3`），带来一批 ConfigProvider 全局配置能力：Timeline、Steps、Divider、Alert、Tag、Button 支持在顶层统一配置 `variant`，AutoComplete、Cascader、TreeSelect 支持全局 `allowClear`，Select 支持全局 `autoComplete`。Select 类组件与 DatePicker / TimePicker 新增 `suffix` 属性与插槽，`allowClear` 配置在选择类和日期类组件间统一；Form 的 `labelAlign` 支持逻辑方向 `start` / `end`，并实现了 `preserve` 与 `clearOnDestroy`。此外 Space 支持 `align="stretch"`，Listy 支持 `scrollWidth`，Pagination 的 `change` 事件提供 `recommendPage`，ColorPicker 新增 `popup.container` 语义化节点；同时修复了 Tour、Tooltip、Tag、Timeline、Tabs、TreeSelect 等组件的一批问题，并让 antdv-next 与文档站的 vue-tsc 类型检查通过。
+
+**✨ 新功能 Features**
+
+* feat(config-provider)：Timeline、Steps、Divider、Alert、Tag、Button 支持通过 ConfigProvider 配置 `variant`；`useVariant` 支持按组件自定义可选值与默认值（#59576、#59577、#59578、#59587、#59588、#59589、#59581）
+* feat(select, cascader, tree-select, auto-complete)：新增 `suffix` 属性与 `#suffix` 插槽，插槽可接收展开 / 搜索状态；`suffixIcon` 废弃但仍可用，并读取 ConfigProvider 的 `suffix` / `suffixIcon`（#59185）
+* feat(date-picker, time-picker)：DatePicker、RangePicker、TimePicker 新增 `suffix` 属性与插槽，`suffixIcon` 废弃；RangePicker 现在读取 ConfigProvider 中的 `suffix` / `suffixIcon`；`suffix` 为 `false` / `null` 时不再渲染空的后缀容器（#59240）
+* feat(select, cascader, tree-select, date-picker, time-picker)：`allowClear` 统一为与 ConfigProvider 按字段合并，支持 `disabled`、`label`、`tabIndex`（#59566、#59567）
+* feat(auto-complete, cascader, tree-select)：支持通过 ConfigProvider 配置 `allowClear`，ConfigProvider 新增 `autoComplete` 组件配置（#59591、#59592、#59593）
+* feat(select)：支持通过 ConfigProvider 配置 `autoComplete`（#59632）
+* feat(form)：`labelAlign` 支持 `start` / `end`，`left` / `right` 废弃并给出警告（#59760）；实现 `preserve` 与 `clearOnDestroy`，`preserve={false}` 时字段移除会同步删除 `model` 中的值（[#1078](https://github.com/antdv-next/antdv-next/pull/1078)）
+* feat(color-picker)：`classes` / `styles` 新增 `popup.container`；废弃的 `styles.popupOverlayInner` 改为从合并后的样式读取，ConfigProvider 与函数形式同样生效（#59743）
+* feat(pagination)：pageSize 变化时 `change` 事件的第三个参数提供 `{ recommendPage }`，Table 分页同样透传；导出 `PaginationOnChangeInfo` 类型（#58604）
+* feat(space)：`align` 支持 `stretch`（#59005）
+* feat(listy)：支持 `scrollWidth` 横向滚动（#59197）；`rowKey` 函数可接收 `index`（#59347）
+* feat(tree)：非 checkable 模式下 `selectable={false}` 的节点与禁用节点样式一致（#58906）；Tree 与 DirectoryTree 支持数据节点类型泛型（`TreeConstructor` / `DirectoryTreeConstructor`）
+* feat(input)：Input.OTP 的每个输入格提供本地化的无障碍名称（`locale.Input.otpCell`），`aria-invalid` 设置在输入格而非容器上（#59722）
+* feat(time-picker)：点击清除图标时触发 `clear` 事件（#58403，[#1063](https://github.com/antdv-next/antdv-next/pull/1063)）
+* feat(locale)：fr_FR、de_DE、it_IT 新增清除按钮文案（#59723）；hy_AM、sq_AL 改用 `@v-c/pagination` 自带的分页语言包（#59500）
+
+**🐞 问题修复 Fixes**
+
+* fix(select)：默认的箭头、加载、搜索图标添加 `aria-hidden`（#59709）；`showArrow` 此前被内部覆盖而不生效，现在按 `showArrow ?? suffix !== null` 计算；Cascader 的 ConfigProvider `suffixIcon` 只替换默认下拉箭头，不再替换加载与搜索图标，与上游一致
+* fix(select, tree-select)：将 `on*` 监听声明为 emits，修复 `mouseenter` / `mouseleave` 未透传到原生事件、`search` 事件未声明的问题（[#1080](https://github.com/antdv-next/antdv-next/pull/1080)）；TreeSelect 声明 `clear` 事件（[#1079](https://github.com/antdv-next/antdv-next/pull/1079)）；TreeSelect 弹层 `zIndex` 从 `styles.popup.root` 读取，而不是 `styles.root`（[#1074](https://github.com/antdv-next/antdv-next/pull/1074)）
+* fix(button)：设置 `href` 时保留 `tabIndex`，禁用时为 `-1`（#59732）
+* fix(statistic)：极大或极小的数值先展开科学计数法再格式化（#59693）
+* fix(pagination)：恢复自定义链接的禁用样式（#59780）
+* fix(splitter)：触摸拖拽被取消（`touchcancel`）时正确结束拖拽（#59712）
+* fix(form)：编辑后的 `noStyle` 子项保留父级的校验状态（#59708）
+* fix(theme)：`getDesignToken` 支持空的 `algorithm` 数组（#59695）
+* fix(input)：密码框的显示 / 隐藏切换按钮提供无障碍名称（[#1077](https://github.com/antdv-next/antdv-next/pull/1077)）；Input.OTP 的输入格随 `status`、`disabled`、`aria-*` 的变化更新
+* fix(tour)：点击完成时 `update:open` 只触发一次（[#1070](https://github.com/antdv-next/antdv-next/pull/1070)）；标题、`description`、`cover` 为空字符串或 `false` 时不再渲染对应区域（[#1069](https://github.com/antdv-next/antdv-next/pull/1069)）
+* fix(tooltip, tag)：默认插槽渲染全部子节点，而不是只渲染第一个（[#1065](https://github.com/antdv-next/antdv-next/pull/1065)、[#1059](https://github.com/antdv-next/antdv-next/pull/1059)）
+* fix(popover, tooltip)：修复 Windows 下打开动画结束后文字抖动的问题（[#1062](https://github.com/antdv-next/antdv-next/pull/1062)）
+* fix(timeline)：`mode`、`reverse`、`pending`、`pendingDot` 不再泄漏为根元素的 DOM 属性（[#1064](https://github.com/antdv-next/antdv-next/pull/1064)）
+* fix(tabs)：从 ConfigProvider 读取 `indicator`、`indicatorSize`、`icons`、`more` 配置（[#1058](https://github.com/antdv-next/antdv-next/pull/1058)）
+* fix(drawer)：标题来自插槽时保留 `aria-labelledby`（[#1071](https://github.com/antdv-next/antdv-next/pull/1071)）
+* fix(tree)：函数形式的 `showLeafIcon` 返回结果添加 `switcher-line-custom-icon` class（[#1073](https://github.com/antdv-next/antdv-next/pull/1073)）
+* fix(menu)：折叠且菜单项没有图标时渲染首字母作为兜底图标（[#1076](https://github.com/antdv-next/antdv-next/pull/1076)）
+* fix(checkbox)：原生 input 获得焦点时触发 `focus` 事件（[#1060](https://github.com/antdv-next/antdv-next/pull/1060)）
+* fix(message)：修复 Safari 下消息堆叠闪烁（[#1061](https://github.com/antdv-next/antdv-next/pull/1061)）
+* fix(locale)：ne_NP 使用对应的分页语言包，不再回退到 en_US（#59499）；完善 cs_CZ 翻译（#59787）
+* fix(types)：antdv-next 源码与文档站的 vue-tsc 类型检查通过，补齐 TimePicker（Dayjs 值类型）、Calendar（泛型插槽）、Listy（`ListyRef` 的 Key 类型）、Cascader（`clear` 语义节点）等类型缺口，并修复了类型检查暴露出的几个运行时有问题的 demo
+
+**⚡ 性能 Performance**
+
+* perf(table)：树形数据筛选时不再重复过滤子孙节点（#59719）
+
+**📖 文档 Documentation**
+
+* docs(tag)：补充 `closable` 配置说明，基础示例改为可关闭（#59720）
+* docs(dropdown)：移除 `openChange` 事件中过时的说明（#59747）
+* docs(input-number)：语义化示例补充 `clear` 节点（#59251）
+* docs(auto-complete)：修复分类搜索示例的弹层样式（#59767）
+* docs(tour)：API 表格补充 `keyboard` 属性（[#1068](https://github.com/antdv-next/antdv-next/pull/1068)）
+* docs：移除事件表格中残留的 `update:value` 行（[#1067](https://github.com/antdv-next/antdv-next/pull/1067)）
+
+**🛠 重构与维护 Refactor & Maintenance**
+
+* refactor(form)：移除过时的 IE 样式兼容（`fallbackCmp`），每个表单项少渲染一个注释节点（#59510）
+* refactor(style)：移除 Space（#59766）、QRCode（#59716）中未使用的样式，以及 Watermark 中未使用的常量（#59407）
+* chore(sync)：ant-design 上游跟踪推进到 6.7.0（`550d75dbb3`）
+
+## V1.7.1
+
+发布日期：2026-10-27
+
+本次版本将 ant-design 上游跟踪推进到 6.6.8 之后的 master（`912d4066db`），以问题修复为主。Splitter 支持在顶层统一配置 `destroyOnHidden`；集中修复了组件卸载后实例仍被引用、无法回收的问题（模块级共享的 vnode、卸载时的 watcher 清理、FormItem 持有的 DOM），以及 FormItem 改名后字段注册错乱、Steps 未绑定 `change` 时仍渲染可点击语义、Statistic 的 `#formatter` 插槽不生效等问题。同时升级了一批 `@v-c/*` 基础组件：输入类组件的 `allowClear` 配置统一，Pagination 的交互语义移到内部控件上。
+
+**✨ 新功能 Features**
+
+* feat(splitter)：Splitter 支持顶层 `destroyOnHidden`，作用于所有面板，可在单个面板上覆盖（[#1046](https://github.com/antdv-next/antdv-next/pull/1046)）
+
+**🐞 问题修复 Fixes**
+
+* fix(empty, popconfirm, float-button, cascader, qrcode)：模块级共享的内置图片 / 图标 vnode 以及从 props、插槽、ConfigProvider 传入的 vnode 会一直持有首次挂载的组件实例，导致卸载后无法回收；现在在渲染阶段克隆（[#1056](https://github.com/antdv-next/antdv-next/pull/1056)）
+* fix(anchor, checkbox, form, grid, affix)：卸载时的 watcher 清理不再读取响应式状态，子组件卸载不会让父组件多渲染一次，父组件也不再持有已卸载组件的 computed。涉及 Anchor、CheckboxGroup、Form、Affix，以及使用 `useBreakpoint` 的 Row、Table、Avatar、Pagination、Descriptions、Steps、Masonry、FormItem
+* fix(form)：FormItem 卸载后释放已脱离文档的 DOM（[#1040](https://github.com/antdv-next/antdv-next/pull/1040)）；FormItem 的 `name` 变化时重新注册字段，动态列表中新增的项不再覆盖改名的项，`validateFields` / `resetFields` 不再漏掉字段；字符串 label 末尾的 `|` 不再被去掉（#59599）
+* fix(steps)：未绑定 `change` 或 `v-model:current` 时不再渲染 `role="button"`、`tabindex` 等可点击语义，只绑定 `v-model:current` 时恢复波纹效果（[#1057](https://github.com/antdv-next/antdv-next/pull/1057)）；props 不再泄漏为根元素的 DOM 属性（[#1054](https://github.com/antdv-next/antdv-next/pull/1054)）；错误状态的步骤图标渲染为 `CloseOutlined`（[#1049](https://github.com/antdv-next/antdv-next/pull/1049)）
+* fix(statistic)：实现文档中的 `#formatter` 插槽，作用域参数为 `{ value }`，优先于 `formatter` 属性，Statistic.Timer 同样生效（[#1047](https://github.com/antdv-next/antdv-next/pull/1047)）
+* fix(modal)：恢复确认框内容的排版样式（[#1051](https://github.com/antdv-next/antdv-next/pull/1051)）；内部面板（PurePanel）的 `#footer` 插槽没有传入 `originNode` / `extra` 参数，解构时报错
+* fix(table)：动态注册的 `expandedRowRender` 插槽不渲染展开列（[#1048](https://github.com/antdv-next/antdv-next/pull/1048)）
+* fix(switch)：通过 ref 暴露 `nativeElement`、`focus`、`blur`（[#1055](https://github.com/antdv-next/antdv-next/pull/1055)）
+* fix(slider)：范围模式下 `blur` 事件只触发一次（[#1037](https://github.com/antdv-next/antdv-next/pull/1037)）；支持 `mark` 插槽渲染（[#1041](https://github.com/antdv-next/antdv-next/pull/1041)）
+* fix(spin)：语义化 classes / styles 作用到自定义指示器（[#1043](https://github.com/antdv-next/antdv-next/pull/1043)）
+* fix(space)：分隔符的 class 由 `prefixCls` 派生，与上游一致（[#1042](https://github.com/antdv-next/antdv-next/pull/1042)）
+* fix(listy)：虚拟滚动条背景色使用 `colorSplit`（[#1053](https://github.com/antdv-next/antdv-next/pull/1053)）
+* fix(message)：消息列表的内容区不再拦截指针事件（[#1045](https://github.com/antdv-next/antdv-next/pull/1045)）
+* fix(upload)：判断缩略图时忽略 URL 中的查询参数与 hash（#59649）；图片解码失败时预览 Promise 正常结束并清理资源（#59583）
+* fix(pagination)：分页禁止文本选中（#59638）；内部控件保留焦点样式（#59573）
+* fix(progress)：`aria-valuenow` 使用 `percent`，而不是成功进度（#59634）；线形进度条支持字符串形式的 `width`（#59597）
+* fix(card)：重置标题中 Typography 标题的外边距（#59613）
+* fix(color-picker)：恢复格式选择器的字号与间距（#59610）
+
+**📖 文档 Documentation**
+
+* docs(config-provider)：wave 示例改用 happy-work-theme 的 `HappyProvider`（[#1052](https://github.com/antdv-next/antdv-next/pull/1052)）
+* docs(spin)：语义化示例补充 `section` / `description` / `container`（[#1044](https://github.com/antdv-next/antdv-next/pull/1044)）
+* docs：修正 FAQ 错别字（#59656）；CDN 示例版本更新到 1.7.0；站点的七夕彩蛋替换为 1024 程序员节彩蛋（`/1024`）
+
+**🧰 工程与依赖 Infrastructure & Dependencies**
+
+* chore(deps)：升级 `@v-c/util` 1.4.0、`input` 1.3.0、`textarea` 1.2.0、`input-number` 1.2.0、`select` 1.3.0、`picker` 1.6.0、`mentions` 1.3.0，统一 `allowClear` 配置（`allowClear.disabled` 为 `true` 时不再渲染清除按钮）；`@v-c/pagination` 1.3.0，页码与上一页 / 下一页的交互语义从 `li` 移到内部控件上
+* chore(deps)：升级 `@v-c/menu` 1.4.4、`tabs` 1.4.3、`tour` 1.1.3、`slick` 1.0.3、`color-picker` 1.0.8（卸载清理修复：Menu、ColorPicker 卸载不再触发父组件重渲染，Tour 不再遗留 window 监听），以及 `virtual-list` 1.1.4、`progress` 1.1.0、`upload` 1.1.1、`switch` 1.0.2、`image` 1.1.3、`table` 1.3.5
+* refactor(style)：移除 Tabs（#59662）、Tooltip（#59644）、Notification（#59645）、Dropdown（#59605）、Input（#59604）中已失效的选择器与样式；Anchor 移除未使用的组件 token `anchorBallSize`（#59389）
+* chore(sync)：ant-design 上游跟踪推进到 6.6.8 之后的 master（`912d4066db`）
+
 ## V1.7.0
 
 发布日期：2026-10-17

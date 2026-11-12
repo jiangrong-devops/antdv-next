@@ -4,6 +4,7 @@ import type { PickerToken, SharedPickerToken } from './token'
 
 import { FastColor } from '@ant-design/fast-color'
 import { unit } from '@antdv-next/cssinjs'
+import { genLinkStyle } from '../../style'
 
 const genPickerCellInnerStyle: GenerateStyle<SharedPickerToken, CSSObject> = (token) => {
   const {
@@ -583,13 +584,14 @@ export const genPanelStyle: GenerateStyle<SharedPickerToken, CSSObject> = (token
               marginInline: marginXXS,
               [`${componentCls}-time-panel-cell-inner`]: {
                 display: 'block',
-                width: token.calc(timeColumnWidth).sub(token.calc(marginXXS).mul(2)).equal(),
+                // Follow the column's visible width so a space-taking scrollbar
+                // neither clips the cell nor pushes the text off-center.
+                width: 'auto',
                 height: timeCellHeight,
                 margin: 0,
-                paddingBlock: 0,
-                paddingInlineEnd: 0,
-                paddingInlineStart: token.calc(timeColumnWidth).sub(timeCellHeight).div(2).equal(),
+                padding: 0,
                 color: colorText,
+                textAlign: 'center',
                 lineHeight: unit(timeCellHeight),
                 borderRadius: borderRadiusSM,
                 cursor: 'pointer',
@@ -662,19 +664,21 @@ const genPickerPanelStyle: GenerateStyle<PickerToken, CSSObject> = (token) => {
         paddingInline: unit(paddingSM),
         overflow: 'hidden',
         textAlign: 'start',
-        listStyle: 'none',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
 
-        '> li': {
+        [`${componentCls}-now`]: {
+          ...(genLinkStyle(token).a as CSSObject),
+          padding: 0,
+          border: 0,
+          font: 'inherit',
           lineHeight: unit(token.calc(textHeight).sub(token.calc(lineWidth).mul(2)).equal()),
-          display: 'inline-block',
-        },
 
-        [`${componentCls}-now-btn-disabled`]: {
-          pointerEvents: 'none',
-          color: token.colorTextDisabled,
+          '&:disabled': {
+            pointerEvents: 'none',
+            color: token.colorTextDisabled,
+          },
         },
 
         // https://github.com/ant-design/ant-design/issues/23687
@@ -686,7 +690,13 @@ const genPickerPanelStyle: GenerateStyle<PickerToken, CSSObject> = (token) => {
         },
 
         [`${componentCls}-ok`]: {
-          paddingBlock: token.calc(lineWidth).mul(2).equal(),
+          // Preserve the footer height without the list-item wrapper.
+          marginBlock: token
+            .calc(textHeight)
+            .sub(token.controlHeightSM)
+            .div(2)
+            .add(lineWidth)
+            .equal(),
           marginInlineStart: 'auto',
         },
       },

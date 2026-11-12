@@ -112,6 +112,29 @@ describe('tree', () => {
     expect(wrapper.findAll('.customLeafIcon')).toHaveLength(2)
   })
 
+  it('leaf nodes should get switcher-line-custom-icon class when showLeafIcon is a render function', () => {
+    const treeData = [
+      {
+        title: 'parent',
+        key: '0-0',
+        children: [
+          { title: 'node1', key: '0-0-0' },
+          { title: 'node2', key: '0-0-1' },
+        ],
+      },
+    ]
+    const wrapper = mount(Tree, {
+      props: {
+        treeData,
+        defaultExpandAll: true,
+        showLine: { showLeafIcon: () => <i class="customLeafIcon" /> },
+      },
+    })
+
+    expect(wrapper.findAll('.customLeafIcon')).toHaveLength(2)
+    expect(wrapper.findAll('.ant-tree-switcher-line-custom-icon')).toHaveLength(2)
+  })
+
   it('leaf nodes should render custom icons when provided as string', () => {
     const treeData = [
       {
@@ -485,6 +508,47 @@ describe('tree', () => {
     ])
 
     expect(getPath('little').map(({ key }) => key)).toEqual(['bamboo', 'little'])
+  })
+
+  describe('unselectable', () => {
+    it('selectable={false} should show disabled style in non-checkable mode', () => {
+      const wrapper = mount(() => (
+        <Tree defaultExpandAll>
+          <TreeNode title="normal" key="0-0" />
+          <TreeNode title="unselectable" key="0-1" selectable={false} />
+          <TreeNode title="disabled" key="0-2" disabled />
+        </Tree>
+      ), { attachTo: document.body })
+
+      const nodes = Array.from((wrapper.element as HTMLElement).querySelectorAll<HTMLElement>('.ant-tree-treenode'))
+      const normalNode = nodes.find(node => node.textContent?.includes('normal'))
+      const unselectableNode = nodes.find(node => node.textContent?.includes('unselectable'))
+      const disabledNode = nodes.find(node => node.textContent?.includes('disabled'))
+
+      expect(unselectableNode?.classList.contains('ant-tree-treenode-unselectable')).toBe(true)
+      expect(normalNode?.classList.contains('ant-tree-treenode-unselectable')).toBe(false)
+
+      // Should apply the same disabled color as `ant-tree-treenode-disabled`
+      const unselectableContent = unselectableNode!.querySelector<HTMLElement>('.ant-tree-node-content-wrapper')!
+      const disabledContent = disabledNode!.querySelector<HTMLElement>('.ant-tree-node-content-wrapper')!
+      expect(getComputedStyle(disabledContent).color).not.toBe('')
+      expect(getComputedStyle(unselectableContent).color).toBe(getComputedStyle(disabledContent).color)
+      wrapper.unmount()
+    })
+
+    it('selectable={false} should not show unselectable class in checkable mode', () => {
+      const wrapper = mount(() => (
+        <Tree defaultExpandAll checkable>
+          <TreeNode title="normal" key="0-0" />
+          <TreeNode title="unselectable" key="0-1" selectable={false} />
+        </Tree>
+      ))
+
+      const nodes = Array.from((wrapper.element as HTMLElement).querySelectorAll<HTMLElement>('.ant-tree-treenode'))
+      const unselectableNode = nodes.find(node => node.textContent?.includes('unselectable'))
+
+      expect(unselectableNode?.classList.contains('ant-tree-treenode-unselectable')).toBe(false)
+    })
   })
 
   describe('form disabled', () => {

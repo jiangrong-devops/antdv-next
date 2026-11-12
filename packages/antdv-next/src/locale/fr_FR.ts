@@ -15,8 +15,11 @@ const localeValues: Locale = {
   Calendar,
   global: {
     close: 'Fermer',
+    clear: 'Effacer',
     placeholder: 'Veuillez sélectionner',
     sortable: 'triable',
+    show: 'Afficher',
+    hide: 'Masquer',
   },
   Table: {
     filterTitle: 'Filtrer',
@@ -157,6 +160,9 @@ const localeValues: Locale = {
     transparent: 'Transparente',
     singleColor: 'Couleur unique',
     gradientColor: 'Couleur dégradée',
+  },
+  Input: {
+    otpCell: 'Caractère ${index} sur ${total}',
   },
 }
 
