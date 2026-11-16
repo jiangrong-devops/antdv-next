@@ -5,8 +5,10 @@ import { classNames } from '@v-c/util'
 import { filterEmpty } from '@v-c/util/dist/props-util'
 import { unrefElement, useResizeObserver } from '@vueuse/core'
 import { computed, createVNode, defineComponent, isVNode, nextTick, onBeforeUnmount, onMounted, shallowRef, watch } from 'vue'
+import { getAttrStyleAndClass } from '../_util/hooks'
 import throttleByAnimationFrameFn from '../_util/throttleByAnimationFrame'
 import { useConfig } from '../config-provider'
+import { useComponentBaseConfig } from '../config-provider/context'
 import useStyle from './style'
 import { getFixedBottom, getFixedTop, getTargetRect } from './utils'
 
@@ -71,7 +73,11 @@ export const Affix = defineComponent<
   (props = affixDefaultProps, { slots, attrs, expose, emit }) => {
     const configContext = useConfig()
 
-    const affixPrefixCls = computed(() => configContext.value.getPrefixCls('affix', props.prefixCls))
+    const {
+      prefixCls: affixPrefixCls,
+      class: contextClassName,
+      style: contextStyle,
+    } = useComponentBaseConfig('affix', props)
 
     const lastAffix = shallowRef(false)
     const affixStyle = shallowRef<CSSProperties>()
@@ -88,6 +94,7 @@ export const Affix = defineComponent<
     const timer = shallowRef<ReturnType<typeof setTimeout> | null>(null)
 
     const targetFunc = computed(() => props.target ?? configContext.value.getTargetContainer ?? getDefaultTarget)
+    const resolvedTarget = computed(() => targetFunc.value())
 
     const internalOffsetTop = computed(() => {
       const { offsetTop, offsetBottom } = props
@@ -185,14 +192,23 @@ export const Affix = defineComponent<
 
     const addListeners = () => {
       const listenerTarget = targetFunc.value()
+
+      // Detach first so a target that becomes unavailable does not leave stale listeners.
+      const previousTarget = prevTarget
+      const previousListener = prevListener
+      if (previousListener) {
+        TRIGGER_EVENTS.forEach((eventName) => {
+          previousTarget?.removeEventListener(eventName, previousListener)
+        })
+        prevTarget = null
+        prevListener = null
+      }
+
       if (!listenerTarget) {
         return
       }
       TRIGGER_EVENTS.forEach((eventName) => {
-        if (prevListener) {
-          prevTarget?.removeEventListener(eventName, prevListener)
-        }
-        listenerTarget?.addEventListener(eventName, lazyUpdatePosition)
+        listenerTarget.addEventListener(eventName, lazyUpdatePosition)
       })
       prevTarget = listenerTarget
       prevListener = lazyUpdatePosition
@@ -230,6 +246,7 @@ export const Affix = defineComponent<
 
     watch([
       () => props.target,
+      resolvedTarget,
       affixStyle,
       lastAffix,
       () => props.offsetTop,
@@ -247,7 +264,7 @@ export const Affix = defineComponent<
       onCleanup(() => removeListeners(target))
     })
 
-    watch([() => props.target, () => props.offsetTop, () => props.offsetBottom], async () => {
+    watch([() => props.target, resolvedTarget, () => props.offsetTop, () => props.offsetBottom], async () => {
       await nextTick()
       updatePosition()
     })
@@ -286,8 +303,14 @@ export const Affix = defineComponent<
           },
         })
       }
+      const { className, style, restAttrs } = getAttrStyleAndClass(attrs)
       return (
-        <div {...attrs} ref={placeholderNodeRef}>
+        <div
+          {...restAttrs}
+          ref={placeholderNodeRef}
+          class={classNames(className, contextClassName.value)}
+          style={{ ...contextStyle.value, ...style }}
+        >
           {affixStyle.value && <div style={placeholderStyle.value} aria-hidden="true" />}
           <div class={mergedCls} ref={fixedNodeRef} style={affixStyle.value}>
             {childNode}

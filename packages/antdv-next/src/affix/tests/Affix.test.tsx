@@ -3,6 +3,7 @@ import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } 
 import { defineComponent, h, onMounted, shallowRef } from 'vue'
 import Affix from '..'
 import Button from '../../button'
+import ConfigProvider from '../../config-provider'
 import rtlTest from '/@tests/shared/rtlTest'
 import { mount, triggerResize, waitFakeTimer } from '/@tests/utils'
 
@@ -176,6 +177,56 @@ describe('affix Render', () => {
       wrapper.unmount()
     })
 
+    it('rebinds listeners when the resolved target changes through the same function', async () => {
+      const target = shallowRef<HTMLElement | null>(null)
+      const getTarget = () => target.value
+
+      const wrapper = mount(
+        () => (
+          <Affix class="placeholder" target={getTarget} offsetTop={0}>
+            <Button type="primary">target</Button>
+          </Affix>
+        ),
+        { attachTo: document.body },
+      )
+      await waitFakeTimer()
+
+      const first = document.createElement('div')
+      first.className = 'container'
+      const firstEvents: Record<string, EventListener> = {}
+      first.addEventListener = vi.fn().mockImplementation((event: string, listener: EventListener) => {
+        firstEvents[event] = listener
+      }) as any
+      const firstRemove = vi.fn()
+      first.removeEventListener = firstRemove as any
+
+      target.value = first
+      await waitFakeTimer()
+      expect(firstEvents.scroll).toBeTypeOf('function')
+
+      target.value = null
+      await waitFakeTimer()
+      expect(firstRemove.mock.calls.some(([eventName]) => eventName === 'scroll')).toBe(true)
+
+      const second = document.createElement('div')
+      second.className = 'container'
+      const secondEvents: Record<string, EventListener> = {}
+      second.addEventListener = vi.fn().mockImplementation((event: string, listener: EventListener) => {
+        secondEvents[event] = listener
+      }) as any
+
+      target.value = second
+      await waitFakeTimer()
+      expect(secondEvents.scroll).toBeTypeOf('function')
+
+      classRect.placeholder = { top: -100, bottom: -100 } as DOMRect
+      secondEvents.scroll({ type: 'scroll' } as Event)
+      await waitFakeTimer()
+      expect(wrapper.element.querySelector('.ant-affix')).toBeTruthy()
+
+      wrapper.unmount()
+    })
+
     it('check position change before measure', async () => {
       const wrapper = mount(
         () => (
@@ -341,5 +392,43 @@ describe('affix Render', () => {
       wrapper.unmount()
       domMock.mockImplementation(defaultRectMock)
     }
+  })
+
+  // ========================= ConfigProvider =========================
+  it('should apply ConfigProvider affix class and style to the root', async () => {
+    const wrapper = mount(
+      <ConfigProvider affix={{ class: 'custom-config-affix', style: { background: 'red' } }}>
+        <Affix class="custom-affix" offsetTop={10}>
+          <Button>top</Button>
+        </Affix>
+      </ConfigProvider>,
+      { attachTo: document.body },
+    )
+    await waitFakeTimer()
+
+    const affixElement = wrapper.find('.custom-affix')
+    expect(affixElement.exists()).toBeTruthy()
+    expect(affixElement.classes()).toContain('custom-config-affix')
+    expect((affixElement.element as HTMLElement).style.background).toBe('red')
+
+    wrapper.unmount()
+  })
+
+  it('user class and style should take priority over ConfigProvider affix config', async () => {
+    const wrapper = mount(
+      <ConfigProvider affix={{ class: 'custom-config-affix', style: { background: 'red' } }}>
+        <Affix class="custom-affix" style={{ background: 'blue' }}>
+          <Button>top</Button>
+        </Affix>
+      </ConfigProvider>,
+      { attachTo: document.body },
+    )
+    await waitFakeTimer()
+
+    const affixElement = wrapper.find('.custom-affix')
+    expect(affixElement.classes()).toContain('custom-config-affix')
+    expect((affixElement.element as HTMLElement).style.background).toBe('blue')
+
+    wrapper.unmount()
   })
 })
