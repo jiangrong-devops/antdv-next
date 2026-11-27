@@ -38,7 +38,7 @@ exports[`auto-complete demo > renders _semantic correctly 1`] = `
               aria-expanded="true"
               aria-haspopup="listbox"
               aria-owns="test-id_list"
-              autocomplete="new-password"
+              autocomplete="off"
               class="ant-select-input semantic-mark-input"
               id="test-id"
               role="combobox"
@@ -106,6 +106,7 @@ exports[`auto-complete demo > renders _semantic correctly 1`] = `
               >
                 <h5
                   class="ant-typography css-var-root"
+                  data-v-dfc8ebef=""
                   style="margin: 0px;"
                 >
                   <!---->
@@ -196,6 +197,7 @@ exports[`auto-complete demo > renders _semantic correctly 1`] = `
             </div>
             <div
               class="ant-typography css-var-root"
+              data-v-dfc8ebef=""
               style="margin: 0px; font-size: 12px;"
             >
               <!---->
@@ -228,6 +230,7 @@ exports[`auto-complete demo > renders _semantic correctly 1`] = `
               >
                 <h5
                   class="ant-typography css-var-root"
+                  data-v-dfc8ebef=""
                   style="margin: 0px;"
                 >
                   <!---->
@@ -318,6 +321,7 @@ exports[`auto-complete demo > renders _semantic correctly 1`] = `
             </div>
             <div
               class="ant-typography css-var-root"
+              data-v-dfc8ebef=""
               style="margin: 0px; font-size: 12px;"
             >
               <!---->
@@ -350,6 +354,7 @@ exports[`auto-complete demo > renders _semantic correctly 1`] = `
               >
                 <h5
                   class="ant-typography css-var-root"
+                  data-v-dfc8ebef=""
                   style="margin: 0px;"
                 >
                   <!---->
@@ -440,6 +445,7 @@ exports[`auto-complete demo > renders _semantic correctly 1`] = `
             </div>
             <div
               class="ant-typography css-var-root"
+              data-v-dfc8ebef=""
               style="margin: 0px; font-size: 12px;"
             >
               <!---->
@@ -472,6 +478,7 @@ exports[`auto-complete demo > renders _semantic correctly 1`] = `
               >
                 <h5
                   class="ant-typography css-var-root"
+                  data-v-dfc8ebef=""
                   style="margin: 0px;"
                 >
                   <!---->
@@ -562,6 +569,7 @@ exports[`auto-complete demo > renders _semantic correctly 1`] = `
             </div>
             <div
               class="ant-typography css-var-root"
+              data-v-dfc8ebef=""
               style="margin: 0px; font-size: 12px;"
             >
               <!---->
@@ -594,6 +602,7 @@ exports[`auto-complete demo > renders _semantic correctly 1`] = `
               >
                 <h5
                   class="ant-typography css-var-root"
+                  data-v-dfc8ebef=""
                   style="margin: 0px;"
                 >
                   <!---->
@@ -684,6 +693,7 @@ exports[`auto-complete demo > renders _semantic correctly 1`] = `
             </div>
             <div
               class="ant-typography css-var-root"
+              data-v-dfc8ebef=""
               style="margin: 0px; font-size: 12px;"
             >
               <!---->
@@ -716,6 +726,7 @@ exports[`auto-complete demo > renders _semantic correctly 1`] = `
               >
                 <h5
                   class="ant-typography css-var-root"
+                  data-v-dfc8ebef=""
                   style="margin: 0px;"
                 >
                   <!---->
@@ -806,6 +817,7 @@ exports[`auto-complete demo > renders _semantic correctly 1`] = `
             </div>
             <div
               class="ant-typography css-var-root"
+              data-v-dfc8ebef=""
               style="margin: 0px; font-size: 12px;"
             >
               <!---->
@@ -838,6 +850,7 @@ exports[`auto-complete demo > renders _semantic correctly 1`] = `
               >
                 <h5
                   class="ant-typography css-var-root"
+                  data-v-dfc8ebef=""
                   style="margin: 0px;"
                 >
                   <!---->
@@ -928,6 +941,7 @@ exports[`auto-complete demo > renders _semantic correctly 1`] = `
             </div>
             <div
               class="ant-typography css-var-root"
+              data-v-dfc8ebef=""
               style="margin: 0px; font-size: 12px;"
             >
               <!---->
@@ -960,6 +974,7 @@ exports[`auto-complete demo > renders _semantic correctly 1`] = `
               >
                 <h5
                   class="ant-typography css-var-root"
+                  data-v-dfc8ebef=""
                   style="margin: 0px;"
                 >
                   <!---->
@@ -1050,6 +1065,7 @@ exports[`auto-complete demo > renders _semantic correctly 1`] = `
             </div>
             <div
               class="ant-typography css-var-root"
+              data-v-dfc8ebef=""
               style="margin: 0px; font-size: 12px;"
             >
               <!---->
@@ -1082,6 +1098,7 @@ exports[`auto-complete demo > renders _semantic correctly 1`] = `
               >
                 <h5
                   class="ant-typography css-var-root"
+                  data-v-dfc8ebef=""
                   style="margin: 0px;"
                 >
                   <!---->
@@ -1172,6 +1189,7 @@ exports[`auto-complete demo > renders _semantic correctly 1`] = `
             </div>
             <div
               class="ant-typography css-var-root"
+              data-v-dfc8ebef=""
               style="margin: 0px; font-size: 12px;"
             >
               <!---->
@@ -1215,7 +1233,7 @@ exports[`auto-complete demo > renders allowClear correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         role="combobox"
@@ -1248,7 +1266,7 @@ exports[`auto-complete demo > renders allowClear correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         role="combobox"
@@ -1289,7 +1307,7 @@ exports[`auto-complete demo > renders auto-complete-and-select correctly 1`] = `
           aria-expanded="false"
           aria-haspopup="listbox"
           aria-owns="test-id_list"
-          autocomplete="new-password"
+          autocomplete="off"
           class="ant-select-input"
           id="test-id"
           readonly=""
@@ -1345,7 +1363,7 @@ exports[`auto-complete demo > renders auto-complete-and-select correctly 1`] = `
           aria-expanded="false"
           aria-haspopup="listbox"
           aria-owns="test-id_list"
-          autocomplete="new-password"
+          autocomplete="off"
           class="ant-select-input"
           id="test-id"
           role="combobox"
@@ -1380,7 +1398,7 @@ exports[`auto-complete demo > renders auto-complete-and-select correctly 1`] = `
           aria-expanded="false"
           aria-haspopup="listbox"
           aria-owns="test-id_list"
-          autocomplete="new-password"
+          autocomplete="off"
           class="ant-select-input"
           id="test-id"
           readonly=""
@@ -1436,7 +1454,7 @@ exports[`auto-complete demo > renders auto-complete-and-select correctly 1`] = `
           aria-expanded="false"
           aria-haspopup="listbox"
           aria-owns="test-id_list"
-          autocomplete="new-password"
+          autocomplete="off"
           class="ant-select-input"
           id="test-id"
           role="combobox"
@@ -1471,7 +1489,7 @@ exports[`auto-complete demo > renders auto-complete-and-select correctly 1`] = `
           aria-expanded="false"
           aria-haspopup="listbox"
           aria-owns="test-id_list"
-          autocomplete="new-password"
+          autocomplete="off"
           class="ant-select-input"
           id="test-id"
           readonly=""
@@ -1527,7 +1545,7 @@ exports[`auto-complete demo > renders auto-complete-and-select correctly 1`] = `
           aria-expanded="false"
           aria-haspopup="listbox"
           aria-owns="test-id_list"
-          autocomplete="new-password"
+          autocomplete="off"
           class="ant-select-input"
           id="test-id"
           role="combobox"
@@ -1568,7 +1586,7 @@ exports[`auto-complete demo > renders basic correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         role="combobox"
@@ -1601,7 +1619,7 @@ exports[`auto-complete demo > renders basic correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         role="combobox"
@@ -1640,7 +1658,7 @@ exports[`auto-complete demo > renders certain-category correctly 1`] = `
           aria-expanded="false"
           aria-haspopup="listbox"
           aria-owns="test-id_list"
-          autocomplete="new-password"
+          autocomplete="off"
           class="ant-input ant-input-lg ant-input-outlined ant-input-compact-item ant-input-compact-first-item css-var-root ant-input-css-var"
           id="test-id"
           placeholder="input here"
@@ -1708,7 +1726,7 @@ exports[`auto-complete demo > renders custom correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-input ant-input-outlined css-var-root ant-input-css-var custom ant-select-input"
         id="test-id"
         placeholder="input here"
@@ -1747,7 +1765,7 @@ exports[`auto-complete demo > renders customize-clear-debug correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-input ant-input-outlined ant-select-input css-var-root ant-input-css-var"
         id="test-id"
         role="combobox"
@@ -1801,7 +1819,7 @@ exports[`auto-complete demo > renders customize-clear-debug correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-input ant-input-outlined css-var-root ant-input-css-var ant-select-input"
         id="test-id"
         role="combobox"
@@ -1869,7 +1887,7 @@ exports[`auto-complete demo > renders disabled-custom-debug correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-input ant-input-outlined css-var-root ant-input-css-var ant-select-input ant-input-disabled"
         disabled=""
         id="test-id"
@@ -1902,7 +1920,7 @@ exports[`auto-complete demo > renders disabled-custom-debug correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         disabled=""
         id="test-id"
@@ -1993,7 +2011,7 @@ exports[`auto-complete demo > renders disabled-in-form-debug correctly 1`] = `
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-owns="test-id_list"
-                    autocomplete="new-password"
+                    autocomplete="off"
                     class="ant-select-input"
                     disabled=""
                     id="test-id"
@@ -2049,7 +2067,7 @@ exports[`auto-complete demo > renders disabled-in-form-debug correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         disabled=""
         id="test-id"
@@ -2114,7 +2132,7 @@ exports[`auto-complete demo > renders filled-custom-debug correctly 1`] = `
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-owns="test-id_list"
-                    autocomplete="new-password"
+                    autocomplete="off"
                     class="ant-input ant-input-filled css-var-root ant-input-css-var ant-select-input"
                     id="test-id"
                     placeholder="Custom TextArea"
@@ -2235,7 +2253,7 @@ exports[`auto-complete demo > renders non-case-sensitive correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         role="combobox"
@@ -2275,7 +2293,7 @@ exports[`auto-complete demo > renders options correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         role="combobox"
@@ -2342,7 +2360,7 @@ exports[`auto-complete demo > renders render-panel correctly 1`] = `
           aria-expanded="false"
           aria-haspopup="listbox"
           aria-owns="test-id_list"
-          autocomplete="new-password"
+          autocomplete="off"
           class="ant-select-input"
           id="test-id"
           role="combobox"
@@ -2387,7 +2405,7 @@ exports[`auto-complete demo > renders status correctly 1`] = `
           aria-expanded="false"
           aria-haspopup="listbox"
           aria-owns="test-id_list"
-          autocomplete="new-password"
+          autocomplete="off"
           class="ant-select-input"
           id="test-id"
           role="combobox"
@@ -2425,7 +2443,7 @@ exports[`auto-complete demo > renders status correctly 1`] = `
           aria-expanded="false"
           aria-haspopup="listbox"
           aria-owns="test-id_list"
-          autocomplete="new-password"
+          autocomplete="off"
           class="ant-select-input"
           id="test-id"
           role="combobox"
@@ -2467,7 +2485,7 @@ exports[`auto-complete demo > renders style-class correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         role="combobox"
@@ -2501,7 +2519,7 @@ exports[`auto-complete demo > renders style-class correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         role="combobox"
@@ -2540,7 +2558,7 @@ exports[`auto-complete demo > renders uncertain-category correctly 1`] = `
           aria-expanded="false"
           aria-haspopup="listbox"
           aria-owns="test-id_list"
-          autocomplete="new-password"
+          autocomplete="off"
           class="ant-input ant-input-lg ant-input-outlined ant-input-compact-item ant-input-compact-first-item css-var-root ant-input-css-var"
           id="test-id"
           placeholder="input here"
@@ -2612,7 +2630,7 @@ exports[`auto-complete demo > renders variant correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         role="combobox"
@@ -2646,7 +2664,7 @@ exports[`auto-complete demo > renders variant correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         role="combobox"
@@ -2680,7 +2698,7 @@ exports[`auto-complete demo > renders variant correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         role="combobox"
@@ -2714,7 +2732,7 @@ exports[`auto-complete demo > renders variant correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         role="combobox"

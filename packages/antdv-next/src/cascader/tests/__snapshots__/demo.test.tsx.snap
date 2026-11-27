@@ -94,7 +94,7 @@ exports[`cascader demo > renders _semantic correctly 1`] = `
                 aria-expanded="true"
                 aria-haspopup="listbox"
                 aria-owns="test-id_list"
-                autocomplete="new-password"
+                autocomplete="off"
                 class="ant-select-input semantic-mark-input"
                 id="test-id"
                 readonly=""
@@ -188,6 +188,7 @@ exports[`cascader demo > renders _semantic correctly 1`] = `
               >
                 <h5
                   class="ant-typography css-var-root"
+                  data-v-dfc8ebef=""
                   style="margin: 0px;"
                 >
                   <!---->
@@ -278,6 +279,7 @@ exports[`cascader demo > renders _semantic correctly 1`] = `
             </div>
             <div
               class="ant-typography css-var-root"
+              data-v-dfc8ebef=""
               style="margin: 0px; font-size: 12px;"
             >
               <!---->
@@ -310,6 +312,7 @@ exports[`cascader demo > renders _semantic correctly 1`] = `
               >
                 <h5
                   class="ant-typography css-var-root"
+                  data-v-dfc8ebef=""
                   style="margin: 0px;"
                 >
                   <!---->
@@ -400,6 +403,7 @@ exports[`cascader demo > renders _semantic correctly 1`] = `
             </div>
             <div
               class="ant-typography css-var-root"
+              data-v-dfc8ebef=""
               style="margin: 0px; font-size: 12px;"
             >
               <!---->
@@ -432,6 +436,7 @@ exports[`cascader demo > renders _semantic correctly 1`] = `
               >
                 <h5
                   class="ant-typography css-var-root"
+                  data-v-dfc8ebef=""
                   style="margin: 0px;"
                 >
                   <!---->
@@ -522,6 +527,7 @@ exports[`cascader demo > renders _semantic correctly 1`] = `
             </div>
             <div
               class="ant-typography css-var-root"
+              data-v-dfc8ebef=""
               style="margin: 0px; font-size: 12px;"
             >
               <!---->
@@ -554,6 +560,7 @@ exports[`cascader demo > renders _semantic correctly 1`] = `
               >
                 <h5
                   class="ant-typography css-var-root"
+                  data-v-dfc8ebef=""
                   style="margin: 0px;"
                 >
                   <!---->
@@ -644,6 +651,7 @@ exports[`cascader demo > renders _semantic correctly 1`] = `
             </div>
             <div
               class="ant-typography css-var-root"
+              data-v-dfc8ebef=""
               style="margin: 0px; font-size: 12px;"
             >
               <!---->
@@ -676,6 +684,7 @@ exports[`cascader demo > renders _semantic correctly 1`] = `
               >
                 <h5
                   class="ant-typography css-var-root"
+                  data-v-dfc8ebef=""
                   style="margin: 0px;"
                 >
                   <!---->
@@ -766,6 +775,7 @@ exports[`cascader demo > renders _semantic correctly 1`] = `
             </div>
             <div
               class="ant-typography css-var-root"
+              data-v-dfc8ebef=""
               style="margin: 0px; font-size: 12px;"
             >
               <!---->
@@ -798,6 +808,7 @@ exports[`cascader demo > renders _semantic correctly 1`] = `
               >
                 <h5
                   class="ant-typography css-var-root"
+                  data-v-dfc8ebef=""
                   style="margin: 0px;"
                 >
                   <!---->
@@ -888,6 +899,7 @@ exports[`cascader demo > renders _semantic correctly 1`] = `
             </div>
             <div
               class="ant-typography css-var-root"
+              data-v-dfc8ebef=""
               style="margin: 0px; font-size: 12px;"
             >
               <!---->
@@ -920,6 +932,7 @@ exports[`cascader demo > renders _semantic correctly 1`] = `
               >
                 <h5
                   class="ant-typography css-var-root"
+                  data-v-dfc8ebef=""
                   style="margin: 0px;"
                 >
                   <!---->
@@ -1010,6 +1023,7 @@ exports[`cascader demo > renders _semantic correctly 1`] = `
             </div>
             <div
               class="ant-typography css-var-root"
+              data-v-dfc8ebef=""
               style="margin: 0px; font-size: 12px;"
             >
               <!---->
@@ -1042,6 +1056,7 @@ exports[`cascader demo > renders _semantic correctly 1`] = `
               >
                 <h5
                   class="ant-typography css-var-root"
+                  data-v-dfc8ebef=""
                   style="margin: 0px;"
                 >
                   <!---->
@@ -1132,6 +1147,7 @@ exports[`cascader demo > renders _semantic correctly 1`] = `
             </div>
             <div
               class="ant-typography css-var-root"
+              data-v-dfc8ebef=""
               style="margin: 0px; font-size: 12px;"
             >
               <!---->
@@ -1164,6 +1180,7 @@ exports[`cascader demo > renders _semantic correctly 1`] = `
               >
                 <h5
                   class="ant-typography css-var-root"
+                  data-v-dfc8ebef=""
                   style="margin: 0px;"
                 >
                   <!---->
@@ -1254,6 +1271,7 @@ exports[`cascader demo > renders _semantic correctly 1`] = `
             </div>
             <div
               class="ant-typography css-var-root"
+              data-v-dfc8ebef=""
               style="margin: 0px; font-size: 12px;"
             >
               <!---->
@@ -1286,6 +1304,7 @@ exports[`cascader demo > renders _semantic correctly 1`] = `
               >
                 <h5
                   class="ant-typography css-var-root"
+                  data-v-dfc8ebef=""
                   style="margin: 0px;"
                 >
                   <!---->
@@ -1376,6 +1395,7 @@ exports[`cascader demo > renders _semantic correctly 1`] = `
             </div>
             <div
               class="ant-typography css-var-root"
+              data-v-dfc8ebef=""
               style="margin: 0px; font-size: 12px;"
             >
               <!---->
@@ -1418,7 +1438,7 @@ exports[`cascader demo > renders basic correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         readonly=""
@@ -1482,7 +1502,7 @@ exports[`cascader demo > renders change-on-select correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         readonly=""
@@ -1546,7 +1566,7 @@ exports[`cascader demo > renders component-token correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         readonly=""
@@ -1610,7 +1630,7 @@ exports[`cascader demo > renders custom-dropdown correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         readonly=""
@@ -1684,7 +1704,7 @@ exports[`cascader demo > renders custom-render correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         readonly=""
@@ -1781,7 +1801,7 @@ exports[`cascader demo > renders default-value correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         readonly=""
@@ -1870,7 +1890,7 @@ exports[`cascader demo > renders disabled-option correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         readonly=""
@@ -1934,7 +1954,7 @@ exports[`cascader demo > renders fields-name correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         readonly=""
@@ -1998,7 +2018,7 @@ exports[`cascader demo > renders hover correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         readonly=""
@@ -2062,7 +2082,7 @@ exports[`cascader demo > renders lazy correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         readonly=""
@@ -2137,7 +2157,7 @@ exports[`cascader demo > renders multiple correctly 1`] = `
           aria-expanded="false"
           aria-haspopup="listbox"
           aria-owns="test-id_list"
-          autocomplete="new-password"
+          autocomplete="off"
           class="ant-select-input"
           id="test-id"
           readonly=""
@@ -2564,7 +2584,7 @@ exports[`cascader demo > renders placement correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         readonly=""
@@ -2632,7 +2652,7 @@ exports[`cascader demo > renders render-panel correctly 1`] = `
           aria-expanded="true"
           aria-haspopup="listbox"
           aria-owns="test-id_list"
-          autocomplete="new-password"
+          autocomplete="off"
           class="ant-select-input"
           id="test-id"
           readonly=""
@@ -2697,7 +2717,7 @@ exports[`cascader demo > renders search correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         role="combobox"
@@ -2778,7 +2798,7 @@ exports[`cascader demo > renders showCheckedStrategy correctly 1`] = `
           aria-expanded="false"
           aria-haspopup="listbox"
           aria-owns="test-id_list"
-          autocomplete="new-password"
+          autocomplete="off"
           class="ant-select-input"
           id="test-id"
           readonly=""
@@ -2882,7 +2902,7 @@ exports[`cascader demo > renders showCheckedStrategy correctly 1`] = `
           aria-expanded="false"
           aria-haspopup="listbox"
           aria-owns="test-id_list"
-          autocomplete="new-password"
+          autocomplete="off"
           class="ant-select-input"
           id="test-id"
           readonly=""
@@ -2973,7 +2993,7 @@ exports[`cascader demo > renders size correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         readonly=""
@@ -3032,7 +3052,7 @@ exports[`cascader demo > renders size correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         readonly=""
@@ -3091,7 +3111,7 @@ exports[`cascader demo > renders size correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         readonly=""
@@ -3160,7 +3180,7 @@ exports[`cascader demo > renders status correctly 1`] = `
           aria-expanded="false"
           aria-haspopup="listbox"
           aria-owns="test-id_list"
-          autocomplete="new-password"
+          autocomplete="off"
           class="ant-select-input"
           id="test-id"
           readonly=""
@@ -3232,7 +3252,7 @@ exports[`cascader demo > renders status correctly 1`] = `
             aria-expanded="false"
             aria-haspopup="listbox"
             aria-owns="test-id_list"
-            autocomplete="new-password"
+            autocomplete="off"
             class="ant-select-input"
             id="test-id"
             readonly=""
@@ -3306,7 +3326,7 @@ exports[`cascader demo > renders style-class correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         readonly=""
@@ -3369,7 +3389,7 @@ exports[`cascader demo > renders style-class correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         readonly=""
@@ -3434,7 +3454,7 @@ exports[`cascader demo > renders suffix correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         readonly=""
@@ -3492,7 +3512,7 @@ exports[`cascader demo > renders suffix correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         readonly=""
@@ -3532,7 +3552,7 @@ exports[`cascader demo > renders suffix correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         readonly=""
@@ -3591,7 +3611,7 @@ exports[`cascader demo > renders suffix correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         readonly=""
@@ -3672,7 +3692,7 @@ exports[`cascader demo > renders suffix correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         readonly=""
@@ -3736,7 +3756,7 @@ exports[`cascader demo > renders variant correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         readonly=""
@@ -3793,7 +3813,7 @@ exports[`cascader demo > renders variant correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         readonly=""
@@ -3850,7 +3870,7 @@ exports[`cascader demo > renders variant correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         readonly=""
@@ -3907,7 +3927,7 @@ exports[`cascader demo > renders variant correctly 1`] = `
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-owns="test-id_list"
-        autocomplete="new-password"
+        autocomplete="off"
         class="ant-select-input"
         id="test-id"
         readonly=""

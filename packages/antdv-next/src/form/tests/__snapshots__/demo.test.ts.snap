@@ -239,6 +239,7 @@ exports[`form demo > renders _semantic correctly 1`] = `
               >
                 <h5
                   class="ant-typography css-var-root"
+                  data-v-dfc8ebef=""
                   style="margin: 0px;"
                 >
                   <!---->
@@ -337,6 +338,7 @@ exports[`form demo > renders _semantic correctly 1`] = `
             </div>
             <div
               class="ant-typography css-var-root"
+              data-v-dfc8ebef=""
               style="margin: 0px; font-size: 12px;"
             >
               <!---->
@@ -369,6 +371,7 @@ exports[`form demo > renders _semantic correctly 1`] = `
               >
                 <h5
                   class="ant-typography css-var-root"
+                  data-v-dfc8ebef=""
                   style="margin: 0px;"
                 >
                   <!---->
@@ -467,6 +470,7 @@ exports[`form demo > renders _semantic correctly 1`] = `
             </div>
             <div
               class="ant-typography css-var-root"
+              data-v-dfc8ebef=""
               style="margin: 0px; font-size: 12px;"
             >
               <!---->
@@ -499,6 +503,7 @@ exports[`form demo > renders _semantic correctly 1`] = `
               >
                 <h5
                   class="ant-typography css-var-root"
+                  data-v-dfc8ebef=""
                   style="margin: 0px;"
                 >
                   <!---->
@@ -597,6 +602,7 @@ exports[`form demo > renders _semantic correctly 1`] = `
             </div>
             <div
               class="ant-typography css-var-root"
+              data-v-dfc8ebef=""
               style="margin: 0px; font-size: 12px;"
             >
               <!---->
@@ -629,6 +635,7 @@ exports[`form demo > renders _semantic correctly 1`] = `
               >
                 <h5
                   class="ant-typography css-var-root"
+                  data-v-dfc8ebef=""
                   style="margin: 0px;"
                 >
                   <!---->
@@ -727,6 +734,7 @@ exports[`form demo > renders _semantic correctly 1`] = `
             </div>
             <div
               class="ant-typography css-var-root"
+              data-v-dfc8ebef=""
               style="margin: 0px; font-size: 12px;"
             >
               <!---->
@@ -759,6 +767,7 @@ exports[`form demo > renders _semantic correctly 1`] = `
               >
                 <h5
                   class="ant-typography css-var-root"
+                  data-v-dfc8ebef=""
                   style="margin: 0px;"
                 >
                   <!---->
@@ -857,6 +866,7 @@ exports[`form demo > renders _semantic correctly 1`] = `
             </div>
             <div
               class="ant-typography css-var-root"
+              data-v-dfc8ebef=""
               style="margin: 0px; font-size: 12px;"
             >
               <!---->
@@ -889,6 +899,7 @@ exports[`form demo > renders _semantic correctly 1`] = `
               >
                 <h5
                   class="ant-typography css-var-root"
+                  data-v-dfc8ebef=""
                   style="margin: 0px;"
                 >
                   <!---->
@@ -987,6 +998,7 @@ exports[`form demo > renders _semantic correctly 1`] = `
             </div>
             <div
               class="ant-typography css-var-root"
+              data-v-dfc8ebef=""
               style="margin: 0px; font-size: 12px;"
             >
               <!---->
@@ -1070,7 +1082,7 @@ exports[`form demo > renders advanced-search correctly 1`] = `
                         aria-expanded="false"
                         aria-haspopup="listbox"
                         aria-owns="advanced_search_field-0_list"
-                        autocomplete="new-password"
+                        autocomplete="off"
                         class="ant-select-input"
                         id="advanced_search_field-0"
                         readonly=""
@@ -1312,7 +1324,7 @@ exports[`form demo > renders advanced-search correctly 1`] = `
                         aria-expanded="false"
                         aria-haspopup="listbox"
                         aria-owns="advanced_search_field-3_list"
-                        autocomplete="new-password"
+                        autocomplete="off"
                         class="ant-select-input"
                         id="advanced_search_field-3"
                         readonly=""
@@ -2175,7 +2187,7 @@ exports[`form demo > renders col-24-debug correctly 1`] = `
                       aria-expanded="false"
                       aria-haspopup="listbox"
                       aria-owns="col-24-debug_select_list"
-                      autocomplete="new-password"
+                      autocomplete="off"
                       class="ant-select-input"
                       id="col-24-debug_select"
                       role="combobox"
@@ -2631,7 +2643,7 @@ exports[`form demo > renders col-24-debug correctly 1`] = `
                       aria-expanded="false"
                       aria-haspopup="listbox"
                       aria-owns="select_list"
-                      autocomplete="new-password"
+                      autocomplete="off"
                       class="ant-select-input"
                       id="select"
                       role="combobox"
@@ -2896,7 +2908,7 @@ exports[`form demo > renders complex-form-control correctly 1`] = `
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-owns="complex-form_address_province_list"
-                    autocomplete="new-password"
+                    autocomplete="off"
                     class="ant-select-input"
                     id="complex-form_address_province"
                     readonly=""
@@ -3532,7 +3544,7 @@ exports[`form demo > renders control-hooks correctly 1`] = `
                   aria-expanded="false"
                   aria-haspopup="listbox"
                   aria-owns="control-hooks_gender_list"
-                  autocomplete="new-password"
+                  autocomplete="off"
                   class="ant-select-input"
                   id="control-hooks_gender"
                   readonly=""
@@ -4228,7 +4240,7 @@ exports[`form demo > renders customized-form-controls correctly 1`] = `
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-owns="test-id_list"
-                    autocomplete="new-password"
+                    autocomplete="off"
                     class="ant-select-input"
                     id="test-id"
                     readonly=""
@@ -4661,7 +4673,7 @@ exports[`form demo > renders disabled correctly 1`] = `
                       aria-expanded="false"
                       aria-haspopup="listbox"
                       aria-owns="select_list"
-                      autocomplete="new-password"
+                      autocomplete="off"
                       class="ant-select-input"
                       disabled=""
                       id="select"
@@ -4986,7 +4998,7 @@ exports[`form demo > renders disabled-input-debug correctly 1`] = `
                   aria-expanded="false"
                   aria-haspopup="listbox"
                   aria-owns="level_list"
-                  autocomplete="new-password"
+                  autocomplete="off"
                   class="ant-select-input"
                   disabled=""
                   id="level"
@@ -10851,7 +10863,7 @@ exports[`form demo > renders register correctly 1`] = `
                   aria-expanded="false"
                   aria-haspopup="listbox"
                   aria-owns="register_residence_list"
-                  autocomplete="new-password"
+                  autocomplete="off"
                   class="ant-select-input"
                   id="register_residence"
                   readonly=""
@@ -10987,7 +10999,7 @@ exports[`form demo > renders register correctly 1`] = `
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-owns="test-id_list"
-                    autocomplete="new-password"
+                    autocomplete="off"
                     class="ant-select-input"
                     id="test-id"
                     readonly=""
@@ -11179,7 +11191,7 @@ exports[`form demo > renders register correctly 1`] = `
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-owns="test-id_list"
-                    autocomplete="new-password"
+                    autocomplete="off"
                     class="ant-select-input"
                     id="test-id"
                     readonly=""
@@ -11289,7 +11301,7 @@ exports[`form demo > renders register correctly 1`] = `
                   aria-expanded="false"
                   aria-haspopup="listbox"
                   aria-owns="register_website_list"
-                  autocomplete="new-password"
+                  autocomplete="off"
                   class="ant-select-input"
                   id="register_website"
                   role="combobox"
@@ -11444,7 +11456,7 @@ exports[`form demo > renders register correctly 1`] = `
                   aria-expanded="false"
                   aria-haspopup="listbox"
                   aria-owns="register_gender_list"
-                  autocomplete="new-password"
+                  autocomplete="off"
                   class="ant-select-input"
                   id="register_gender"
                   readonly=""
@@ -12340,7 +12352,7 @@ exports[`form demo > renders size correctly 1`] = `
                   aria-expanded="false"
                   aria-haspopup="listbox"
                   aria-owns="select_list"
-                  autocomplete="new-password"
+                  autocomplete="off"
                   class="ant-select-input"
                   id="select"
                   readonly=""
@@ -14035,7 +14047,7 @@ exports[`form demo > renders use-form correctly 1`] = `
                   aria-expanded="false"
                   aria-haspopup="listbox"
                   aria-owns="use-form_gender_list"
-                  autocomplete="new-password"
+                  autocomplete="off"
                   class="ant-select-input"
                   id="use-form_gender"
                   readonly=""
@@ -15343,7 +15355,7 @@ exports[`form demo > renders validate-other correctly 1`] = `
                   aria-expanded="false"
                   aria-haspopup="listbox"
                   aria-owns="validate_other_select_list"
-                  autocomplete="new-password"
+                  autocomplete="off"
                   class="ant-select-input"
                   id="validate_other_select"
                   readonly=""
@@ -15462,7 +15474,7 @@ exports[`form demo > renders validate-other correctly 1`] = `
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-owns="validate_other_selectMultiple_list"
-                    autocomplete="new-password"
+                    autocomplete="off"
                     class="ant-select-input"
                     id="validate_other_selectMultiple"
                     role="combobox"
@@ -16860,7 +16872,7 @@ exports[`form demo > renders validate-scroll-to-field correctly 1`] = `
                   aria-expanded="false"
                   aria-haspopup="listbox"
                   aria-owns="occupation_list"
-                  autocomplete="new-password"
+                  autocomplete="off"
                   class="ant-select-input"
                   id="occupation"
                   readonly=""
@@ -17658,7 +17670,7 @@ exports[`form demo > renders validate-static correctly 1`] = `
                   aria-expanded="false"
                   aria-haspopup="listbox"
                   aria-owns="test-id_list"
-                  autocomplete="new-password"
+                  autocomplete="off"
                   class="ant-select-input"
                   id="test-id"
                   readonly=""
